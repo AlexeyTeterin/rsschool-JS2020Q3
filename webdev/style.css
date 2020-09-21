@@ -346,6 +346,146 @@ body {
 .our-community {
   height: 504px;
   background: #F5F6F7;
+  position: relative;
+}
+
+.our-community__info {
+  position: absolute;
+  width: 298px;
+  height: 175px;
+  left: 269px;
+  top: 155px;
+  text-align: center;
+}
+
+.our-community__avatar {
+  background-image: url(assets/avatar-our-community.png);
+  width: 45px;
+  height: 45px;
+  margin: 0 auto;
+}
+
+.our-community__title {
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 20px;
+  text-align: center;
+  letter-spacing: 2.4px;
+  padding-top: 20px;
+}
+
+.our-community__text {
+  padding-top: 11px;
+}
+
+.our-community__switch {
+  position: absolute;
+  width: 77px;
+  height: 20px;
+  left: 1251px;
+  top: 80px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  font-size: 18px;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+}
+
+.our-community__switch .arrow {
+  cursor: pointer;
+  -webkit-transition-timing-function: linear;
+          transition-timing-function: linear;
+  -webkit-transition-duration: 100ms;
+          transition-duration: 100ms;
+}
+
+.our-community__switch .arrow:hover {
+  opacity: 0.5;
+}
+
+.our-community__switch .arrow:active {
+  opacity: 0.3;
+}
+
+.our-community__switch .switch-left {
+  width: 8px;
+  height: 8px;
+  position: absolute;
+  top: 7px;
+  left: 0px;
+  border-left: 2px solid #373737;
+  border-top: 2px solid #373737;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  -webkit-transform: rotate(-45deg);
+          transform: rotate(-45deg);
+}
+
+.our-community__switch .arrow {
+  cursor: pointer;
+  -webkit-transition-timing-function: linear;
+          transition-timing-function: linear;
+  -webkit-transition-duration: 100ms;
+          transition-duration: 100ms;
+}
+
+.our-community__switch .arrow:hover {
+  opacity: 0.5;
+}
+
+.our-community__switch .arrow:active {
+  opacity: 0.3;
+}
+
+.our-community__switch .switch-position {
+  position: absolute;
+  top: 2px;
+  left: 21px;
+}
+
+.our-community__switch .switch-slash {
+  position: absolute;
+  top: 2px;
+  left: 35px;
+}
+
+.our-community__switch .switch-total {
+  position: absolute;
+  top: 2px;
+  left: 46px;
+}
+
+.our-community__switch .switch-right {
+  width: 8px;
+  height: 8px;
+  position: absolute;
+  top: 7px;
+  right: 0px;
+  border-top: 2px solid #373737;
+  border-left: 2px solid #373737;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  -webkit-transform: matrix(-0.71, -0.71, -0.71, 0.71, 0, 0);
+          transform: matrix(-0.71, -0.71, -0.71, 0.71, 0, 0);
+}
+
+.our-community__carousel {
+  position: absolute;
+  width: 894px;
+  height: 244px;
+  left: 706px;
+  top: 120px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.carousel-pic {
+  float: left;
 }
 
 .implement {
