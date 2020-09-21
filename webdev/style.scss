@@ -125,6 +125,9 @@ a {
   display: flex;
   align-items: center;
   justify-content: center;
+  h1{
+    visibility: hidden;
+  }
 }
 
 .header__menu {

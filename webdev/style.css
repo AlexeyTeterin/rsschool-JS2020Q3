@@ -221,6 +221,10 @@ a:active {
           justify-content: center;
 }
 
+.header h1 {
+  visibility: hidden;
+}
+
 .header__menu {
   color: white;
   text-align: center;
