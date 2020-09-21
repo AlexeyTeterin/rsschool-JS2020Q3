@@ -527,8 +527,52 @@ body {
 }
 
 .signup {
-  height: 598px;
+  height: 524px;
   background-image: url(assets/signup-bg.jpg);
+  padding-top: 201px;
+  text-align: center;
+}
+
+.signup .signup__title {
+  font-weight: bold;
+  font-size: 24px;
+  line-height: 28px;
+  letter-spacing: 1px;
+  color: white;
+}
+
+.signup .signup__form {
+  height: 46px;
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  padding-top: 29px;
+}
+
+.signup .signup__form .signup__field {
+  width: 340px;
+  height: 46px;
+  padding-left: 24px;
+  font-size: 14px;
+  color: #373737;
+}
+
+.signup .signup__form .signup__button {
+  width: 65px;
+  height: 46px;
+  margin-top: 0px;
+  background-image: url(assets/signup-button-icon.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.signup .signup__form .signup__button:active {
+  opacity: 0.5;
+  transform: unset;
+  -webkit-transform: unset;
+  -moz-transform: unset;
+  -ms-transform: unset;
+  -o-transform: unset;
 }
 
 .download {
