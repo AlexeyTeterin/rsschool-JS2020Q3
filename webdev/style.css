@@ -81,6 +81,24 @@ body {
   font-weight: normal;
 }
 
+a {
+  color: white;
+  -webkit-transition-timing-function: linear;
+          transition-timing-function: linear;
+  -webkit-transition-duration: 100ms;
+          transition-duration: 100ms;
+}
+
+a:hover {
+  border-bottom: 1px solid white;
+  cursor: pointer;
+  opacity: 0.7;
+}
+
+a:active {
+  opacity: 0.5;
+}
+
 .title {
   text-transform: uppercase;
 }
@@ -252,19 +270,6 @@ body {
 
 .header__menu ul li:nth-child(5) {
   margin-left: 85px;
-}
-
-.header__menu ul li a {
-  color: white;
-}
-
-.header__menu ul li a:hover {
-  border-bottom: 1px solid white;
-  cursor: pointer;
-}
-
-.header__menu ul li a:active {
-  opacity: 0.7;
 }
 
 .yourlife {
@@ -558,7 +563,7 @@ body {
 }
 
 .signup .signup__form .signup__button {
-  width: 65px;
+  width: 66px;
   height: 46px;
   margin-top: 0px;
   background-image: url(assets/signup-button-icon.svg);
@@ -576,7 +581,7 @@ body {
 }
 
 .download {
-  height: 468px;
+  height: 464px;
   background: #F5F6F7;
   text-align: center;
 }
@@ -586,11 +591,12 @@ body {
   font-weight: bold;
   font-size: 24px;
   line-height: 28px;
+  letter-spacing: 1px;
 }
 
 .download__buttons {
   margin: 0 auto;
-  width: 406px;
+  width: 402px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -600,11 +606,12 @@ body {
 }
 
 .download__buttons .button {
-  width: 188px;
-  height: 50px;
+  width: 186px;
+  height: 46px;
   background-repeat: no-repeat;
   background-position-x: right;
   padding-right: 60px;
+  margin-top: 28px;
 }
 
 .download__buttons .button-appstore {
@@ -638,7 +645,7 @@ body {
 
 .footer__nav {
   width: 236px;
-  height: 44px;
+  height: 48px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -657,9 +664,17 @@ body {
           justify-content: space-between;
 }
 
+.footer__nav ul .separator {
+  color: #4E4E4E;
+}
+
+.footer__nav ul a {
+  color: white;
+}
+
 .footer__text {
-  height: 44px;
-  line-height: 44px;
+  height: 48px;
+  line-height: 48px;
   color: #818181;
   text-align: right;
   width: 100%;

@@ -11,6 +11,23 @@ body {
   font-weight: normal;
 }
 
+
+a {
+  color: white;
+  transition-timing-function: linear;
+  transition-duration: 100ms;
+
+  &:hover {
+    border-bottom: 1px solid white;
+    cursor: pointer;
+    opacity: 0.7;
+  }
+
+  &:active {
+    opacity: 0.5;
+  }
+}
+
 .title {
   text-transform: uppercase;
 }
@@ -147,19 +164,6 @@ body {
 
       &:nth-child(5) {
         margin-left: 85px;
-      }
-
-      a {
-        color: white;
-
-        &:hover {
-          border-bottom: 1px solid white;
-          cursor: pointer;
-        }
-
-        &:active {
-          opacity: 0.7;
-        }
       }
     }
 
@@ -434,7 +438,7 @@ body {
     }
 
     .signup__button {
-      width: 65px;
+      width: 66px;
       height: 46px;
       margin-top: 0px;
       background-image: url(assets/signup-button-icon.svg);
@@ -455,7 +459,7 @@ body {
 }
 
 .download {
-  height: 468px;
+  height: 464px;
   background: $bg-gray;
   text-align: center;
 }
@@ -465,20 +469,22 @@ body {
   font-weight: bold;
   font-size: 24px;
   line-height: 28px;
+  letter-spacing: 1px;
 }
 
 .download__buttons {
   margin: 0 auto;
-  width: 406px;
+  width: 402px;
   display: flex;
   justify-content: space-between;
 
   .button {
-    width: 188px;
-    height: 50px;
+    width: 186px;
+    height: 46px;
     background-repeat: no-repeat;
     background-position-x: right;
     padding-right: 60px;
+    margin-top: 28px;
   }
 
   .button-appstore {
@@ -510,7 +516,7 @@ body {
 
 .footer__nav {
   width: 236px;
-  height: 44px;
+  height: 48px;
   display: flex;
 
   ul {
@@ -518,12 +524,18 @@ body {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    .separator{
+      color: #4E4E4E;
+    }
+    a{
+      color: white;
+    }
   }
 }
 
 .footer__text {
-  height: 44px;
-  line-height: 44px;
+  height: 48px;
+  line-height: 48px;
   color: #818181;
   text-align: right;
   width: 100%;
