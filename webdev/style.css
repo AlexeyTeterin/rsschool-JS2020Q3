@@ -494,6 +494,36 @@ body {
 
 .implement {
   height: 842px;
+  position: relative;
+  padding-left: 815px;
+  padding-top: 319px;
+}
+
+.implement .implement__pic {
+  position: absolute;
+  width: 407px;
+  height: 582px;
+  left: 269px;
+  top: 120px;
+  background-image: url(assets/implement-pic.jpg);
+}
+
+.implement .implement__title {
+  font-weight: bold;
+  font-size: 24px;
+  line-height: 28px;
+  letter-spacing: 1px;
+}
+
+.implement .implement__text {
+  width: 407px;
+  height: 60px;
+}
+
+.implement .implement__button {
+  width: 180px;
+  height: 46px;
+  margin-top: 50px;
 }
 
 .signup {
