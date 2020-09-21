@@ -86,10 +86,10 @@ body {
 }
 
 .text {
-  margin-top: 20px;
+  padding-top: 22px;
   font-weight: normal;
   font-size: 14px;
-  line-height: 140%;
+  line-height: 144%;
 }
 
 .text span {
@@ -139,13 +139,34 @@ body {
 .logo {
   background-image: url(assets/logo.png);
   width: 44px;
-  height: 44px;
+  height: 45px;
   margin: 0 auto;
 }
 
 .icon {
   width: 20px;
   height: 20px;
+  cursor: pointer;
+}
+
+.icon:hover {
+  opacity: 0.5;
+  -webkit-transition-timing-function: linear;
+          transition-timing-function: linear;
+  -webkit-transition-duration: 100ms;
+          transition-duration: 100ms;
+}
+
+.icon:active {
+  transform: scale(0.95);
+  -webkit-transition-timing-function: linear;
+          transition-timing-function: linear;
+  -webkit-transition-duration: 100ms;
+          transition-duration: 100ms;
+  -webkit-transform: scale(0.95);
+  -moz-transform: scale(0.95);
+  -ms-transform: scale(0.95);
+  -o-transform: scale(0.95);
 }
 
 .icon-yt {
@@ -181,7 +202,7 @@ body {
 .header__menu {
   color: white;
   text-align: center;
-  width: 582px;
+  width: 596px;
 }
 
 .header__menu ul {
@@ -198,7 +219,6 @@ body {
 }
 
 .header__menu ul li {
-  width: 20%;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -208,6 +228,39 @@ body {
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
+}
+
+.header__menu ul li:nth-child(1) {
+  border-bottom: 1px solid white;
+}
+
+.header__menu ul li:nth-child(2) {
+  margin-left: 85px;
+}
+
+.header__menu ul li:nth-child(3) {
+  margin-left: 100px;
+}
+
+.header__menu ul li:nth-child(4) {
+  margin-left: 100px;
+}
+
+.header__menu ul li:nth-child(5) {
+  margin-left: 85px;
+}
+
+.header__menu ul li a {
+  color: white;
+}
+
+.header__menu ul li a:hover {
+  border-bottom: 1px solid white;
+  cursor: pointer;
+}
+
+.header__menu ul li a:active {
+  opacity: 0.7;
 }
 
 .yourlife {
@@ -225,12 +278,12 @@ body {
 .yourlife__title {
   font-weight: bold;
   font-size: 64px;
-  line-height: 75px;
+  line-height: 72px;
   letter-spacing: 4.5px;
+  padding-left: 5px;
 }
 
 .yourlife__text {
-  padding: 20px 0 0 0;
   font-size: 18px;
 }
 
@@ -264,7 +317,7 @@ body {
   position: absolute;
   width: 407px;
   height: 233px;
-  left: 268px;
+  left: 269px;
   top: 295px;
 }
 
@@ -276,6 +329,7 @@ body {
 }
 
 .rap-present__button {
+  margin-top: 29px;
   width: 184px;
   height: 46px;
 }
@@ -284,9 +338,9 @@ body {
   position: absolute;
   width: 407px;
   height: 582px;
-  left: 923px;
+  left: 924px;
   top: 120px;
-  background-image: url(/assets/rap-present.jpg);
+  background-image: url(assets/rap-present.jpg);
 }
 
 .our-community {
@@ -300,7 +354,7 @@ body {
 
 .signup {
   height: 598px;
-  background-image: url(/assets/signup-bg.jpg);
+  background-image: url(assets/signup-bg.jpg);
 }
 
 .download {
@@ -336,11 +390,11 @@ body {
 }
 
 .download__buttons .button-appstore {
-  background-image: url(/assets/icon-appstore.png);
+  background-image: url(assets/icon-appstore.png);
 }
 
 .download__buttons .button-googleplay {
-  background-image: url(/assets/icon-googleplay.png);
+  background-image: url(assets/icon-googleplay.png);
 }
 
 .footer {
