@@ -223,6 +223,7 @@ a:active {
 
 .header h1 {
   visibility: hidden;
+  width: 0;
 }
 
 .header__menu {
