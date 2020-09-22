@@ -22,18 +22,15 @@ class Calculator {
   }
 
   chooseOperation(operation) {
-    if (
-      this.operation !== undefined &&
+    if (this.operation !== undefined &&
       this.prevOperand !== "" &&
-      this.currOperand !== ""
-    )
+      this.currOperand !== "")
       this.compute();
     this.operation = operation;
     if (this.currOperand === "") {
       this.prevOperand = this.prevOperand.slice(0, -1) + operation.toString();
     } else {
-      this.prevOperand =
-        this.currOperand.toString() + " " + operation.toString();
+      this.prevOperand = this.currOperand.toString() + " " + operation.toString();
       this.currOperand = "";
     }
   }
@@ -45,8 +42,7 @@ class Calculator {
           parseFloat(this.prevOperand) + parseFloat(this.currOperand);
         break;
       case "-":
-        this.currOperand =
-          parseFloat(this.prevOperand) - parseFloat(this.currOperand);
+        this.currOperand = parseFloat(this.prevOperand) - parseFloat(this.currOperand);
         break;
       case "/":
         this.currOperand =
