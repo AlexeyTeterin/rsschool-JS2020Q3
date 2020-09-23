@@ -1,7 +1,8 @@
 class Calculator {
-  constructor(PREV_OPERAND, CURR_OPERAND) {
+  constructor(PREV_OPERAND, CURR_OPERAND, ALERT) {
     this.PREV_OPERAND = PREV_OPERAND;
     this.CURR_OPERAND = CURR_OPERAND;
+    this.ALERT = ALERT;
     this.clear();
   }
 
@@ -29,21 +30,16 @@ class Calculator {
 
   chooseOperation(operation) {
     if (this.operation !== undefined && this.prevOperand !== '' && this.currOperand !== '') this.compute();
-    if (operation === 'xy') operation = '^';
 
-    this.operation = operation;
+    this.operation = (operation === 'xy') ? '^' : operation;
 
     if (this.currOperand === '') {
       this.prevOperand = this.prevOperand.slice(0, -1) + operation.toString();
-    } else {
-      if (operation === '√') {
-        this.compute();
-      } else {
-        this.prevOperand = `${this.currOperand.toString()} ${operation.toString()}`;
-        this.currOperand = '';
-      }
+    } else if (operation === '√') this.compute();
+    else {
+      this.prevOperand = `${this.currOperand.toString()} ${operation.toString()}`;
+      this.currOperand = '';
     }
-
   }
 
   compute() {
@@ -51,8 +47,7 @@ class Calculator {
     switch (this.operation) {
       case '+':
         if (this.prevOperand === '') return;
-        this.currOperand =
-          parseFloat(this.prevOperand) + parseFloat(this.currOperand || 0);
+        this.currOperand = parseFloat(this.prevOperand) + parseFloat(this.currOperand || 0);
         break;
       case '-':
         if (this.prevOperand === '') return;
@@ -64,7 +59,8 @@ class Calculator {
         break;
       case '*':
         if (this.prevOperand === '') return;
-        this.currOperand = parseFloat(this.prevOperand) * parseFloat(this.currOperand || this.prevOperand);
+        this.currOperand = parseFloat(this.prevOperand)
+          * parseFloat(this.currOperand || this.prevOperand);
         break;
       case '^':
         if (this.prevOperand === '') return;
@@ -85,12 +81,12 @@ class Calculator {
   }
 
   showAlert(text) {
-    ALERT.innerText = text;
-    ALERT.classList.remove('hidden');
+    this.ALERT.innerText = text;
+    this.ALERT.classList.remove('hidden');
   }
 
   hideAlert() {
-    ALERT.classList.add('hidden');
+    this.ALERT.classList.add('hidden');
   }
 
   updateDisplay() {
@@ -108,7 +104,7 @@ const PREV_OPERAND = document.querySelector('.prev-operand');
 const CURR_OPERAND = document.querySelector('.curr-operand');
 const ALERT = document.querySelector('.alert');
 
-const CALCULATOR = new Calculator(PREV_OPERAND, CURR_OPERAND);
+const CALCULATOR = new Calculator(PREV_OPERAND, CURR_OPERAND, ALERT);
 
 NUM_BUTTONS.forEach((btn) => {
   btn.addEventListener('click', () => {
