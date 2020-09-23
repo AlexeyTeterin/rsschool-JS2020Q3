@@ -51,7 +51,8 @@ class Calculator {
     switch (this.operation) {
       case '+':
         if (this.prevOperand === '') return;
-        this.currOperand = parseFloat(this.prevOperand) + parseFloat(this.currOperand || 0);
+        this.currOperand =
+          parseFloat(this.prevOperand) + parseFloat(this.currOperand || 0);
         break;
       case '-':
         if (this.prevOperand === '') return;
@@ -79,9 +80,8 @@ class Calculator {
       default:
         break;
     }
+    this.currOperand = parseFloat(this.currOperand.toFixed(10));
     this.prevOperand = '';
-
-    // TODO: вместить длинные числа
   }
 
   showAlert(text) {
