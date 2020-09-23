@@ -9,6 +9,7 @@ class Calculator {
     this.currOperand = '';
     this.prevOperand = '';
     this.operation = undefined;
+    this.equalsPressed = false;
   }
 
   delete() {
@@ -16,6 +17,10 @@ class Calculator {
   }
 
   appendNumber(number) {
+    if (this.equalsPressed) {
+      this.currOperand = '';
+      this.equalsPressed = false;
+    }
     if (number === '.' && this.currOperand.includes('.')) return;
     if (this.currOperand === '0') this.currOperand = number.toString();
     else this.currOperand = this.currOperand.toString() + number.toString();
@@ -33,18 +38,20 @@ class Calculator {
   }
 
   compute() {
+    if (this.prevOperand === this.operation) this.prevOperand = 0;
+    if (this.prevOperand === '') return;
     switch (this.operation) {
       case '+':
-        this.currOperand = parseFloat(this.prevOperand) + parseFloat(this.currOperand);
+        this.currOperand = parseFloat(this.prevOperand) + parseFloat(this.currOperand || 0);
         break;
       case '-':
-        this.currOperand = parseFloat(this.prevOperand) - parseFloat(this.currOperand);
+        this.currOperand = parseFloat(this.prevOperand) - parseFloat(this.currOperand || 0);
         break;
       case '/':
-        this.currOperand = parseFloat(this.prevOperand) / parseFloat(this.currOperand);
+        this.currOperand = parseFloat(this.prevOperand) / parseFloat(this.currOperand || 1);
         break;
       case '*':
-        this.currOperand = parseFloat(this.prevOperand) * parseFloat(this.currOperand);
+        this.currOperand = parseFloat(this.prevOperand) * parseFloat(this.currOperand || this.prevOperand);
         break;
       default:
         break;
@@ -96,6 +103,6 @@ OPERATION_BUTTONS.forEach((btn) => {
 
 EQUALS_BUTTON.addEventListener('click', () => {
   CALCULATOR.compute();
-
   CALCULATOR.updateDisplay();
+  CALCULATOR.equalsPressed = true;
 });
