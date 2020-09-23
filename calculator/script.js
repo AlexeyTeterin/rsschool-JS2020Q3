@@ -10,6 +10,7 @@ class Calculator {
     this.prevOperand = '';
     this.operation = undefined;
     this.equalsPressed = false;
+    this.hideAlert();
   }
 
   delete() {
@@ -28,30 +29,52 @@ class Calculator {
 
   chooseOperation(operation) {
     if (this.operation !== undefined && this.prevOperand !== '' && this.currOperand !== '') this.compute();
+    if (operation === 'xy') operation = '^';
+
     this.operation = operation;
+
     if (this.currOperand === '') {
       this.prevOperand = this.prevOperand.slice(0, -1) + operation.toString();
     } else {
-      this.prevOperand = `${this.currOperand.toString()} ${operation.toString()}`;
-      this.currOperand = '';
+      if (operation === '√') {
+        this.compute();
+      } else {
+        this.prevOperand = `${this.currOperand.toString()} ${operation.toString()}`;
+        this.currOperand = '';
+      }
     }
+
   }
 
   compute() {
     if (this.prevOperand === this.operation) this.prevOperand = 0;
-    if (this.prevOperand === '') return;
     switch (this.operation) {
       case '+':
+        if (this.prevOperand === '') return;
         this.currOperand = parseFloat(this.prevOperand) + parseFloat(this.currOperand || 0);
         break;
       case '-':
+        if (this.prevOperand === '') return;
         this.currOperand = parseFloat(this.prevOperand) - parseFloat(this.currOperand || 0);
         break;
       case '/':
+        if (this.prevOperand === '') return;
         this.currOperand = parseFloat(this.prevOperand) / parseFloat(this.currOperand || 1);
         break;
       case '*':
+        if (this.prevOperand === '') return;
         this.currOperand = parseFloat(this.prevOperand) * parseFloat(this.currOperand || this.prevOperand);
+        break;
+      case '^':
+        if (this.prevOperand === '') return;
+        this.currOperand = parseFloat(this.prevOperand) ** parseFloat(this.currOperand);
+        break;
+      case '√':
+        if (parseFloat(this.currOperand) < 0) {
+          this.showAlert('Извлечение корня возможно только из положительных чисел!');
+          break;
+        }
+        this.currOperand = Math.sqrt(parseFloat(this.currOperand));
         break;
       default:
         break;
@@ -59,6 +82,15 @@ class Calculator {
     this.prevOperand = '';
 
     // TODO: вместить длинные числа
+  }
+
+  showAlert(text) {
+    ALERT.innerText = text;
+    ALERT.classList.remove('hidden');
+  }
+
+  hideAlert() {
+    ALERT.classList.add('hidden');
   }
 
   updateDisplay() {
@@ -74,11 +106,13 @@ const DELETE_BUTTON = document.querySelector('.calc__del');
 const AC_BUTTON = document.querySelector('.calc__ac');
 const PREV_OPERAND = document.querySelector('.prev-operand');
 const CURR_OPERAND = document.querySelector('.curr-operand');
+const ALERT = document.querySelector('.alert');
 
 const CALCULATOR = new Calculator(PREV_OPERAND, CURR_OPERAND);
 
 NUM_BUTTONS.forEach((btn) => {
   btn.addEventListener('click', () => {
+    CALCULATOR.hideAlert();
     CALCULATOR.appendNumber(btn.innerText);
     CALCULATOR.updateDisplay();
   });
@@ -90,18 +124,21 @@ AC_BUTTON.addEventListener('click', () => {
 });
 
 DELETE_BUTTON.addEventListener('click', () => {
+  CALCULATOR.hideAlert();
   CALCULATOR.delete();
   CALCULATOR.updateDisplay();
 });
 
 OPERATION_BUTTONS.forEach((btn) => {
   btn.addEventListener('click', () => {
+    CALCULATOR.hideAlert();
     CALCULATOR.chooseOperation(btn.innerText);
     CALCULATOR.updateDisplay();
   });
 });
 
 EQUALS_BUTTON.addEventListener('click', () => {
+  CALCULATOR.hideAlert();
   CALCULATOR.compute();
   CALCULATOR.updateDisplay();
   CALCULATOR.equalsPressed = true;
