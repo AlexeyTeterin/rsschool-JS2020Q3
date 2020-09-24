@@ -1,1 +1,141 @@
-/* No CSS */
+* {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+.wrapper {
+  width: 1920px;
+  margin: 0 auto;
+}
+
+.title {
+  font-family: Georgia, serif;
+}
+
+.text {
+  font-family: Arial, Helvetica, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 15px;
+  line-height: 160%;
+}
+
+.header__wrapper {
+  padding: 60px 360px 0 360px;
+  padding-top: 60px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+header {
+  width: 1920px;
+  height: 120px;
+  margin: 0 auto;
+}
+
+header .logo {
+  height: 60px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+header .logo .logo__title {
+  color: #F1CDB3;
+  font-size: 32px;
+  line-height: 110%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  letter-spacing: 0.06em;
+}
+
+header .logo .logo__text {
+  color: #FFFFFF;
+  font-size: 13px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  letter-spacing: 0.1em;
+}
+
+header .header__menu {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  color: #CDCDCD;
+}
+
+header .header__menu ul {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  list-style-type: none;
+}
+
+header .header__menu ul li {
+  padding-left: 35px;
+}
+
+.main {
+  width: 100%;
+}
+
+.notonly {
+  width: 100%;
+  background-image: url(assets/gradient-background.jpg);
+  background-color: black;
+  height: 908px;
+  margin-top: -120px;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.notonly .notonly__wrapper {
+  position: relative;
+  padding: 180px 360px 0 360px;
+}
+
+.notonly .notonly__title {
+  padding-top: 160px;
+  font-size: 44px;
+  line-height: 130%;
+  color: #FFFFFF;
+}
+
+.notonly .notonly__text {
+  color: #CDCDCD;
+  width: 460px;
+}
+
+.notonly .notonly__pic {
+  width: 698px;
+  height: 728px;
+  float: right;
+  background-image: url(assets/start-screen-puppy.png);
+  background-position-y: 0;
+  background-position-x: 0;
+}
