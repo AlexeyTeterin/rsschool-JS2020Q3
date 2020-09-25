@@ -5,6 +5,7 @@
 $col-light-s: #FAFAFA;
 $col-light-l: #F6F6F6;
 $col-primary: #F1CDB3;
+$col-primary-light: #FDDCC4;
 $col-light-xl: #FFFFFF;
 $col-dark-s: #CDCDCD;
 $col-dark-l: #545454;
@@ -13,6 +14,42 @@ $col-dark-xl: #4C4C4C;
 .wrapper {
   width: 1200px;
   margin: 0 auto;
+}
+
+%button {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 207px;
+  height: 52px;
+
+  border: 2px solid $col-primary;
+  border-radius: 100px;
+
+  font-family: Georgia;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 17px;
+  line-height: 130%;
+  letter-spacing: 0.06em;
+
+  color: #292929;
+
+  &:hover {
+    background: $col-primary-light;
+  }
+}
+
+.button-dark {
+  @extend %button;
+  background: $col-primary;
+}
+
+.button-white {
+  @extend %button;
+  background: none;
 }
 
 .title {
@@ -111,6 +148,7 @@ header {
   }
 
   .notonly__text {
+    padding: 41px 0;
     color: $col-dark-s;
     width: 460px;
   }

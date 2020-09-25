@@ -8,6 +8,42 @@
   margin: 0 auto;
 }
 
+.button-dark, .button-white {
+  cursor: pointer;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  width: 207px;
+  height: 52px;
+  border: 2px solid #F1CDB3;
+  border-radius: 100px;
+  font-family: Georgia;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 17px;
+  line-height: 130%;
+  letter-spacing: 0.06em;
+  color: #292929;
+}
+
+.button-dark:hover, .button-white:hover {
+  background: #FDDCC4;
+}
+
+.button-dark {
+  background: #F1CDB3;
+}
+
+.button-white {
+  background: none;
+}
+
 .title {
   font-family: Georgia, serif;
   font-size: 35px;
@@ -128,6 +164,7 @@ header .header__menu ul li {
 }
 
 .notonly .notonly__text {
+  padding: 41px 0;
   color: #CDCDCD;
   width: 460px;
 }
