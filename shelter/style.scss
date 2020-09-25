@@ -3,9 +3,12 @@
 }
 
 $col-light-s: #FAFAFA;
+$col-light-l: #F6F6F6;
 $col-primary: #F1CDB3;
 $col-light-xl: #FFFFFF;
 $col-dark-s: #CDCDCD;
+$col-dark-l: #545454;
+$col-dark-xl: #4C4C4C;
 
 .wrapper {
   width: 1200px;
@@ -14,6 +17,10 @@ $col-dark-s: #CDCDCD;
 
 .title {
   font-family: Georgia, serif;
+  font-size: 35px;
+  line-height: 130%;
+  letter-spacing: 0.06em;
+  color: $col-dark-l;
 }
 
 .text {
@@ -22,6 +29,7 @@ $col-dark-s: #CDCDCD;
   font-weight: normal;
   font-size: 15px;
   line-height: 160%;
+  color: $col-dark-xl;
 }
 
 .header__wrapper {
@@ -83,16 +91,15 @@ header {
 }
 
 .notonly {
-  width: 100%;
-  background-image: url(assets/gradient-background.jpg);
-  background-color: black;
+  background:
+    radial-gradient(100% 215.42% at 0% 0%, #5B483A 0%, #262425 100%),
+    #211F20;
   height: 908px;
   margin-top: -120px;
   background-repeat: no-repeat;
   background-position: center;
 
   .notonly__wrapper {
-    position: relative;
     padding: 180px 0;
   }
 
@@ -109,7 +116,6 @@ header {
   }
 
   .notonly__pic {
-    // position: absolute;
     width: 698px;
     height: 728px;
     float: right;
@@ -117,4 +123,47 @@ header {
     background-position-y: 0;
     background-position-x: 0;
   }
+}
+
+.about {
+  height: 588px;
+
+  .about__wrapper {
+    padding: 80px 175px;
+  }
+
+  .about__pic {
+    float: left;
+    padding-right: 120px;
+  }
+
+  .about__title {
+    padding-top: 14px;
+  }
+
+  .about__text {
+    padding-top: 25px;
+  }
+}
+
+.our-friends {
+  height: 877px;
+  background-color: $col-light-l;
+}
+
+.help {
+  height: 611px;
+}
+
+.donation {
+  height: 464px;
+  background-color: $col-light-l;
+}
+
+footer {
+  height: 355px;
+  background:
+    radial-gradient(110.67% 538.64% at 5.73% 50%, #513D2F 0%, #1A1A1C 100%),
+    #211F20;
+  background-position: center;
 }
