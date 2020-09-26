@@ -3,6 +3,22 @@
           box-sizing: border-box;
 }
 
+a {
+  font-family: Arial;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 15px;
+  line-height: 160%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  color: #CDCDCD;
+  text-decoration: none;
+}
+
 .wrapper {
   width: 1200px;
   margin: 0 auto;
@@ -341,6 +357,52 @@ header .header__menu ul li {
 .donation {
   height: 464px;
   background-color: #F6F6F6;
+}
+
+.donation div {
+  margin-bottom: 20px;
+}
+
+.donation a {
+  all: unset;
+  color: #545454;
+}
+
+.donation .donation__wrapper {
+  padding: 80px 142px;
+}
+
+.donation .donation__card-number {
+  width: 349px;
+  height: 43px;
+  font-size: 20px;
+  border-radius: 9px;
+  -webkit-border-radius: 9px;
+  -moz-border-radius: 9px;
+  -ms-border-radius: 9px;
+  -o-border-radius: 9px;
+}
+
+.donation .donation__pic {
+  margin-right: 30px;
+  float: left;
+}
+
+.donation .card__icon {
+  float: left;
+  margin-right: 15px;
+  width: 30px;
+  height: 23px;
+  background: url(assets/card-icon.png);
+  background-repeat: no-repeat;
+  background-position: center;
+  margin-bottom: unset;
+}
+
+.donation .donation__info {
+  font-size: 12px;
+  line-height: 18px;
+  color: #B2B2B2;
 }
 
 footer {
