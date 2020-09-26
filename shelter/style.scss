@@ -72,8 +72,10 @@ $col-dark-xl: #4C4C4C;
 
 .header4 {
   @extend .title;
+          padding: 30px 0;
   font-size: 20px;
   line-height: 115%;
+  text-align: center;
 }
 
 
@@ -261,7 +263,6 @@ header {
       }
 
       .card__name {
-        padding: 30px 0;
         text-align: center;
         margin: 0 auto;
       }
@@ -289,14 +290,17 @@ header {
   }
 
   .help__grid {
-    display: grid;
-    grid-template-columns: repeat(5, 20%);
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
 
     .grid__element {
-      margin: 5px;
-      width: 160px;
-      height: 160px;
-      background: red;
+      margin: 0 60px;
+      height: 140px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
     }
   }
 }
