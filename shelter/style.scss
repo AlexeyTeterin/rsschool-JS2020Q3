@@ -50,6 +50,7 @@ a {
 
   &:hover {
     background: $col-primary-light;
+      border: 2px solid $col-primary-light;
   }
 }
 
@@ -234,7 +235,7 @@ header {
       top: 190px;
 
       &:hover {
-        background: url(assets/arrow.png), $col-primary;
+        background: url(assets/arrow.png), $col-primary-light;
         background-repeat: no-repeat;
         background-position: center;
       }

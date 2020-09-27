@@ -48,6 +48,7 @@ a {
 
 .button-dark:hover, .button-white:hover, .our-friends .our-friends__carousel .arrow-left:hover, .our-friends .our-friends__carousel .arrow-right:hover {
   background: #FDDCC4;
+  border: 2px solid #FDDCC4;
 }
 
 .button-dark {
@@ -254,7 +255,7 @@ header .header__menu ul li {
 }
 
 .our-friends .our-friends__carousel .arrow-left:hover, .our-friends .our-friends__carousel .arrow-right:hover {
-  background: url(assets/arrow.png), #F1CDB3;
+  background: url(assets/arrow.png), #FDDCC4;
   background-repeat: no-repeat;
   background-position: center;
 }
