@@ -1,5 +1,10 @@
 * {
   box-sizing: border-box;
+  transition: 50ms linear;
+  -webkit-transition: 50ms linear;
+  -moz-transition: 50ms linear;
+  -ms-transition: 50ms linear;
+  -o-transition: 50ms linear;
 }
 
 $col-light-s: #FAFAFA;
