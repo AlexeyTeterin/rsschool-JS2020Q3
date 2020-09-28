@@ -143,6 +143,7 @@ header .logo {
 }
 
 header .logo .logo__title {
+  margin: 0;
   color: #F1CDB3;
   font-size: 32px;
   line-height: 110%;
