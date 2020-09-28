@@ -33,6 +33,11 @@ a.selected {
   margin-bottom: -3px;
 }
 
+a.selected:hover {
+  color: unset;
+  cursor: default;
+}
+
 .wrapper {
   width: 1200px;
   margin: 0 auto;
@@ -168,6 +173,10 @@ header .header__menu {
 }
 
 header .header__menu ul {
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;

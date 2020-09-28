@@ -35,6 +35,11 @@ a {
   &.selected {
     border-bottom: solid 3px $col-primary;
     margin-bottom: -3px;
+
+    &:hover {
+      color: unset;
+      cursor: default;
+    }
   }
 }
 
@@ -151,6 +156,7 @@ header {
     color: $col-dark-s;
 
     ul {
+      user-select: none;
       display: flex;
       list-style-type: none;
 
