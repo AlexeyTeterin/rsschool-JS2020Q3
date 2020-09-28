@@ -24,25 +24,6 @@ a {
   text-decoration: none;
 }
 
-a:hover {
-  color: #FAFAFA;
-}
-
-a:active {
-  border-bottom: solid 3px #F1CDB3;
-  margin-bottom: -3px;
-}
-
-a.selected {
-  border-bottom: solid 3px #F1CDB3;
-  margin-bottom: -3px;
-}
-
-a.selected:hover {
-  color: unset;
-  cursor: default;
-}
-
 .wrapper {
   width: 1200px;
   margin: 0 auto;
@@ -123,6 +104,25 @@ header {
   width: 100%;
   height: 120px;
   margin: 0 auto;
+}
+
+header a:hover {
+  color: #FAFAFA;
+}
+
+header a:active {
+  border-bottom: solid 3px #F1CDB3;
+  margin-bottom: -3px;
+}
+
+header a.selected {
+  border-bottom: solid 3px #F1CDB3;
+  margin-bottom: -3px;
+}
+
+header a.selected:hover {
+  color: unset;
+  cursor: default;
 }
 
 header .logo {

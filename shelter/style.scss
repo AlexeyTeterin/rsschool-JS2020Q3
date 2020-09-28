@@ -28,24 +28,6 @@ a {
   color: $col-dark-s;
   text-decoration: none;
 
-  &:hover {
-    color: $col-light-s;
-  }
-
-  &:active {
-    border-bottom: solid 3px $col-primary;
-    margin-bottom: -3px;
-  }
-
-  &.selected {
-    border-bottom: solid 3px $col-primary;
-    margin-bottom: -3px;
-
-    &:hover {
-      color: unset;
-      cursor: default;
-    }
-  }
 }
 
 .wrapper {
@@ -128,6 +110,27 @@ header {
   width: 100%;
   height: 120px;
   margin: 0 auto;
+
+  a {
+    &:hover {
+      color: $col-light-s;
+    }
+
+    &:active {
+      border-bottom: solid 3px $col-primary;
+      margin-bottom: -3px;
+    }
+
+    &.selected {
+      border-bottom: solid 3px $col-primary;
+      margin-bottom: -3px;
+
+      &:hover {
+        color: unset;
+        cursor: default;
+      }
+    }
+  }
 
 
   .logo {
