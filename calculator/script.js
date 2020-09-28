@@ -31,13 +31,13 @@ class Calculator {
   chooseOperation(operation) {
     if (this.operation !== undefined && this.prevOperand !== '' && this.currOperand !== '') this.compute();
 
-    this.operation = (operation === 'xy') ? '^' : operation;
+    this.operation = (operation == 'xy') ? '^' : operation;
 
     if (this.currOperand === '') {
       this.prevOperand = this.prevOperand.slice(0, -1) + operation.toString();
     } else if (operation === '√') this.compute();
     else {
-      this.prevOperand = `${this.currOperand.toString()} ${operation.toString()}`;
+      this.prevOperand = `${this.currOperand.toString()} ${this.operation.toString()}`;
       this.currOperand = '';
     }
   }
@@ -59,8 +59,8 @@ class Calculator {
         break;
       case '*':
         if (this.prevOperand === '') return;
-        this.currOperand = parseFloat(this.prevOperand)
-          * parseFloat(this.currOperand || this.prevOperand);
+        this.currOperand = parseFloat(this.prevOperand) *
+          parseFloat(this.currOperand || this.prevOperand);
         break;
       case '^':
         if (this.prevOperand === '') return;
