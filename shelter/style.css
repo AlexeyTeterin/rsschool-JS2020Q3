@@ -19,6 +19,20 @@ a {
   text-decoration: none;
 }
 
+a:hover {
+  color: #FAFAFA;
+}
+
+a:active {
+  border-bottom: solid 3px #F1CDB3;
+  margin-bottom: -3px;
+}
+
+a.selected {
+  border-bottom: solid 3px #F1CDB3;
+  margin-bottom: -3px;
+}
+
 .wrapper {
   width: 1200px;
   margin: 0 auto;
@@ -384,6 +398,10 @@ header .header__menu ul li {
   -o-border-radius: 9px;
 }
 
+.donation .donation__text {
+  letter-spacing: 0.06em;
+}
+
 .donation .donation__pic {
   margin-right: 30px;
   float: left;
@@ -426,7 +444,7 @@ footer .footer__wrapper {
           align-items: center;
 }
 
-footer .footer__wrapper .footer__column {
+footer .footer__column {
   height: 100%;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -440,11 +458,11 @@ footer .footer__wrapper .footer__column {
           justify-content: center;
 }
 
-footer .footer__wrapper .footer__column .footer__title {
+footer .footer__column .footer__title {
   color: #FFFFFF;
 }
 
-footer .footer__wrapper .footer__column .footer__pic {
+footer .footer__column .footer__pic {
   margin-bottom: 0;
   width: 300px;
   height: 100%;
@@ -460,7 +478,7 @@ footer .footer__wrapper .footer__column .footer__pic {
           justify-content: flex-end;
 }
 
-footer .footer__wrapper .footer__link {
+footer .footer__link {
   padding-top: 40px;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -470,7 +488,7 @@ footer .footer__wrapper .footer__link {
           align-items: center;
 }
 
-footer .footer__wrapper .footer__link a {
+footer .footer__link a {
   font-family: Georgia, sans-serif;
   font-size: 20px;
   line-height: 115%;
@@ -479,6 +497,6 @@ footer .footer__wrapper .footer__link a {
   letter-spacing: 0.06em;
 }
 
-footer .footer__wrapper .footer__link img {
+footer .footer__link img {
   margin-right: 20px;
 }
