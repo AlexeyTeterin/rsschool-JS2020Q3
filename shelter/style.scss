@@ -50,7 +50,7 @@ a {
 
   &:hover {
     background: $col-primary-light;
-      border: 2px solid $col-primary-light;
+    border: 2px solid $col-primary-light;
   }
 }
 
@@ -364,9 +364,11 @@ header {
   }
 
   .donation__info {
+    font-style: italic;
     font-size: 12px;
     line-height: 18px;
     color: $col-dark-m;
+
   }
 }
 
@@ -376,4 +378,50 @@ footer {
     radial-gradient(110.67% 538.64% at 5.73% 50%, #513D2F 0%, #1A1A1C 100%),
     #211F20;
   background-position: center;
+
+  .footer__wrapper {
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .footer__column {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+
+      .footer__title {
+        color: $col-light-xl;
+      }
+
+      .footer__pic {
+        margin-bottom: 0;
+        width: 300px;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+      }
+    }
+
+    .footer__link {
+      padding-top: 40px;
+      display: flex;
+      align-items: center;
+
+      a {
+        font-family: Georgia, sans-serif;
+        font-size: 20px;
+        line-height: 115%;
+        color: $col-primary;
+        font-size: 20px;
+        letter-spacing: 0.06em;
+      }
+
+      img {
+        margin-right: 20px;
+      }
+    }
+  }
 }
