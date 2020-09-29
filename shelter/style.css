@@ -154,6 +154,7 @@ header .logo .logo__title {
       -ms-flex-align: center;
           align-items: center;
   letter-spacing: 0.06em;
+  padding-top: 2px;
 }
 
 header .logo .logo__text {
@@ -166,6 +167,7 @@ header .logo .logo__text {
       -ms-flex-align: center;
           align-items: center;
   letter-spacing: 0.1em;
+  padding-top: 6px;
 }
 
 header .header__menu {
@@ -193,10 +195,6 @@ header .header__menu ul li {
   padding-left: 35px;
 }
 
-.main {
-  width: 100%;
-}
-
 .notonly {
   background: radial-gradient(100% 215.42% at 0% 0%, #5B483A 0%, #262425 100%), #211F20;
   height: 908px;
@@ -210,10 +208,11 @@ header .header__menu ul li {
 }
 
 .notonly .notonly__title {
-  padding-top: 160px;
+  padding-top: 164px;
   font-size: 44px;
   line-height: 130%;
   color: #FFFFFF;
+  letter-spacing: unset;
 }
 
 .notonly .notonly__text {
@@ -270,6 +269,7 @@ header .header__menu ul li {
   -webkit-box-pack: space-evenly;
       -ms-flex-pack: space-evenly;
           justify-content: space-evenly;
+  padding: 0 16px;
 }
 
 .our-friends .our-friends__carousel .arrow-left, .our-friends .our-friends__carousel .arrow-right {
@@ -280,7 +280,7 @@ header .header__menu ul li {
   background-repeat: no-repeat;
   background-position: center;
   left: 0;
-  top: 190px;
+  top: 192px;
 }
 
 .our-friends .our-friends__carousel .arrow-left:hover, .our-friends .our-friends__carousel .arrow-right:hover {
@@ -364,6 +364,10 @@ header .header__menu ul li {
           justify-content: center;
   -ms-flex-wrap: wrap;
       flex-wrap: wrap;
+  -webkit-box-align: baseline;
+      -ms-flex-align: baseline;
+          align-items: baseline;
+  height: 334px;
 }
 
 .help .help__grid .grid__element {
@@ -390,7 +394,7 @@ header .header__menu ul li {
 }
 
 .donation div {
-  margin-bottom: 20px;
+  margin-bottom: 16px;
 }
 
 .donation a {
@@ -399,7 +403,7 @@ header .header__menu ul li {
 }
 
 .donation .donation__wrapper {
-  padding: 80px 142px;
+  padding: 82px 142px;
 }
 
 .donation .donation__card-number {
@@ -418,7 +422,7 @@ header .header__menu ul li {
 }
 
 .donation .donation__pic {
-  margin-right: 30px;
+  margin: 10px 30px 0 0;
   float: left;
 }
 
@@ -438,6 +442,7 @@ header .header__menu ul li {
   font-size: 12px;
   line-height: 18px;
   color: #B2B2B2;
+  padding-top: 4px;
 }
 
 footer {
@@ -468,9 +473,15 @@ footer .footer__column {
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  padding-top: 62px;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  padding-bottom: 60px;
+}
+
+footer .footer__column:last-child {
+  padding-bottom: unset;
 }
 
 footer .footer__column .footer__title {
@@ -494,7 +505,6 @@ footer .footer__column .footer__pic {
 }
 
 footer .footer__link {
-  padding-top: 40px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
