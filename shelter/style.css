@@ -90,20 +90,13 @@ a {
   text-align: center;
 }
 
-.header__wrapper {
-  padding-top: 60px;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
-}
-
 header {
-  width: 100%;
   height: 120px;
   margin: 0 auto;
+}
+
+header a {
+  color: #CDCDCD;
 }
 
 header a:hover {
@@ -123,6 +116,16 @@ header a.selected {
 header a.selected:hover {
   color: unset;
   cursor: default;
+}
+
+header .header__wrapper {
+  padding-top: 60px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
 }
 
 header .logo {
@@ -193,6 +196,10 @@ header .header__menu ul {
 
 header .header__menu ul li {
   padding-left: 35px;
+}
+
+main a {
+  color: #4C4C4C;
 }
 
 .notonly {
@@ -399,7 +406,6 @@ header .header__menu ul li {
 
 .donation a {
   all: unset;
-  color: #545454;
 }
 
 .donation .donation__wrapper {
