@@ -383,10 +383,6 @@ footer .footer__column .footer__pic {
           justify-content: flex-end;
 }
 
-footer .footer__column .footer__pic img {
-  margin-bottom: -3px;
-}
-
 footer .footer__link {
   display: -webkit-box;
   display: -ms-flexbox;
