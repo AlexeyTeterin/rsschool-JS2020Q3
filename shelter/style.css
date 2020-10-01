@@ -29,8 +29,7 @@ a {
   margin: 0 auto;
 }
 
-.button-dark, .button-white, .our-friends .our-friends__carousel .arrow-left, .our-friends .our-friends__carousel .arrow-right {
-  cursor: pointer;
+button {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -40,7 +39,8 @@ a {
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
-  width: 207px;
+  cursor: pointer;
+  outline: none;
   height: 52px;
   border: 2px solid #F1CDB3;
   border-radius: 100px;
@@ -48,20 +48,32 @@ a {
   font-size: 17px;
   line-height: 130%;
   letter-spacing: 0.06em;
+  background: none;
   color: #292929;
 }
 
-.button-dark:hover, .button-white:hover, .our-friends .our-friends__carousel .arrow-left:hover, .our-friends .our-friends__carousel .arrow-right:hover {
+button:hover {
   background: #FDDCC4;
   border: 2px solid #FDDCC4;
 }
 
-.button-dark {
-  background: #F1CDB3;
+button:disabled {
+  cursor: default;
+  border: 2px solid #CDCDCD;
+  border-radius: 100px;
+  color: #CDCDCD;
 }
 
-.button-white {
+button:disabled:hover {
   background: none;
+}
+
+button a {
+  letter-spacing: 0.12em;
+}
+
+.button-dark {
+  background: #F1CDB3;
 }
 
 .title, .header4 {
@@ -181,6 +193,7 @@ header .header__menu {
       -ms-flex-align: center;
           align-items: center;
   color: #CDCDCD;
+  padding-bottom: 4px;
 }
 
 header .header__menu ul {
@@ -228,6 +241,10 @@ main a {
   width: 460px;
 }
 
+.notonly .notonly__button {
+  width: 207px;
+}
+
 .notonly .notonly__pic {
   width: 698px;
   height: 728px;
@@ -252,10 +269,12 @@ main a {
 
 .about .about__title {
   padding-top: 14px;
+  padding-bottom: 25px;
 }
 
 .about .about__text {
-  padding-top: 25px;
+  padding-bottom: 25px;
+  line-height: 160%;
 }
 
 .our-friends {
@@ -383,12 +402,13 @@ main a {
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+}
+
+.help .help__grid .grid__element .grid__title {
+  padding-top: 26px;
 }
 
 .donation {
@@ -444,7 +464,7 @@ main a {
   font-size: 12px;
   line-height: 18px;
   color: #B2B2B2;
-  padding-top: 4px;
+  padding-top: 20px;
 }
 
 footer {

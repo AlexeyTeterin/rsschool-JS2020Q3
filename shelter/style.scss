@@ -17,6 +17,12 @@ $col-dark-l: #545454;
 $col-dark-xl: #4C4C4C;
 $col-dark-m: #B2B2B2;
 
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 a {
   font-family: Arial, sans-serif;
   font-style: normal;
@@ -34,13 +40,11 @@ a {
   margin: 0 auto;
 }
 
-%button {
+button {
+  @include flex-center();
   cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  outline: none;
 
-  width: 207px;
   height: 52px;
 
   border: 2px solid $col-primary;
@@ -51,23 +55,37 @@ a {
   line-height: 130%;
   letter-spacing: 0.06em;
 
+  background: none;
   color: #292929;
 
   &:hover {
     background: $col-primary-light;
     border: 2px solid $col-primary-light;
   }
+
+  &:disabled {
+    cursor: default;
+
+    border: 2px solid $col-dark-s;
+    border-radius: 100px;
+
+    color: $col-dark-s;
+
+    &:hover {
+      background: none;
+    }
+  }
+
+  a {
+    letter-spacing: 0.12em;
+  }
 }
 
 .button-dark {
-  @extend %button;
   background: $col-primary;
 }
 
-.button-white {
-  @extend %button;
-  background: none;
-}
+
 
 .title {
   font-family: Georgia, serif;
@@ -163,6 +181,7 @@ header {
     display: flex;
     align-items: center;
     color: $col-dark-s;
+    padding-bottom: 4px;
 
     ul {
       user-select: none;
@@ -209,6 +228,10 @@ main {
     width: 460px;
   }
 
+  .notonly__button {
+    width: 207px;
+  }
+
   .notonly__pic {
     width: 698px;
     height: 728px;
@@ -233,10 +256,12 @@ main {
 
   .about__title {
     padding-top: 14px;
+    padding-bottom: 25px;
   }
 
   .about__text {
-    padding-top: 25px;
+    padding-bottom: 25px;
+    line-height: 160%;
   }
 }
 
@@ -256,7 +281,6 @@ main {
     padding: 0 16px;
 
     .arrow-left {
-      @extend %button;
 
       position: absolute;
       width: 52px;
@@ -275,7 +299,6 @@ main {
     }
 
     .arrow-right {
-
       @extend .arrow-left;
       transform: rotate(-180deg);
       -webkit-transform: rotate(-180deg);
@@ -346,8 +369,11 @@ main {
       height: 140px;
       display: flex;
       flex-direction: column;
-      justify-content: center;
       align-items: center;
+
+      .grid__title {
+        padding-top: 26px;
+      }
     }
   }
 }
@@ -404,7 +430,7 @@ main {
     font-size: 12px;
     line-height: 18px;
     color: $col-dark-m;
-    padding-top: 4px;
+    padding-top: 20px;
   }
 }
 
