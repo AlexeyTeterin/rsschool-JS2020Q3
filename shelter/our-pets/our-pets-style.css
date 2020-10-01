@@ -29,7 +29,7 @@ a {
   margin: 0 auto;
 }
 
-.button-dark, .button-white, main .navigation .arrow-right, main .navigation .arrow-end {
+button {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -40,6 +40,7 @@ a {
       -ms-flex-pack: center;
           justify-content: center;
   cursor: pointer;
+  outline: none;
   height: 52px;
   border: 2px solid #F1CDB3;
   border-radius: 100px;
@@ -47,32 +48,24 @@ a {
   font-size: 17px;
   line-height: 130%;
   letter-spacing: 0.06em;
+  background: none;
   color: #292929;
 }
 
-.button-dark:hover, .button-white:hover, main .navigation .arrow-right:hover, main .navigation .arrow-end:hover {
+button:hover {
   background: #FDDCC4;
   border: 2px solid #FDDCC4;
 }
 
-main .navigation .arrow-left, main .navigation .position, main .navigation .arrow-start {
+button:disabled {
   cursor: default;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
   border: 2px solid #CDCDCD;
   border-radius: 100px;
   color: #CDCDCD;
-  font-family: Georgia;
-  font-size: 17px;
-  line-height: 130%;
-  letter-spacing: 0.06em;
+}
+
+button:disabled:hover {
+  background: none;
 }
 
 .button-dark {
@@ -305,9 +298,23 @@ main .navigation .arrow-right {
 main .navigation .position {
   width: 52px;
   height: 52px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
   background: #F1CDB3;
   border-color: #F1CDB3;
   color: #545454;
+  border-radius: 100px;
+  -webkit-border-radius: 100px;
+  -moz-border-radius: 100px;
+  -ms-border-radius: 100px;
+  -o-border-radius: 100px;
 }
 
 main .navigation .arrow-start {
@@ -348,11 +355,15 @@ footer .footer__column {
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
-  padding-top: 62px;
+  padding-top: 57px;
   -webkit-box-pack: justify;
       -ms-flex-pack: justify;
           justify-content: space-between;
   padding-bottom: 60px;
+}
+
+footer .footer__column:nth-child(2) {
+  margin-left: -6px;
 }
 
 footer .footer__column:last-child {

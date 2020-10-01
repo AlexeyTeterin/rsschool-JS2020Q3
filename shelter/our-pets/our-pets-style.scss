@@ -37,9 +37,10 @@ a {
   margin: 0 auto;
 }
 
-%button {
+button {
   @include flex-center();
   cursor: pointer;
+  outline: none;
 
   height: 52px;
 
@@ -51,29 +52,26 @@ a {
   line-height: 130%;
   letter-spacing: 0.06em;
 
+  background: none;
   color: #292929;
 
   &:hover {
     background: $col-primary-light;
     border: 2px solid $col-primary-light;
   }
-}
 
-%button_inactive {
-  cursor: default;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  &:disabled {
+    cursor: default;
 
-  border: 2px solid $col-dark-s;
-  border-radius: 100px;
+    border: 2px solid $col-dark-s;
+    border-radius: 100px;
 
-  color: $col-dark-s;
+    color: $col-dark-s;
 
-  font-family: Georgia;
-  font-size: 17px;
-  line-height: 130%;
-  letter-spacing: 0.06em;
+    &:hover {
+      background: none;
+    }
+  }
 }
 
 @mixin b52 {
@@ -82,12 +80,10 @@ a {
 }
 
 .button-dark {
-  @extend %button;
   background: $col-primary;
 }
 
 .button-white {
-  @extend %button;
   background: none;
 }
 
@@ -256,30 +252,31 @@ main {
     justify-content: space-between;
 
     .arrow-left {
-      @extend %button_inactive;
       @include b52();
     }
 
     .arrow-right {
-      @extend %button;
       @include b52();
     }
 
     .position {
-      @extend %button_inactive;
       @include b52();
+      @include flex-center();
       background: $col-primary;
       border-color: $col-primary;
       color: $col-dark-l;
-    }
+      border-radius: 100px;
+      -webkit-border-radius: 100px;
+      -moz-border-radius: 100px;
+      -ms-border-radius: 100px;
+      -o-border-radius: 100px;
+}
 
     .arrow-start {
-      @extend %button_inactive;
       @include b52();
     }
 
     .arrow-end {
-      @extend %button;
       @include b52();
     }
   }
@@ -305,9 +302,13 @@ footer {
     height: 100%;
     display: flex;
     flex-direction: column;
-    padding-top: 62px;
+    padding-top: 57px;
     justify-content: space-between;
     padding-bottom: 60px;
+
+    &:nth-child(2) {
+      margin-left: -6px;
+    }
 
     &:last-child {
       padding-bottom: unset;
