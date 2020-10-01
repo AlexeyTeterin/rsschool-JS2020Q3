@@ -476,6 +476,10 @@ footer {
       display: flex;
       flex-direction: column;
       justify-content: flex-end;
+
+      img {
+        margin-bottom: -3px;
+      }
     }
   }
 

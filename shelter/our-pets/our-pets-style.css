@@ -184,6 +184,7 @@ header .header__menu {
       -ms-flex-align: center;
           align-items: center;
   color: #CDCDCD;
+  padding-bottom: 4px;
 }
 
 header .header__menu ul {
@@ -205,6 +206,7 @@ main {
   background-color: #F6F6F6;
   margin-top: 120px;
   padding: 80px 0 100px 0;
+  height: 1342px;
 }
 
 main .title, main .header4 {
@@ -267,7 +269,7 @@ main .pets .pet-card .pet__button {
 }
 
 main .navigation {
-  margin: 0 auto;
+  margin: 45px auto;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -320,7 +322,7 @@ main .navigation .arrow-end {
 }
 
 footer {
-  height: 355px;
+  height: 350px;
   background: radial-gradient(110.67% 538.64% at 5.73% 50%, #513D2F 0%, #1A1A1C 100%), #211F20;
   background-position: center;
 }
@@ -367,7 +369,6 @@ footer .footer__column .footer__title {
 }
 
 footer .footer__column .footer__pic {
-  margin-bottom: 0;
   width: 300px;
   height: 100%;
   display: -webkit-box;
@@ -380,6 +381,10 @@ footer .footer__column .footer__pic {
   -webkit-box-pack: end;
       -ms-flex-pack: end;
           justify-content: flex-end;
+}
+
+footer .footer__column .footer__pic img {
+  margin-bottom: -3px;
 }
 
 footer .footer__link {
