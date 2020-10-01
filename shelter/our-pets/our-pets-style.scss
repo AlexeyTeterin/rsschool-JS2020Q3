@@ -216,9 +216,10 @@ main {
     margin-top: 45px;
 
     .pet-card {
-      @include flex-center();
+      display: flex;
       flex-direction: column;
-      padding: 30px 35px;
+      align-items: center;
+      flex-direction: column;
       margin: 15px 0;
 
       width: 270px;
@@ -233,12 +234,13 @@ main {
       }
 
       .pet__photo {
-        width: 200px;
-        height: 240px;
+        width: 270px;
+        height: 270px;
       }
 
       .pet__name {
         text-align: center;
+        text-transform: capitalize;
       }
 
       .pet__button {
