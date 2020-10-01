@@ -317,10 +317,6 @@ main a {
   -webkit-box-align: start;
       -ms-flex-align: start;
           align-items: flex-start;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  padding: 30px 35px;
   width: 270px;
   height: 435px;
   background: #FAFAFA;
@@ -334,8 +330,8 @@ main a {
 }
 
 .our-friends .our-friends__carousel .card .card__photo {
-  width: 200px;
-  height: 240px;
+  width: 270px;
+  height: 270px;
 }
 
 .our-friends .our-friends__carousel .card .card__name {
@@ -452,7 +448,7 @@ main a {
 }
 
 footer {
-  height: 355px;
+  height: 350px;
   background: radial-gradient(110.67% 538.64% at 5.73% 50%, #513D2F 0%, #1A1A1C 100%), #211F20;
   background-position: center;
 }
@@ -479,11 +475,15 @@ footer .footer__column {
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
-  padding-top: 62px;
+  padding-top: 57px;
   -webkit-box-pack: justify;
       -ms-flex-pack: justify;
           justify-content: space-between;
   padding-bottom: 60px;
+}
+
+footer .footer__column:nth-child(2) {
+  margin-left: -6px;
 }
 
 footer .footer__column:last-child {
