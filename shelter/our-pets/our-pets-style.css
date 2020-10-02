@@ -275,6 +275,12 @@ main .pets .pet-card:hover {
   background: #FFFFFF;
 }
 
+@media (max-width: 1279px) {
+  main .pets .pet-card {
+    margin: 15px 20px;
+  }
+}
+
 main .pets .pet-card .pet__photo {
   width: 270px;
   height: 270px;

@@ -243,6 +243,10 @@ main {
         background: $col-light-xl;
       }
 
+      @include max_1280() {
+        margin: 15px 20px;
+      }
+
       .pet__photo {
         width: 270px;
         height: 270px;
