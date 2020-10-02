@@ -262,7 +262,7 @@ main .pets .pet-card {
       -ms-flex-align: center;
           align-items: center;
   flex-direction: column;
-  margin: 15px;
+  margin: 15px 0;
   width: 270px;
   height: 435px;
   background: #FAFAFA;
