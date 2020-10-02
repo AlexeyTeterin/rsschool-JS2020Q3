@@ -69,6 +69,7 @@ class Calculator {
       case '√':
         if (parseFloat(this.currOperand) < 0) {
           this.showAlert('Извлечение корня возможно только из положительных чисел!');
+          this.equalsPressed = true;
           break;
         }
         this.currOperand = Math.sqrt(parseFloat(this.currOperand));
@@ -83,6 +84,7 @@ class Calculator {
   showAlert(text) {
     this.ALERT.innerText = text;
     this.ALERT.classList.remove('hidden');
+    this.equalsPressed = true;
   }
 
   hideAlert() {
