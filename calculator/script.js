@@ -15,7 +15,11 @@ class Calculator {
   }
 
   delete() {
-    this.currOperand = this.currOperand.toString().slice(0, -1);
+    if (this.equalsPressed) {
+      this.currOperand = '';
+      this.equalsPressed = false;
+    } else
+      this.currOperand = this.currOperand.toString().slice(0, -1);
   }
 
   appendNumber(number) {
@@ -73,6 +77,7 @@ class Calculator {
           break;
         }
         this.currOperand = Math.sqrt(parseFloat(this.currOperand));
+        this.equalsPressed = true;
         break;
       default:
         break;
