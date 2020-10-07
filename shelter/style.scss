@@ -331,6 +331,11 @@ main {
   height: 877px;
   background-color: $col-light-l;
 
+  @include max_1280() {
+    height: fit-content;
+    padding-bottom: 60px;
+  }
+
   .our-friends__title {
     text-align: center;
     padding: 80px 0 60px 0;
@@ -387,6 +392,12 @@ main {
         background: $col-light-xl;
       }
 
+      @include max_1280() {
+        &:nth-child(n+4) {
+          display: none;
+        }
+      }
+
       .card__photo {
         width: 270px;
         height: 270px;
@@ -414,6 +425,10 @@ main {
 .help {
   height: 611px;
 
+    @include max_1280() {
+      height: fit-content;
+    }
+
   .help__title {
     text-align: center;
     padding: 80px 0 60px 0;
@@ -426,12 +441,22 @@ main {
     align-items: baseline;
     height: 334px;
 
+        @include max_1280() {
+          height: fit-content;
+          padding-bottom: 100px;
+        }
+
     .grid__element {
       margin: 0 60px;
       height: 140px;
       display: flex;
       flex-direction: column;
       align-items: center;
+
+      @include max_1280() {
+        margin: 0;
+        width: 30%;
+      }
 
       .grid__title {
         padding-top: 26px;

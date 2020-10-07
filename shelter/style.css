@@ -369,6 +369,15 @@ main a {
   background-color: #F6F6F6;
 }
 
+@media (max-width: 1279px) {
+  .our-friends {
+    height: -webkit-fit-content;
+    height: -moz-fit-content;
+    height: fit-content;
+    padding-bottom: 60px;
+  }
+}
+
 .our-friends .our-friends__title {
   text-align: center;
   padding: 80px 0 60px 0;
@@ -435,6 +444,12 @@ main a {
   background: #FFFFFF;
 }
 
+@media (max-width: 1279px) {
+  .our-friends .our-friends__carousel .card:nth-child(n+4) {
+    display: none;
+  }
+}
+
 .our-friends .our-friends__carousel .card .card__photo {
   width: 270px;
   height: 270px;
@@ -459,6 +474,14 @@ main a {
   height: 611px;
 }
 
+@media (max-width: 1279px) {
+  .help {
+    height: -webkit-fit-content;
+    height: -moz-fit-content;
+    height: fit-content;
+  }
+}
+
 .help .help__title {
   text-align: center;
   padding: 80px 0 60px 0;
@@ -479,6 +502,15 @@ main a {
   height: 334px;
 }
 
+@media (max-width: 1279px) {
+  .help .help__grid {
+    height: -webkit-fit-content;
+    height: -moz-fit-content;
+    height: fit-content;
+    padding-bottom: 100px;
+  }
+}
+
 .help .help__grid .grid__element {
   margin: 0 60px;
   height: 140px;
@@ -492,6 +524,13 @@ main a {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+}
+
+@media (max-width: 1279px) {
+  .help .help__grid .grid__element {
+    margin: 0;
+    width: 30%;
+  }
 }
 
 .help .help__grid .grid__element .grid__title {
