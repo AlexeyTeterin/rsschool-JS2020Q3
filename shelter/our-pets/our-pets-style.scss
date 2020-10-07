@@ -245,6 +245,10 @@ main {
 
       @include max_1280() {
         margin: 15px 20px;
+
+        &:nth-child(n+7) {
+          display: none;
+        }
       }
 
       .pet__photo {

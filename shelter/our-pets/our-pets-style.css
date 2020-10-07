@@ -279,6 +279,9 @@ main .pets .pet-card:hover {
   main .pets .pet-card {
     margin: 15px 20px;
   }
+  main .pets .pet-card:nth-child(n+7) {
+    display: none;
+  }
 }
 
 main .pets .pet-card .pet__photo {
