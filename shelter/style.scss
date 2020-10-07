@@ -17,6 +17,18 @@ $col-dark-l: #545454;
 $col-dark-xl: #4C4C4C;
 $col-dark-m: #B2B2B2;
 
+@mixin max_1280 {
+  @media (max-width: 1279px) {
+    @content;
+  }
+}
+
+@mixin max_768 {
+  @media (max-width: 767px) {
+    @content;
+  }
+}
+
 @mixin flex-center {
   display: flex;
   align-items: center;
