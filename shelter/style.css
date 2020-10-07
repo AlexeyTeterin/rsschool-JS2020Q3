@@ -25,7 +25,8 @@ a {
 }
 
 .wrapper {
-  width: 1200px;
+  width: 1280px;
+  padding: 0 40px;
   margin: 0 auto;
 }
 
@@ -224,7 +225,7 @@ main a {
 }
 
 .notonly .notonly__wrapper {
-  padding: 180px 0;
+  padding: 180px 40px;
 }
 
 .notonly .notonly__title {
@@ -259,7 +260,7 @@ main a {
 }
 
 .about .about__wrapper {
-  padding: 80px 175px;
+  padding: 80px 215px;
 }
 
 .about .about__pic {
@@ -425,7 +426,7 @@ main a {
 }
 
 .donation .donation__wrapper {
-  padding: 82px 142px;
+  padding: 82px 182px;
 }
 
 .donation .donation__card-number {
