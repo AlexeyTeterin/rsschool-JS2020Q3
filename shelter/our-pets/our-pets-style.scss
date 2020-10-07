@@ -13,6 +13,11 @@ $col-dark-m: #B2B2B2;
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  transition: 50ms linear;
+  -webkit-transition: 50ms linear;
+  -moz-transition: 50ms linear;
+  -ms-transition: 50ms linear;
+  -o-transition: 50ms linear;
 }
 
 @mixin max_1280 {
