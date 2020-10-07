@@ -21,6 +21,12 @@ $col-dark-m: #B2B2B2;
   }
 }
 
+@mixin max_768 {
+  @media (max-width: 767px) {
+    @content;
+  }
+}
+
 @mixin flex-center {
   display: flex;
   align-items: center;
@@ -45,6 +51,10 @@ a {
   @include max_1280() {
     width: 100%;
     padding: 0 30px;
+  }
+
+  @include max_768() {
+    padding: 0 10px;
   }
 }
 
@@ -147,10 +157,21 @@ header {
     }
   }
 
+  .burger {
+    display: none;
+
+
+    @include max_768() {
+      display: block;
+      padding-right: 40px;
+    }
+  }
+
   .header__wrapper {
     height: 100%;
     display: flex;
     justify-content: space-between;
+    align-items: center;
   }
 
   .logo {
@@ -186,6 +207,10 @@ header {
     color: $col-dark-s;
     padding-bottom: 4px;
 
+    @include max_768() {
+      display: none;
+    }
+
     ul {
       user-select: none;
       display: flex;
@@ -212,6 +237,10 @@ main {
 
   .title {
     text-align: center;
+
+    @include max_768() {
+      font-size: 25px;
+    }
   }
 
   .pets {
@@ -223,6 +252,11 @@ main {
 
     @include max_1280() {
       justify-content: space-around;
+    }
+
+    @include max_768() {
+      flex-direction: column;
+      align-items: center;
     }
 
     .pet-card {
@@ -251,6 +285,12 @@ main {
         }
       }
 
+      @include max_768() {
+        &:nth-child(n+4) {
+          display: none;
+        }
+      }
+
       .pet__photo {
         width: 270px;
         height: 270px;
@@ -275,6 +315,10 @@ main {
 
     @include max_1280() {
       margin: 40px auto 0 auto;
+    }
+
+    @include max_768() {
+      width: 300px;
     }
 
     .arrow-left {
@@ -342,11 +386,11 @@ footer {
     }
 
     &:nth-child(2) {
-      margin-left: -6px;
 
-      // @include max_1280() {
-      //   align-items: flex-end;
-      // }
+      // margin-left: -6px;
+      @include max_768() {
+        padding: 0 0 60px 0;
+      }
     }
 
     &:last-child {
@@ -362,24 +406,44 @@ footer {
       align-items: center;
     }
 
+    @include max_768() {
+      width: 100%;
+    }
+
     .column__wrapper {
       height: 100%;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
+
+      @include max_768() {
+        align-items: center;
+      }
     }
 
     .footer__title {
       color: $col-light-xl;
+
+      @include max_768() {
+        text-align: center;
+      }
     }
 
     .footer__pic {
-
-      width: 300px;
-      height: 310px;
       display: flex;
       flex-direction: column;
       justify-content: flex-end;
+
+      img {
+
+        width: 300px;
+        height: 310px;
+
+        @include max_768() {
+          width: 260px;
+          height: 269px;
+        }
+      }
     }
   }
 
