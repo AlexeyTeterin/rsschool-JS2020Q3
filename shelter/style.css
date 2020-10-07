@@ -327,7 +327,7 @@ main a {
 
 @media (max-width: 1279px) {
   .about .about__wrapper {
-    padding: 80px 0;
+    padding: 0 0 100px 0;
     width: 437px;
     display: -webkit-box;
     display: -ms-flexbox;
@@ -357,6 +357,12 @@ main a {
 .about .about__title {
   padding-top: 14px;
   padding-bottom: 25px;
+}
+
+@media (max-width: 1279px) {
+  .about .about__title {
+    padding-top: 80px;
+  }
 }
 
 .about .about__text {
@@ -542,6 +548,12 @@ main a {
   background-color: #F6F6F6;
 }
 
+@media (max-width: 1279px) {
+  .donation {
+    height: auto;
+  }
+}
+
 .donation div {
   margin-bottom: 16px;
 }
@@ -552,6 +564,33 @@ main a {
 
 .donation .donation__wrapper {
   padding: 82px 182px;
+}
+
+@media (max-width: 1279px) {
+  .donation .donation__wrapper {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    -webkit-box-align: start;
+        -ms-flex-align: start;
+            align-items: flex-start;
+    width: 505px;
+    padding: 80px 0 100px 0;
+    margin-bottom: 0;
+  }
+  .donation .donation__wrapper > div,
+  .donation .donation__wrapper > button {
+    margin-left: 63px;
+    margin-right: 63px;
+  }
+  .donation .donation__wrapper > div:first-child,
+  .donation .donation__wrapper > button:first-child {
+    margin: 0;
+  }
 }
 
 .donation .donation__card-number {
@@ -574,6 +613,14 @@ main a {
   float: left;
 }
 
+@media (max-width: 1279px) {
+  .donation .donation__pic {
+    -webkit-box-ordinal-group: 2;
+        -ms-flex-order: 1;
+            order: 1;
+  }
+}
+
 .donation .card__icon {
   float: left;
   margin-right: 15px;
@@ -591,6 +638,12 @@ main a {
   line-height: 18px;
   color: #B2B2B2;
   padding-top: 20px;
+}
+
+@media (max-width: 1279px) {
+  .donation .donation__info {
+    margin-bottom: 60px;
+  }
 }
 
 footer {
