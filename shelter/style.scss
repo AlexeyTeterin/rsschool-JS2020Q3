@@ -51,6 +51,11 @@ a {
   width: 1280px;
   padding: 0 40px;
   margin: 0 auto;
+
+  @include max_1280() {
+    width: 100%;
+    padding: 0 30px;
+  }
 }
 
 button {
@@ -156,10 +161,13 @@ header {
   }
 
   .header__wrapper {
-    // padding: 60px 360px 0 360px;
     padding-top: 60px;
     display: flex;
     justify-content: space-between;
+
+    @include max_1280() {
+      padding-top: 30px;
+    }
   }
 
   .logo {
@@ -223,16 +231,32 @@ main {
   background-repeat: no-repeat;
   background-position: center;
 
+  @include max_1280() {
+    height: unset;
+  }
+
   .notonly__wrapper {
     padding: 180px 40px;
+
+    @include max_1280() {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 150px 30px 0 30px;
+    }
   }
 
   .notonly__title {
+    width: 460px;
     padding-top: 164px;
     font-size: 44px;
     line-height: 130%;
     color: $col-light-xl;
     letter-spacing: unset;
+
+    @include max_1280() {
+      padding-top: 0;
+    }
   }
 
   .notonly__text {
@@ -252,19 +276,44 @@ main {
     background-image: url(assets/start-screen-puppy.png);
     background-position-y: 0;
     background-position-x: 0;
+    background-repeat: no-repeat;
+    background-size: 698px 728px;
+
+    @include max_1280() {
+      order: 1;
+      height: 593px;
+      margin-top: 100px;
+      background-size: 569px 593px;
+      background-position-x: right;
+    }
   }
 }
 
 .about {
   height: 588px;
 
+  @include max_1280() {
+    height: unset;    
+  }
+
   .about__wrapper {
     padding: 80px 215px;
+    @include max_1280() {
+      padding: 80px 0;
+      width: 437px;
+      display: flex;
+      flex-direction: column;
+    }
   }
 
   .about__pic {
     float: left;
     padding-right: 120px;
+    @include max_1280() {
+      order: 1;
+      padding: 55px 0 20px 0;
+      margin: 0 auto;
+    }
   }
 
   .about__title {
