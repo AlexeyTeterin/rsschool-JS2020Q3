@@ -560,7 +560,6 @@ main {
 }
 
 footer {
-  height: 350px;
   background:
     radial-gradient(110.67% 538.64% at 5.73% 50%, #513D2F 0%, #1A1A1C 100%),
     #211F20;
@@ -570,37 +569,86 @@ footer {
     height: 100%;
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-start;
 
+    @include max_1280() {
+      flex-wrap: wrap;
+      justify-content: space-around;
+    }
   }
 
   .footer__column {
-    height: 100%;
+    height: 350px;
+    width: fit-content;
     display: flex;
     flex-direction: column;
-    padding-top: 57px;
-    justify-content: space-between;
-    padding-bottom: 60px;
+    justify-content: flex-end;
+    align-items: flex-end;
+    padding: 56px 0 60px 0;
+
+    div {
+      width: fit-content;
+    }
 
     &:nth-child(2) {
-      margin-left: -6px;
+
+      // margin-left: -6px;
+      @include max_768() {
+        padding: 0 0 60px 0;
+      }
     }
 
     &:last-child {
-      padding-bottom: unset;
+      padding: 0;
+
+      @include max_1280() {
+        height: fit-content;
+      }
+    }
+
+    @include max_1280() {
+      width: 45%;
+      align-items: center;
+    }
+
+    @include max_768() {
+      width: 100%;
+    }
+
+    .column__wrapper {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+
+      @include max_768() {
+        align-items: center;
+      }
     }
 
     .footer__title {
       color: $col-light-xl;
+
+      @include max_768() {
+        text-align: center;
+      }
     }
 
     .footer__pic {
-      margin-bottom: 0;
-      width: 300px;
-      height: 100%;
       display: flex;
       flex-direction: column;
       justify-content: flex-end;
+
+      img {
+
+        width: 300px;
+        height: 310px;
+
+        @include max_768() {
+          width: 260px;
+          height: 269px;
+        }
+      }
     }
   }
 
@@ -625,4 +673,6 @@ footer {
       margin-right: 20px;
     }
   }
+
+
 }
