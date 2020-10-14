@@ -139,6 +139,14 @@ button a {
   display: none;
 }
 
+.burger > img {
+  transform: rotate(0deg);
+  -webkit-transform: rotate(0deg);
+  -moz-transform: rotate(0deg);
+  -ms-transform: rotate(0deg);
+  -o-transform: rotate(0deg);
+}
+
 @media (max-width: 767px) {
   .burger {
     display: block;
@@ -146,6 +154,14 @@ button a {
     padding-right: 43px;
     padding-top: 5px;
   }
+}
+
+.burger_active > img {
+  transform: rotate(90deg);
+  -webkit-transform: rotate(90deg);
+  -moz-transform: rotate(90deg);
+  -ms-transform: rotate(90deg);
+  -o-transform: rotate(90deg);
 }
 
 header {

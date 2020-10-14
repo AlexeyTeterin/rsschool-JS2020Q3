@@ -152,12 +152,31 @@ button {
 .burger {
   display: none;
 
+  >img {
+    transform: rotate(0deg);
+    -webkit-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    -ms-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+  }
+
   @include max_768() {
     display: block;
     margin: auto 0;
     padding-right: 43px;
     padding-top: 5px;
   }
+}
+
+.burger_active {
+  >img {
+    transform: rotate(90deg);
+    -webkit-transform: rotate(90deg);
+    -moz-transform: rotate(90deg);
+    -ms-transform: rotate(90deg);
+    -o-transform: rotate(90deg);
+  }
+
 }
 
 header {
@@ -764,7 +783,7 @@ footer {
 
     &:nth-child(2) {
       // margin-left: -6px;
-      
+
       @include max_768() {
         padding: 0 0 92px 0;
       }
