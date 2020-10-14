@@ -143,15 +143,20 @@ button {
   font-size: 20px;
   line-height: 115%;
   text-align: center;
+
+  @include max_768() {
+    font-size: 15px;
+  }
 }
 
 .burger {
   display: none;
 
-
   @include max_768() {
     display: block;
-    padding-right: 40px;
+    margin: auto 0;
+    padding-right: 43px;
+    padding-top: 5px;
   }
 }
 
@@ -272,7 +277,9 @@ main {
       padding: 150px 30px 0 30px;
     }
 
-    @include max_768() {}
+    @include max_768() {
+      padding: 150px 10px 0 10px;
+    }
   }
 
   .notonly__title {
@@ -294,7 +301,7 @@ main {
   }
 
   .notonly__text {
-    padding: 41px 0;
+    padding: 42px 0;
     color: $col-dark-s;
     width: 460px;
 
@@ -370,7 +377,12 @@ main {
     }
 
     @include max_768() {
-      padding: 42px 0;
+      padding: 42px 0 0 0;
+
+      >img {
+        width: 260px;
+        height: 354px;
+      }
     }
   }
 
@@ -528,6 +540,10 @@ main {
   .help__title {
     text-align: center;
     padding: 80px 0 60px 0;
+
+    @include max_768() {
+      padding: 42px 0;
+    }
   }
 
   .help__grid {
@@ -540,6 +556,11 @@ main {
     @include max_1280() {
       height: fit-content;
       padding-bottom: 100px;
+    }
+
+    @include max_768() {
+      padding-bottom: 12px;
+      justify-content: left;
     }
 
     .grid__element {
@@ -561,6 +582,16 @@ main {
       .grid__title {
         padding-top: 26px;
       }
+
+      .grid__icon>img {
+        width: 60px;
+        height: 60px;
+
+        @include max_768() {
+          width: 50px;
+          height: 50px;
+        }
+      }
     }
   }
 }
@@ -575,6 +606,10 @@ main {
 
   div {
     margin-bottom: 16px;
+
+    @include max_768() {
+      margin-bottom: 0;
+    }
   }
 
   a {
@@ -605,6 +640,30 @@ main {
 
     @include max_768() {
       width: 100%;
+      padding: 42px 10px;
+
+      >div,
+      button {
+        width: 100%;
+        margin: 0 auto;
+        padding: 0 10px 20px 0;
+
+        &:first-child {
+          padding: 22px 0 0 0;
+        }
+      }
+
+      >button {
+        max-width: 281px;
+        padding: 0;
+        margin-bottom: 20px;
+      }
+    }
+  }
+
+  .donation__title {
+    @include max_768() {
+      width: 100%;
     }
   }
 
@@ -619,12 +678,14 @@ main {
     -o-border-radius: 9px;
 
     @include max_768() {
-      width: 50%;
+      width: fit-content;
+      font-size: 15px;
     }
   }
 
   .donation__text {
     letter-spacing: 0.06em;
+    text-align: center;
   }
 
   .donation__pic {
@@ -636,7 +697,10 @@ main {
     }
 
     @include max_768() {
+      display: flex;
+
       >img {
+        margin: 0 auto;
         width: 260px;
         height: 135px;
       }
@@ -699,10 +763,10 @@ footer {
     }
 
     &:nth-child(2) {
-
       // margin-left: -6px;
+      
       @include max_768() {
-        padding: 0 0 60px 0;
+        padding: 0 0 92px 0;
       }
     }
 
@@ -720,7 +784,9 @@ footer {
     }
 
     @include max_768() {
+      height: 100%;
       width: 100%;
+      padding: 30px 0 40px 0;
     }
 
     .column__wrapper {
@@ -730,7 +796,8 @@ footer {
       justify-content: space-between;
 
       @include max_768() {
-        align-items: center;
+        height: 234px;
+        align-items: flex-start;
       }
     }
 
@@ -738,7 +805,9 @@ footer {
       color: $col-light-xl;
 
       @include max_768() {
+        align-self: center;
         text-align: center;
+        font-size: 35px;
       }
     }
 

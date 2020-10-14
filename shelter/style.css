@@ -129,6 +129,12 @@ button a {
   text-align: center;
 }
 
+@media (max-width: 767px) {
+  .header4 {
+    font-size: 15px;
+  }
+}
+
 .burger {
   display: none;
 }
@@ -136,7 +142,9 @@ button a {
 @media (max-width: 767px) {
   .burger {
     display: block;
-    padding-right: 40px;
+    margin: auto 0;
+    padding-right: 43px;
+    padding-top: 5px;
   }
 }
 
@@ -299,6 +307,12 @@ main a {
   }
 }
 
+@media (max-width: 767px) {
+  .notonly .notonly__wrapper {
+    padding: 150px 10px 0 10px;
+  }
+}
+
 .notonly .notonly__title {
   width: 460px;
   padding-top: 164px;
@@ -322,7 +336,7 @@ main a {
 }
 
 .notonly .notonly__text {
-  padding: 41px 0;
+  padding: 42px 0;
   color: #CDCDCD;
   width: 460px;
 }
@@ -423,7 +437,11 @@ main a {
 
 @media (max-width: 767px) {
   .about .about__pic {
-    padding: 42px 0;
+    padding: 42px 0 0 0;
+  }
+  .about .about__pic > img {
+    width: 260px;
+    height: 354px;
   }
 }
 
@@ -615,6 +633,12 @@ main a {
   padding: 80px 0 60px 0;
 }
 
+@media (max-width: 767px) {
+  .help .help__title {
+    padding: 42px 0;
+  }
+}
+
 .help .help__grid {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -636,6 +660,15 @@ main a {
     height: -moz-fit-content;
     height: fit-content;
     padding-bottom: 100px;
+  }
+}
+
+@media (max-width: 767px) {
+  .help .help__grid {
+    padding-bottom: 12px;
+    -webkit-box-pack: left;
+        -ms-flex-pack: left;
+            justify-content: left;
   }
 }
 
@@ -671,6 +704,18 @@ main a {
   padding-top: 26px;
 }
 
+.help .help__grid .grid__element .grid__icon > img {
+  width: 60px;
+  height: 60px;
+}
+
+@media (max-width: 767px) {
+  .help .help__grid .grid__element .grid__icon > img {
+    width: 50px;
+    height: 50px;
+  }
+}
+
 .donation {
   height: 464px;
   background-color: #F6F6F6;
@@ -684,6 +729,12 @@ main a {
 
 .donation div {
   margin-bottom: 16px;
+}
+
+@media (max-width: 767px) {
+  .donation div {
+    margin-bottom: 0;
+  }
 }
 
 .donation a {
@@ -724,6 +775,28 @@ main a {
 @media (max-width: 767px) {
   .donation .donation__wrapper {
     width: 100%;
+    padding: 42px 10px;
+  }
+  .donation .donation__wrapper > div,
+  .donation .donation__wrapper button {
+    width: 100%;
+    margin: 0 auto;
+    padding: 0 10px 20px 0;
+  }
+  .donation .donation__wrapper > div:first-child,
+  .donation .donation__wrapper button:first-child {
+    padding: 22px 0 0 0;
+  }
+  .donation .donation__wrapper > button {
+    max-width: 281px;
+    padding: 0;
+    margin-bottom: 20px;
+  }
+}
+
+@media (max-width: 767px) {
+  .donation .donation__title {
+    width: 100%;
   }
 }
 
@@ -740,12 +813,16 @@ main a {
 
 @media (max-width: 767px) {
   .donation .donation__card-number {
-    width: 50%;
+    width: -webkit-fit-content;
+    width: -moz-fit-content;
+    width: fit-content;
+    font-size: 15px;
   }
 }
 
 .donation .donation__text {
   letter-spacing: 0.06em;
+  text-align: center;
 }
 
 .donation .donation__pic {
@@ -762,7 +839,13 @@ main a {
 }
 
 @media (max-width: 767px) {
+  .donation .donation__pic {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+  }
   .donation .donation__pic > img {
+    margin: 0 auto;
     width: 260px;
     height: 135px;
   }
@@ -849,7 +932,7 @@ footer .footer__column div {
 
 @media (max-width: 767px) {
   footer .footer__column:nth-child(2) {
-    padding: 0 0 60px 0;
+    padding: 0 0 92px 0;
   }
 }
 
@@ -876,7 +959,9 @@ footer .footer__column:last-child {
 
 @media (max-width: 767px) {
   footer .footer__column {
+    height: 100%;
     width: 100%;
+    padding: 30px 0 40px 0;
   }
 }
 
@@ -896,9 +981,10 @@ footer .footer__column .column__wrapper {
 
 @media (max-width: 767px) {
   footer .footer__column .column__wrapper {
-    -webkit-box-align: center;
-        -ms-flex-align: center;
-            align-items: center;
+    height: 234px;
+    -webkit-box-align: start;
+        -ms-flex-align: start;
+            align-items: flex-start;
   }
 }
 
@@ -908,7 +994,11 @@ footer .footer__column .footer__title {
 
 @media (max-width: 767px) {
   footer .footer__column .footer__title {
+    -ms-flex-item-align: center;
+        -ms-grid-row-align: center;
+        align-self: center;
     text-align: center;
+    font-size: 35px;
   }
 }
 

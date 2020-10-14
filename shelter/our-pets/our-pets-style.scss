@@ -162,15 +162,16 @@ header {
     }
   }
 
-  .burger {
-    display: none;
+.burger {
+  display: none;
 
-
-    @include max_768() {
-      display: block;
-      padding-right: 40px;
-    }
+  @include max_768() {
+    display: block;
+    margin: auto 0;
+    padding-right: 43px;
+    padding-top: 5px;
   }
+}
 
   .header__wrapper {
     height: 100%;
@@ -389,10 +390,10 @@ footer {
     }
 
     &:nth-child(2) {
-
       // margin-left: -6px;
+
       @include max_768() {
-        padding: 0 0 60px 0;
+        padding: 0 0 92px 0;
       }
     }
 
@@ -410,7 +411,9 @@ footer {
     }
 
     @include max_768() {
+      height: 100%;
       width: 100%;
+      padding: 30px 0 40px 0;
     }
 
     .column__wrapper {
@@ -420,7 +423,8 @@ footer {
       justify-content: space-between;
 
       @include max_768() {
-        align-items: center;
+        height: 234px;
+        align-items: flex-start;
       }
     }
 
@@ -428,7 +432,9 @@ footer {
       color: $col-light-xl;
 
       @include max_768() {
+        align-self: center;
         text-align: center;
+        font-size: 35px;
       }
     }
 

@@ -147,7 +147,9 @@ header .burger {
 @media (max-width: 767px) {
   header .burger {
     display: block;
-    padding-right: 40px;
+    margin: auto 0;
+    padding-right: 43px;
+    padding-top: 5px;
   }
 }
 
@@ -474,7 +476,7 @@ footer .footer__column div {
 
 @media (max-width: 767px) {
   footer .footer__column:nth-child(2) {
-    padding: 0 0 60px 0;
+    padding: 0 0 92px 0;
   }
 }
 
@@ -501,7 +503,9 @@ footer .footer__column:last-child {
 
 @media (max-width: 767px) {
   footer .footer__column {
+    height: 100%;
     width: 100%;
+    padding: 30px 0 40px 0;
   }
 }
 
@@ -521,9 +525,10 @@ footer .footer__column .column__wrapper {
 
 @media (max-width: 767px) {
   footer .footer__column .column__wrapper {
-    -webkit-box-align: center;
-        -ms-flex-align: center;
-            align-items: center;
+    height: 234px;
+    -webkit-box-align: start;
+        -ms-flex-align: start;
+            align-items: flex-start;
   }
 }
 
@@ -533,7 +538,11 @@ footer .footer__column .footer__title {
 
 @media (max-width: 767px) {
   footer .footer__column .footer__title {
+    -ms-flex-item-align: center;
+        -ms-grid-row-align: center;
+        align-self: center;
     text-align: center;
+    font-size: 35px;
   }
 }
 
