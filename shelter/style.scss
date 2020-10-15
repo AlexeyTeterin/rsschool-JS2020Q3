@@ -271,6 +271,7 @@ header {
   .header__menu_show {
 
     @include max_768() {
+      position: fixed;
       background: $col-dark-3xl;
       top: 0;
       right: 0;

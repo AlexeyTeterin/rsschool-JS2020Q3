@@ -290,6 +290,7 @@ header .header__menu ul li {
 
 @media (max-width: 767px) {
   header .header__menu_show {
+    position: fixed;
     background: #292929;
     top: 0;
     right: 0;
