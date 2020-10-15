@@ -2,6 +2,7 @@ const BURGER = document.getElementsByClassName('burger__img')[0];
 const menuBlock = document.getElementById('menu-block');
 const MENU = document.getElementsByClassName('header__menu')[0];
 const LOGO = document.getElementsByClassName('logo')[0];
+const LOGO2 = document.getElementsByClassName('logo2')[0];
 const HEADER = document.getElementsByTagName('header')[0];
 
 hideMenu = () => {
@@ -12,6 +13,7 @@ hideMenu = () => {
   }, 250);
   menuBlock.classList.add('hidden');
   LOGO.classList.remove('hidden');
+  LOGO2.classList.add('hidden');
 }
 
 showMenu = () => {
@@ -23,6 +25,7 @@ showMenu = () => {
   menuBlock.style.setProperty('height', document.querySelector('body').scrollHeight + 'px');
   menuBlock.classList.remove('hidden');
   LOGO.classList.add('hidden');
+  LOGO2.classList.remove('hidden');
 }
 
 BURGER.addEventListener('click', () => {
