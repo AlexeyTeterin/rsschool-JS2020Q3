@@ -151,8 +151,14 @@ button {
 }
 
 .burger {
+  position: absolute;
   display: none;
   z-index: 4;
+  width: 30px;
+  height: 22px;
+  margin: 0;
+  right: 53px;
+  top: 49px;
 
   .burger__img {
     transform: rotate(0deg);
@@ -161,8 +167,9 @@ button {
     -ms-transform: rotate(0deg);
     -o-transform: rotate(0deg);
   }
-
+  
   .burger__img_active {
+    position: fixed;
     transform: rotate(90deg);
     -webkit-transform: rotate(90deg);
     -moz-transform: rotate(90deg);
@@ -172,9 +179,6 @@ button {
 
   @include max_768() {
     display: block;
-    margin: auto 0;
-    padding-right: 43px;
-    padding-top: 5px;
   }
 }
 
