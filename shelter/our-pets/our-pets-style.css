@@ -512,7 +512,7 @@ main .navigation .arrow-end {
   width: 100%;
   top: 0;
   left: 0;
-  background: red;
+  background: rgba(41, 41, 41, 0.6);
   transition: all 0.25s linear;
   -webkit-transition: all 0.25s linear;
   -moz-transition: all 0.25s linear;
