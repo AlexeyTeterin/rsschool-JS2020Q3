@@ -108,8 +108,6 @@ button {
   background: $col-primary;
 }
 
-
-
 .title {
   font-family: Georgia, serif;
   font-size: 35px;
@@ -167,7 +165,7 @@ button {
     -ms-transform: rotate(0deg);
     -o-transform: rotate(0deg);
   }
-  
+
   .burger__img_active {
     position: fixed;
     transform: rotate(90deg);
@@ -181,7 +179,6 @@ button {
     display: block;
   }
 }
-
 
 header {
   // width: 100%;
@@ -282,8 +279,11 @@ header {
       display: flex;
       width: 320px;
       height: 100vh;
-      //animation-name: showMenu;
-      //animation-timing-function: ease-in-out;
+      transition: right 0.25s;
+      -webkit-transition: right 0.25s;
+      -moz-transition: right 0.25s;
+      -ms-transition: right 0.25s;
+      -o-transition: right 0.25s;
 
       ul {
         width: 100%;
@@ -302,15 +302,11 @@ header {
 
           a {
             font-size: 32px;
+            color: $col-dark-s;
           }
         }
       }
 
-      transition: right 0.25s;
-      -webkit-transition: right 0.25s;
-      -moz-transition: right 0.25s;
-      -ms-transition: right 0.25s;
-      -o-transition: right 0.25s;
     }
   }
 
@@ -813,12 +809,12 @@ main {
 .menu-block {
   position: absolute;
   visibility: visible;
-  opacity: 1;
+  // opacity: 1;
   z-index: 2;
   width: 100%;
   top: 0;
   left: 0;
-  background: #0008;
+  background: rgba(41, 41, 41, 0.6);
   transition: all 0.25s linear;
   -webkit-transition: all 0.25s linear;
   -moz-transition: all 0.25s linear;
@@ -830,7 +826,6 @@ main {
     opacity: 0;
   }
 }
-
 
 footer {
   background:

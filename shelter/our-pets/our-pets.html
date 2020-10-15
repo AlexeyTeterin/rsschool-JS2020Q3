@@ -17,7 +17,7 @@
         <h1 class="logo__title title">Cozy House</h1>
         <div class="logo__text text">Shelter for pets in Boston</div>
       </div>
-      <div class="header__menu text">
+      <div class="header__menu header__menu_hide text">
         <ul>
           <li><a href="/index.html" id="menu-about">About the shelter</a></li>
           <li><a href="#" id="menu-our-pets" class="selected">Our pets</a></li>
@@ -26,7 +26,7 @@
         </ul>
       </div>
       <div class="burger">
-        <img src="/assets/Burger.png" alt="burger" width="30" height="22">
+        <img src="/assets/Burger.png" class="burger__img" alt="burger" width="30" height="22">
       </div>
     </div>
   </header>
@@ -86,6 +86,9 @@
         <button class="arrow-end">&gt;&gt;</button>
       </div>
     </div>
+    
+    <!-- <div id="menu-block" class="menu-block hidden" onclick="hideMenu()"></div> -->
+
   </main>
 
   <footer>
@@ -112,13 +115,14 @@
         </div>
       </div>
       <div class="footer__column">
-          <div class="footer__pic">
-            <img src="/assets/footer-puppy.png" alt="puppy">
-          </div>
+        <div class="footer__pic">
+          <img src="/assets/footer-puppy.png" alt="puppy">
+        </div>
       </div>
     </div>
   </footer>
 
 </body>
+<script src="/burger.js"></script>
 
 </html>
