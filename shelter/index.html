@@ -16,7 +16,7 @@
         <h1 class="logo__title title">Cozy House</h1>
         <div class="logo__text text">Shelter for pets in Boston</div>
       </div>
-      <div class="header__menu text">
+      <div class="header__menu header__menu_hide text">
         <ul>
           <li><a href="#" id="menu-about" class="selected">About the shelter</a></li>
           <li><a href="/our-pets/our-pets.html#" id="menu-our-pets">Our pets</a></li>
@@ -25,7 +25,7 @@
         </ul>
       </div>
       <div class="burger">
-        <img src="assets/Burger_light.png" alt="burger">
+        <img class="burger__img" src="assets/Burger_light.png" alt="burger">
       </div>
     </div>
   </header>
@@ -93,7 +93,7 @@
               <div class="grid__title header4">Pet food</div>
             </div>
             <div class="grid__element">
-              <div class="grid__icon"><img src="assets/icon-transportation.png" alt="transportation" ></div>
+              <div class="grid__icon"><img src="assets/icon-transportation.png" alt="transportation"></div>
               <div class="grid__title header4">Transportation</div>
             </div>
             <div class="grid__element">
@@ -101,7 +101,7 @@
               <div class="grid__title header4">Toys</div>
             </div>
             <div class="grid__element">
-              <div class="grid__icon"><img src="assets/icon-bowls-and-cups.png" alt="bowls-and-cups" ></div>
+              <div class="grid__icon"><img src="assets/icon-bowls-and-cups.png" alt="bowls-and-cups"></div>
               <div class="grid__title header4">Bowls and cups</div>
             </div>
             <div class="grid__element">
@@ -118,11 +118,11 @@
               <div class="grid__title header4">Medicines</div>
             </div>
             <div class="grid__element">
-              <div class="grid__icon"><img src="assets/icon-collars-leashes.png" alt="collars-leashes" ></div>
+              <div class="grid__icon"><img src="assets/icon-collars-leashes.png" alt="collars-leashes"></div>
               <div class="grid__title header4">Collars / leashes</div>
             </div>
             <div class="grid__element">
-              <div class="grid__icon"><img src="assets/icon-sleeping-area.png" alt="sleeping-area" ></div>
+              <div class="grid__icon"><img src="assets/icon-sleeping-area.png" alt="sleeping-area"></div>
               <div class="grid__title header4">Sleeping areas</div>
             </div>
           </div>
@@ -143,7 +143,12 @@
         </div>
       </div>
     </div>
+
+    <div id="menu-block" class="menu-block hidden" onclick="hideMenu()"></div>
   </main>
+
+  <!-- <div id="menu-block" class="hidden" onclick="hideMenu()"></div> -->
+
   <footer>
     <div class="footer__wrapper wrapper">
       <div class="footer__column">
@@ -176,5 +181,6 @@
   </footer>
 
 </body>
+<script src="script.js"></script>
 
 </html>
