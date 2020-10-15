@@ -161,11 +161,13 @@ header .burger .burger__img {
 
 header .burger .burger__img_active {
   position: fixed;
+  filter: invert(1);
   transform: rotate(90deg);
   -webkit-transform: rotate(90deg);
   -moz-transform: rotate(90deg);
   -ms-transform: rotate(90deg);
   -o-transform: rotate(90deg);
+  -webkit-filter: invert(1);
 }
 
 @media (max-width: 767px) {
@@ -187,7 +189,7 @@ header .header__wrapper {
           align-items: center;
 }
 
-header .logo {
+header .logo, header .logo2 {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -203,7 +205,7 @@ header .logo {
           align-items: center;
 }
 
-header .logo .logo__title {
+header .logo .logo__title, header .logo2 .logo__title {
   margin: 0;
   color: #545454;
   font-size: 32px;
@@ -218,7 +220,7 @@ header .logo .logo__title {
   padding-top: 2px;
 }
 
-header .logo .logo__text {
+header .logo .logo__text, header .logo2 .logo__text {
   color: #545454;
   font-size: 13px;
   display: -webkit-box;
@@ -229,6 +231,21 @@ header .logo .logo__text {
           align-items: center;
   letter-spacing: 0.1em;
   padding-top: 6px;
+}
+
+header .logo2 {
+  position: absolute;
+  z-index: 10;
+  top: 30px;
+  left: 10px;
+}
+
+header .logo2 .logo__title {
+  color: #F1CDB3;
+}
+
+header .logo2 .logo__text {
+  color: #FFFFFF;
 }
 
 header .header__menu {
@@ -520,7 +537,7 @@ main .navigation .arrow-end {
   -o-transition: all 0.25s linear;
 }
 
-.menu-block.hidden {
+.hidden {
   visibility: hidden;
   opacity: 0;
 }

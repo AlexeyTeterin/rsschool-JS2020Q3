@@ -246,6 +246,22 @@ header {
     }
   }
 
+  .logo2 {
+    @extend .logo;
+    position: absolute;
+    z-index: 10;
+    top: 30px;
+    left: 10px;
+
+    .logo__title {
+      color: $col-primary;
+    }
+
+    .logo__text {
+      color: $col-light-xl;
+    }
+  }
+
   .header__menu {
     display: flex;
     z-index: 3;
@@ -820,11 +836,11 @@ main {
   -moz-transition: all 0.25s linear;
   -ms-transition: all 0.25s linear;
   -o-transition: all 0.25s linear;
+}
 
-  &.hidden {
-    visibility: hidden;
-    opacity: 0;
-  }
+.hidden {
+  visibility: hidden;
+  opacity: 0;
 }
 
 footer {

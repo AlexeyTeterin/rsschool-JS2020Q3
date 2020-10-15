@@ -1,6 +1,8 @@
 const BURGER = document.getElementsByClassName('burger__img')[0];
 const menuBlock = document.getElementById('menu-block');
 const MENU = document.getElementsByClassName('header__menu')[0];
+const LOGO = document.getElementsByClassName('logo')[0];
+const HEADER = document.getElementsByTagName('header')[0];
 
 hideMenu = () => {
   MENU.classList.add('header__menu_hide');
@@ -9,6 +11,7 @@ hideMenu = () => {
     MENU.classList.remove('header__menu_show');
   }, 250);
   menuBlock.classList.add('hidden');
+  LOGO.classList.remove('hidden');
 }
 
 showMenu = () => {
@@ -19,6 +22,7 @@ showMenu = () => {
   }, 10);
   menuBlock.style.setProperty('height', document.querySelector('body').scrollHeight + 'px');
   menuBlock.classList.remove('hidden');
+  LOGO.classList.add('hidden');
 }
 
 BURGER.addEventListener('click', () => {

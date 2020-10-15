@@ -182,11 +182,13 @@ header {
 
     .burger__img_active {
       position: fixed;
+      filter: invert(1);
       transform: rotate(90deg);
       -webkit-transform: rotate(90deg);
       -moz-transform: rotate(90deg);
       -ms-transform: rotate(90deg);
       -o-transform: rotate(90deg);
+      -webkit-filter: invert(1);
     }
 
     @include max_768() {
@@ -225,6 +227,22 @@ header {
       align-items: center;
       letter-spacing: 0.1em;
       padding-top: 6px;
+    }
+  }
+
+  .logo2 {
+    @extend .logo;
+    position: absolute;
+    z-index: 10;
+    top: 30px;
+    left: 10px;
+
+    .logo__title {
+      color: $col-primary;
+    }
+
+    .logo__text {
+      color: $col-light-xl;
     }
   }
 
@@ -449,10 +467,11 @@ main {
   -ms-transition: all 0.25s linear;
   -o-transition: all 0.25s linear;
 
-  &.hidden {
-    visibility: hidden;
-    opacity: 0;
-  }
+}
+
+.hidden {
+  visibility: hidden;
+  opacity: 0;
 }
 
 footer {

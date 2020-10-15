@@ -213,7 +213,7 @@ header .header__wrapper {
   }
 }
 
-header .logo {
+header .logo, header .logo2 {
   height: 60px;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -230,7 +230,7 @@ header .logo {
           align-items: center;
 }
 
-header .logo .logo__title {
+header .logo .logo__title, header .logo2 .logo__title {
   margin: 0;
   color: #F1CDB3;
   font-size: 32px;
@@ -245,7 +245,7 @@ header .logo .logo__title {
   padding-top: 2px;
 }
 
-header .logo .logo__text {
+header .logo .logo__text, header .logo2 .logo__text {
   color: #FFFFFF;
   font-size: 13px;
   display: -webkit-box;
@@ -256,6 +256,21 @@ header .logo .logo__text {
           align-items: center;
   letter-spacing: 0.1em;
   padding-top: 6px;
+}
+
+header .logo2 {
+  position: absolute;
+  z-index: 10;
+  top: 30px;
+  left: 10px;
+}
+
+header .logo2 .logo__title {
+  color: #F1CDB3;
+}
+
+header .logo2 .logo__text {
+  color: #FFFFFF;
 }
 
 header .header__menu {
@@ -976,7 +991,7 @@ main a {
   -o-transition: all 0.25s linear;
 }
 
-.menu-block.hidden {
+.hidden {
   visibility: hidden;
   opacity: 0;
 }
