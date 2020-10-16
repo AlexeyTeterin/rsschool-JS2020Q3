@@ -283,6 +283,8 @@ header .header__menu {
   header .header__menu {
     display: none;
     position: absolute;
+    -webkit-box-shadow: 0px -40px 20px rgba(0, 0, 0, 0.4);
+            box-shadow: 0px -40px 20px rgba(0, 0, 0, 0.4);
   }
 }
 
