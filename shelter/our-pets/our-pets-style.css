@@ -121,6 +121,10 @@ header {
   background-color: #FFFFFF;
 }
 
+header a {
+  color: #545454;
+}
+
 header a.selected {
   border-bottom: solid 3px #F1CDB3;
   margin-bottom: -3px;
