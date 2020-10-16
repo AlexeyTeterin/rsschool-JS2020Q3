@@ -121,23 +121,38 @@ header {
   background-color: #FFFFFF;
 }
 
-header a:hover {
-  color: #292929;
-}
-
-header a:active {
-  border-bottom: solid 3px #F1CDB3;
-  margin-bottom: -3px;
-}
-
 header a.selected {
   border-bottom: solid 3px #F1CDB3;
   margin-bottom: -3px;
 }
 
-header a.selected:hover {
-  color: inherit;
+header a.disabled:hover {
   cursor: default;
+  color: #545454;
+}
+
+header a:hover {
+  color: #292929;
+}
+
+header a:active {
+  color: #CDCDCD;
+}
+
+@media (max-width: 767px) {
+  header a {
+    font-size: 32px;
+    color: #CDCDCD;
+  }
+  header a:hover {
+    color: #FAFAFA;
+  }
+  header a:hover.disabled {
+    color: unset;
+  }
+  header a:active {
+    color: #CDCDCD;
+  }
 }
 
 header .burger {
@@ -326,16 +341,6 @@ header .header__menu ul li {
     -webkit-box-pack: center;
         -ms-flex-pack: center;
             justify-content: center;
-  }
-  header .header__menu_show ul li a {
-    font-size: 32px;
-    color: #CDCDCD;
-  }
-  header .header__menu_show ul li a:hover {
-    color: #FAFAFA;
-  }
-  header .header__menu_show ul li a:hover.selected {
-    color: inherit;
   }
 }
 

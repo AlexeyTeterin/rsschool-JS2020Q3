@@ -142,22 +142,38 @@ header {
   background-color: $col-light-xl;
 
   a {
+    &.selected {
+      border-bottom: solid 3px $col-primary;
+      margin-bottom: -3px;
+    }
+
+    &.disabled:hover {
+      cursor: default;
+      color: $col-dark-l;
+    }
+
     &:hover {
       color: $col-dark-3xl;
     }
 
     &:active {
-      border-bottom: solid 3px $col-primary;
-      margin-bottom: -3px;
+      color: $col-dark-s;
     }
 
-    &.selected {
-      border-bottom: solid 3px $col-primary;
-      margin-bottom: -3px;
+    @include max_768() {
+      font-size: 32px;
+      color: $col-dark-s;
 
       &:hover {
-        color: inherit;
-        cursor: default;
+        color: $col-light-s;
+
+        &.disabled {
+          color: unset;
+        }
+      }
+
+      &:active {
+        color: $col-dark-s;
       }
     }
   }
@@ -299,22 +315,8 @@ header {
           padding-left: 0;
           display: flex;
           justify-content: center;
-
-          a {
-            font-size: 32px;
-            color: $col-dark-s;
-
-            &:hover {
-              color: $col-light-s;
-
-              &.selected {
-                color: inherit;
-              }
-            }
-          }
         }
       }
-
     }
   }
 

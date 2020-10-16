@@ -1,6 +1,8 @@
 const BURGER = document.getElementsByClassName('burger__img')[0];
 const menuBlock = document.getElementById('menu-block');
 const MENU = document.getElementsByClassName('header__menu')[0];
+const MENU_ELEMENTS = Array.from(document.getElementsByClassName('menu-link'));
+const MENU_ELEMENTS_DISABLED = Array.from(document.getElementsByClassName('disabled'));
 const LOGO = document.getElementsByClassName('logo')[0];
 const LOGO2 = document.getElementsByClassName('logo2')[0];
 const HEADER = document.getElementsByTagName('header')[0];
@@ -40,3 +42,20 @@ BURGER.addEventListener('click', () => {
 window.onresize = (event) => {
   hideMenu();
 };
+
+MENU_ELEMENTS_DISABLED.forEach((a) => {
+  a.addEventListener('click', () => {
+    return false;
+  })
+})
+
+// Close menu on li click
+MENU_ELEMENTS.forEach((a) => {
+  a.addEventListener('click', () => {
+    if (a.classList.contains('disabled')) {
+      return false;
+    } else setTimeout(() => {
+      hideMenu();
+    }, 50);
+  })
+})

@@ -181,29 +181,40 @@ button {
 }
 
 header {
-  // width: 100%;
   height: 120px;
   margin: 0 auto;
 
   a {
     color: $col-dark-s;
 
+    &.selected {
+      border-bottom: solid 3px $col-primary;
+      margin-bottom: -3px;
+    }
+
+    &.disabled:hover {
+      cursor: default;
+      color: unset;
+    }
+
     &:hover {
       color: $col-light-s;
     }
 
     &:active {
-      border-bottom: solid 3px $col-primary;
-      margin-bottom: -3px;
+      color: $col-dark-s;
     }
 
-    &.selected {
-      border-bottom: solid 3px $col-primary;
-      margin-bottom: -3px;
+    @include max_768() {
+      font-size: 32px;
+      color: $col-dark-s;
 
       &:hover {
-        color: unset;
-        cursor: default;
+        color: $col-light-s;
+      }
+
+      &:active {
+        color: $col-dark-s;
       }
     }
   }
@@ -315,22 +326,8 @@ header {
           padding-left: 0;
           display: flex;
           justify-content: center;
-
-          a {
-            font-size: 32px;
-            color: $col-dark-s;
-
-            &:hover {
-              color: $col-light-s;
-
-              &.selected {
-                color: inherit;
-              }
-            }
-          }
         }
       }
-
     }
   }
 
