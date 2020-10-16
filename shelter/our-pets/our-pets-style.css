@@ -32,6 +32,11 @@ a {
 .wrapper {
   width: 1200px;
   margin: 0 auto;
+  transition: all 150ms linear;
+  -webkit-transition: all 150ms linear;
+  -moz-transition: all 150ms linear;
+  -ms-transition: all 150ms linear;
+  -o-transition: all 150ms linear;
 }
 
 @media (max-width: 1279px) {

@@ -52,6 +52,11 @@ a {
   width: 1280px;
   padding: 0 40px;
   margin: 0 auto;
+  transition: all 150ms linear;
+  -webkit-transition: all 150ms linear;
+  -moz-transition: all 150ms linear;
+  -ms-transition: all 150ms linear;
+  -o-transition: all 150ms linear;
 
   @include max_1280() {
     width: 100%;
