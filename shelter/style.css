@@ -896,7 +896,7 @@ main a {
   .donation .donation__wrapper button {
     width: 100%;
     margin: 0 auto;
-    padding: 0 10px 20px 0;
+    padding: 0 10px 20px 10px;
   }
   .donation .donation__wrapper > div:first-child,
   .donation .donation__wrapper button:first-child {
