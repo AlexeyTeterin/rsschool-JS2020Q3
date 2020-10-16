@@ -319,6 +319,14 @@ header {
           a {
             font-size: 32px;
             color: $col-dark-s;
+
+            &:hover {
+              color: $col-light-s;
+
+              &.selected {
+                color: inherit;
+              }
+            }
           }
         }
       }

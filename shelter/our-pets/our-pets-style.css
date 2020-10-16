@@ -136,7 +136,7 @@ header a.selected {
 }
 
 header a.selected:hover {
-  color: #545454;
+  color: inherit;
   cursor: default;
 }
 
@@ -330,6 +330,12 @@ header .header__menu ul li {
   header .header__menu_show ul li a {
     font-size: 32px;
     color: #CDCDCD;
+  }
+  header .header__menu_show ul li a:hover {
+    color: #FAFAFA;
+  }
+  header .header__menu_show ul li a:hover.selected {
+    color: inherit;
   }
 }
 

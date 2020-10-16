@@ -156,7 +156,7 @@ header {
       margin-bottom: -3px;
 
       &:hover {
-        color: $col-dark-l;
+        color: inherit;
         cursor: default;
       }
     }
@@ -303,6 +303,14 @@ header {
           a {
             font-size: 32px;
             color: $col-dark-s;
+
+            &:hover {
+              color: $col-light-s;
+
+              &.selected {
+                color: inherit;
+              }
+            }
           }
         }
       }
