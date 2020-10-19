@@ -865,6 +865,7 @@ main {
   width: 100%;
   height: 100%;
   background: rgba(41, 41, 41, 0.6);
+  transition: all 0.2s linear;
 
   &:hover button.popup__close-btn {
     background-color: $col-primary;
@@ -916,10 +917,8 @@ main {
     }
 
     .popup__container {
-      // position: absolute;
       z-index: 2;
-      // left: 0px;
-      // top: 0px;
+      display: flex;
       padding: 0 20px 0 0;
       min-height: 500px;
 
@@ -939,39 +938,15 @@ main {
         padding: 10px;
       }
 
-      ul {
-        padding-left: 529px;
-
-        @include max_1280() {
-          padding-left: 361px;
-        }
-
-        @include max_768() {
-          padding-left: 0;
-        }
-
-        li {
-          list-style-type: none;
-          padding-bottom: 10px;
-          font-size: 15px;
-
-          &::before {
-            content: "•";
-            color: $col-primary;
-            display: inline-block;
-            width: 1em;
-          }
-        }
-      }
-
       .popup__photo {
         width: 500px;
-        height: 100%;
+        height: 500px;
         float: left;
         margin-right: 29px;
 
         @include max_1280() {
           width: 350px;
+          height: 350px;
           margin-right: 11px;
         }
 
@@ -986,44 +961,74 @@ main {
         }
       }
 
-      .popup__name {
-        padding-top: 50px;
+      .popup__info {
+        width: 351px;
 
         @include max_1280() {
-          padding-top: 10px;
-        }
-      }
-
-      .popup__breed {
-        padding-top: 10px;
-        font-size: 20px;
-        line-height: 115%;
-
-        @include max_1280() {
-          padding-top: 10px;
+          width: 260px;
         }
 
         @include max_768() {
-          text-align: center;
+          width: 100%;
         }
-      }
 
-      .popup__description {
-        padding-top: 40px;
-        font-size: 15px;
+        ul {
+          padding: 0;
 
-        @include max_1280() {
-          padding-top: 20px;
-          font-size: 13px;
+          li {
+            list-style-type: none;
+            padding-bottom: 10px;
+            font-size: 15px;
+
+            &::before {
+              content: "•";
+              color: $col-primary;
+              display: inline-block;
+              width: 1em;
+            }
+          }
         }
-      }
 
-      .popup__age {
-        padding-top: 20px;
+        .popup__name {
+          padding-top: 50px;
 
-        @include max_1280() {
+          @include max_1280() {
+            padding-top: 10px;
+          }
+        }
+
+        .popup__breed {
           padding-top: 10px;
+          font-size: 20px;
+          line-height: 115%;
+
+          @include max_1280() {
+            padding-top: 10px;
+          }
+
+          @include max_768() {
+            text-align: center;
+          }
         }
+
+        .popup__description {
+          padding-top: 40px;
+          font-size: 15px;
+
+          @include max_1280() {
+            padding-top: 20px;
+            font-size: 13px;
+          }
+        }
+
+        .popup__age {
+          padding-top: 20px;
+
+          @include max_1280() {
+            padding-top: 10px;
+          }
+        }
+
       }
     }
   }
