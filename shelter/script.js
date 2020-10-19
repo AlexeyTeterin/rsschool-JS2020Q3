@@ -83,9 +83,11 @@ showPetInfo = (petName) => {
         field.children[0].setAttribute('alt', currentPet.name);
         break;
       case 'name':
-      case 'breed':
       case 'description':
         field.innerHTML = currentPet[field.id];
+        break;
+      case 'breed':
+        field.innerHTML = currentPet.type + ' - ' + currentPet.breed;
         break;
       default:
         field.innerHTML = '<b>' + field.id.charAt(0).toUpperCase() + field.id.slice(1) + ': </b>';
