@@ -919,7 +919,7 @@ main {
     .popup__container {
       z-index: 2;
       display: flex;
-      padding: 0 20px 0 0;
+      padding: 0;
       min-height: 500px;
 
       font-family: Georgia, serif;
@@ -935,19 +935,16 @@ main {
 
       @include max_768() {
         min-height: unset;
-        padding: 10px;
       }
 
       .popup__photo {
         width: 500px;
         height: 500px;
         float: left;
-        margin-right: 29px;
 
         @include max_1280() {
           width: 350px;
           height: 350px;
-          margin-right: 11px;
         }
 
         @include max_768() {
@@ -962,10 +959,12 @@ main {
       }
 
       .popup__info {
-        width: 351px;
+        width: 400px;
+        padding: 0 20px 0 29px;
 
         @include max_1280() {
-          width: 260px;
+          width: 280px;
+          padding: 0 10px 0 10px;
         }
 
         @include max_768() {
