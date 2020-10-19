@@ -101,17 +101,19 @@ showPetInfo = (petName) => {
   POPUP.classList.remove('hidden');
 }
 
-// Selecting card to show its info
+// Click on card calls for popup window
 SLIDER_CARDS.forEach((card) => {
   card.addEventListener('click', () => {
     showPetInfo(card.children[1].innerText);
   })
 })
 
+//Click on close button
 POPUP_CLOSE_BTN.addEventListener('click', () => {
   hidePetInfo();
 })
 
+//Click on popup's background
 POPUP.addEventListener('click', (event) => {
   if (event.target.id !== 'popup') return;
   else hidePetInfo();
