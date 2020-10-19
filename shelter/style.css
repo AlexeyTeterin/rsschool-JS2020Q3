@@ -1,3 +1,4 @@
+@charset "UTF-8";
 * {
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
@@ -1029,38 +1030,97 @@ main a {
   background: rgba(41, 41, 41, 0.6);
 }
 
+.popup:hover button.popup__close-btn {
+  background-color: #F1CDB3;
+}
+
+.popup div:hover button.popup__close-btn {
+  background-color: unset;
+}
+
 .popup .popup__wrapper {
   position: fixed;
+  z-index: 2;
   left: 50%;
   top: 50%;
   -webkit-transform: translate(-50%, -50%);
           transform: translate(-50%, -50%);
-  width: 952px;
-  height: 552px;
+  width: 900px;
+  height: 500px;
 }
 
-.popup .popup__close-btn {
+.popup .popup__wrapper .popup__close-btn {
   position: absolute;
-  right: 0;
-  top: 0px;
+  right: -52px;
+  top: -52px;
   width: 52px;
   height: 52px;
   border: 2px solid #F1CDB3;
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
   border-radius: 100px;
   background: url(assets/close.png) no-repeat center;
 }
 
-.popup .popup__container {
+.popup .popup__wrapper .popup__close-btn:hover {
+  background-color: #F1CDB3;
+}
+
+.popup .popup__wrapper .popup__container {
   position: absolute;
   z-index: 2;
   left: 0px;
-  top: 52px;
+  top: 0px;
   width: 900px;
   height: 500px;
+  padding: 0 20px 0 0;
+  font-family: Georgia, serif;
+  letter-spacing: 0.06em;
   background: #FAFAFA;
   border-radius: 9px;
+}
+
+.popup .popup__wrapper .popup__container ul li {
+  list-style-type: none;
+  padding-bottom: 10px;
+  font-size: 15px;
+}
+
+.popup .popup__wrapper .popup__container ul li::before {
+  content: "•";
+  color: #F1CDB3;
+  display: inline-block;
+  width: 1em;
+}
+
+.popup .popup__wrapper .popup__container .popup__photo {
+  width: 500px;
+  height: 500px;
+  float: left;
+  margin-right: 29px;
+}
+
+.popup .popup__wrapper .popup__container .popup__photo > img {
+  width: 500px;
+  height: 500px;
+  border-radius: 9px;
+}
+
+.popup .popup__wrapper .popup__container .popup__name {
+  padding-top: 50px;
+}
+
+.popup .popup__wrapper .popup__container .popup__breed {
+  padding-top: 10px;
+  font-size: 20px;
+  line-height: 115%;
+}
+
+.popup .popup__wrapper .popup__container .popup__description {
+  padding-top: 40px;
+  font-size: 15px;
+}
+
+.popup .popup__wrapper .popup__container .popup__age {
+  padding-top: 40px;
 }
 
 footer {

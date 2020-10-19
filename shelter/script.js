@@ -2,6 +2,7 @@ const SLIDER_CARDS = Array.from(document.getElementsByClassName('card'));
 const SLIDER_BTNS = Array.from(document.getElementsByClassName('arrow'));
 const PETS = [];
 const POPUP = document.getElementById('popup');
+const POPUP_FIELDS = document.getElementsByClassName('field');
 const POPUP_CLOSE_BTN = document.getElementById('popup__close-btn');
 
 const request = new XMLHttpRequest();
@@ -59,7 +60,12 @@ SLIDER_BTNS.forEach((btn) => {
   })
 })
 
-// Show pet info
+// Hide popup window
+hidePetInfo = () => {
+  POPUP.classList.add('hidden');
+}
+
+// Show popup window
 showPetInfo = (petName) => {
   let currentPet = {};
 
@@ -70,9 +76,29 @@ showPetInfo = (petName) => {
   })
   console.log(currentPet);
 
+  Array.from(POPUP_FIELDS).forEach((field) => {
+    switch (field.id) {
+      case 'photo':
+        field.children[0].setAttribute('src', currentPet.img);
+        field.children[0].setAttribute('alt', currentPet.name);
+        break;
+      case 'name':
+      case 'breed':
+      case 'description':
+        field.innerHTML = currentPet[field.id];
+        break;
+      default:
+        field.innerHTML = '<b>' + field.id.charAt(0).toUpperCase() + field.id.slice(1) + ': </b>';
+        if (typeof currentPet[field.id] === 'object')
+          field.innerHTML += currentPet[field.id].join(', ');
+        else
+          field.innerHTML += currentPet[field.id];
+        break;
+    }
+  })
+
   POPUP.style.setProperty('height', document.querySelector('body').scrollHeight + 'px');
   POPUP.classList.remove('hidden');
-
 }
 
 // Selecting card to show its info
@@ -82,15 +108,11 @@ SLIDER_CARDS.forEach((card) => {
   })
 })
 
-hidePetInfo = () => {
-  POPUP.classList.add('hidden');
-}
-
 POPUP_CLOSE_BTN.addEventListener('click', () => {
   hidePetInfo();
 })
 
 POPUP.addEventListener('click', (event) => {
-  if (event.target.id === 'popup__container') return;
+  if (event.target.id !== 'popup') return;
   else hidePetInfo();
 })

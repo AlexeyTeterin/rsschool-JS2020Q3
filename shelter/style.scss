@@ -847,7 +847,6 @@ main {
 .menu-block {
   position: absolute;
   visibility: visible;
-  // opacity: 1;
   z-index: 2;
   width: 100%;
   top: 0;
@@ -867,55 +866,102 @@ main {
   height: 100%;
   background: rgba(41, 41, 41, 0.6);
 
+  &:hover button.popup__close-btn {
+    background-color: $col-primary;
+  }
+
+  & div:hover button.popup__close-btn {
+    background-color: unset;
+  }
+
   .popup__wrapper {
     position: fixed;
+    z-index: 2;
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
-    width: 952px;
-    height: 552px;
-  }
-
-  .popup__close-btn {
-    position: absolute;
-    right: 0;
-    top: 0px;
-    width: 52px;
-    height: 52px;
-
-    border: 2px solid #F1CDB3;
-    box-sizing: border-box;
-    border-radius: 100px;
-    background: url(assets/close.png) no-repeat center;
-  }
-
-  .popup__container {
-    position: absolute;
-    z-index: 2;
-    left: 0px;
-    top: 52px;
     width: 900px;
     height: 500px;
 
-    background: #FAFAFA;
-    border-radius: 9px;
+    .popup__close-btn {
+      position: absolute;
+      right: -52px;
+      top: -52px;
+      width: 52px;
+      height: 52px;
+
+      border: 2px solid #F1CDB3;
+      border-radius: 100px;
+      background: url(assets/close.png) no-repeat center;
+
+      &:hover {
+        background-color: $col-primary;
+      }
+    }
+
+    .popup__container {
+      position: absolute;
+      z-index: 2;
+      left: 0px;
+      top: 0px;
+      width: 900px;
+      height: 500px;
+      padding: 0 20px 0 0;
+
+      font-family: Georgia, serif;
+      letter-spacing: 0.06em;
+
+      background: #FAFAFA;
+      border-radius: 9px;
+
+      ul {
+        li {
+          list-style-type: none;
+          padding-bottom: 10px;
+          font-size: 15px;
+
+          &::before {
+            content: "•";
+            color: $col-primary;
+            display: inline-block;
+            width: 1em;
+          }
+        }
+      }
+
+      .popup__photo {
+        width: 500px;
+        height: 500px;
+        float: left;
+        margin-right: 29px;
+
+        >img {
+          width: 500px;
+          height: 500px;
+          border-radius: 9px;
+        }
+      }
+
+      .popup__name {
+        padding-top: 50px;
+      }
+
+      .popup__breed {
+        padding-top: 10px;
+        font-size: 20px;
+        line-height: 115%;
+      }
+
+      .popup__description {
+        padding-top: 40px;
+        font-size: 15px;
+      }
+
+      .popup__age {
+        padding-top: 40px;
+      }
+    }
   }
-
-  .popup__photo {}
-
-  .popup__name {}
-
-  .popup__breed {}
-
-  .popup__description {}
-
-  .popup__age {}
-
-  .popup__inoculations {}
-
-  .popup__diseases {}
-
-  .popup__parasites {}
 }
 
 footer {
