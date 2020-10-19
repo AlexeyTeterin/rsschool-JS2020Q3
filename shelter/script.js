@@ -35,11 +35,19 @@ shuffleCards = () => {
     let random = generateRandom();
 
     while (threePets.includes(random) || newThreePets.includes(random)) random = generateRandom();
-
     newThreePets.push(random);
-    card__photo.setAttribute('src', PETS[random].img);
-    card__photo.setAttribute('alt', PETS[random].name);
-    card__name.innerText = PETS[random].name;
+
+    card.style.setProperty('opacity', '0');
+
+    setTimeout(() => {
+      card__photo.setAttribute('src', PETS[random].img);
+      card__photo.setAttribute('alt', PETS[random].name);
+      card__name.innerText = PETS[random].name;
+    }, 100)
+
+    setTimeout(() => {
+      card.style.setProperty('opacity', '1');
+    }, 200)
   })
 }
 

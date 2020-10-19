@@ -105,7 +105,11 @@ button {
   }
 
   a {
+    display: flex;
     letter-spacing: 0.12em;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
   }
 }
 
@@ -581,6 +585,7 @@ main {
       display: flex;
       flex-direction: column;
       align-items: flex-start;
+      transition: all 0.1s linear;
 
       width: 270px;
       height: 435px;
