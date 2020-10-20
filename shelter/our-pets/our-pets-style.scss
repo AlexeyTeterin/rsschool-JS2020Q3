@@ -353,6 +353,181 @@ main {
     padding: 70px 0 76px 0;
   }
 
+  .popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    width: 100%;
+    height: 100vh;
+    background: rgba(41, 41, 41, 0.6);
+    transition: all 0.3s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &:hover button.popup__close-btn {
+      background-color: $col-primary;
+    }
+
+    & div:hover button.popup__close-btn {
+      background-color: unset;
+    }
+
+    .popup__wrapper {
+      position: relative;
+      z-index: 10;
+
+      width: 900px;
+      height: fit-content;
+
+      @include max_1280() {
+        width: 630px;
+        height: 350px;
+      }
+
+      @include max_768() {
+        width: 75vw;
+        height: auto;
+        padding: 10px;
+      }
+
+      .popup__close-btn {
+        position: absolute;
+        right: -52px;
+        top: -52px;
+        width: 52px;
+        height: 52px;
+
+        border: 2px solid #F1CDB3;
+        border-radius: 100px;
+        background: url(assets/close.png) no-repeat center;
+
+        @include max_768() {
+          right: -22px;
+          top: -42px;
+        }
+
+        &:hover {
+          background-color: $col-primary;
+        }
+      }
+
+      .popup__container {
+        display: flex;
+        padding: 0;
+        min-height: 500px;
+
+        font-family: Georgia, serif;
+        letter-spacing: 0.06em;
+        line-height: 110%;
+
+        background: #FAFAFA;
+        border-radius: 9px;
+
+        @include max_1280() {
+          min-height: 350px;
+        }
+
+        @include max_768() {
+          min-height: unset;
+        }
+
+        .popup__photo {
+          width: 500px;
+          height: 500px;
+          float: left;
+
+          @include max_1280() {
+            width: 350px;
+            height: 350px;
+          }
+
+          @include max_768() {
+            display: none;
+          }
+
+          >img {
+            width: 100%;
+            height: 100%;
+            border-radius: 9px;
+          }
+        }
+
+        .popup__info {
+          width: 400px;
+          padding: 0 20px 0 29px;
+
+          @include max_1280() {
+            width: 280px;
+            padding: 0 10px 0 10px;
+          }
+
+          @include max_768() {
+            width: 100%;
+          }
+
+          ul {
+            padding: 0;
+
+            li {
+              list-style-type: none;
+              padding-bottom: 10px;
+              font-size: 15px;
+
+              &::before {
+                content: "•";
+                color: $col-primary;
+                display: inline-block;
+                width: 1em;
+              }
+            }
+          }
+
+          .popup__name {
+            padding-top: 50px;
+
+            @include max_1280() {
+              padding-top: 10px;
+            }
+          }
+
+          .popup__breed {
+            padding-top: 10px;
+            font-size: 20px;
+            line-height: 115%;
+
+            @include max_1280() {
+              padding-top: 10px;
+            }
+
+            @include max_768() {
+              text-align: center;
+            }
+          }
+
+          .popup__description {
+            padding-top: 40px;
+            font-size: 15px;
+
+            @include max_1280() {
+              padding-top: 20px;
+              font-size: 13px;
+            }
+          }
+
+          .popup__age {
+            padding-top: 20px;
+
+            @include max_1280() {
+              padding-top: 10px;
+            }
+          }
+        }
+      }
+    }
+  }
+
   .title {
     text-align: center;
 

@@ -1,3 +1,4 @@
+@charset "UTF-8";
 * {
   margin: 0;
   padding: 0;
@@ -377,6 +378,216 @@ main {
   main {
     height: unset;
     padding: 70px 0 76px 0;
+  }
+}
+
+main .popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  width: 100%;
+  height: 100vh;
+  background: rgba(41, 41, 41, 0.6);
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+main .popup:hover button.popup__close-btn {
+  background-color: #F1CDB3;
+}
+
+main .popup div:hover button.popup__close-btn {
+  background-color: unset;
+}
+
+main .popup .popup__wrapper {
+  position: relative;
+  z-index: 10;
+  width: 900px;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+}
+
+@media (max-width: 1279px) {
+  main .popup .popup__wrapper {
+    width: 630px;
+    height: 350px;
+  }
+}
+
+@media (max-width: 767px) {
+  main .popup .popup__wrapper {
+    width: 75vw;
+    height: auto;
+    padding: 10px;
+  }
+}
+
+main .popup .popup__wrapper .popup__close-btn {
+  position: absolute;
+  right: -52px;
+  top: -52px;
+  width: 52px;
+  height: 52px;
+  border: 2px solid #F1CDB3;
+  border-radius: 100px;
+  background: url(assets/close.png) no-repeat center;
+}
+
+@media (max-width: 767px) {
+  main .popup .popup__wrapper .popup__close-btn {
+    right: -22px;
+    top: -42px;
+  }
+}
+
+main .popup .popup__wrapper .popup__close-btn:hover {
+  background-color: #F1CDB3;
+}
+
+main .popup .popup__wrapper .popup__container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  padding: 0;
+  min-height: 500px;
+  font-family: Georgia, serif;
+  letter-spacing: 0.06em;
+  line-height: 110%;
+  background: #FAFAFA;
+  border-radius: 9px;
+}
+
+@media (max-width: 1279px) {
+  main .popup .popup__wrapper .popup__container {
+    min-height: 350px;
+  }
+}
+
+@media (max-width: 767px) {
+  main .popup .popup__wrapper .popup__container {
+    min-height: unset;
+  }
+}
+
+main .popup .popup__wrapper .popup__container .popup__photo {
+  width: 500px;
+  height: 500px;
+  float: left;
+}
+
+@media (max-width: 1279px) {
+  main .popup .popup__wrapper .popup__container .popup__photo {
+    width: 350px;
+    height: 350px;
+  }
+}
+
+@media (max-width: 767px) {
+  main .popup .popup__wrapper .popup__container .popup__photo {
+    display: none;
+  }
+}
+
+main .popup .popup__wrapper .popup__container .popup__photo > img {
+  width: 100%;
+  height: 100%;
+  border-radius: 9px;
+}
+
+main .popup .popup__wrapper .popup__container .popup__info {
+  width: 400px;
+  padding: 0 20px 0 29px;
+}
+
+@media (max-width: 1279px) {
+  main .popup .popup__wrapper .popup__container .popup__info {
+    width: 280px;
+    padding: 0 10px 0 10px;
+  }
+}
+
+@media (max-width: 767px) {
+  main .popup .popup__wrapper .popup__container .popup__info {
+    width: 100%;
+  }
+}
+
+main .popup .popup__wrapper .popup__container .popup__info ul {
+  padding: 0;
+}
+
+main .popup .popup__wrapper .popup__container .popup__info ul li {
+  list-style-type: none;
+  padding-bottom: 10px;
+  font-size: 15px;
+}
+
+main .popup .popup__wrapper .popup__container .popup__info ul li::before {
+  content: "•";
+  color: #F1CDB3;
+  display: inline-block;
+  width: 1em;
+}
+
+main .popup .popup__wrapper .popup__container .popup__info .popup__name {
+  padding-top: 50px;
+}
+
+@media (max-width: 1279px) {
+  main .popup .popup__wrapper .popup__container .popup__info .popup__name {
+    padding-top: 10px;
+  }
+}
+
+main .popup .popup__wrapper .popup__container .popup__info .popup__breed {
+  padding-top: 10px;
+  font-size: 20px;
+  line-height: 115%;
+}
+
+@media (max-width: 1279px) {
+  main .popup .popup__wrapper .popup__container .popup__info .popup__breed {
+    padding-top: 10px;
+  }
+}
+
+@media (max-width: 767px) {
+  main .popup .popup__wrapper .popup__container .popup__info .popup__breed {
+    text-align: center;
+  }
+}
+
+main .popup .popup__wrapper .popup__container .popup__info .popup__description {
+  padding-top: 40px;
+  font-size: 15px;
+}
+
+@media (max-width: 1279px) {
+  main .popup .popup__wrapper .popup__container .popup__info .popup__description {
+    padding-top: 20px;
+    font-size: 13px;
+  }
+}
+
+main .popup .popup__wrapper .popup__container .popup__info .popup__age {
+  padding-top: 20px;
+}
+
+@media (max-width: 1279px) {
+  main .popup .popup__wrapper .popup__container .popup__info .popup__age {
+    padding-top: 10px;
   }
 }
 
