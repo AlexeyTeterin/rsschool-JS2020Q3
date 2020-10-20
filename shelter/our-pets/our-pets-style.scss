@@ -111,6 +111,11 @@ button {
   height: 52px;
 }
 
+.hidden {
+  visibility: hidden;
+  opacity: 0;
+}
+
 .title {
   font-family: Georgia, serif;
   font-size: 35px;
@@ -362,9 +367,7 @@ main {
     height: 100vh;
     background: rgba(41, 41, 41, 0.6);
     transition: all 0.3s;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    @include flex-center();
 
     &:hover button.popup__close-btn {
       background-color: $col-primary;
@@ -401,7 +404,6 @@ main {
 
         border: 2px solid #F1CDB3;
         border-radius: 100px;
-        background: url(assets/close.png) no-repeat center;
 
         @include max_768() {
           right: -22px;
@@ -661,11 +663,6 @@ main {
   -ms-transition: all 0.25s linear;
   -o-transition: all 0.25s linear;
 
-}
-
-.hidden {
-  visibility: hidden;
-  opacity: 0;
 }
 
 footer {

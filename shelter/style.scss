@@ -907,7 +907,6 @@ main {
 
       border: 2px solid #F1CDB3;
       border-radius: 100px;
-      background: url(assets/close.png) no-repeat center;
 
       @include max_768() {
         right: -22px;

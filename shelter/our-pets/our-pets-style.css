@@ -92,6 +92,11 @@ button:disabled:hover {
   background: none;
 }
 
+.hidden {
+  visibility: hidden;
+  opacity: 0;
+}
+
 .title, .header4 {
   font-family: Georgia, serif;
   font-size: 35px;
@@ -394,12 +399,12 @@ main .popup {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
 }
 
 main .popup:hover button.popup__close-btn {
@@ -442,7 +447,6 @@ main .popup .popup__wrapper .popup__close-btn {
   height: 52px;
   border: 2px solid #F1CDB3;
   border-radius: 100px;
-  background: url(assets/close.png) no-repeat center;
 }
 
 @media (max-width: 767px) {
@@ -768,11 +772,6 @@ main .navigation .arrow-end {
   -moz-transition: all 0.25s linear;
   -ms-transition: all 0.25s linear;
   -o-transition: all 0.25s linear;
-}
-
-.hidden {
-  visibility: hidden;
-  opacity: 0;
 }
 
 footer {
