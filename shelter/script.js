@@ -74,7 +74,6 @@ showPetInfo = (petName) => {
       currentPet = pet;
     }
   })
-  console.log(currentPet);
 
   Array.from(POPUP_FIELDS).forEach((field) => {
     switch (field.id) {
