@@ -97,6 +97,10 @@ button:disabled:hover {
   opacity: 0;
 }
 
+.display-none {
+  display: none;
+}
+
 .title, .header4 {
   font-family: Georgia, serif;
   font-size: 35px;
