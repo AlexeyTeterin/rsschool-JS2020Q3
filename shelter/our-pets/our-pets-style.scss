@@ -242,6 +242,10 @@ header {
       cursor: pointer;
     }
 
+    a {
+      all: unset;
+    }
+
     .logo__title {
       margin: 0;
       color: $col-dark-l;
