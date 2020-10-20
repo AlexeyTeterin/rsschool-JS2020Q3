@@ -1,9 +1,10 @@
+const PETS = [];
+
 const request = new XMLHttpRequest();
 request.open('GET', 'pets.json');
 request.responseType = 'json';
 request.send();
 
-const PETS = [];
 
 request.onload = () => {
   const pets = request.response;
@@ -11,3 +12,5 @@ request.onload = () => {
     PETS.push(pet);
   }
 }
+
+// const LOGO1 = document.querySelectorAll('.logo');
