@@ -99,7 +99,6 @@ showPetInfo = (petName) => {
     }
   })
 
-  POPUP.style.setProperty('height', document.querySelector('body').scrollHeight + 'px');
   POPUP.classList.remove('hidden');
 }
 
