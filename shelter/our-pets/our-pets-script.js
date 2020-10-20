@@ -1,6 +1,11 @@
 const PETS = [];
-const VISIBLE_PETS = document.querySelector('.pets');
+const VISIBLE_PETS = document.querySelectorAll('.pet-card');
 const ALL_48_PETS = [];
+const PAGE = document.querySelector('.position');
+const PAGE_NEXT = document.querySelector('.arrow-right');
+const PAGE_PREV = document.querySelector('.arrow-left');
+const PAGE_END = document.querySelector('.arrow-end');
+const PAGE_START = document.querySelector('.arrow-start');
 
 const request = new XMLHttpRequest();
 request.open('GET', 'pets.json');
@@ -12,8 +17,100 @@ request.onload = () => {
   for (const pet of pets) {
     PETS.push(pet);
   }
-  for (let i = 0; i < 6; i += 1) {
-    ALL_48_PETS.push(...pets);
-  }
 }
 
+generate48pets = () => {
+  const pets_48_indexes = [];
+
+  generate8pets = () => {
+    const newEightPets = [];
+    generateRandom = () => Math.floor(Math.random() * 8);
+
+    for (let i = 0; i < 8; i += 1) {
+      let random = generateRandom();
+
+      while (newEightPets.includes(random) ||
+        (newEightPets.length < 4 &&
+          pets_48_indexes.slice(pets_48_indexes.length - 2).includes(random)))
+        random = generateRandom();
+      newEightPets.push(random);
+    }
+    return newEightPets;
+  }
+
+  for (let i = 0; i < 6; i += 1) {
+    pets_48_indexes.push(...generate8pets());
+  }
+
+  return pets_48_indexes;
+}
+
+fillCards = (offset) => {
+
+  if (offset === undefined) offset = 0;
+
+  VISIBLE_PETS.forEach((card, index) => {
+    const card__photo = card.children[0].children[0];
+    const card__name = card.children[1];
+    const selectedPet = PETS[ALL_48_PETS[index + 8 * offset]];
+
+    card__photo.setAttribute('src', selectedPet.img);
+    card__photo.setAttribute('alt', selectedPet.name);
+    card__name.innerText = selectedPet.name;
+  })
+}
+
+nextPage = (index) => {
+  PAGE.textContent = parseInt(PAGE.textContent) + 1;
+
+  if (index !== undefined) PAGE.textContent = index;
+
+  if (PAGE.textContent > 1) {
+    PAGE_PREV.removeAttribute('disabled');
+    PAGE_START.removeAttribute('disabled');
+  }
+
+  if (PAGE.textContent === '6') {
+    PAGE_NEXT.setAttribute('disabled', '');
+    PAGE_END.setAttribute('disabled', '');
+  }
+
+  fillCards(parseInt(PAGE.textContent) - 1);
+}
+
+prevPage = (index) => {
+  PAGE.textContent = parseInt(PAGE.textContent) - 1;
+
+  if (index !== undefined) PAGE.textContent = index;
+
+  if (PAGE.textContent < 6) {
+    PAGE_NEXT.removeAttribute('disabled');
+    PAGE_END.removeAttribute('disabled');
+  }
+  if (PAGE.textContent === '1') {
+    PAGE_PREV.setAttribute('disabled', '');
+    PAGE_START.setAttribute('disabled', '');
+  }
+
+  fillCards(parseInt(PAGE.textContent) - 1);
+}
+
+window.addEventListener('load', () => {
+  ALL_48_PETS.push(...generate48pets());
+  fillCards();
+})
+
+PAGE_NEXT.addEventListener('click', () => {
+  nextPage();
+})
+PAGE_PREV.addEventListener('click', () => {
+  prevPage();
+})
+
+PAGE_END.addEventListener('click', () => {
+  nextPage(6);
+})
+
+PAGE_START.addEventListener('click', () => {
+  prevPage(1);
+})
