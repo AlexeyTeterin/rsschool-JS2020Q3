@@ -59,8 +59,3 @@ MENU_ELEMENTS.forEach((a) => {
     }, 50);
   })
 })
-
-LOGO.addEventListener('click', () => {
-  if (document.URL.includes('index.html')) return;
-  else window.scrollTo(0,0);
-})
