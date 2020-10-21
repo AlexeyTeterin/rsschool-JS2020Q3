@@ -23,7 +23,7 @@ request.onload = () => {
   }
 }
 
-generate48pets = () => {
+function generate48pets() {
   const pets_48_indexes = [];
 
   generate8pets = () => {
