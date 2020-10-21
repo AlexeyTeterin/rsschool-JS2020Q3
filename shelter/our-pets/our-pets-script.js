@@ -6,6 +6,9 @@ const PAGE_NEXT = document.querySelector('.arrow-right');
 const PAGE_PREV = document.querySelector('.arrow-left');
 const PAGE_END = document.querySelector('.arrow-end');
 const PAGE_START = document.querySelector('.arrow-start');
+const POPUP = document.getElementById('popup');
+const POPUP_FIELDS = document.getElementsByClassName('field');
+const POPUP_CLOSE_BTN = document.getElementById('popup__close-btn');
 let numOfPages;
 
 const request = new XMLHttpRequest();
@@ -46,6 +49,12 @@ generate48pets = () => {
   return pets_48_indexes;
 }
 
+turnBtn = (button_name, position) => {
+  if (position === 'on') button_name.removeAttribute('disabled');
+  if (position === 'off') button_name.setAttribute('disabled', '');
+  else return;
+}
+
 fillCards = (offset) => {
 
   if (offset === undefined) offset = 0;
@@ -66,12 +75,6 @@ fillCards = (offset) => {
       }, 100)
     }
   })
-}
-
-turnBtn = (button_name, position) => {
-  if (position === 'on') button_name.removeAttribute('disabled');
-  if (position === 'off') button_name.setAttribute('disabled', '');
-  else return;
 }
 
 getNumOfPages = () => {
@@ -127,6 +130,58 @@ prevPage = (index) => {
   fillCards(parseInt(PAGE.textContent) - 1);
 }
 
+stopScroll = () => {
+  const x = window.scrollX;
+  const y = window.scrollY;
+  window.onscroll = function () {
+    window.scrollTo(x, y);
+  };
+}
+
+// Hide popup window
+hidePetInfo = () => {
+  POPUP.classList.add('hidden');
+  window.onscroll = () => {};
+}
+
+// Show popup window
+showPetInfo = (petName) => {
+  let currentPet = {};
+
+  stopScroll();
+
+  PETS.forEach((pet) => {
+    if (pet.name === petName) {
+      currentPet = pet;
+    }
+  })
+
+  Array.from(POPUP_FIELDS).forEach((field) => {
+    switch (field.id) {
+      case 'photo':
+        field.children[0].setAttribute('src', currentPet.img);
+        field.children[0].setAttribute('alt', currentPet.name);
+        break;
+      case 'name':
+      case 'description':
+        field.innerHTML = currentPet[field.id];
+        break;
+      case 'breed':
+        field.innerHTML = currentPet.type + ' - ' + currentPet.breed;
+        break;
+      default:
+        field.innerHTML = '<b>' + field.id.charAt(0).toUpperCase() + field.id.slice(1) + ': </b>';
+        if (typeof currentPet[field.id] === 'object')
+          field.innerHTML += currentPet[field.id].join(', ');
+        else
+          field.innerHTML += currentPet[field.id];
+        break;
+    }
+  })
+
+  POPUP.classList.remove('hidden');
+}
+
 window.addEventListener('load', () => {
   ALL_48_PETS.push(...generate48pets());
   getNumOfPages();
@@ -149,4 +204,22 @@ PAGE_END.addEventListener('click', () => {
 
 PAGE_START.addEventListener('click', () => {
   prevPage(1);
+})
+
+// Click on card calls for popup window
+VISIBLE_PETS.forEach((card) => {
+  card.addEventListener('click', () => {
+    showPetInfo(card.children[1].innerText);
+  })
+})
+
+//Click on close button
+POPUP_CLOSE_BTN.addEventListener('click', () => {
+  hidePetInfo();
+})
+
+//Click on popup's background
+POPUP.addEventListener('click', (event) => {
+  if (event.target.id !== 'popup') return;
+  else hidePetInfo();
 })
