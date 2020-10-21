@@ -6,6 +6,7 @@ const PAGE_NEXT = document.querySelector('.arrow-right');
 const PAGE_PREV = document.querySelector('.arrow-left');
 const PAGE_END = document.querySelector('.arrow-end');
 const PAGE_START = document.querySelector('.arrow-start');
+let numOfPages;
 
 const request = new XMLHttpRequest();
 request.open('GET', 'pets.json');
@@ -52,13 +53,43 @@ fillCards = (offset) => {
   VISIBLE_PETS.forEach((card, index) => {
     const card__photo = card.children[0].children[0];
     const card__name = card.children[1];
-    const selectedPet = PETS[ALL_48_PETS[index + 8 * offset]];
+    const selectedPet = PETS[ALL_48_PETS[index + (48 / numOfPages) * offset]];
 
-    card__photo.setAttribute('src', selectedPet.img);
-    card__photo.setAttribute('alt', selectedPet.name);
-    card__name.innerText = selectedPet.name;
+    if (selectedPet !== undefined) {
+      card__photo.setAttribute('src', selectedPet.img);
+      card__photo.setAttribute('alt', selectedPet.name);
+      card__name.innerText = selectedPet.name;
+    }
   })
 }
+
+turnBtn = (button_name, position) => {
+  if (position === 'on') button_name.removeAttribute('disabled');
+  if (position === 'off') button_name.setAttribute('disabled', '');
+  else return;
+}
+
+getNumOfPages = () => {
+  if (window.innerWidth >= 768) numOfPages = 8;
+  if (window.innerWidth >= 1280) numOfPages = 6;
+  if (window.innerWidth < 768) numOfPages = 16;
+
+  if (parseInt(PAGE.textContent) >= numOfPages) {
+    PAGE.textContent = numOfPages;
+    turnBtn(PAGE_NEXT, 'off');
+    turnBtn(PAGE_END, 'off');
+  }
+  if (parseInt(PAGE.textContent) < numOfPages) {
+    turnBtn(PAGE_NEXT, 'on');
+    turnBtn(PAGE_END, 'on');
+  }
+
+  fillCards(parseInt(PAGE.textContent) - 1);
+}
+
+window.addEventListener('resize', () => {
+  getNumOfPages();
+})
 
 nextPage = (index) => {
   PAGE.textContent = parseInt(PAGE.textContent) + 1;
@@ -66,13 +97,13 @@ nextPage = (index) => {
   if (index !== undefined) PAGE.textContent = index;
 
   if (PAGE.textContent > 1) {
-    PAGE_PREV.removeAttribute('disabled');
-    PAGE_START.removeAttribute('disabled');
+    turnBtn(PAGE_PREV, 'on');
+    turnBtn(PAGE_START, 'on');
   }
 
-  if (PAGE.textContent === '6') {
-    PAGE_NEXT.setAttribute('disabled', '');
-    PAGE_END.setAttribute('disabled', '');
+  if (PAGE.textContent === numOfPages.toString()) {
+    turnBtn(PAGE_NEXT, 'off');
+    turnBtn(PAGE_END, 'off');
   }
 
   fillCards(parseInt(PAGE.textContent) - 1);
@@ -83,13 +114,13 @@ prevPage = (index) => {
 
   if (index !== undefined) PAGE.textContent = index;
 
-  if (PAGE.textContent < 6) {
-    PAGE_NEXT.removeAttribute('disabled');
-    PAGE_END.removeAttribute('disabled');
+  if (PAGE.textContent < numOfPages) {
+    turnBtn(PAGE_NEXT, 'on');
+    turnBtn(PAGE_END, 'on');
   }
   if (PAGE.textContent === '1') {
-    PAGE_PREV.setAttribute('disabled', '');
-    PAGE_START.setAttribute('disabled', '');
+    turnBtn(PAGE_PREV, 'off');
+    turnBtn(PAGE_START, 'off');
   }
 
   fillCards(parseInt(PAGE.textContent) - 1);
@@ -97,7 +128,7 @@ prevPage = (index) => {
 
 window.addEventListener('load', () => {
   ALL_48_PETS.push(...generate48pets());
-  fillCards();
+  getNumOfPages();
 })
 
 PAGE_NEXT.addEventListener('click', () => {
@@ -108,7 +139,7 @@ PAGE_PREV.addEventListener('click', () => {
 })
 
 PAGE_END.addEventListener('click', () => {
-  nextPage(6);
+  nextPage(numOfPages);
 })
 
 PAGE_START.addEventListener('click', () => {
