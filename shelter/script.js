@@ -12,10 +12,8 @@ request.send();
 
 request.onload = () => {
   const pets = request.response;
-  for (const pet of pets) {
-    PETS.push(pet);
-  }
-}
+  pets.forEach((pet) => PETS.push(pet));
+};
 
 shuffleCards = () => {
   const threePets = [];
@@ -107,13 +105,13 @@ SLIDER_CARDS.forEach((card) => {
   })
 })
 
-//Click on close button
+// Click on close button
 POPUP_CLOSE_BTN.addEventListener('click', () => {
   hidePetInfo();
-})
+});
 
-//Click on popup's background
+// Click on popup's background
 POPUP.addEventListener('click', (event) => {
   if (event.target.id !== 'popup') return;
   else hidePetInfo();
-})
+});
