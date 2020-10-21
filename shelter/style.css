@@ -25,6 +25,11 @@ a {
   text-decoration: none;
 }
 
+.stop-scrolling {
+  height: 100%;
+  overflow: hidden;
+}
+
 .wrapper {
   width: 1280px;
   padding: 0 40px;

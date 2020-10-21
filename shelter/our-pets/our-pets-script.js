@@ -87,10 +87,6 @@ getNumOfPages = () => {
   fillCards(parseInt(PAGE.textContent) - 1);
 }
 
-window.addEventListener('resize', () => {
-  getNumOfPages();
-})
-
 nextPage = (index) => {
   PAGE.textContent = parseInt(PAGE.textContent) + 1;
 
@@ -128,6 +124,10 @@ prevPage = (index) => {
 
 window.addEventListener('load', () => {
   ALL_48_PETS.push(...generate48pets());
+  getNumOfPages();
+})
+
+window.addEventListener('resize', () => {
   getNumOfPages();
 })
 

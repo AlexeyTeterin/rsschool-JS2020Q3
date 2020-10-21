@@ -63,6 +63,7 @@ SLIDER_BTNS.forEach((btn) => {
 // Hide popup window
 hidePetInfo = () => {
   POPUP.classList.add('hidden');
+  document.body.classList.remove("stop-scrolling");
 }
 
 // Show popup window
@@ -99,6 +100,7 @@ showPetInfo = (petName) => {
   })
 
   POPUP.classList.remove('hidden');
+  document.body.classList.add("stop-scrolling");
 }
 
 // Click on card calls for popup window
