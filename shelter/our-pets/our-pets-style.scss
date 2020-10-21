@@ -221,13 +221,12 @@ header {
 
     .burger__img_active {
       position: fixed;
-      filter: invert(1);
+      filter: invert(0.7) sepia(0.5);
       transform: rotate(90deg);
       -webkit-transform: rotate(90deg);
       -moz-transform: rotate(90deg);
       -ms-transform: rotate(90deg);
       -o-transform: rotate(90deg);
-      -webkit-filter: invert(1);
     }
 
     @include max_768() {
