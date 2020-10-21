@@ -91,6 +91,10 @@ button {
   background: none;
   color: #292929;
 
+  &:focus, :active {
+    outline: none;
+  }
+
   &:hover {
     background: $col-primary-light;
     border: 2px solid $col-primary-light;

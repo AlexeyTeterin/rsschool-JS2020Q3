@@ -77,6 +77,10 @@ button {
   color: #292929;
 }
 
+button:focus, button :active {
+  outline: none;
+}
+
 button:hover {
   background: #FDDCC4;
   border: 2px solid #FDDCC4;
