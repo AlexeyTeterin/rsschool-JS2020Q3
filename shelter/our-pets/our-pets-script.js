@@ -32,7 +32,7 @@ generate48pets = () => {
 
       while (newEightPets.includes(random) ||
         (newEightPets.length < 4 &&
-          pets_48_indexes.slice(pets_48_indexes.length - 2).includes(random)))
+          pets_48_indexes.slice(pets_48_indexes.length - 4).includes(random)))
         random = generateRandom();
       newEightPets.push(random);
     }
@@ -56,9 +56,14 @@ fillCards = (offset) => {
     const selectedPet = PETS[ALL_48_PETS[index + (48 / numOfPages) * offset]];
 
     if (selectedPet !== undefined) {
-      card__photo.setAttribute('src', selectedPet.img);
-      card__photo.setAttribute('alt', selectedPet.name);
-      card__name.innerText = selectedPet.name;
+      card.classList.add('hidden');
+
+      setTimeout(() => {
+        card__photo.setAttribute('src', selectedPet.img);
+        card__photo.setAttribute('alt', selectedPet.name);
+        card__name.innerText = selectedPet.name;
+        card.classList.remove('hidden');
+      }, 100)
     }
   })
 }

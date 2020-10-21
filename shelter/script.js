@@ -46,11 +46,8 @@ shuffleCards = () => {
       card__photo.setAttribute('src', PETS[random].img);
       card__photo.setAttribute('alt', PETS[random].name);
       card__name.innerText = PETS[random].name;
-    }, 100)
-
-    setTimeout(() => {
       card.style.setProperty('opacity', '1');
-    }, 200)
+    }, 100)
   })
 }
 
