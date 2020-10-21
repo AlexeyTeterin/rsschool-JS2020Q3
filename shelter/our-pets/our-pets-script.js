@@ -34,7 +34,7 @@ generate48pets = () => {
       let random = generateRandom();
 
       while (newEightPets.includes(random) ||
-        (newEightPets.length < 4 &&
+        (newEightPets.length < 3 &&
           pets_48_indexes.slice(pets_48_indexes.length - 4).includes(random)))
         random = generateRandom();
       newEightPets.push(random);
