@@ -22,9 +22,8 @@ const APP = {
       const pets = request.response;
       pets.forEach((pet) => this.PETS.push(pet));
     };
-    setTimeout(() => {
-      document.querySelector('.pets').classList.remove('hidden');
-    }, 50);
+
+    document.querySelector('.pets').classList.remove('hidden');
   },
 
   generateRandom() {
@@ -191,7 +190,7 @@ const APP = {
 
 APP.init();
 
-window.addEventListener('load', () => {
+document.addEventListener('DOMContentLoaded', () => {
   APP.ALL_48_PETS.push(...APP.generate48pets());
   APP.getNumOfPages();
 });
