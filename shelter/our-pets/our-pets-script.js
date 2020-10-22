@@ -22,8 +22,9 @@ const APP = {
       const pets = request.response;
       pets.forEach((pet) => this.PETS.push(pet));
     };
-
-    document.querySelector('.pets').classList.remove('hidden');
+    setTimeout(() => {
+      document.querySelector('.pets').classList.remove('hidden');
+    }, 50);
   },
 
   generateRandom() {
