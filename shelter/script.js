@@ -1,21 +1,23 @@
 const SLIDER_CARDS = Array.from(document.getElementsByClassName('card'));
 const SLIDER_BTNS = Array.from(document.getElementsByClassName('arrow'));
-const PETS = [];
 const POPUP = document.getElementById('popup');
 const POPUP_FIELDS = document.getElementsByClassName('field');
 const POPUP_CLOSE_BTN = document.getElementById('popup__close-btn');
 
-const request = new XMLHttpRequest();
-request.open('GET', 'our-pets/pets.json');
-request.responseType = 'json';
-request.send();
-
-request.onload = () => {
-  const pets = request.response;
-  pets.forEach((pet) => PETS.push(pet));
-};
-
 const APP = {
+  PETS: [],
+
+  init() {
+    const request = new XMLHttpRequest();
+    request.open('GET', 'our-pets/pets.json');
+    request.responseType = 'json';
+    request.send();
+
+    request.onload = () => {
+      const pets = request.response;
+      pets.forEach((pet) => this.PETS.push(pet));
+    };
+  },
 
   // Random number (1 - 8) generator
   generateRandom() {
@@ -29,7 +31,7 @@ const APP = {
 
     // getting current pets
     SLIDER_CARDS.forEach((card) => {
-      PETS.forEach((pet, index) => {
+      this.PETS.forEach((pet, index) => {
         if (pet.name === card.children[1].innerText) {
           threePets.push(index);
         }
@@ -50,9 +52,9 @@ const APP = {
       card.style.setProperty('opacity', '0');
 
       setTimeout(() => {
-        CARD__PHOTO.setAttribute('src', PETS[random].img);
-        CARD__PHOTO.setAttribute('alt', PETS[random].name);
-        CARD__NAME.innerText = PETS[random].name;
+        CARD__PHOTO.setAttribute('src', this.PETS[random].img);
+        CARD__PHOTO.setAttribute('alt', this.PETS[random].name);
+        CARD__NAME.innerText = this.PETS[random].name;
         card.style.setProperty('opacity', '1');
       }, 100);
     });
@@ -61,14 +63,16 @@ const APP = {
   // Hide popup window
   hidePetInfo() {
     POPUP.classList.add('hidden');
-    document.body.classList.remove('stop-scrolling');
+    window.onscroll = () => {};
   },
 
   // Show popup window
   showPetInfo(petName) {
     let currentPet = {};
 
-    PETS.forEach((pet) => {
+    this.stopScroll();
+
+    this.PETS.forEach((pet) => {
       if (pet.name === petName) {
         currentPet = pet;
       }
@@ -100,7 +104,15 @@ const APP = {
     POPUP.classList.remove('hidden');
     document.body.classList.add('stop-scrolling');
   },
+
+  stopScroll() {
+    const x = window.scrollX;
+    const y = window.scrollY;
+    window.onscroll = () => window.scrollTo(x, y);
+  },
 };
+
+APP.init();
 
 // Click on arrows calls cards shuffling
 SLIDER_BTNS.forEach((btn) => {
