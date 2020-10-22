@@ -562,6 +562,7 @@ main {
     justify-content: space-between;
     flex-wrap: wrap;
     margin-top: 45px;
+    transition: opacity 1s;
 
     @include max_1280() {
       justify-content: space-around;

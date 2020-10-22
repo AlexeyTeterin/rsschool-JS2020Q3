@@ -637,6 +637,8 @@ main .pets {
   -ms-flex-wrap: wrap;
       flex-wrap: wrap;
   margin-top: 45px;
+  -webkit-transition: opacity 1s;
+  transition: opacity 1s;
 }
 
 @media (max-width: 1279px) {
