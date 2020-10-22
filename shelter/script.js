@@ -52,7 +52,7 @@ const APP = {
       card.style.setProperty('opacity', '0');
 
       setTimeout(() => {
-        CARD__PHOTO.setAttribute('src', this.PETS[random].img);
+        CARD__PHOTO.setAttribute('src', this.PETS[random].img.slice(3));
         CARD__PHOTO.setAttribute('alt', this.PETS[random].name);
         CARD__NAME.innerText = this.PETS[random].name;
         card.style.setProperty('opacity', '1');
@@ -82,7 +82,7 @@ const APP = {
       const FIELD = field;
       switch (FIELD.id) {
         case 'photo':
-          FIELD.children[0].setAttribute('src', currentPet.img);
+          FIELD.children[0].setAttribute('src', currentPet.img.slice(3));
           FIELD.children[0].setAttribute('alt', currentPet.name);
           break;
         case 'name':
@@ -102,7 +102,6 @@ const APP = {
     });
 
     POPUP.classList.remove('hidden');
-    document.body.classList.add('stop-scrolling');
   },
 
   stopScroll() {
