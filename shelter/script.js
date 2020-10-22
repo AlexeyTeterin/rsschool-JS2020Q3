@@ -6,7 +6,7 @@ const POPUP_FIELDS = document.getElementsByClassName('field');
 const POPUP_CLOSE_BTN = document.getElementById('popup__close-btn');
 
 const request = new XMLHttpRequest();
-request.open('GET', '/our-pets/pets.json');
+request.open('GET', 'our-pets/pets.json');
 request.responseType = 'json';
 request.send();
 
@@ -15,103 +15,114 @@ request.onload = () => {
   pets.forEach((pet) => PETS.push(pet));
 };
 
-shuffleCards = () => {
-  const threePets = [];
-  const newThreePets = [];
-  generateRandom = () => Math.floor(Math.random() * 8);
+const APP = {
 
-  // getting current pets
-  SLIDER_CARDS.forEach((card) => {
-    PETS.forEach((pet, index) => {
-      if (pet.name === card.children[1].innerText) {
-        threePets.push(index);
+  // Random number (1 - 8) generator
+  generateRandom() {
+    return Math.floor(Math.random() * 8);
+  },
+
+  // Randomly shuffle cards
+  shuffleCards() {
+    const threePets = [];
+    const newThreePets = [];
+
+    // getting current pets
+    SLIDER_CARDS.forEach((card) => {
+      PETS.forEach((pet, index) => {
+        if (pet.name === card.children[1].innerText) {
+          threePets.push(index);
+        }
+      });
+    });
+
+    // generate new three pets
+    SLIDER_CARDS.forEach((card) => {
+      const CARD__PHOTO = card.children[0].children[0];
+      const CARD__NAME = card.children[1];
+      let random = this.generateRandom();
+
+      while (threePets.includes(random) || newThreePets.includes(random)) {
+        random = this.generateRandom();
       }
-    })
-  })
+      newThreePets.push(random);
 
-  // generate new three pets
-  SLIDER_CARDS.forEach((card) => {
-    const card__photo = card.children[0].children[0];
-    const card__name = card.children[1];
-    let random = generateRandom();
+      card.style.setProperty('opacity', '0');
 
-    while (threePets.includes(random) || newThreePets.includes(random)) random = generateRandom();
-    newThreePets.push(random);
+      setTimeout(() => {
+        CARD__PHOTO.setAttribute('src', PETS[random].img);
+        CARD__PHOTO.setAttribute('alt', PETS[random].name);
+        CARD__NAME.innerText = PETS[random].name;
+        card.style.setProperty('opacity', '1');
+      }, 100);
+    });
+  },
 
-    card.style.setProperty('opacity', '0');
+  // Hide popup window
+  hidePetInfo() {
+    POPUP.classList.add('hidden');
+    document.body.classList.remove('stop-scrolling');
+  },
 
-    setTimeout(() => {
-      card__photo.setAttribute('src', PETS[random].img);
-      card__photo.setAttribute('alt', PETS[random].name);
-      card__name.innerText = PETS[random].name;
-      card.style.setProperty('opacity', '1');
-    }, 100)
-  })
-}
+  // Show popup window
+  showPetInfo(petName) {
+    let currentPet = {};
 
+    PETS.forEach((pet) => {
+      if (pet.name === petName) {
+        currentPet = pet;
+      }
+    });
+
+    Array.from(POPUP_FIELDS).forEach((field) => {
+      const FIELD = field;
+      switch (FIELD.id) {
+        case 'photo':
+          FIELD.children[0].setAttribute('src', currentPet.img);
+          FIELD.children[0].setAttribute('alt', currentPet.name);
+          break;
+        case 'name':
+        case 'description':
+          FIELD.innerHTML = currentPet[field.id];
+          break;
+        case 'breed':
+          FIELD.innerHTML = `${currentPet.type} - ${currentPet.breed}`;
+          break;
+        default:
+          FIELD.innerHTML = `<b>${field.id.charAt(0).toUpperCase()}${field.id.slice(1)}: </b>`;
+          if (typeof currentPet[field.id] === 'object') FIELD.innerHTML += currentPet[field.id].join(', ');
+          else FIELD.innerHTML += currentPet[field.id];
+          break;
+      }
+      return FIELD;
+    });
+
+    POPUP.classList.remove('hidden');
+    document.body.classList.add('stop-scrolling');
+  },
+};
+
+// Click on arrows calls cards shuffling
 SLIDER_BTNS.forEach((btn) => {
   btn.addEventListener('click', () => {
-    shuffleCards();
-  })
-})
-
-// Hide popup window
-hidePetInfo = () => {
-  POPUP.classList.add('hidden');
-  document.body.classList.remove("stop-scrolling");
-}
-
-// Show popup window
-showPetInfo = (petName) => {
-  let currentPet = {};
-
-  PETS.forEach((pet) => {
-    if (pet.name === petName) {
-      currentPet = pet;
-    }
-  })
-
-  Array.from(POPUP_FIELDS).forEach((field) => {
-    switch (field.id) {
-      case 'photo':
-        field.children[0].setAttribute('src', currentPet.img);
-        field.children[0].setAttribute('alt', currentPet.name);
-        break;
-      case 'name':
-      case 'description':
-        field.innerHTML = currentPet[field.id];
-        break;
-      case 'breed':
-        field.innerHTML = currentPet.type + ' - ' + currentPet.breed;
-        break;
-      default:
-        field.innerHTML = '<b>' + field.id.charAt(0).toUpperCase() + field.id.slice(1) + ': </b>';
-        if (typeof currentPet[field.id] === 'object')
-          field.innerHTML += currentPet[field.id].join(', ');
-        else
-          field.innerHTML += currentPet[field.id];
-        break;
-    }
-  })
-
-  POPUP.classList.remove('hidden');
-  document.body.classList.add("stop-scrolling");
-}
-
-// Click on card calls for popup window
-SLIDER_CARDS.forEach((card) => {
-  card.addEventListener('click', () => {
-    showPetInfo(card.children[1].innerText);
-  })
-})
-
-// Click on close button
-POPUP_CLOSE_BTN.addEventListener('click', () => {
-  hidePetInfo();
+    APP.shuffleCards();
+  });
 });
 
-// Click on popup's background
+// Click on card opens popup window
+SLIDER_CARDS.forEach((card) => {
+  card.addEventListener('click', () => {
+    APP.showPetInfo(card.children[1].innerText);
+  });
+});
+
+// Click on close button hides popup
+POPUP_CLOSE_BTN.addEventListener('click', () => {
+  APP.hidePetInfo();
+});
+
+// Click on popup's background hides popup
 POPUP.addEventListener('click', (event) => {
-  if (event.target.id !== 'popup') return;
-  else hidePetInfo();
+  if (event.target.id !== 'popup');
+  else APP.hidePetInfo();
 });
