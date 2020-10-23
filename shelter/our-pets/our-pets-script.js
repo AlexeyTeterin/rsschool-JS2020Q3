@@ -9,7 +9,7 @@ const POPUP_FIELDS = document.getElementsByClassName('field');
 const POPUP_CLOSE_BTN = document.getElementById('popup__close-btn');
 
 const APP = {
-  numOfPages: 6,
+  numOfPages: 0,
   PETS: [],
   ALL_48_PETS: [],
 
@@ -22,6 +22,9 @@ const APP = {
       const pets = request.response;
       pets.forEach((pet) => this.PETS.push(pet));
     };
+
+    this.ALL_48_PETS.push(...this.generate48pets());
+    this.getNumOfPages();
   },
 
   generateRandom() {
@@ -97,8 +100,6 @@ const APP = {
       this.turnBtn(PAGE_NEXT, 'on');
       this.turnBtn(PAGE_END, 'on');
     }
-
-    this.fillCards(parseInt(PAGE.textContent, 10) - 1);
   },
 
   nextPage(index) {
@@ -190,11 +191,7 @@ const APP = {
 APP.init();
 
 window.addEventListener('load', () => {
-  APP.ALL_48_PETS.push(...APP.generate48pets());
-  APP.getNumOfPages();
-  // setTimeout(() => {
-  //   document.querySelector('.pets').classList.remove('hidden');
-  // }, 250);
+  APP.fillCards(1);
 });
 
 window.addEventListener('resize', () => {
@@ -232,4 +229,8 @@ POPUP_CLOSE_BTN.addEventListener('click', () => {
 POPUP.addEventListener('click', (event) => {
   if (event.target.id !== 'popup');
   else APP.hidePetInfo();
+});
+
+PAGE.addEventListener('DOMSubtreeModified', () => {
+  APP.fillCards(PAGE);
 });
