@@ -952,8 +952,13 @@ main a {
 }
 
 .donation .donation__text {
-  letter-spacing: 0.06em;
   text-align: left;
+}
+
+@media (max-width: 767px) {
+  .donation .donation__text {
+    text-align: center;
+  }
 }
 
 .donation .donation__pic {
