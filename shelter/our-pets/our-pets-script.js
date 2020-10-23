@@ -21,10 +21,14 @@ const APP = {
     request.onload = () => {
       const pets = request.response;
       pets.forEach((pet) => this.PETS.push(pet));
+      this.ALL_48_PETS.push(...this.generate48pets());
+      this.getNumOfPages();
+      this.fillCards();
     };
 
-    this.ALL_48_PETS.push(...this.generate48pets());
-    this.getNumOfPages();
+    VISIBLE_PETS.forEach((card) => {
+      card.children[0].append(document.createElement('img'));
+    });
   },
 
   generateRandom() {
@@ -68,10 +72,10 @@ const APP = {
     if (offset === undefined) page = 0;
 
     VISIBLE_PETS.forEach((card, index) => {
-      card.children[0].append(document.createElement('img'));
       const CARD__PHOTO = card.children[0].children[0];
       const CARD__NAME = card.children[1];
-      const selectedPet = APP.PETS[APP.ALL_48_PETS[index + (48 / APP.numOfPages) * page]];
+      const petIndex = APP.ALL_48_PETS[index + (48 / APP.numOfPages) * page];
+      const selectedPet = APP.PETS[petIndex];
 
       if (selectedPet !== undefined) {
         card.classList.add('hidden');
@@ -100,8 +104,6 @@ const APP = {
       this.turnBtn(PAGE_NEXT, 'on');
       this.turnBtn(PAGE_END, 'on');
     }
-
-    this.numOfPages -= 0;
   },
 
   nextPage(index) {
@@ -190,10 +192,8 @@ const APP = {
   },
 };
 
-APP.init();
-
-window.addEventListener('load', () => {
-  APP.fillCards();
+document.addEventListener('DOMContentLoaded', () => {
+  APP.init();
 });
 
 window.addEventListener('resize', () => {
