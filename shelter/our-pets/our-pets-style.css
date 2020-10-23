@@ -9,6 +9,7 @@
   -moz-transition: 50ms linear;
   -ms-transition: 50ms linear;
   -o-transition: 50ms linear;
+  -webkit-tap-highlight-color: transparent;
 }
 
 a {
@@ -74,6 +75,12 @@ button {
   letter-spacing: 0.06em;
   background: none;
   color: #292929;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
 }
 
 button:hover {

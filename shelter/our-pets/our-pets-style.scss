@@ -18,6 +18,8 @@ $col-dark-m: #B2B2B2;
   -moz-transition: 50ms linear;
   -ms-transition: 50ms linear;
   -o-transition: 50ms linear;
+
+  -webkit-tap-highlight-color: transparent;
 }
 
 @mixin max_1280 {
@@ -86,6 +88,14 @@ button {
 
   background: none;
   color: #292929;
+
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
 
   &:hover {
     background: $col-primary-light;
