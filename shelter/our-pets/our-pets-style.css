@@ -959,6 +959,14 @@ footer .footer__link {
           align-items: center;
 }
 
+@media (max-width: 767px) {
+  footer .footer__link {
+    -ms-flex-item-align: center;
+        -ms-grid-row-align: center;
+        align-self: center;
+  }
+}
+
 footer .footer__link a {
   font-family: Georgia, sans-serif;
   font-size: 20px;

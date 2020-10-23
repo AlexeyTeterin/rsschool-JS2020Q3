@@ -1143,6 +1143,10 @@ footer {
     display: flex;
     align-items: center;
 
+    @include max_768() {
+      align-self: center;
+    }
+
     a {
       font-family: Georgia, sans-serif;
       font-size: 20px;
