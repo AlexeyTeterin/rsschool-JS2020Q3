@@ -81,7 +81,7 @@ const APP = {
           CARD__PHOTO.setAttribute('alt', selectedPet.name);
           CARD__NAME.innerText = selectedPet.name;
           card.classList.remove('hidden');
-        }, 150);
+        }, 100);
       }
     });
   },
