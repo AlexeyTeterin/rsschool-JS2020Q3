@@ -65,6 +65,7 @@ const APP = {
     if (offset === undefined) page = 0;
 
     VISIBLE_PETS.forEach((card, index) => {
+      card.children[0].append(document.createElement('img'));
       const CARD__PHOTO = card.children[0].children[0];
       const CARD__NAME = card.children[1];
       const selectedPet = APP.PETS[APP.ALL_48_PETS[index + (48 / APP.numOfPages) * page]];
@@ -77,7 +78,7 @@ const APP = {
           CARD__PHOTO.setAttribute('alt', selectedPet.name);
           CARD__NAME.innerText = selectedPet.name;
           card.classList.remove('hidden');
-        }, 100);
+        }, 150);
       }
     });
   },
@@ -191,9 +192,9 @@ APP.init();
 window.addEventListener('load', () => {
   APP.ALL_48_PETS.push(...APP.generate48pets());
   APP.getNumOfPages();
-  setTimeout(() => {
-    document.querySelector('.pets').classList.remove('hidden');
-  }, 250);
+  // setTimeout(() => {
+  //   document.querySelector('.pets').classList.remove('hidden');
+  // }, 250);
 });
 
 window.addEventListener('resize', () => {
