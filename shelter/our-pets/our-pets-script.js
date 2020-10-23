@@ -191,7 +191,7 @@ const APP = {
 APP.init();
 
 window.addEventListener('load', () => {
-  APP.fillCards(1);
+  APP.fillCards();
 });
 
 window.addEventListener('resize', () => {
