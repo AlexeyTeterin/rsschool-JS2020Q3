@@ -6,6 +6,12 @@ const MENU_ELEMENTS_DISABLED = Array.from(document.getElementsByClassName('disab
 const LOGO = document.getElementsByClassName('logo')[0];
 const LOGO2 = document.getElementsByClassName('logo2')[0];
 
+const stopScroll = () => {
+  const x = window.scrollX;
+  const y = window.scrollY;
+  window.onscroll = () => window.scrollTo(x, y);
+};
+
 const hideMenu = () => {
   MENU.classList.add('header__menu_hide');
   BURGER.classList.remove('burger__img_active');
@@ -15,6 +21,7 @@ const hideMenu = () => {
   menuBlock.classList.add('hidden');
   LOGO.classList.remove('hidden');
   LOGO2.classList.add('hidden');
+  window.onscroll = () => {};
 };
 
 const showMenu = () => {
@@ -27,6 +34,7 @@ const showMenu = () => {
   menuBlock.classList.remove('hidden');
   LOGO.classList.add('hidden');
   LOGO2.classList.remove('hidden');
+  stopScroll();
 };
 
 // Open/close burger-menu
@@ -53,7 +61,8 @@ MENU_ELEMENTS.forEach((a) => {
   a.addEventListener('click', () => {
     if (a.classList.contains('disabled')) {
       return false;
-    } setTimeout(() => {
+    }
+    setTimeout(() => {
       hideMenu();
     }, 50);
     return true;
