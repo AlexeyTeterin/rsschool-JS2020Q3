@@ -27,10 +27,12 @@ const APP = {
     };
   },
 
+  // Random number (1 - 8) generator
   generateRandom() {
     return Math.floor(Math.random() * 8);
   },
 
+  // Genereates pseudorandom array of 48 pets
   generate48pets() {
     const PETS_48_INDEXES = [];
 
@@ -188,26 +190,27 @@ const APP = {
   },
 };
 
+// Fill cards on load
 document.addEventListener('DOMContentLoaded', () => {
   APP.init();
 });
 
+// On resize change pages and cards
 window.addEventListener('resize', () => {
   APP.getNumOfPages();
   APP.fillCards(parseInt(PAGE.textContent, 10) - 1);
 });
 
+// On arrow clicks switch pages
 PAGE_NEXT.addEventListener('click', () => {
   APP.nextPage();
 });
 PAGE_PREV.addEventListener('click', () => {
   APP.prevPage();
 });
-
 PAGE_END.addEventListener('click', () => {
   APP.nextPage(APP.numOfPages);
 });
-
 PAGE_START.addEventListener('click', () => {
   APP.prevPage(1);
 });
@@ -219,12 +222,10 @@ VISIBLE_PETS.forEach((card) => {
   });
 });
 
-// Click on close button
+// Click on close button or popup's bg hides popup
 POPUP_CLOSE_BTN.addEventListener('click', () => {
   APP.hidePetInfo();
 });
-
-// Click on popup's background
 POPUP.addEventListener('click', (event) => {
   if (event.target.id !== 'popup');
   else APP.hidePetInfo();
