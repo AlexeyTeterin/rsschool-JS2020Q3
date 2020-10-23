@@ -952,7 +952,7 @@ main a {
 
 .donation .donation__text {
   letter-spacing: 0.06em;
-  text-align: center;
+  text-align: left;
 }
 
 .donation .donation__pic {
