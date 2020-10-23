@@ -25,10 +25,6 @@ const APP = {
       this.getNumOfPages();
       this.fillCards();
     };
-
-    VISIBLE_PETS.forEach((card) => {
-      card.children[0].append(document.createElement('img'));
-    });
   },
 
   generateRandom() {
