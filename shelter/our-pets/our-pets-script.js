@@ -100,6 +100,8 @@ const APP = {
       this.turnBtn(PAGE_NEXT, 'on');
       this.turnBtn(PAGE_END, 'on');
     }
+
+    this.numOfPages -= 0;
   },
 
   nextPage(index) {
@@ -196,6 +198,7 @@ window.addEventListener('load', () => {
 
 window.addEventListener('resize', () => {
   APP.getNumOfPages();
+  APP.fillCards(parseInt(PAGE.textContent, 10) - 1);
 });
 
 PAGE_NEXT.addEventListener('click', () => {
@@ -229,8 +232,4 @@ POPUP_CLOSE_BTN.addEventListener('click', () => {
 POPUP.addEventListener('click', (event) => {
   if (event.target.id !== 'popup');
   else APP.hidePetInfo();
-});
-
-PAGE.addEventListener('DOMSubtreeModified', () => {
-  APP.fillCards(PAGE);
 });
