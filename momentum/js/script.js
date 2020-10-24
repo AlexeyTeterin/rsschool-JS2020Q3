@@ -4,6 +4,7 @@ const DATE = document.getElementById('date');
 const GREETING = document.getElementById('greeting');
 const NAME = document.getElementById('name');
 const GOAL = document.getElementById('goal');
+const WEATHER = document.getElementById('weather');
 
 const APP = {
   run() {
@@ -12,6 +13,7 @@ const APP = {
     this.setBGGreet();
     this.getName();
     this.getGoal();
+    this.getCity();
   },
 
   showTime() {
@@ -71,7 +73,7 @@ const APP = {
       }
     } else if (event.target.innerText !== '') {
       localStorage.setItem('name', event.target.innerText);
-    } else getName();
+    } else APP.getName();
   },
 
   getGoal() {
@@ -89,7 +91,25 @@ const APP = {
       }
     } else if (event.target.innerText !== '') {
       localStorage.setItem('goal', event.target.innerText);
-    } else getGoal();
+    } else APP.getGoal();
+  },
+
+  getCity() {
+    if (localStorage.getItem('city') === null) {
+      WEATHER.textContent = '[Enter yor city]';
+    } else {
+      WEATHER.textContent = localStorage.getItem('city');
+    }
+  },
+
+  setCity(event) {
+    if (event.type === 'keypress') {
+      if (event.which === 13 || event.keyCode === 13) {
+        WEATHER.blur();
+      }
+    } else if (event.target.innerText !== '') {
+      localStorage.setItem('city', event.target.innerText);
+    } else APP.getCity();
   },
 };
 
@@ -98,5 +118,7 @@ NAME.addEventListener('keypress', APP.setName);
 NAME.addEventListener('blur', APP.setName);
 GOAL.addEventListener('keypress', APP.setGoal);
 GOAL.addEventListener('blur', APP.setGoal);
+WEATHER.addEventListener('keypress', APP.setCity);
+WEATHER.addEventListener('blur', APP.setCity);
 
 APP.run();
