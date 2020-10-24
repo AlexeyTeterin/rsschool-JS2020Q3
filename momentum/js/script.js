@@ -1,11 +1,12 @@
 // DOM Elements
 const TIME = document.getElementById('time');
+const DATE = document.getElementById('date');
 const GREETING = document.getElementById('greeting');
 const NAME = document.getElementById('name');
 const GOAL = document.getElementById('goal');
 
 // Show time
-function showTime() {
+const showTime = () => {
   const today = new Date();
   const hour = today.getHours();
   const min = today.getMinutes();
@@ -18,7 +19,18 @@ function showTime() {
   TIME.innerHTML = `${hour}<span>:</span>${addZero(min)}<span>:</span>${addZero(sec)}`;
 
   setTimeout(showTime, 1000);
-}
+};
+
+// SHow Date
+const showDate = () => {
+  const today = new Date();
+  const day = today.getDate();
+  const weekDay = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'][today.getDay()];
+  const month = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'][today.getMonth()];
+
+  // Output Date
+  DATE.innerHTML = `${weekDay}, ${month} ${day}`;
+};
 
 // Set BG and Greeting
 const setBGGreet = () => {
@@ -38,28 +50,6 @@ const setBGGreet = () => {
   }
 };
 
-// Set Name
-const setName = (event) => {
-  if (event.type === 'keypress') {
-    if (event.which === 13 || event.keyCode === 13) {
-      NAME.blur();
-    }
-  } else {
-    localStorage.setItem('name', event.target.innerText);
-  }
-};
-
-// Set Goal
-const setGoal = (event) => {
-  if (event.type === 'keypress') {
-    if (event.which === 13 || event.keyCode === 13) {
-      GOAL.blur();
-    }
-  } else {
-    localStorage.setItem('goal', event.target.innerText);
-  }
-};
-
 // Get Name
 const getName = () => {
   if (localStorage.getItem('name') === null) {
@@ -67,6 +57,17 @@ const getName = () => {
   } else {
     NAME.textContent = localStorage.getItem('name');
   }
+};
+
+// Set Name
+const setName = (event) => {
+  if (event.type === 'keypress') {
+    if (event.which === 13 || event.keyCode === 13) {
+      NAME.blur();
+    }
+  } else if (event.target.innerText !== '') {
+    localStorage.setItem('name', event.target.innerText);
+  } else getName();
 };
 
 // Get GOAL
@@ -78,6 +79,17 @@ const getGoal = () => {
   }
 };
 
+// Set Goal
+const setGoal = (event) => {
+  if (event.type === 'keypress') {
+    if (event.which === 13 || event.keyCode === 13) {
+      GOAL.blur();
+    }
+  } else if (event.target.innerText !== '') {
+    localStorage.setItem('goal', event.target.innerText);
+  } else getGoal();
+};
+
 NAME.addEventListener('keypress', setName);
 NAME.addEventListener('blur', setName);
 GOAL.addEventListener('keypress', setGoal);
@@ -85,6 +97,7 @@ GOAL.addEventListener('blur', setGoal);
 
 // Run
 showTime();
+showDate();
 setBGGreet();
 getName();
 getGoal();
