@@ -5,6 +5,11 @@ const GREETING = document.getElementById('greeting');
 const NAME = document.getElementById('name');
 const GOAL = document.getElementById('goal');
 const WEATHER = document.getElementById('weather');
+const weatherIcon = document.querySelector('.weather-icon');
+const temperature = document.querySelector('.temperature');
+const weatherDescription = document.querySelector('.weather-description');
+const weatherWind = document.querySelector('.weather-wind');
+const weatherHumidity = document.querySelector('.weather-humidity');
 
 const APP = {
   run() {
@@ -14,6 +19,7 @@ const APP = {
     this.getName();
     this.getGoal();
     this.getCity();
+    this.getWeather();
   },
 
   showTime() {
@@ -105,11 +111,36 @@ const APP = {
   setCity(event) {
     if (event.type === 'keypress') {
       if (event.which === 13 || event.keyCode === 13) {
+        APP.getWeather();
         WEATHER.blur();
       }
     } else if (event.target.innerText !== '') {
       localStorage.setItem('city', event.target.innerText);
-    } else APP.getCity();
+    } else {
+      APP.getCity();
+      APP.getWeather();
+    }
+  },
+
+  async getWeather() {
+    const APIkey = '1ab9afb1a4fe7697d9c2df60ecdab26c';
+    const url = `https://api.openweathermap.org/data/2.5/weather?q=${WEATHER.textContent}&lang=en&appid=${APIkey}&units=metric`;
+    try {
+      const res = await fetch(url);
+      const data = await res.json();
+
+      weatherIcon.classList.add(`owf-${data.weather[0].id}`);
+      temperature.textContent = `${data.main.temp}°C`;
+      weatherDescription.textContent = data.weather[0].description;
+      weatherWind.textContent = `Wind: ${data.wind.speed} m/s`;
+      weatherHumidity.textContent = `Humidity: ${data.main.humidity}%`;
+    } catch (error) {
+      weatherIcon.className = 'weather-icon owf';
+      temperature.textContent = '';
+      weatherDescription.textContent = 'Город с таким название не найден!';
+      weatherWind.textContent = '';
+      weatherHumidity.textContent = '';
+    }
   },
 };
 
@@ -120,5 +151,7 @@ GOAL.addEventListener('keypress', APP.setGoal);
 GOAL.addEventListener('blur', APP.setGoal);
 WEATHER.addEventListener('keypress', APP.setCity);
 WEATHER.addEventListener('blur', APP.setCity);
+// WEATHER.addEventListener('blur', APP.getWeather);
+document.addEventListener('DOMContentLoaded', APP.getWeather);
 
 APP.run();

@@ -25,6 +25,7 @@ body {
   color: black;
   background-size: cover;
   background-position: center;
+  text-shadow: 0px 0px 4px rgba(255, 255, 255, 0.99);
 }
 
 #time {
@@ -49,4 +50,8 @@ h1 {
 h2 {
   margin-bottom: 0.5rem;
   opacity: 0.6;
+}
+
+.weather-icon {
+  font-size: 2.5rem;
 }
