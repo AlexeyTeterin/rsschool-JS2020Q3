@@ -13,11 +13,8 @@ const stopScroll = () => {
 };
 
 const hideMenu = () => {
-  MENU.classList.add('header__menu_hide');
   BURGER.classList.remove('burger__img_active');
-  setTimeout(() => {
-    MENU.classList.remove('header__menu_show');
-  }, 250);
+  MENU.classList.add('header__menu_hide');
   menuBlock.classList.add('hidden');
   LOGO.classList.remove('hidden');
   LOGO2.classList.add('hidden');
@@ -59,12 +56,10 @@ MENU_ELEMENTS_DISABLED.forEach((a) => {
 // Close menu on li click
 MENU_ELEMENTS.forEach((a) => {
   a.addEventListener('click', () => {
-    if (a.classList.contains('disabled')) {
-      return false;
-    }
+    if (a.classList.contains('disabled')) return false;
+    window.onscroll = () => {};
     setTimeout(() => {
       hideMenu();
-    }, 50);
-    return true;
+    }, 100);
   });
 });
