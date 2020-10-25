@@ -192,7 +192,7 @@ const APP = {
         APP.getWeather();
         WEATHER.blur();
       }
-    } else if (event.target.innerText !== '') {
+    } else if (event.target.innerText.trim() !== '') {
       localStorage.setItem('city', event.target.innerText);
     } else {
       APP.getCity();
