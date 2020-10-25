@@ -10,9 +10,11 @@ body {
   align-items: center;
   justify-content: center;
   text-align: center;
-width: 100%;
+  width: 100%;
   background-size: cover;
   background-position: center;
+
+  transition: background-image 0.5s ease-in-out;
 
   .overlay {
     display: flex;
@@ -56,4 +58,25 @@ h2 {
 
 .weather-icon {
   font-size: 2.5rem;
+}
+
+.btn {
+    width: 40px;
+    height: 40px;
+    border: 0;
+    background: url("https://www.pngarts.com/files/7/Update-Button-PNG-Image.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    filter: grayscale(1);
+    margin: 10px;
+    outline: none;
+
+    &:hover {
+      cursor: pointer;
+      opacity: 0.8;
+    }
+
+    &:active{
+      transform: scale(0.9);
+    }
 }

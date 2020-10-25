@@ -10,16 +10,76 @@ const temperature = document.querySelector('.temperature');
 const weatherDescription = document.querySelector('.weather-description');
 const weatherWind = document.querySelector('.weather-wind');
 const weatherHumidity = document.querySelector('.weather-humidity');
+const btn = document.querySelector('.btn');
 
 const APP = {
+  base: 'https://raw.githubusercontent.com/irinainina/ready-projects/momentum/momentum/assets/images/',
+  images: ['01.jpg', '02.jpg', '03.jpg', '04.jpg', '05.jpg', '06.jpg',
+    '07.jpg', '08.jpg', '09.jpg', '10.jpg', '11.jpg', '12.jpg', '13.jpg', '14.jpg',
+    '15.jpg', '16.jpg', '17.jpg', '18.jpg', '19.jpg', '20.jpg'],
+  i: 0,
+  today_24_images: [],
+
+  generateRandom() {
+    return Math.ceil(Math.random() * 20) - 1;
+  },
+
+  setToday_24_Images() {
+    setToday_6_Images = () => {
+      const images = [];
+      for (let j = 0; j < 6; j += 1) {
+        let random = APP.generateRandom();
+        while (images.includes(APP.images[random])) {
+          random = APP.generateRandom();
+        }
+        images.push(APP.images[random]);
+      };
+      return images;
+    };
+
+    const today_6_images = setToday_6_Images();
+    const dayPart = ['night/', 'morning/', 'day/', 'evening/'];
+    for (let k = 0; k < 4; k += 1) {
+      today_6_images.forEach((img) => {
+        const currentImg = `${dayPart[k]}${img}`;
+        APP.today_24_images.push(currentImg);
+      });
+    }
+  },
+
+  viewBgImage(data) {
+    const body = document.querySelector('body');
+    const src = data;
+    const img = document.createElement('img');
+    img.src = src;
+    img.onload = () => {
+      body.style.backgroundImage = `url(${src})`;
+    };
+  },
+
+  getImage(hour) {
+    let index = hour;
+    APP.i += 1;
+    if (APP.i === 24) APP.i = 0;
+    if (typeof index !== 'number') index = APP.i;
+    console.log(`index = ${index}`)
+
+    const imageSrc = `${APP.base}${APP.today_24_images[index]}`;
+    console.log(imageSrc);
+    APP.viewBgImage(imageSrc);
+    btn.disabled = true;
+    setTimeout(() => btn.disabled = false, 500);
+  },
+
   run() {
     this.showTime();
     this.showDate();
-    this.setBGGreet();
     this.getName();
     this.getGoal();
     this.getCity();
     this.getWeather();
+    this.setToday_24_Images();
+    this.setBGGreet();
   },
 
   showTime() {
@@ -55,20 +115,19 @@ const APP = {
   setBGGreet() {
     const today = new Date();
     const hour = today.getHours();
+    APP.i = hour;
 
     if (hour < 6) {
-      document.body.style.backgroundImage = "url('../img/night.jpg')";
       GREETING.textContent = 'Good night';
     } else if (hour < 12) {
-      document.body.style.backgroundImage = "url('../img/morning.jpg')";
       GREETING.textContent = 'Good morning';
     } else if (hour < 18) {
-      document.body.style.backgroundImage = "url('../img/afternoon.jpg')";
       GREETING.textContent = 'Good afternoon';
     } else {
-      document.body.style.backgroundImage = "url('../img/evening.jpg')";
       GREETING.textContent = 'Good evening';
     }
+
+    APP.getImage(hour);
   },
 
   getName() {
@@ -159,7 +218,7 @@ GOAL.addEventListener('keypress', APP.setGoal);
 GOAL.addEventListener('blur', APP.setGoal);
 WEATHER.addEventListener('keypress', APP.setCity);
 WEATHER.addEventListener('blur', APP.setCity);
-// WEATHER.addEventListener('blur', APP.getWeather);
 document.addEventListener('DOMContentLoaded', APP.getWeather);
+btn.addEventListener('click', APP.getImage);
 
 APP.run();
