@@ -3,6 +3,7 @@
   margin: 0;
   padding: 0;
   outline: none;
+  transition: all 0.25s ease-in-out;
 }
 
 body {
@@ -47,7 +48,11 @@ body {
 }
 
 #date {
-  font-size: 1.5rem;
+  font-size: 1.2rem;
+
+  @include max_700() {
+    font-size: 1rem;
+  }
 }
 
 #weather {
@@ -68,6 +73,14 @@ h2 {
 
   @include max_700() {
     font-size: 1.2em;
+  }
+}
+
+h3 {
+  font-weight: 400;
+
+  @include max_700() {
+    font-size: 0.9em;
   }
 }
 
@@ -103,7 +116,7 @@ h2 {
   position: relative;
   min-height: 2rem;
   font-size: 1.2rem;
-  margin: 0;
+  margin: 5px;
   background: rgba(255, 255, 255, 0.15);
   padding: 0.5em;
   border-radius: 1em;

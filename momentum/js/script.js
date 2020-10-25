@@ -217,7 +217,7 @@ const APP = {
     } catch (error) {
       weatherIcon.className = 'weather-icon owf';
       temperature.textContent = '';
-      weatherDescription.textContent = 'Город с таким название не найден!';
+      weatherDescription.textContent = 'Incorrect city name!';
       weatherWind.textContent = '';
       weatherHumidity.textContent = '';
     }
@@ -229,7 +229,7 @@ const APP = {
     const data = await res.json();
 
     figure.style.setProperty('opacity', '0');
-    
+
     if (data.en !== undefined) {
       setTimeout(() => {
         blockquote.textContent = data.en;

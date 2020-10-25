@@ -4,6 +4,8 @@
   margin: 0;
   padding: 0;
   outline: none;
+  -webkit-transition: all 0.25s ease-in-out;
+  transition: all 0.25s ease-in-out;
 }
 
 body {
@@ -59,7 +61,13 @@ body .overlay {
 }
 
 #date {
-  font-size: 1.5rem;
+  font-size: 1.2rem;
+}
+
+@media (max-width: 700px) {
+  #date {
+    font-size: 1rem;
+  }
 }
 
 #weather {
@@ -84,6 +92,16 @@ h2 {
 @media (max-width: 700px) {
   h2 {
     font-size: 1.2em;
+  }
+}
+
+h3 {
+  font-weight: 400;
+}
+
+@media (max-width: 700px) {
+  h3 {
+    font-size: 0.9em;
   }
 }
 
@@ -120,7 +138,7 @@ h2 {
   position: relative;
   min-height: 2rem;
   font-size: 1.2rem;
-  margin: 0;
+  margin: 5px;
   background: rgba(255, 255, 255, 0.15);
   padding: 0.5em;
   border-radius: 1em;
