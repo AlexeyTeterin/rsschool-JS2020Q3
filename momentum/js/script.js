@@ -32,7 +32,8 @@ const APP = {
     const addZero = (n) => (parseInt(n, 10) < 10 ? '0' : '') + n;
 
     // Output Time
-    TIME.innerHTML = `${hour}<span>:</span>${addZero(min)}<span>:</span>${addZero(sec)}`;
+    TIME.innerHTML =
+      `${hour}<span>:</span>${addZero(min)}<span>:</span>${addZero(sec)}`;
 
     setTimeout(APP.showTime, 1000);
   },
@@ -40,8 +41,12 @@ const APP = {
   showDate() {
     const today = new Date();
     const day = today.getDate();
-    const weekDay = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'][today.getDay()];
-    const month = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'][today.getMonth()];
+    const weekDay = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday',
+      'Friday', 'Saturday'
+    ][today.getDay()];
+    const month = ['January', 'February', 'March', 'April', 'May', 'June',
+      'July', 'August', 'September', 'October', 'November', 'December'
+    ][today.getMonth()];
 
     // Output Date
     DATE.innerHTML = `${weekDay}, ${month} ${day}`;
@@ -124,7 +129,8 @@ const APP = {
 
   async getWeather() {
     const APIkey = '1ab9afb1a4fe7697d9c2df60ecdab26c';
-    const url = `https://api.openweathermap.org/data/2.5/weather?q=${WEATHER.textContent}&lang=en&appid=${APIkey}&units=metric`;
+    const url =
+      `https://api.openweathermap.org/data/2.5/weather?q=${WEATHER.textContent}&lang=en&appid=${APIkey}&units=metric`;
     try {
       const res = await fetch(url);
       const data = await res.json();
