@@ -115,6 +115,8 @@ const APP = {
   setBGGreet() {
     const today = new Date();
     const hour = today.getHours();
+    let timer = (60 - today.getMinutes()) * 60000 - today.getSeconds()*1000;
+    if (timer <= 0) timer = 1000 * 60 * 60;
     APP.i = hour;
 
     if (hour < 6) {
@@ -128,6 +130,8 @@ const APP = {
     }
 
     APP.getImage(hour);
+    console.log(`timer = ${timer}`);
+    setTimeout(this.setBGGreet, timer);
   },
 
   getName() {
