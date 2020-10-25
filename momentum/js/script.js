@@ -124,17 +124,16 @@ const APP = {
     APP.i = hour;
 
     if (hour < 6) {
-      GREETING.textContent = 'Good night';
+      GREETING.textContent = 'Good night,';
     } else if (hour < 12) {
-      GREETING.textContent = 'Good morning';
+      GREETING.textContent = 'Good morning,';
     } else if (hour < 18) {
-      GREETING.textContent = 'Good afternoon';
+      GREETING.textContent = 'Good afternoon,';
     } else {
-      GREETING.textContent = 'Good evening';
+      GREETING.textContent = 'Good evening,';
     }
 
     APP.getImage(hour);
-    console.log(`timer = ${timer}`);
     setTimeout(this.setBGGreet, timer);
   },
 
@@ -151,7 +150,7 @@ const APP = {
       if (event.which === 13 || event.keyCode === 13) {
         NAME.blur();
       }
-    } else if (event.target.innerText !== '') {
+    } else if (event.target.innerText.trim() !== '') {
       localStorage.setItem('name', event.target.innerText);
     } else APP.getName();
   },
@@ -175,7 +174,7 @@ const APP = {
   },
 
   clearField(field) {
-    console.log('click');
+    console.log(field.target.parentNode);
     field.target.textContent = '';
   },
 

@@ -70,6 +70,10 @@ body .overlay {
   }
 }
 
+#name {
+  text-align: right;
+}
+
 #weather {
   margin-bottom: 0;
 }
@@ -77,6 +81,9 @@ body .overlay {
 h1 {
   margin-top: 1rem;
   margin-bottom: 2rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
 }
 
 @media (max-width: 700px) {
