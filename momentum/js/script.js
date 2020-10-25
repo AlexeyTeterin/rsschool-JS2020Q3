@@ -24,12 +24,23 @@ const APP = {
   i: 0,
   today_24_images: [],
 
+  run() {
+    this.showTime();
+    this.showDate();
+    this.getName();
+    this.getGoal();
+    this.getCity();
+    this.getWeather();
+    this.setToday_24_Images();
+    this.setBGGreet();
+  },
+
   generateRandom() {
     return Math.ceil(Math.random() * 20) - 1;
   },
 
   setToday_24_Images() {
-    setToday_6_Images = () => {
+    const setToday6Images = () => {
       const images = [];
       for (let j = 0; j < 6; j += 1) {
         let random = APP.generateRandom();
@@ -37,14 +48,14 @@ const APP = {
           random = APP.generateRandom();
         }
         images.push(APP.images[random]);
-      };
+      }
       return images;
     };
 
-    const today_6_images = setToday_6_Images();
+    const today6images = setToday6Images();
     const dayPart = ['night/', 'morning/', 'day/', 'evening/'];
     for (let k = 0; k < 4; k += 1) {
-      today_6_images.forEach((img) => {
+      today6images.forEach((img) => {
         const currentImg = `${dayPart[k]}${img}`;
         APP.today_24_images.push(currentImg);
       });
@@ -66,24 +77,16 @@ const APP = {
     APP.i += 1;
     if (APP.i === 24) APP.i = 0;
     if (typeof index !== 'number') index = APP.i;
-    console.log(`index = ${index}`)
+    console.log(`index = ${index}`);
 
     const imageSrc = `${APP.base}${APP.today_24_images[index]}`;
     console.log(imageSrc);
     APP.viewBgImage(imageSrc);
     BGbtn.disabled = true;
-    setTimeout(() => BGbtn.disabled = false, 500);
-  },
-
-  run() {
-    this.showTime();
-    this.showDate();
-    this.getName();
-    this.getGoal();
-    this.getCity();
-    this.getWeather();
-    this.setToday_24_Images();
-    this.setBGGreet();
+    setTimeout(() => {
+      BGbtn.disabled = false;
+      return true;
+    }, 500);
   },
 
   showTime() {
@@ -96,8 +99,7 @@ const APP = {
     const addZero = (n) => (parseInt(n, 10) < 10 ? '0' : '') + n;
 
     // Output Time
-    TIME.innerHTML =
-      `${hour}<span>:</span>${addZero(min)}<span>:</span>${addZero(sec)}`;
+    TIME.innerHTML = `${hour}<span>:</span>${addZero(min)}<span>:</span>${addZero(sec)}`;
 
     setTimeout(APP.showTime, 1000);
   },
@@ -106,11 +108,9 @@ const APP = {
     const today = new Date();
     const day = today.getDate();
     const weekDay = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday',
-      'Friday', 'Saturday'
-    ][today.getDay()];
+      'Friday', 'Saturday'][today.getDay()];
     const month = ['January', 'February', 'March', 'April', 'May', 'June',
-      'July', 'August', 'September', 'October', 'November', 'December'
-    ][today.getMonth()];
+      'July', 'August', 'September', 'October', 'November', 'December'][today.getMonth()];
 
     // Output Date
     DATE.innerHTML = `${weekDay}, ${month} ${day}`;
@@ -174,8 +174,9 @@ const APP = {
   },
 
   clearField(field) {
-    console.log(field.target.parentNode);
-    field.target.textContent = '';
+    const content = field.target;
+    content.textContent = '';
+    return content;
   },
 
   getCity() {
@@ -202,8 +203,7 @@ const APP = {
 
   async getWeather() {
     const APIkey = '1ab9afb1a4fe7697d9c2df60ecdab26c';
-    const url =
-      `https://api.openweathermap.org/data/2.5/weather?q=${WEATHER.textContent}&lang=en&appid=${APIkey}&units=metric`;
+    const url = `https://api.openweathermap.org/data/2.5/weather?q=${WEATHER.textContent}&lang=en&appid=${APIkey}&units=metric`;
     try {
       const res = await fetch(url);
       const data = await res.json();
@@ -223,7 +223,7 @@ const APP = {
   },
 
   async getQuote() {
-    const url = `https://programming-quotes-api.herokuapp.com/quotes/random`;
+    const url = 'https://programming-quotes-api.herokuapp.com/quotes/random';
     const res = await fetch(url);
     const data = await res.json();
 
@@ -233,7 +233,7 @@ const APP = {
       setTimeout(() => {
         blockquote.textContent = data.en;
         figcaption.textContent = data.author;
-        figure.style.setProperty('opacity', '1')
+        figure.style.setProperty('opacity', '1');
       }, 250);
     }
   },
