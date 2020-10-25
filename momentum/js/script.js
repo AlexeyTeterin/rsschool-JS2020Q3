@@ -56,7 +56,10 @@ const APP = {
     const today = new Date();
     const hour = today.getHours();
 
-    if (hour < 12) {
+    if (hour < 6) {
+      document.body.style.backgroundImage = "url('../img/night.jpg')";
+      GREETING.textContent = 'Good night';
+    } else if (hour < 12) {
       document.body.style.backgroundImage = "url('../img/morning.jpg')";
       GREETING.textContent = 'Good morning';
     } else if (hour < 18) {
@@ -65,7 +68,6 @@ const APP = {
     } else {
       document.body.style.backgroundImage = "url('../img/evening.jpg')";
       GREETING.textContent = 'Good evening';
-      document.body.style.color = 'white';
     }
   },
 

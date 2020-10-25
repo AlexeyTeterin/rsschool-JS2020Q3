@@ -17,6 +17,7 @@ body {
       -ms-flex-pack: center;
           justify-content: center;
   text-align: center;
+  width: 100%;
   background-size: cover;
   background-position: center;
 }
