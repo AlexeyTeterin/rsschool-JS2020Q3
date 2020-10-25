@@ -38,6 +38,7 @@ body {
 
 #time {
   font-size: 8rem;
+  line-height: 1;
 
   @include max_700() {
     font-size: 6rem;
@@ -55,6 +56,10 @@ h1 {
 
 h2 {
   margin-bottom: 0.5rem;
+}
+
+#weather {
+  margin-bottom: 0;
 }
 
 .weather-icon {
