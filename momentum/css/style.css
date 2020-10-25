@@ -3,6 +3,7 @@
           box-sizing: border-box;
   margin: 0;
   padding: 0;
+  outline: none;
 }
 
 body {
@@ -53,7 +54,7 @@ body .overlay {
 
 @media (max-width: 700px) {
   #time {
-    font-size: 6rem;
+    font-size: 5rem;
   }
 }
 
@@ -61,24 +62,38 @@ body .overlay {
   font-size: 1.5rem;
 }
 
+#weather {
+  margin-bottom: 0;
+}
+
 h1 {
   margin-top: 1rem;
   margin-bottom: 2rem;
+}
+
+@media (max-width: 700px) {
+  h1 {
+    font-size: 1.5em;
+  }
 }
 
 h2 {
   margin-bottom: 0.5rem;
 }
 
-#weather {
-  margin-bottom: 0;
+@media (max-width: 700px) {
+  h2 {
+    font-size: 1.2em;
+  }
 }
 
 .weather-icon {
   font-size: 2.5rem;
 }
 
-.btn {
+.bg-btn, .quote .quote-btn {
+  position: absolute;
+  top: 10px;
   width: 40px;
   height: 40px;
   border: 0;
@@ -91,12 +106,57 @@ h2 {
   outline: none;
 }
 
-.btn:hover {
+.bg-btn:hover, .quote .quote-btn:hover {
   cursor: pointer;
   opacity: 0.8;
 }
 
-.btn:active {
+.bg-btn:active, .quote .quote-btn:active {
   -webkit-transform: scale(0.9);
           transform: scale(0.9);
+}
+
+.quote {
+  position: relative;
+  min-height: 2rem;
+  font-size: 1.2rem;
+  margin: 0;
+  background: rgba(255, 255, 255, 0.15);
+  padding: 0.5em;
+  border-radius: 1em;
+  -webkit-transition: all 250ms ease-in-out;
+  transition: all 250ms ease-in-out;
+  text-align: left;
+}
+
+@media (max-width: 700px) {
+  .quote {
+    font-size: 0.9rem;
+  }
+}
+
+.quote figcaption {
+  font-size: 0.9rem;
+  text-align: right;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+@media (max-width: 700px) {
+  .quote figcaption {
+    font-size: 0.8rem;
+  }
+}
+
+.quote .quote-btn {
+  margin: 0;
+  margin-bottom: 0.5em;
+  float: right;
+  position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-line-pack: right;
+      align-content: right;
+  width: 25px;
+  height: 25px;
 }

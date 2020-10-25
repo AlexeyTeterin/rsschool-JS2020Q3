@@ -10,7 +10,11 @@ const temperature = document.querySelector('.temperature');
 const weatherDescription = document.querySelector('.weather-description');
 const weatherWind = document.querySelector('.weather-wind');
 const weatherHumidity = document.querySelector('.weather-humidity');
-const btn = document.querySelector('.btn');
+const BGbtn = document.querySelector('.bg-btn');
+const QuoteBtn = document.querySelector('.quote-btn');
+const figure = document.querySelector('figure');
+const blockquote = document.querySelector('blockquote');
+const figcaption = document.querySelector('figcaption');
 
 const APP = {
   base: 'https://raw.githubusercontent.com/irinainina/ready-projects/momentum/momentum/assets/images/',
@@ -67,8 +71,8 @@ const APP = {
     const imageSrc = `${APP.base}${APP.today_24_images[index]}`;
     console.log(imageSrc);
     APP.viewBgImage(imageSrc);
-    btn.disabled = true;
-    setTimeout(() => btn.disabled = false, 500);
+    BGbtn.disabled = true;
+    setTimeout(() => BGbtn.disabled = false, 500);
   },
 
   run() {
@@ -218,6 +222,22 @@ const APP = {
       weatherHumidity.textContent = '';
     }
   },
+
+  async getQuote() {
+    const url = `https://programming-quotes-api.herokuapp.com/quotes/random`;
+    const res = await fetch(url);
+    const data = await res.json();
+
+    figure.style.setProperty('opacity', '0');
+    
+    if (data.en !== undefined) {
+      setTimeout(() => {
+        blockquote.textContent = data.en;
+        figcaption.textContent = data.author;
+        figure.style.setProperty('opacity', '1')
+      }, 250);
+    }
+  },
 };
 
 // Event listeners
@@ -231,6 +251,8 @@ WEATHER.addEventListener('keypress', APP.setCity);
 WEATHER.addEventListener('click', APP.clearField);
 WEATHER.addEventListener('blur', APP.setCity);
 document.addEventListener('DOMContentLoaded', APP.getWeather);
-btn.addEventListener('click', APP.getImage);
+BGbtn.addEventListener('click', APP.getImage);
+document.addEventListener('DOMContentLoaded', APP.getQuote);
+QuoteBtn.addEventListener('click', APP.getQuote);
 
 APP.run();
