@@ -115,7 +115,7 @@ const APP = {
   setBGGreet() {
     const today = new Date();
     const hour = today.getHours();
-    let timer = (60 - today.getMinutes()) * 60000 - today.getSeconds()*1000;
+    let timer = (60 - today.getMinutes()) * 60000 - today.getSeconds() * 1000;
     if (timer <= 0) timer = 1000 * 60 * 60;
     APP.i = hour;
 
@@ -154,7 +154,7 @@ const APP = {
 
   getGoal() {
     if (localStorage.getItem('goal') === null) {
-      GOAL.textContent = '[Enter your goal]';
+      GOAL.textContent = '...';
     } else {
       GOAL.textContent = localStorage.getItem('goal');
     }
@@ -168,6 +168,11 @@ const APP = {
     } else if (event.target.innerText !== '') {
       localStorage.setItem('goal', event.target.innerText);
     } else APP.getGoal();
+  },
+
+  clearField(field) {
+    console.log('click');
+    field.target.textContent = '';
   },
 
   getCity() {
@@ -217,10 +222,13 @@ const APP = {
 
 // Event listeners
 NAME.addEventListener('keypress', APP.setName);
+NAME.addEventListener('click', APP.clearField);
 NAME.addEventListener('blur', APP.setName);
 GOAL.addEventListener('keypress', APP.setGoal);
+GOAL.addEventListener('click', APP.clearField);
 GOAL.addEventListener('blur', APP.setGoal);
 WEATHER.addEventListener('keypress', APP.setCity);
+WEATHER.addEventListener('click', APP.clearField);
 WEATHER.addEventListener('blur', APP.setCity);
 document.addEventListener('DOMContentLoaded', APP.getWeather);
 btn.addEventListener('click', APP.getImage);
