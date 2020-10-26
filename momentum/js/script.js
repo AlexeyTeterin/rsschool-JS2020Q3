@@ -24,14 +24,15 @@ const APP = {
   i: 0,
   today_24_images: [],
 
-  run() {
+  async run() {
+    await this.getQuote();
+    this.setToday_24_Images();
     this.showTime();
     this.showDate();
     this.getName();
     this.getGoal();
     this.getCity();
     this.getWeather();
-    this.setToday_24_Images();
     this.setBGGreet();
   },
 
@@ -68,7 +69,9 @@ const APP = {
     const img = document.createElement('img');
     img.src = src;
     img.onload = () => {
-      body.style.backgroundImage = `url(${src})`;
+      console.log(`url(${src})`);
+      body.style.setProperty('background-image', `url(${src})`);
+      body.style.setProperty('opacity', '1');
     };
   },
 
@@ -80,13 +83,12 @@ const APP = {
     console.log(`index = ${index}`);
 
     const imageSrc = `${APP.base}${APP.today_24_images[index]}`;
-    console.log(imageSrc);
     APP.viewBgImage(imageSrc);
     BGbtn.disabled = true;
     setTimeout(() => {
       BGbtn.disabled = false;
       return true;
-    }, 500);
+    }, 1000);
   },
 
   showTime() {
@@ -135,6 +137,7 @@ const APP = {
 
     APP.getImage(hour);
     setTimeout(this.setBGGreet, timer);
+    console.log(`Time to change background: ${Math.floor(timer/1000/60)} min ${timer/1000 % 60} sec`)
   },
 
   getName() {
@@ -251,7 +254,7 @@ WEATHER.addEventListener('click', APP.clearField);
 WEATHER.addEventListener('blur', APP.setCity);
 document.addEventListener('DOMContentLoaded', APP.getWeather);
 BGbtn.addEventListener('click', APP.getImage);
-document.addEventListener('DOMContentLoaded', APP.getQuote);
+// document.addEventListener('DOMContentLoaded', APP.getQuote);
 QuoteBtn.addEventListener('click', APP.getQuote);
 
 APP.run();

@@ -16,8 +16,18 @@ body {
   height: 100vh;
   background-size: cover;
   background-position: center;
+  opacity: 0;
+  background: black;
 
-  transition: background-image 0.5s ease-in-out;
+  transition: all 0.5s ease-in-out;
+
+  .black {
+    background: black;
+    position: fixed;
+    z-index: 110;
+    width: 100vw;
+    height: 100vh;
+  }
 
   .overlay {
     display: flex;
@@ -128,6 +138,8 @@ h3 {
   transition: all 250ms ease-in-out;
   text-align: left;
   max-width: 75vw;
+  opacity: 0;
+  transition: opacity 250ms;
 
   @include max_700() {
     font-size: 0.9rem;
