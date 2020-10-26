@@ -127,9 +127,11 @@ h3 {
   border-radius: 1em;
   transition: all 250ms ease-in-out;
   text-align: left;
+  max-width: 75vw;
 
   @include max_700() {
     font-size: 0.9rem;
+    max-width: 95vw;
   }
 
   figcaption {
