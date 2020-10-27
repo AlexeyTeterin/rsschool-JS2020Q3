@@ -60,6 +60,7 @@ body {
 #time {
   font-size: 8rem;
   line-height: 1;
+  font-family: 'Inconsolata', monospace;
 
   @include max_700() {
     font-size: 5rem;
@@ -68,6 +69,7 @@ body {
 
 #date {
   font-size: 1.2rem;
+  padding-bottom: 1em;
 
   @include max_700() {
     font-size: 1rem;

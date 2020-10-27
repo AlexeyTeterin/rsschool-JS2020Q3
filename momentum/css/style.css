@@ -51,6 +51,7 @@ body .overlay .wrapper {
 #time {
   font-size: 8rem;
   line-height: 1;
+  font-family: 'Inconsolata', monospace;
 }
 
 @media (max-width: 700px) {
@@ -61,6 +62,7 @@ body .overlay .wrapper {
 
 #date {
   font-size: 1.2rem;
+  padding-bottom: 1em;
 }
 
 @media (max-width: 700px) {
