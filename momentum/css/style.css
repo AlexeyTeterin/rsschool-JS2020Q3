@@ -18,16 +18,8 @@ body {
   background-position: center;
   opacity: 0;
   background-color: black;
-  background-image: none;
-  transition: background-image 0.5s, opacity 0.75s linear;
-}
-
-body .black {
-  background: black;
-  position: fixed;
-  z-index: 110;
-  width: 100vw;
-  height: 100vh;
+  background-image: url(../img/black.png);
+  transition: background-image 0.75s, opacity 1s;
 }
 
 body .overlay {

@@ -25,13 +25,13 @@ const APP = {
   today_24_images: [],
 
   async run() {
-    await this.getQuote();
     this.setToday_24_Images();
-    this.showTime();
-    this.showDate();
+    this.getQuote();
     this.getName();
     this.getGoal();
     this.getCity();
+    this.showDate();
+    this.showTime();
     this.getWeather();
     this.setBGGreet();
   },
@@ -68,9 +68,10 @@ const APP = {
     const src = data;
     const img = document.createElement('img');
     img.src = src;
+
     img.onload = () => {
-      body.style.setProperty('background-image', `url(${src})`);
-      body.style.setProperty('opacity', '1');
+        body.style.setProperty('background-image', `url(${src})`);
+        body.style.setProperty('opacity', '1');
     };
   },
 
@@ -210,12 +211,13 @@ const APP = {
       const res = await fetch(url);
       const data = await res.json();
 
+      weatherDescription.textContent = data.weather[0].description;
       weatherIcon.classList.add(`owf-${data.weather[0].id}`);
       temperature.textContent = `${data.main.temp}°C`;
-      weatherDescription.textContent = data.weather[0].description;
       weatherWind.textContent = `Wind: ${data.wind.speed} m/s`;
       weatherHumidity.textContent = `Humidity: ${data.main.humidity}%`;
     } catch (error) {
+      console.error(error);
       weatherIcon.className = 'weather-icon owf';
       temperature.textContent = '';
       weatherDescription.textContent = 'Incorrect city name!';
@@ -251,6 +253,7 @@ GOAL.addEventListener('blur', APP.setGoal);
 WEATHER.addEventListener('keypress', APP.setCity);
 WEATHER.addEventListener('click', APP.clearField);
 WEATHER.addEventListener('blur', APP.setCity);
+WEATHER.addEventListener('blur', APP.getWeather);
 document.addEventListener('DOMContentLoaded', APP.getWeather);
 BGbtn.addEventListener('click', APP.getImage);
 // document.addEventListener('DOMContentLoaded', APP.getQuote);
