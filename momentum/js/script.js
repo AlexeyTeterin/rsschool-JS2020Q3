@@ -69,7 +69,6 @@ const APP = {
     const img = document.createElement('img');
     img.src = src;
     img.onload = () => {
-      console.log(`url(${src})`);
       body.style.setProperty('background-image', `url(${src})`);
       body.style.setProperty('opacity', '1');
     };
