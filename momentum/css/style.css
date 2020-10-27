@@ -37,7 +37,7 @@ body .overlay {
   color: white;
   width: 100%;
   height: 100vh;
-  overflow: scroll;
+  overflow: auto;
 }
 
 body .overlay .wrapper {
@@ -117,8 +117,8 @@ h3 {
 
 .bg-btn, .quote .quote-btn {
   position: absolute;
-  bottom: 10px;
-  right: 10px;
+  bottom: 2vmin;
+  right: 2vmin;
   width: 40px;
   height: 40px;
   border: 0;
@@ -128,6 +128,7 @@ h3 {
   filter: grayscale(1);
   margin: 10px;
   outline: none;
+  overflow: hidden;
 }
 
 .bg-btn:hover, .quote .quote-btn:hover {
@@ -153,6 +154,7 @@ h3 {
   max-width: 75vw;
   opacity: 0;
   transition: opacity 250ms, height 500ms;
+  overflow: hidden;
 }
 
 @media (max-width: 700px) {
