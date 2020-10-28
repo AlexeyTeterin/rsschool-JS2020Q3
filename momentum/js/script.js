@@ -70,8 +70,8 @@ const APP = {
     img.src = src;
 
     img.onload = () => {
-        body.style.setProperty('background-image', `url(${src})`);
-        body.style.setProperty('opacity', '1');
+      body.style.setProperty('background-image', `url(${src})`);
+      body.style.setProperty('opacity', '1');
     };
   },
 
@@ -80,7 +80,6 @@ const APP = {
     APP.i += 1;
     if (APP.i === 24) APP.i = 0;
     if (typeof index !== 'number') index = APP.i;
-    console.log(`index = ${index}`);
 
     const imageSrc = `${APP.base}${APP.today_24_images[index]}`;
     APP.viewBgImage(imageSrc);
@@ -137,7 +136,7 @@ const APP = {
 
     APP.getImage(hour);
     setTimeout(this.setBGGreet, timer);
-    console.log(`Time to change background: ${Math.floor(timer/1000/60)} min ${timer/1000 % 60} sec`)
+    console.log(`Time to change background: ${Math.floor(timer / 1000 / 60)} min ${(timer / 1000) % 60} sec`);
   },
 
   getName() {
