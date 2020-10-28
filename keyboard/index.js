@@ -286,6 +286,7 @@ const KEYBOARD = {
 
   hideKeyboard() {
     KEYBOARD.elements.keysContainer.classList.add('hidden');
+    textarea.blur();
     setTimeout(() => {
       KEYBOARD.elements.main.classList.add('goDown');
     }, 200);
@@ -322,71 +323,73 @@ const KEYBOARD = {
         }
       });
 
-      switch (event.key) {
-        case 'Enter':
-          break;
+      if (document.activeElement === 'textarea') {
+        switch (event.key) {
+          case 'Enter':
+            break;
 
-        case 'Backspace':
-          break;
+          case 'Backspace':
+            break;
 
-        case 'CapsLock':
-          document.querySelector('#Caps').classList.toggle('keyboard__key--active', !KEYBOARD.properties.capsLock);
-          KEYBOARD.toggleCapsLock();
-          break;
+          case 'CapsLock':
+            document.querySelector('#Caps').classList.toggle('keyboard__key--active', !KEYBOARD.properties.capsLock);
+            KEYBOARD.toggleCapsLock();
+            break;
 
-        case 'Shift':
-          if (KEYBOARD.properties.ctrl === true) {
-            KEYBOARD.toggleLang();
-          }
-          KEYBOARD.shiftPress();
-          break;
-
-        case 'Tab':
-          event.preventDefault();
-          textarea
-            .setRangeText('\t', textarea.selectionStart, textarea.selectionEnd, 'end');
-          break;
-
-        case 'ArrowUp':
-          event.preventDefault();
-          textarea
-            .setRangeText('↑', textarea.selectionStart, textarea.selectionEnd, 'end');
-          break;
-
-        case 'ArrowDown':
-          event.preventDefault();
-          textarea
-            .setRangeText('↓', textarea.selectionStart, textarea.selectionEnd, 'end');
-          break;
-
-        case 'ArrowRight':
-          event.preventDefault();
-          textarea
-            .setRangeText('→', textarea.selectionStart, textarea.selectionEnd, 'end');
-          break;
-
-        case 'ArrowLeft':
-          event.preventDefault();
-          textarea
-            .setRangeText('←', textarea.selectionStart, textarea.selectionEnd, 'end');
-          break;
-
-        default:
-          event.preventDefault();
-          if (event.key.length === 1) {
-            switch (capsLock || shift) {
-              case true:
-                textarea
-                  .setRangeText(inputChar.toUpperCase(), textarea.selectionStart, textarea.selectionEnd, 'end');
-                break;
-
-              default:
-                textarea
-                  .setRangeText(inputChar, textarea.selectionStart, textarea.selectionEnd, 'end');
-                break;
+          case 'Shift':
+            if (KEYBOARD.properties.ctrl === true) {
+              KEYBOARD.toggleLang();
             }
-          }
-          break;
+            KEYBOARD.shiftPress();
+            break;
+
+          case 'Tab':
+            event.preventDefault();
+            textarea
+              .setRangeText('\t', textarea.selectionStart, textarea.selectionEnd, 'end');
+            break;
+
+          case 'ArrowUp':
+            event.preventDefault();
+            textarea
+              .setRangeText('↑', textarea.selectionStart, textarea.selectionEnd, 'end');
+            break;
+
+          case 'ArrowDown':
+            event.preventDefault();
+            textarea
+              .setRangeText('↓', textarea.selectionStart, textarea.selectionEnd, 'end');
+            break;
+
+          case 'ArrowRight':
+            event.preventDefault();
+            textarea
+              .setRangeText('→', textarea.selectionStart, textarea.selectionEnd, 'end');
+            break;
+
+          case 'ArrowLeft':
+            event.preventDefault();
+            textarea
+              .setRangeText('←', textarea.selectionStart, textarea.selectionEnd, 'end');
+            break;
+
+          default:
+            event.preventDefault();
+            if (event.key.length === 1) {
+              switch (capsLock || shift) {
+                case true:
+                  textarea
+                    .setRangeText(inputChar.toUpperCase(), textarea.selectionStart, textarea.selectionEnd, 'end');
+                  break;
+
+                default:
+                  textarea
+                    .setRangeText(inputChar, textarea.selectionStart, textarea.selectionEnd, 'end');
+                  break;
+              }
+            }
+            break;
+        }
       }
     };
 
@@ -559,6 +562,5 @@ window.addEventListener('DOMContentLoaded', () => {
 });
 
 textarea.addEventListener('click', KEYBOARD.showKeyboard);
-// textarea.addEventListener('focusout', KEYBOARD.hideKeyboard);
 
 window.addEventListener('load', KEYBOARD.showKeyboard);
