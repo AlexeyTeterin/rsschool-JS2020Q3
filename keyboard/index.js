@@ -15,28 +15,28 @@ const KEYBOARD = {
         'tab', 'й', 'ц', 'у', 'к', 'е', 'н', 'г', 'ш', 'щ', 'з', 'х', 'ъ', '\\',
         'caps', 'ф', 'ы', 'в', 'а', 'п', 'р', 'о', 'л', 'д', 'ж', 'э', 'enter',
         'lshift', 'я', 'ч', 'с', 'м', 'и', 'т', 'ь', 'б', 'ю', '.', 'uarr', 'shift',
-        'lctrl', 'lang', 'lalt', ' ', 'alt', 'ctrl', 'larr', 'darr', 'rarr',
+        'lctrl', 'lang', 'lalt', ' ', 'alt', 'ctrl', 'larr', 'darr', 'rarr', 'on/off',
       ],
       en: [
         '`', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', 'backspace',
         'tab', 'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', '[', ']', '\\',
         'caps', 'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', ';', '\'', 'enter',
         'lshift', 'z', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.', '/', 'uarr', 'shift',
-        'lctrl', 'lang', 'lalt', ' ', 'alt', 'ctrl', 'larr', 'darr', 'rarr',
+        'lctrl', 'lang', 'lalt', ' ', 'alt', 'ctrl', 'larr', 'darr', 'rarr', 'on/off',
       ],
       ruShifted: [
         'Ё', '!', '"', '№', ';', '%', ':', '?', '*', '(', ')', '_', '+', 'backspace',
         'tab', 'Й', 'Ц', 'У', 'К', 'Е', 'Н', 'Г', 'Ш', 'Щ', 'З', 'Х', 'Ъ', '/',
         'caps', 'Ф', 'Ы', 'В', 'А', 'П', 'Р', 'О', 'Л', 'Д', 'Ж', 'Э', 'enter',
         'lshift', 'Я', 'Ч', 'С', 'М', 'И', 'Т', 'Ь', 'Б', 'Ю', ',', 'uarr', 'shift',
-        'lctrl', 'lang', 'lalt', ' ', 'alt', 'ctrl', 'larr', 'darr', 'rarr',
+        'lctrl', 'lang', 'lalt', ' ', 'alt', 'ctrl', 'larr', 'darr', 'rarr', 'on/off',
       ],
       enShifted: [
         '~', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '_', '+', 'backspace',
         'tab', 'Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P', '{', '}', '|',
         'caps', 'A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L', ':', '"', 'enter',
         'lshift', 'Z', 'X', 'C', 'V', 'B', 'N', 'M', '<', '>', '?', 'uarr', 'shift',
-        'lctrl', 'lang', 'lalt', ' ', 'alt', 'ctrl', 'larr', 'darr', 'rarr',
+        'lctrl', 'lang', 'lalt', ' ', 'alt', 'ctrl', 'larr', 'darr', 'rarr', 'on/off',
       ],
       whichCodes: [
         192, 49, 50, 51, 52, 53, 54, 55, 56, 57, 48, 189, 187, 8,
@@ -58,8 +58,9 @@ const KEYBOARD = {
     this.elements.main = document.createElement('div');
     this.elements.keysContainer = document.createElement('div');
 
-    this.elements.main.classList.add('keyboard', 'hidden');
-    this.elements.keysContainer.className = 'keyboard__keys';
+    this.elements.main.classList.add('keyboard', 'goDown');
+
+    this.elements.keysContainer.className = 'keyboard__keys hidden';
     this.elements.keysContainer.appendChild(this.createKeys());
 
     this.elements.keys = this.elements.keysContainer.querySelectorAll('.keyboard__key');
@@ -70,7 +71,7 @@ const KEYBOARD = {
     this.elements.info = document.body.appendChild(document.createElement('div'));
     this.elements.info.classList.add('info');
     this.elements.info.textContent = 'Keyboard works properly in Windows. Press Shift + Ctrl to change language.';
-    document.body.appendChild(this.elements.info);
+    document.body.prepend(this.elements.info);
 
     if (localStorage.capsLock === 'true') {
       this.toggleCapsLock();
@@ -78,7 +79,6 @@ const KEYBOARD = {
     }
 
     this.langTrigger();
-
     this.phisycalInput();
   },
 
@@ -112,8 +112,8 @@ const KEYBOARD = {
           keyElement.textContent = 'Backspace';
 
           keyElement.addEventListener('click', () => {
-            if (textarea.selectionStart === 0
-              && textarea.selectionEnd === textarea.selectionStart) {
+            if (textarea.selectionStart === 0 &&
+              textarea.selectionEnd === textarea.selectionStart) {
               return;
             }
             if (textarea.selectionEnd === textarea.selectionStart) {
@@ -255,6 +255,16 @@ const KEYBOARD = {
           });
           break;
 
+        case 'on/off':
+          keyElement.classList.add('keyboard__key--dark');
+          keyElement.textContent = 'OFF'
+          keyElement.id = 'off';
+
+          keyElement.addEventListener('click', () => {
+            this.hideKeyboard();
+          });
+          break;
+
         default:
           keyElement.textContent = key.toLowerCase();
 
@@ -272,6 +282,18 @@ const KEYBOARD = {
     });
 
     return fragment;
+  },
+
+  hideKeyboard() {
+    KEYBOARD.elements.keysContainer.classList.add('hidden');
+    setTimeout(() => {
+      KEYBOARD.elements.main.classList.add('goDown');
+    }, 200);
+  },
+
+  showKeyboard() {
+    KEYBOARD.elements.keysContainer.classList.remove('hidden');
+    KEYBOARD.elements.main.classList.remove('goDown');
   },
 
   // Input from real keyboard
@@ -535,3 +557,8 @@ window.addEventListener('DOMContentLoaded', () => {
   KEYBOARD.init();
   textarea.focus();
 });
+
+textarea.addEventListener('click', KEYBOARD.showKeyboard);
+// textarea.addEventListener('focusout', KEYBOARD.hideKeyboard);
+
+window.addEventListener('load', KEYBOARD.showKeyboard);
