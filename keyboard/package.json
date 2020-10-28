@@ -1,0 +1,26 @@
+{
+  "name": "virtualkeyboard",
+  "version": "1.0.0",
+  "description": "Virtual Eng/Rus keyboard",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "AlexeyTeterin",
+  "license": "ISC",
+  "devDependencies": {
+    "eslint": "^6.8.0",
+    "eslint-config-airbnb-base": "^14.1.0",
+    "eslint-plugin-import": "^2.20.2"
+  },
+  "dependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AlexeyTeterin/keyboard.git"
+  },
+  "keywords": [],
+  "bugs": {
+    "url": "https://github.com/AlexeyTeterin/keyboard/issues"
+  },
+  "homepage": "https://github.com/AlexeyTeterin/keyboard#readme"
+}
