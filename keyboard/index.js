@@ -94,6 +94,7 @@ const KEYBOARD = {
 
     // Create keys
     keyLayout.forEach((key) => {
+
       const keyElement = document.createElement('button');
       const insertLineBreak = ['backspace', '\\', 'enter', 'sound'].indexOf(key) !== -1;
 
@@ -109,6 +110,7 @@ const KEYBOARD = {
           keyElement.textContent = 'Backspace';
 
           keyElement.addEventListener('click', () => {
+            this.soundClick('switch-4.wav');
             if (textarea.selectionStart === 0 &&
               textarea.selectionEnd === textarea.selectionStart) {
               return;
@@ -127,6 +129,7 @@ const KEYBOARD = {
 
           keyElement.addEventListener('click', (e) => {
             e.preventDefault();
+            this.soundClick('switch-10.mp3');
             textarea.setRangeText('\t', textarea.selectionStart, textarea.selectionEnd, 'end');
           });
           break;
@@ -139,6 +142,7 @@ const KEYBOARD = {
           keyElement.addEventListener('click', () => {
             this.toggleCapsLock();
             keyElement.classList.toggle('keyboard__key--active', this.properties.capsLock);
+            this.soundClick('switch-4.wav');
           });
           break;
 
@@ -149,6 +153,7 @@ const KEYBOARD = {
 
           keyElement.addEventListener('mousedown', () => {
             this.shiftPress();
+            this.soundClick('switch-4.wav');
           });
           keyElement.addEventListener('mouseup', () => {
             this.shiftUnpress();
@@ -162,6 +167,7 @@ const KEYBOARD = {
 
           keyElement.addEventListener('mousedown', () => {
             this.shiftPress();
+            this.soundClick('switch-4.wav');
           });
           keyElement.addEventListener('mouseup', () => {
             this.shiftUnpress();
@@ -171,11 +177,17 @@ const KEYBOARD = {
         case 'ctrl':
           keyElement.textContent = 'Ctrl';
           keyElement.id = 'ControlRight';
+          keyElement.addEventListener('click', () => {
+            this.soundClick('switch-10.mp3');
+          });
           break;
 
         case 'lctrl':
           keyElement.textContent = 'Ctrl';
           keyElement.id = 'ControlLeft';
+          keyElement.addEventListener('click', () => {
+            this.soundClick('switch-10.mp3');
+          });
           break;
 
         case 'lang':
@@ -183,6 +195,7 @@ const KEYBOARD = {
           keyElement.textContent = this.properties.english ? 'EN' : 'RU';
           keyElement.id = 'lang';
           keyElement.addEventListener('mousedown', () => {
+            this.soundClick('switch-10.mp3');
             this.toggleLang();
           });
           break;
@@ -190,11 +203,17 @@ const KEYBOARD = {
         case 'lalt':
           keyElement.textContent = 'Alt';
           keyElement.id = 'AltLeft';
+          keyElement.addEventListener('click', () => {
+            this.soundClick('switch-10.mp3');
+          });
           break;
 
         case 'alt':
           keyElement.textContent = 'Alt';
           keyElement.id = 'AltRight';
+          keyElement.addEventListener('click', () => {
+            this.soundClick('switch-10.mp3');
+          });
           break;
 
         case 'enter':
@@ -202,6 +221,7 @@ const KEYBOARD = {
           keyElement.textContent = 'Enter';
 
           keyElement.addEventListener('click', () => {
+            this.soundClick('switch-4.wav');
             textarea.setRangeText('\n', textarea.selectionStart, textarea.selectionEnd, 'end');
           });
           break;
@@ -212,6 +232,7 @@ const KEYBOARD = {
           keyElement.id = 'Space';
 
           keyElement.addEventListener('click', () => {
+            this.soundClick('switch-10.mp3');
             textarea.setRangeText(' ', textarea.selectionStart, textarea.selectionEnd, 'end');
           });
           break;
@@ -221,6 +242,7 @@ const KEYBOARD = {
           keyElement.id = 'ArrowDown';
 
           keyElement.addEventListener('click', () => {
+            this.soundClick('switch-10.mp3');
             textarea.setRangeText('↓', textarea.selectionStart, textarea.selectionEnd, 'end');
           });
           break;
@@ -230,6 +252,7 @@ const KEYBOARD = {
           keyElement.id = 'ArrowUp';
 
           keyElement.addEventListener('click', () => {
+            this.soundClick('switch-10.mp3');
             textarea.setRangeText('↑', textarea.selectionStart, textarea.selectionEnd, 'end');
           });
           break;
@@ -239,6 +262,7 @@ const KEYBOARD = {
           keyElement.id = 'ArrowLeft';
 
           keyElement.addEventListener('click', () => {
+            this.soundClick('switch-10.mp3');
             textarea.setRangeText('←', textarea.selectionStart, textarea.selectionEnd, 'end');
           });
           break;
@@ -248,6 +272,7 @@ const KEYBOARD = {
           keyElement.id = 'ArrowRight';
 
           keyElement.addEventListener('click', () => {
+            this.soundClick('switch-10.mp3');
             textarea.setRangeText('→', textarea.selectionStart, textarea.selectionEnd, 'end');
           });
           break;
@@ -261,6 +286,7 @@ const KEYBOARD = {
           keyElement.append(img);
 
           keyElement.addEventListener('click', () => {
+            this.soundClick('switch-10.mp3');
             this.hideKeyboard();
             keyElement.classList.remove('keyboard__key--active');
           });
@@ -276,6 +302,7 @@ const KEYBOARD = {
 
           keyElement.addEventListener('click', () => {
             this.toggleSound();
+            this.soundClick('switch-10.mp3');
           });
           break;
 
@@ -284,6 +311,7 @@ const KEYBOARD = {
 
           keyElement.addEventListener('click', () => {
             textarea.setRangeText(keyElement.textContent, textarea.selectionStart, textarea.selectionEnd, 'end');
+            this.soundClick('switch-10.mp3');
           });
           break;
       }
@@ -327,6 +355,13 @@ const KEYBOARD = {
     this.properties.sound = !sound;
   },
 
+  soundClick(sound) {
+    const audio = new Audio(sound);
+    if (this.properties.sound) {
+      audio.play();
+    };
+  },
+
   // Input from real keyboard
   phisycalInput() {
     const {
@@ -357,18 +392,24 @@ const KEYBOARD = {
       switch (event.key) {
         case 'Enter':
         case 'Backspace':
+          this.soundClick('switch-4.wav');
+          break;
+
         case 'ArrowUp':
         case 'ArrowDown':
         case 'ArrowRight':
         case 'ArrowLeft':
+          this.soundClick('switch-10.mp3');
           break;
 
         case 'CapsLock':
+          this.soundClick('switch-4.wav');
           document.querySelector('#Caps').classList.toggle('keyboard__key--active', !KEYBOARD.properties.capsLock);
           KEYBOARD.toggleCapsLock();
           break;
 
         case 'Shift':
+          this.soundClick('switch-4.wav');
           if (KEYBOARD.properties.ctrl === true) {
             KEYBOARD.toggleLang();
           }
@@ -377,7 +418,7 @@ const KEYBOARD = {
 
         case 'Tab':
           event.preventDefault();
-          console.log(event.key);
+          this.soundClick('switch-10.mp3');
           textarea
             .setRangeText('\t', textarea.selectionStart, textarea.selectionEnd, 'end');
           break;
@@ -385,6 +426,7 @@ const KEYBOARD = {
         default:
           event.preventDefault();
           if (event.key.length === 1) {
+            this.soundClick('switch-10.mp3');
             switch (capsLock || shift) {
               case true:
                 textarea
