@@ -99,7 +99,6 @@ const KEYBOARD = {
 
     // Create keys
     keyLayout.forEach((key) => {
-
       const keyElement = document.createElement('button');
       const insertLineBreak = ['backspace', '\\', 'enter', 'shift'].indexOf(key) !== -1;
 
@@ -116,8 +115,8 @@ const KEYBOARD = {
 
           keyElement.addEventListener('click', () => {
             this.soundClick('switch-4.wav');
-            if (textarea.selectionStart === 0 &&
-              textarea.selectionEnd === textarea.selectionStart) {
+            if (textarea.selectionStart === 0
+              && textarea.selectionEnd === textarea.selectionStart) {
               return;
             }
             if (textarea.selectionEnd === textarea.selectionStart) {
@@ -285,10 +284,9 @@ const KEYBOARD = {
         case 'on/off':
           keyElement.classList.add('keyboard__key--dark', 'off', 'keyboard__key--activatable', 'keyboard__key--active');
           keyElement.id = 'off';
-          const img = document.createElement('img');
-          img.src = 'on-off-icon.svg';
-          img.alt = 'OFF';
-          keyElement.append(img);
+          keyElement.append(document.createElement('img'));
+          keyElement.children[0].src = 'on-off-icon.svg';
+          keyElement.children[0].alt = 'OFF';
 
           keyElement.addEventListener('click', () => {
             this.soundClick('switch-10.mp3');
@@ -300,10 +298,9 @@ const KEYBOARD = {
         case 'sound':
           keyElement.classList.add('keyboard__key--dark', 'sound', 'keyboard__key--activatable', 'keyboard__key--active');
           keyElement.id = 'sound';
-          const imgSound = document.createElement('img');
-          imgSound.src = 'sound-on.svg';
-          imgSound.alt = 'sound';
-          keyElement.append(imgSound);
+          keyElement.append(document.createElement('img'));
+          keyElement.children[0].src = 'sound-on.svg';
+          keyElement.children[0].alt = 'sound';
 
           keyElement.addEventListener('click', () => {
             this.toggleSound();
@@ -314,10 +311,9 @@ const KEYBOARD = {
         case 'mic':
           keyElement.classList.add('keyboard__key--dark', 'mic', 'keyboard__key--activatable');
           keyElement.id = 'mic';
-          const imgMic = document.createElement('img');
-          imgMic.src = 'mic.svg';
-          imgMic.alt = 'mic';
-          keyElement.append(imgMic);
+          keyElement.append(document.createElement('img'));
+          keyElement.children[0].src = 'mic.svg';
+          keyElement.children[0].alt = 'mic';
 
           keyElement.addEventListener('click', () => {
             this.toggleMic();
@@ -438,7 +434,6 @@ const KEYBOARD = {
           }
           break;
       }
-
     };
 
     document.onkeyup = (event) => {
@@ -468,7 +463,7 @@ const KEYBOARD = {
 
   toggleSound() {
     const {
-      sound
+      sound,
     } = this.properties;
     const soundBtn = document.querySelector('#sound');
     if (sound) {
@@ -477,13 +472,13 @@ const KEYBOARD = {
     } else {
       soundBtn.classList.add('keyboard__key--active');
       soundBtn.children[0].src = 'sound-on.svg';
-    };
+    }
     this.properties.sound = !sound;
   },
 
   toggleMic() {
     const {
-      micOn
+      micOn,
     } = this.properties;
     const micBtn = document.querySelector('#mic');
     if (micOn) {
@@ -498,7 +493,7 @@ const KEYBOARD = {
     const audio = new Audio(sound);
     if (this.properties.sound) {
       audio.play();
-    };
+    }
   },
 
   toggleLang() {
