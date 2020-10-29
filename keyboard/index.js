@@ -70,7 +70,7 @@ const KEYBOARD = {
 
     this.elements.info = document.body.appendChild(document.createElement('div'));
     this.elements.info.classList.add('info');
-    this.elements.info.textContent = 'Keyboard works properly in Windows. Press Shift + Ctrl to change language.';
+    this.elements.info.innerHTML = 'Keyboard works properly in Windows. Press <strong>&nbspShift + Ctrl </strong>&nbspto change language.';
     document.body.prepend(this.elements.info);
 
     if (localStorage.capsLock === 'true') {
