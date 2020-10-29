@@ -149,18 +149,9 @@ textarea {
 }
 
 .off {
-
-  background-repeat: no-repeat;
-  background-size: 20px;
-  background-position: center;
-
 }
 
 .off:active {
-
-  background-repeat: no-repeat;
-  background-size: 20px;
-  background-position: center;
 }
 
 .off img {
@@ -174,4 +165,10 @@ strong {
   border-radius: 4px;
   color: white;
   box-shadow: 0px 0px 2px 0px #B5B5B5;
+}
+
+.sound img{
+  filter: invert(100%);
+  width: 20px;
+  height: 20px;
 }
