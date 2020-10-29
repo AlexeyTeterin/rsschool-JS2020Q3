@@ -394,17 +394,10 @@ const KEYBOARD = {
   },
 
   toggleCapsLock() {
+    this.shiftPress();
+
     this.properties.capsLock = !this.properties.capsLock;
     localStorage.capsLock = this.properties.capsLock;
-
-    this.elements.keys.forEach((key) => {
-      const resultKey = key;
-      if (key.textContent.length === 1) {
-        resultKey.textContent = this.properties
-          .capsLock ? key.textContent.toUpperCase() : key.textContent.toLowerCase();
-      }
-      return resultKey;
-    });
 
     this.phisycalInput();
   },
@@ -484,6 +477,7 @@ const KEYBOARD = {
   shiftPress() {
     const {
       en,
+      ru,
       ruShifted,
       enShifted,
     } = this.elements.layouts;
@@ -492,6 +486,7 @@ const KEYBOARD = {
     } = this.elements;
     const {
       english,
+      capsLock,
     } = this.properties;
 
     for (let index = 0; index < keys.length; index += 1) {
@@ -499,12 +494,13 @@ const KEYBOARD = {
       // Change only symbol buttons
       if (buttonIsSymbol) {
         if (english) {
-          keys[index].textContent = enShifted[index];
-        } else {
-          keys[index].textContent = ruShifted[index];
+          keys[index].textContent = capsLock ? en[index] : enShifted[index];
+        } else if (!english) {
+          keys[index].textContent = capsLock ? ru[index] : ruShifted[index];
         }
       }
     }
+
     this.properties.shift = true;
     this.phisycalInput();
   },
@@ -513,6 +509,8 @@ const KEYBOARD = {
     const {
       ru,
       en,
+      ruShifted,
+      enShifted,
     } = this.elements.layouts;
     const {
       keys,
@@ -527,15 +525,15 @@ const KEYBOARD = {
       // Change only symbol buttons
       if (buttonIsSymbol) {
         if (english) {
-          keys[index].textContent = capsLock ? en[index].toUpperCase() : en[index];
+          keys[index].textContent = capsLock ? enShifted[index] : en[index];
         }
         if (!english) {
-          keys[index].textContent = capsLock ? ru[index].toUpperCase() : ru[index];
+          keys[index].textContent = capsLock ? ruShifted[index] : ru[index];
         }
       }
     }
-    this.properties.shift = false;
 
+    this.properties.shift = false;
     this.phisycalInput();
   },
 };
