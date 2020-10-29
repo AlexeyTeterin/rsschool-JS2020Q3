@@ -256,12 +256,16 @@ const KEYBOARD = {
           break;
 
         case 'on/off':
-          keyElement.classList.add('keyboard__key--dark');
-          keyElement.textContent = 'OFF'
+          keyElement.classList.add('keyboard__key--dark', 'off', 'keyboard__key--activatable', 'keyboard__key--active');
           keyElement.id = 'off';
+          const img = document.createElement('img');
+          img.src = 'on-off-icon.svg';
+          img.alt = 'OFF';
+          keyElement.append(img);
 
           keyElement.addEventListener('click', () => {
             this.hideKeyboard();
+            keyElement.classList.remove('keyboard__key--active');
           });
           break;
 
@@ -295,6 +299,7 @@ const KEYBOARD = {
   showKeyboard() {
     KEYBOARD.elements.keysContainer.classList.remove('hidden');
     KEYBOARD.elements.main.classList.remove('goDown');
+    document.querySelector('#off').classList.add('keyboard__key--active');
   },
 
   // Input from real keyboard
