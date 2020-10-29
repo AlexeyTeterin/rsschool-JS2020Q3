@@ -80,6 +80,11 @@ const KEYBOARD = {
       document.querySelector('#Caps').classList.add('keyboard__key--active');
     }
 
+    if (localStorage.sound === 'false') {
+      this.toggleSound();
+      document.querySelector('#sound').classList.remove('keyboard__key--active');
+    }
+
     this.langTrigger();
     this.phisycalInput();
   },
@@ -115,8 +120,8 @@ const KEYBOARD = {
 
           keyElement.addEventListener('click', () => {
             this.soundClick('switch-4.wav');
-            if (textarea.selectionStart === 0
-              && textarea.selectionEnd === textarea.selectionStart) {
+            if (textarea.selectionStart === 0 &&
+              textarea.selectionEnd === textarea.selectionStart) {
               return;
             }
             if (textarea.selectionEnd === textarea.selectionStart) {
@@ -381,7 +386,6 @@ const KEYBOARD = {
         }
       });
 
-      // if (document.activeElement === 'textarea') {
       switch (event.key) {
         case 'Enter':
         case 'Backspace':
@@ -420,15 +424,15 @@ const KEYBOARD = {
           event.preventDefault();
           if (event.key.length === 1) {
             this.soundClick('switch-10.mp3');
-            switch (capsLock || shift) {
+            switch (capsLock === shift) {
               case true:
                 textarea
-                  .setRangeText(inputChar.toUpperCase(), textarea.selectionStart, textarea.selectionEnd, 'end');
+                  .setRangeText(inputChar, textarea.selectionStart, textarea.selectionEnd, 'end');
                 break;
 
               default:
                 textarea
-                  .setRangeText(inputChar, textarea.selectionStart, textarea.selectionEnd, 'end');
+                  .setRangeText(inputChar.toUpperCase(), textarea.selectionStart, textarea.selectionEnd, 'end');
                 break;
             }
           }
@@ -453,10 +457,14 @@ const KEYBOARD = {
   },
 
   toggleCapsLock() {
-    this.shiftPress();
-
     this.properties.capsLock = !this.properties.capsLock;
     localStorage.capsLock = this.properties.capsLock;
+
+    if (localStorage.capsLock) {
+      this.shiftUnpress();
+    } else {
+      this.shiftPress();
+    }
 
     this.phisycalInput();
   },
@@ -474,6 +482,7 @@ const KEYBOARD = {
       soundBtn.children[0].src = 'sound-on.svg';
     }
     this.properties.sound = !sound;
+    localStorage.sound = !sound;
   },
 
   toggleMic() {
