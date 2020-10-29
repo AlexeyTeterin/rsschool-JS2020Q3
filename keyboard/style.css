@@ -10,10 +10,11 @@ body {
   height: 100vh;
   margin: 0 auto;
   background-repeat: no-repeat;
+  min-width: 600px;
 }
 
 textarea {
-  width: 80vw;
+  width: 85vw;
   display: flex;
   height: 140px;
   min-height: 60px;
@@ -22,14 +23,16 @@ textarea {
   outline: none;
   resize: vertical;
   box-shadow: 0px 0px 5px 0px #B5B5B5;
+  min-width: 600px;
 }
 
 .info {
   margin: 10px auto;
-  width: 814px;
+  /* width: 814px; */
   text-align: center;
   font-size: small;
   color: grey;
+  min-width: 600px;
 }
 
 .keyboard {
@@ -39,12 +42,12 @@ textarea {
   height: fit-content;
   bottom: 0;
   width: 100vw;
-  min-width: 800px;
   padding: 5px 0;
   background: linear-gradient(180deg, rgba(55, 72, 97, 1) 0%, rgba(84, 144, 152, 1) 95%);
   user-select: none;
   transition: bottom 0.5s ease-in-out;
   box-shadow: 0px 0px 5px 0px #B5B5B5;
+  min-width: 600px;
 }
 
 .keyboard__keys {
