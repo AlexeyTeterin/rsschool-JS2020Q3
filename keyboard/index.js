@@ -54,6 +54,7 @@ const KEYBOARD = {
     english: null,
     sound: false,
     micOn: false,
+    control: false,
   },
 
   init() {
@@ -72,7 +73,7 @@ const KEYBOARD = {
 
     this.elements.info = document.body.appendChild(document.createElement('div'));
     this.elements.info.classList.add('info');
-    this.elements.info.innerHTML = 'Keyboard works properly in Windows. Press <strong>&nbspShift + Ctrl </strong>&nbspto change language.';
+    this.elements.info.innerHTML = 'Keyboard works properly in Windows. Press <strong>&nbspShift + Ctrl </strong>&nbsp or <strong>&nbspShift + Alt </strong>&nbspto change language.';
     document.body.prepend(this.elements.info);
 
     if (localStorage.capsLock === 'true') {
@@ -389,21 +390,20 @@ const KEYBOARD = {
       switch (event.key) {
         case 'Enter':
         case 'Backspace':
-          break;
-
         case 'ArrowUp':
         case 'ArrowDown':
         case 'ArrowRight':
         case 'ArrowLeft':
+        case 'CapsLock':
           break;
 
-        case 'CapsLock':
-
+        case 'Control':
+          // this.properties.control = true;
           break;
 
         case 'Shift':
-          if (KEYBOARD.properties.ctrl) KEYBOARD.toggleLang();
-          KEYBOARD.shiftPress();
+          this.shiftPress();
+          // this.toggleLang();
           break;
 
         case 'Tab':
@@ -443,6 +443,10 @@ const KEYBOARD = {
           this.soundClick('switch-4.wav');
           document.querySelector('#Caps').classList.toggle('keyboard__key--active', !KEYBOARD.properties.capsLock);
           KEYBOARD.toggleCapsLock();
+          break;
+
+        case 'Control':
+          this.properties.control = false;
           break;
 
         default:
@@ -561,25 +565,28 @@ const KEYBOARD = {
     this.phisycalInput();
   },
 
+
   langTrigger() {
     let counter = 0;
+
     document.addEventListener('keydown', (event) => {
       if (event.key === 'Shift' && (counter === 5 || counter === 0)) {
         counter += 3;
       }
-      if (event.key === 'Control' && (counter === 3 || counter === 0)) {
+      if (['Control', 'Alt'].includes(event.key) && (counter === 3 || counter === 0)) {
         counter += 5;
       }
-      if (counter === 8) {
+      if (counter % 8 === 0) {
         this.toggleLang();
       }
     });
 
     document.addEventListener('keyup', (event) => {
+      console.log(counter);
       if (event.key === 'Shift' && (counter === 3 || counter === 8)) {
         counter -= 3;
       }
-      if (event.key === 'Control' && (counter === 5 || counter === 8)) {
+      if (['Control', 'Alt'].includes(event.key) && (counter === 5 || counter === 8)) {
         counter -= 5;
       }
     });
