@@ -1,6 +1,7 @@
 * {
   font-family: Verdana, Geneva, Tahoma, sans-serif;
   box-sizing: border-box;
+  font-size: 14px;
 }
 
 body {
@@ -26,6 +27,14 @@ textarea {
   min-width: 500px;
 }
 
+strong {
+  background-color: rgba(55, 72, 97, 0.85);
+  border-radius: 4px;
+  color: white;
+  box-shadow: 0px 0px 2px 0px #B5B5B5;
+  white-space: nowrap;
+}
+
 .info {
   margin: 10px auto;
   /* width: 814px; */
@@ -45,14 +54,14 @@ textarea {
   padding: 5px 0;
   background: linear-gradient(180deg, rgba(55, 72, 97, 1) 0%, rgba(84, 144, 152, 1) 95%);
   user-select: none;
-  transition: bottom 0.5s ease-in-out;
+  transition: bottom 0.5s ease-in-out, height 0.5s;
   box-shadow: 0px 0px 5px 0px #B5B5B5;
   min-width: 500px;
 }
 
 .keyboard__keys {
   text-align: center;
-  transition: 0.25s ease-in-out;
+  transition: all 0.25s ease-in-out;
 }
 
 .keyboard__key {
@@ -152,13 +161,6 @@ textarea {
   height: 20px;
 }
 
-strong {
-  background-color: rgba(55, 72, 97, 0.85);
-  border-radius: 4px;
-  color: white;
-  box-shadow: 0px 0px 2px 0px #B5B5B5;
-}
-
 .sound img {
   filter: invert(100%);
   width: 20px;
@@ -178,4 +180,26 @@ strong {
   -moz-transform: scale(0.95);
   -ms-transform: scale(0.95);
   -o-transform: scale(0.95);
+}
+
+@media (max-width: 600px) {
+  .keyboard__key {
+    font-size: 11px;
+    height: 36px;
+    margin: 2px;
+  }
+
+  .sound img,
+  .mic img,
+  .off img {
+    width: 16px;
+    height: 16px;
+  }
+
+  .keyboard__key--activatable::after {
+    top: 3px;
+    right: 4px;
+    width: 4px;
+    height: 4px;
+  }
 }
