@@ -52,7 +52,7 @@ const KEYBOARD = {
     capsLock: null,
     shift: false,
     english: null,
-    sound: true,
+    sound: false,
     micOn: false,
   },
 
@@ -80,9 +80,9 @@ const KEYBOARD = {
       document.querySelector('#Caps').classList.add('keyboard__key--active');
     }
 
-    if (localStorage.sound === 'false') {
+    if (localStorage.sound === 'true') {
       this.toggleSound();
-      document.querySelector('#sound').classList.remove('keyboard__key--active');
+      document.querySelector('#sound').classList.add('keyboard__key--active');
     }
 
     this.langTrigger();
@@ -138,7 +138,7 @@ const KEYBOARD = {
 
           keyElement.addEventListener('click', (e) => {
             e.preventDefault();
-            this.soundClick('switch-10.mp3');
+            this.soundClick('switch-4.wav');
             textarea.setRangeText('\t', textarea.selectionStart, textarea.selectionEnd, 'end');
           });
           break;
@@ -301,10 +301,10 @@ const KEYBOARD = {
           break;
 
         case 'sound':
-          keyElement.classList.add('keyboard__key--dark', 'sound', 'keyboard__key--activatable', 'keyboard__key--active');
+          keyElement.classList.add('keyboard__key--dark', 'sound', 'keyboard__key--activatable');
           keyElement.id = 'sound';
           keyElement.append(document.createElement('img'));
-          keyElement.children[0].src = 'sound-on.svg';
+          keyElement.children[0].src = 'sound-off.svg';
           keyElement.children[0].alt = 'sound';
 
           keyElement.addEventListener('click', () => {
@@ -389,33 +389,25 @@ const KEYBOARD = {
       switch (event.key) {
         case 'Enter':
         case 'Backspace':
-          this.soundClick('switch-4.wav');
           break;
 
         case 'ArrowUp':
         case 'ArrowDown':
         case 'ArrowRight':
         case 'ArrowLeft':
-          this.soundClick('switch-10.mp3');
           break;
 
         case 'CapsLock':
-          this.soundClick('switch-4.wav');
-          document.querySelector('#Caps').classList.toggle('keyboard__key--active', !KEYBOARD.properties.capsLock);
-          KEYBOARD.toggleCapsLock();
+
           break;
 
         case 'Shift':
-          this.soundClick('switch-4.wav');
-          if (KEYBOARD.properties.ctrl === true) {
-            KEYBOARD.toggleLang();
-          }
+          if (KEYBOARD.properties.ctrl) KEYBOARD.toggleLang();
           KEYBOARD.shiftPress();
           break;
 
         case 'Tab':
           event.preventDefault();
-          this.soundClick('switch-10.mp3');
           textarea
             .setRangeText('\t', textarea.selectionStart, textarea.selectionEnd, 'end');
           break;
@@ -423,17 +415,12 @@ const KEYBOARD = {
         default:
           event.preventDefault();
           if (event.key.length === 1) {
-            this.soundClick('switch-10.mp3');
-            switch (capsLock === shift) {
-              case true:
-                textarea
-                  .setRangeText(inputChar, textarea.selectionStart, textarea.selectionEnd, 'end');
-                break;
-
-              default:
-                textarea
-                  .setRangeText(inputChar.toUpperCase(), textarea.selectionStart, textarea.selectionEnd, 'end');
-                break;
+            if (capsLock === shift) {
+              textarea
+                .setRangeText(inputChar, textarea.selectionStart, textarea.selectionEnd, 'end');
+            } else {
+              textarea
+                .setRangeText(inputChar.toUpperCase(), textarea.selectionStart, textarea.selectionEnd, 'end');
             }
           }
           break;
@@ -442,8 +429,27 @@ const KEYBOARD = {
 
     document.onkeyup = (event) => {
       const pos = whichCodes.indexOf(event.which);
-
       let counter = -1;
+
+      switch (event.key) {
+        case 'Enter':
+        case 'Tab':
+        case 'Shift':
+        case 'Backspace':
+          this.soundClick('switch-4.wav');
+          break;
+
+        case 'CapsLock':
+          this.soundClick('switch-4.wav');
+          document.querySelector('#Caps').classList.toggle('keyboard__key--active', !KEYBOARD.properties.capsLock);
+          KEYBOARD.toggleCapsLock();
+          break;
+
+        default:
+          this.soundClick('switch-10.mp3');
+          break;
+      }
+
       document.querySelectorAll('.keyboard__key').forEach((key) => {
         counter += 1;
         if (key.innerText === event.code || event.code === key.id || pos === counter) {
@@ -452,6 +458,8 @@ const KEYBOARD = {
         if (event.key === 'Shift') {
           KEYBOARD.shiftUnpress();
         }
+
+
       });
     };
   },
