@@ -41,7 +41,7 @@ const KEYBOARD = {
       whichCodes: [
         192, 49, 50, 51, 52, 53, 54, 55, 56, 57, 48, 189, 187, 8,
         9, 81, 87, 69, 82, 84, 89, 85, 73, 79, 80, 219, 221, 220,
-        20, 65, 83, 68, 70, 71, 72, 74, 75, 76, 186, 222, 13, null,
+        20, 65, 83, 68, 70, 71, 72, 74, 75, 76, 186, 222, 13,
         999, 90, 88, 67, 86, 66, 78, 77, 188, 190, 191,
       ],
     },
@@ -273,7 +273,8 @@ const KEYBOARD = {
 
           keyElement.addEventListener('click', () => {
             this.soundClick('switch-10.mp3');
-            textarea.setRangeText('←', textarea.selectionStart, textarea.selectionEnd, 'end');
+            // textarea.setRangeText('←', textarea.selectionStart, textarea.selectionEnd, 'end');
+            this.setCursorPos(1, 3);
           });
           break;
 
@@ -359,6 +360,13 @@ const KEYBOARD = {
     KEYBOARD.elements.keysContainer.classList.remove('hidden');
     KEYBOARD.elements.main.classList.remove('goDown');
     document.querySelector('#off').classList.add('keyboard__key--active');
+  },
+
+  setCursorPos() {
+    if ('selectionStart' in textarea) {
+      textarea.selectionStart -= 1;
+      textarea.selectionEnd = textarea.selectionStart;
+    }
   },
 
   // Input from real keyboard
