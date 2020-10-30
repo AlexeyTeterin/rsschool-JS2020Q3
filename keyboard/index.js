@@ -253,7 +253,8 @@ const KEYBOARD = {
 
           keyElement.addEventListener('click', () => {
             this.soundClick('switch-10.mp3');
-            textarea.setRangeText('↓', textarea.selectionStart, textarea.selectionEnd, 'end');
+            // textarea.setRangeText('↓', textarea.selectionStart, textarea.selectionEnd, 'end');
+            this.setCursorPos('end');
           });
           break;
 
@@ -263,7 +264,7 @@ const KEYBOARD = {
 
           keyElement.addEventListener('click', () => {
             this.soundClick('switch-10.mp3');
-            textarea.setRangeText('↑', textarea.selectionStart, textarea.selectionEnd, 'end');
+            this.setCursorPos('start');
           });
           break;
 
@@ -274,7 +275,7 @@ const KEYBOARD = {
           keyElement.addEventListener('click', () => {
             this.soundClick('switch-10.mp3');
             // textarea.setRangeText('←', textarea.selectionStart, textarea.selectionEnd, 'end');
-            this.setCursorPos(1, 3);
+            this.setCursorPos('left');
           });
           break;
 
@@ -284,7 +285,8 @@ const KEYBOARD = {
 
           keyElement.addEventListener('click', () => {
             this.soundClick('switch-10.mp3');
-            textarea.setRangeText('→', textarea.selectionStart, textarea.selectionEnd, 'end');
+            // textarea.setRangeText('→', textarea.selectionStart, textarea.selectionEnd, 'end');
+            this.setCursorPos('right');
           });
           break;
 
@@ -362,9 +364,25 @@ const KEYBOARD = {
     document.querySelector('#off').classList.add('keyboard__key--active');
   },
 
-  setCursorPos() {
+  setCursorPos(pos) {
     if ('selectionStart' in textarea) {
-      textarea.selectionStart -= 1;
+      switch (pos) {
+        case 'left':
+          textarea.selectionStart -= 1;
+          break;
+
+        case 'right':
+          textarea.selectionStart += 1;
+          break;
+
+        case 'start':
+          textarea.selectionStart = 0;
+          break;
+
+        default:
+          textarea.selectionStart = textarea.textLength;
+          break;
+      }
       textarea.selectionEnd = textarea.selectionStart;
     }
   },
