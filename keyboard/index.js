@@ -403,7 +403,6 @@ const KEYBOARD = {
 
         case 'Shift':
           this.shiftPress();
-          // this.toggleLang();
           break;
 
         case 'Tab':
@@ -462,8 +461,6 @@ const KEYBOARD = {
         if (event.key === 'Shift') {
           KEYBOARD.shiftUnpress();
         }
-
-
       });
     };
   },
@@ -565,7 +562,6 @@ const KEYBOARD = {
     this.phisycalInput();
   },
 
-
   langTrigger() {
     let counter = 0;
 
@@ -576,13 +572,10 @@ const KEYBOARD = {
       if (['Control', 'Alt'].includes(event.key) && (counter === 3 || counter === 0)) {
         counter += 5;
       }
-      if (counter % 8 === 0) {
-        this.toggleLang();
-      }
+      if (counter === 8) this.toggleLang();
     });
 
     document.addEventListener('keyup', (event) => {
-      console.log(counter);
       if (event.key === 'Shift' && (counter === 3 || counter === 8)) {
         counter -= 3;
       }
