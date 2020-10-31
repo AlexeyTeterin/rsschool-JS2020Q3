@@ -3,8 +3,10 @@ const textarea = document.querySelector('textarea');
 textarea.classList.add('use-keyboard');
 textarea.setAttribute('placeholder', 'Type your text here...');
 
-const KEYBOARD = {
-  elements: {
+class KEYBOARD {
+  constructor() {}
+
+  elements = {
     info: '',
     main: null,
     keysContainer: null,
@@ -45,9 +47,9 @@ const KEYBOARD = {
         999, 90, 88, 67, 86, 66, 78, 77, 188, 190, 191,
       ],
     },
-  },
+  };
 
-  properties: {
+  properties = {
     value: '',
     capsLock: null,
     shift: false,
@@ -55,7 +57,7 @@ const KEYBOARD = {
     sound: false,
     micOn: false,
     control: false,
-  },
+  };
 
   init() {
     this.elements.main = document.createElement('div');
@@ -88,7 +90,7 @@ const KEYBOARD = {
 
     this.langTrigger();
     this.phisycalInput();
-  },
+  }
 
   createKeys() {
     const fragment = document.createDocumentFragment();
@@ -348,21 +350,22 @@ const KEYBOARD = {
     });
 
     return fragment;
-  },
+  }
 
   hideKeyboard() {
-    KEYBOARD.elements.keysContainer.classList.add('hidden');
+    this.elements.keysContainer.classList.add('hidden');
     textarea.blur();
     setTimeout(() => {
-      KEYBOARD.elements.main.classList.add('goDown');
+      this.elements.main.classList.add('goDown');
     }, 200);
-  },
+  }
 
   showKeyboard() {
-    KEYBOARD.elements.keysContainer.classList.remove('hidden');
-    KEYBOARD.elements.main.classList.remove('goDown');
+    console.log('showing');
+    this.elements.keysContainer.classList.remove('hidden');
+    this.elements.main.classList.remove('goDown');
     document.querySelector('#off').classList.add('keyboard__key--active');
-  },
+  }
 
   setCursorPos(pos) {
     if ('selectionStart' in textarea) {
@@ -385,7 +388,7 @@ const KEYBOARD = {
       }
       textarea.selectionEnd = textarea.selectionStart;
     }
-  },
+  }
 
   // Input from real keyboard
   phisycalInput() {
@@ -397,7 +400,7 @@ const KEYBOARD = {
       shift,
     } = this.properties;
     const keySet = [];
-    KEYBOARD.elements.keys.forEach((key) => {
+    this.elements.keys.forEach((key) => {
       keySet.push(key.textContent);
     });
 
@@ -466,8 +469,8 @@ const KEYBOARD = {
 
         case 'CapsLock':
           this.soundClick('switch-4.wav');
-          document.querySelector('#Caps').classList.toggle('keyboard__key--active', !KEYBOARD.properties.capsLock);
-          KEYBOARD.toggleCapsLock();
+          document.querySelector('#Caps').classList.toggle('keyboard__key--active', !this.properties.capsLock);
+          this.toggleCapsLock();
           break;
 
         case 'Control':
@@ -485,11 +488,11 @@ const KEYBOARD = {
           key.classList.remove('red');
         }
         if (event.key === 'Shift') {
-          KEYBOARD.shiftUnpress();
+          this.shiftUnpress();
         }
       });
     };
-  },
+  }
 
   toggleCapsLock() {
     this.properties.capsLock = !this.properties.capsLock;
@@ -502,7 +505,7 @@ const KEYBOARD = {
     }
 
     this.phisycalInput();
-  },
+  }
 
   toggleSound() {
     const {
@@ -518,7 +521,7 @@ const KEYBOARD = {
     }
     this.properties.sound = !sound;
     localStorage.sound = !sound;
-  },
+  }
 
   toggleMic() {
     const {
@@ -531,14 +534,14 @@ const KEYBOARD = {
       micBtn.classList.add('keyboard__key--active', 'pressed');
     }
     this.properties.micOn = !micOn;
-  },
+  }
 
   soundClick(sound) {
     const audio = new Audio(sound);
     if (this.properties.sound) {
       audio.play();
     }
-  },
+  }
 
   toggleLang() {
     const {
@@ -586,7 +589,7 @@ const KEYBOARD = {
     this.properties.english = !this.properties.english;
 
     this.phisycalInput();
-  },
+  }
 
   langTrigger() {
     let counter = 0;
@@ -609,7 +612,7 @@ const KEYBOARD = {
         counter -= 5;
       }
     });
-  },
+  }
 
   shiftPress() {
     const {
@@ -640,7 +643,7 @@ const KEYBOARD = {
 
     this.properties.shift = true;
     this.phisycalInput();
-  },
+  }
 
   shiftUnpress() {
     const {
@@ -672,14 +675,13 @@ const KEYBOARD = {
 
     this.properties.shift = false;
     this.phisycalInput();
-  },
-};
+  }
+}
 
-window.addEventListener('DOMContentLoaded', () => {
-  KEYBOARD.init();
-  textarea.focus();
-});
+// Creating new instance of KEYBOARD class
+const keyboard = new KEYBOARD('sad');
+keyboard.init();
 
-textarea.addEventListener('click', KEYBOARD.showKeyboard);
-
-window.addEventListener('load', KEYBOARD.showKeyboard);
+// Event listeners
+window.addEventListener('DOMContentLoaded', () => textarea.focus());
+textarea.addEventListener('focusin', () => keyboard.showKeyboard());
