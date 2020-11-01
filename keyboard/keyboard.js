@@ -1,4 +1,4 @@
-import textarea from './index.js';
+import textarea from './main.js';
 
 export default class KEYBOARD {
   constructor() {}
