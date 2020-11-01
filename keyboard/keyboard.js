@@ -1,26 +1,25 @@
-import textarea from './main.js';
-import layouts from './layouts.js'
+import textarea from './textarea.js';
+import { layouts as layoutsImported } from './layouts.js';
 
 export default class KEYBOARD {
-  constructor() {}
-
-  elements = {
-    info: '',
-    main: null,
-    keysContainer: null,
-    keys: [],
-    layouts: layouts,
-  };
-
-  properties = {
-    value: '',
-    capsLock: false,
-    shift: false,
-    english: null,
-    sound: false,
-    micOn: false,
-    control: false,
-  };
+  constructor() {
+    this.properties = {
+      value: '',
+      capsLock: false,
+      shift: false,
+      english: null,
+      sound: false,
+      micOn: false,
+      control: false,
+    };
+    this.elements = {
+      info: '',
+      main: null,
+      keysContainer: null,
+      keys: [],
+      layouts: layoutsImported,
+    };
+  }
 
   init() {
     this.elements.main = document.createElement('div');

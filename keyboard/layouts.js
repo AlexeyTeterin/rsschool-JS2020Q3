@@ -35,4 +35,4 @@ const layouts = {
   ],
 };
 
-export default layouts;
+export { layouts };

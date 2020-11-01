@@ -4,10 +4,11 @@
         "es2021": true
     },
     "extends": [
-        "airbnb-base"
+        "google"
     ],
     "parserOptions": {
-        "ecmaVersion": 12
+        "ecmaVersion": 12,
+        "sourceType": "module"
     },
     "rules": {
     }

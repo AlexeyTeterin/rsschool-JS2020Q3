@@ -1,10 +1,5 @@
 import KEYBOARD from './keyboard.js';
-
-// Create textarea
-document.body.appendChild(document.createElement('textarea'));
-const textarea = document.querySelector('textarea');
-textarea.classList.add('use-keyboard');
-textarea.setAttribute('placeholder', 'Type your text here...');
+import textarea from './textarea.js';
 
 // Creating new instance of KEYBOARD
 const keyboard = new KEYBOARD();
@@ -20,7 +15,7 @@ modal.classList.add('modal', 'hidden');
 
 // Event listeners
 window.addEventListener('DOMContentLoaded', () => textarea.focus());
-textarea.addEventListener('focusin', () => keyboard.showKeyboard());
+textarea.onfocus = () => keyboard.showKeyboard();
 recognition.addEventListener('result', (e) => {
   const transcript = Array.from(e.results)
     .map((result) => result[0])
