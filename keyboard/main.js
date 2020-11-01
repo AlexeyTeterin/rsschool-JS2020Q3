@@ -15,6 +15,8 @@ window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecogn
 const speechBtn = document.querySelector('.mic');
 const recognition = new SpeechRecognition();
 recognition.interimResults = true;
+const modal = document.body.appendChild(document.createElement('div'));
+modal.classList.add('modal', 'hidden');
 
 // Event listeners
 window.addEventListener('DOMContentLoaded', () => textarea.focus());
@@ -37,7 +39,10 @@ speechBtn.addEventListener('click', () => {
   if (Array.from(speechBtn.classList).includes('pressed')) {
     recognition.lang = keyboard.properties.english ? 'en-US' : 'ru-RU';
     recognition.start();
+    modal.innerText = keyboard.properties.english ? 'Recognizing your speech...' : 'Распознавание речи...';
+    modal.classList.remove('hidden');
   } else {
+    modal.classList.add('hidden');
     recognition.stop();
   }
 });
