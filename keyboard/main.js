@@ -14,7 +14,7 @@ const modal = document.body.appendChild(document.createElement('div'));
 modal.classList.add('modal', 'hidden');
 
 // Event listeners
-window.addEventListener('DOMContentLoaded', () => textarea.focus());
+document.addEventListener('DOMContentLoaded', () => textarea.focus());
 textarea.onfocus = () => keyboard.showKeyboard();
 recognition.addEventListener('result', (e) => {
   const transcript = Array.from(e.results)
