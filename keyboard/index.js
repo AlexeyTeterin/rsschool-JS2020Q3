@@ -13,4 +13,42 @@ keyboard.init();
 window.addEventListener('DOMContentLoaded', () => textarea.focus());
 textarea.addEventListener('focusin', () => keyboard.showKeyboard());
 
+// Speech recognition
+window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+const speechBtn = document.querySelector('.mic');
+const recognition = new SpeechRecognition();
+recognition.interimResults = true;
+recognition.lang = 'en-US';
+
+let p = document.createElement('p');
+// const words = document.querySelector('.words');
+textarea.appendChild(p);
+
+recognition.addEventListener('result', e => {
+  const transcript = Array.from(e.results)
+    .map(result => result[0])
+    .map(result => result.transcript)
+    .join('');
+
+  const poopScript = transcript.replace(/poop|poo|shit|dump/gi, '💩');
+  p.textContent = poopScript;
+
+  if (e.results[0].isFinal) {
+    p = document.createElement('p');
+    textarea.appendChild(p);
+  }
+});
+
+// recognition.addEventListener('end', recognition.start);
+speechBtn.addEventListener('click', () => {
+  if (Array.from(speechBtn.classList).includes('keyboard__key--active')) {
+    recognition.start();
+    console.log('start recognition...');
+  } else {
+    recognition.stop();
+    console.log('stop recognition');
+  }
+});
+
 export default textarea;
