@@ -41,5 +41,3 @@ speechBtn.addEventListener('click', () => {
     recognition.stop();
   }
 });
-
-export default textarea;
