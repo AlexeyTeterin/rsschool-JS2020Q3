@@ -119,7 +119,7 @@ export default class KEYBOARD {
           keyElement.textContent = 'Backspace';
 
           keyElement.addEventListener('click', () => {
-            this.soundClick('switch-4.wav');
+            this.soundClick('./audio/switch-4.wav');
             if (textarea.selectionStart === 0 &&
               textarea.selectionEnd === textarea.selectionStart) {
               return;
@@ -138,7 +138,7 @@ export default class KEYBOARD {
 
           keyElement.addEventListener('click', (e) => {
             e.preventDefault();
-            this.soundClick('switch-4.wav');
+            this.soundClick('./audio/switch-4.wav');
             textarea.setRangeText('\t', textarea.selectionStart, textarea.selectionEnd, 'end');
           });
           break;
@@ -151,7 +151,7 @@ export default class KEYBOARD {
           keyElement.addEventListener('click', () => {
             this.toggleCapsLock();
             keyElement.classList.toggle('keyboard__key--active', this.properties.capsLock);
-            this.soundClick('switch-4.wav');
+            this.soundClick('./audio/switch-4.wav');
           });
           break;
 
@@ -162,7 +162,7 @@ export default class KEYBOARD {
 
           keyElement.addEventListener('mousedown', () => {
             this.shiftPress();
-            this.soundClick('switch-4.wav');
+            this.soundClick('./audio/switch-4.wav');
           });
           keyElement.addEventListener('mouseup', () => {
             this.shiftUnpress();
@@ -176,7 +176,7 @@ export default class KEYBOARD {
 
           keyElement.addEventListener('mousedown', () => {
             this.shiftPress();
-            this.soundClick('switch-4.wav');
+            this.soundClick('./audio/switch-4.wav');
           });
           keyElement.addEventListener('mouseup', () => {
             this.shiftUnpress();
@@ -187,7 +187,7 @@ export default class KEYBOARD {
           keyElement.textContent = 'Ctrl';
           keyElement.id = 'ControlRight';
           keyElement.addEventListener('click', () => {
-            this.soundClick('switch-10.mp3');
+            this.soundClick('./audio/switch-10.mp3');
           });
           break;
 
@@ -195,7 +195,7 @@ export default class KEYBOARD {
           keyElement.textContent = 'Ctrl';
           keyElement.id = 'ControlLeft';
           keyElement.addEventListener('click', () => {
-            this.soundClick('switch-10.mp3');
+            this.soundClick('./audio/switch-10.mp3');
           });
           break;
 
@@ -204,7 +204,7 @@ export default class KEYBOARD {
           keyElement.textContent = this.properties.english ? 'EN' : 'RU';
           keyElement.id = 'lang';
           keyElement.addEventListener('mousedown', () => {
-            this.soundClick('switch-10.mp3');
+            this.soundClick('./audio/switch-10.mp3');
             this.toggleLang();
           });
           break;
@@ -213,7 +213,7 @@ export default class KEYBOARD {
           keyElement.textContent = 'Alt';
           keyElement.id = 'AltLeft';
           keyElement.addEventListener('click', () => {
-            this.soundClick('switch-10.mp3');
+            this.soundClick('./audio/switch-10.mp3');
           });
           break;
 
@@ -221,7 +221,7 @@ export default class KEYBOARD {
           keyElement.textContent = 'Alt';
           keyElement.id = 'AltRight';
           keyElement.addEventListener('click', () => {
-            this.soundClick('switch-10.mp3');
+            this.soundClick('./audio/switch-10.mp3');
           });
           break;
 
@@ -230,7 +230,7 @@ export default class KEYBOARD {
           keyElement.textContent = 'Enter';
 
           keyElement.addEventListener('click', () => {
-            this.soundClick('switch-4.wav');
+            this.soundClick('./audio/switch-4.wav');
             textarea.setRangeText('\n', textarea.selectionStart, textarea.selectionEnd, 'end');
           });
           break;
@@ -241,7 +241,7 @@ export default class KEYBOARD {
           keyElement.id = 'Space';
 
           keyElement.addEventListener('click', () => {
-            this.soundClick('switch-10.mp3');
+            this.soundClick('./audio/switch-10.mp3');
             textarea.setRangeText(' ', textarea.selectionStart, textarea.selectionEnd, 'end');
           });
           break;
@@ -251,7 +251,7 @@ export default class KEYBOARD {
           keyElement.id = 'ArrowDown';
 
           keyElement.addEventListener('click', () => {
-            this.soundClick('switch-10.mp3');
+            this.soundClick('./audio/switch-10.mp3');
             // textarea.setRangeText('↓', textarea.selectionStart, textarea.selectionEnd, 'end');
             this.setCursorPos('end');
           });
@@ -262,7 +262,7 @@ export default class KEYBOARD {
           keyElement.id = 'ArrowUp';
 
           keyElement.addEventListener('click', () => {
-            this.soundClick('switch-10.mp3');
+            this.soundClick('./audio/switch-10.mp3');
             this.setCursorPos('start');
           });
           break;
@@ -272,7 +272,7 @@ export default class KEYBOARD {
           keyElement.id = 'ArrowLeft';
 
           keyElement.addEventListener('click', () => {
-            this.soundClick('switch-10.mp3');
+            this.soundClick('./audio/switch-10.mp3');
             // textarea.setRangeText('←', textarea.selectionStart, textarea.selectionEnd, 'end');
             this.setCursorPos('left');
           });
@@ -283,7 +283,7 @@ export default class KEYBOARD {
           keyElement.id = 'ArrowRight';
 
           keyElement.addEventListener('click', () => {
-            this.soundClick('switch-10.mp3');
+            this.soundClick('./audio/switch-10.mp3');
             // textarea.setRangeText('→', textarea.selectionStart, textarea.selectionEnd, 'end');
             this.setCursorPos('right');
           });
@@ -293,11 +293,11 @@ export default class KEYBOARD {
           keyElement.classList.add('keyboard__key--dark', 'off', 'keyboard__key--activatable', 'keyboard__key--active');
           keyElement.id = 'off';
           keyElement.append(document.createElement('img'));
-          keyElement.children[0].src = 'on-off-icon.svg';
+          keyElement.children[0].src = './img/on-off-icon.svg';
           keyElement.children[0].alt = 'OFF';
 
           keyElement.addEventListener('click', () => {
-            this.soundClick('switch-10.mp3');
+            this.soundClick('./audio/switch-10.mp3');
             this.hideKeyboard();
             keyElement.classList.remove('keyboard__key--active');
           });
@@ -307,12 +307,12 @@ export default class KEYBOARD {
           keyElement.classList.add('keyboard__key--dark', 'sound', 'keyboard__key--activatable');
           keyElement.id = 'sound';
           keyElement.append(document.createElement('img'));
-          keyElement.children[0].src = 'sound-off.svg';
+          keyElement.children[0].src = './img/sound-off.svg';
           keyElement.children[0].alt = 'sound';
 
           keyElement.addEventListener('click', () => {
             this.toggleSound();
-            this.soundClick('switch-10.mp3');
+            this.soundClick('./audio/switch-10.mp3');
           });
           break;
 
@@ -320,12 +320,12 @@ export default class KEYBOARD {
           keyElement.classList.add('keyboard__key--dark', 'mic', 'keyboard__key--activatable');
           keyElement.id = 'mic';
           keyElement.append(document.createElement('img'));
-          keyElement.children[0].src = 'mic.svg';
+          keyElement.children[0].src = './img/mic.svg';
           keyElement.children[0].alt = 'mic';
 
           keyElement.addEventListener('click', () => {
             this.toggleMic();
-            this.soundClick('switch-10.mp3');
+            this.soundClick('./audio/switch-10.mp3');
           });
           break;
 
@@ -334,7 +334,7 @@ export default class KEYBOARD {
 
           keyElement.addEventListener('click', () => {
             textarea.setRangeText(keyElement.textContent, textarea.selectionStart, textarea.selectionEnd, 'end');
-            this.soundClick('switch-10.mp3');
+            this.soundClick('./audio/switch-10.mp3');
           });
           break;
       }
@@ -460,11 +460,11 @@ export default class KEYBOARD {
         case 'Tab':
         case 'Shift':
         case 'Backspace':
-          this.soundClick('switch-4.wav');
+          this.soundClick('./audio/switch-4.wav');
           break;
 
         case 'CapsLock':
-          this.soundClick('switch-4.wav');
+          this.soundClick('./audio/switch-4.wav');
           document.querySelector('#Caps').classList.toggle('keyboard__key--active', !this.properties.capsLock);
           this.toggleCapsLock();
           break;
@@ -474,7 +474,7 @@ export default class KEYBOARD {
           break;
 
         default:
-          this.soundClick('switch-10.mp3');
+          this.soundClick('./audio/switch-10.mp3');
           break;
       }
 
@@ -510,10 +510,10 @@ export default class KEYBOARD {
     const soundBtn = document.querySelector('#sound');
     if (sound) {
       soundBtn.classList.remove('keyboard__key--active');
-      soundBtn.children[0].src = 'sound-off.svg';
+      soundBtn.children[0].src = './img/sound-off.svg';
     } else {
       soundBtn.classList.add('keyboard__key--active');
-      soundBtn.children[0].src = 'sound-on.svg';
+      soundBtn.children[0].src = './img/sound-on.svg';
     }
     this.properties.sound = !sound;
     localStorage.sound = !sound;
