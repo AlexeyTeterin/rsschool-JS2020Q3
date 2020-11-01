@@ -31,10 +31,15 @@ recognition.addEventListener('result', (e) => {
     textarea.setRangeText('\n', textarea.selectionStart, textarea.selectionEnd, 'end');
   }
 });
-speechBtn.addEventListener('click', () => {
-  if (Array.from(speechBtn.classList).includes('keyboard__key--active')) recognition.start();
-  else recognition.stop();
+recognition.addEventListener('end', () => {
+  if (Array.from(speechBtn.classList).includes('pressed')) recognition.start();
 });
-recognition.addEventListener('end', recognition.start);
+speechBtn.addEventListener('click', () => {
+  if (Array.from(speechBtn.classList).includes('pressed')) {
+    recognition.start();
+  } else {
+    recognition.stop();
+  }
+});
 
 export default textarea;
