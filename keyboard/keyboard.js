@@ -48,7 +48,7 @@ export default class KEYBOARD {
 
   properties = {
     value: '',
-    capsLock: null,
+    capsLock: false,
     shift: false,
     english: null,
     sound: false,
