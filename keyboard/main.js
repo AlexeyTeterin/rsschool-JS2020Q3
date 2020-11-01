@@ -15,7 +15,6 @@ window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecogn
 const speechBtn = document.querySelector('.mic');
 const recognition = new SpeechRecognition();
 recognition.interimResults = true;
-recognition.lang = keyboard.properties.english ? 'en-US' : 'ru-RU';
 
 // Event listeners
 window.addEventListener('DOMContentLoaded', () => textarea.focus());
@@ -36,6 +35,7 @@ recognition.addEventListener('end', () => {
 });
 speechBtn.addEventListener('click', () => {
   if (Array.from(speechBtn.classList).includes('pressed')) {
+    recognition.lang = keyboard.properties.english ? 'en-US' : 'ru-RU';
     recognition.start();
   } else {
     recognition.stop();
