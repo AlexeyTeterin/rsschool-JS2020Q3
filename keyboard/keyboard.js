@@ -531,7 +531,7 @@ export default class KEYBOARD {
       if (buttonIsSymbol) {
         if (english) {
           this.elements.info.innerHTML = infoRu;
-
+          document.querySelector('.modal').innerText = 'Распознавание речи...';
           if (capsLock) {
             keys[index].textContent = shift ? ruShifted[index] : ru[index].toUpperCase();
           } else {
@@ -540,6 +540,7 @@ export default class KEYBOARD {
         }
         if (!english) {
           this.elements.info.innerHTML = infoEn;
+          document.querySelector('.modal').innerText = 'Recognizing your speech...';
           if (capsLock) {
             keys[index].textContent = shift ? enShifted[index] : en[index].toUpperCase();
           } else {
