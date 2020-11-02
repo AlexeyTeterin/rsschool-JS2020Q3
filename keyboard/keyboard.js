@@ -1,5 +1,7 @@
 import textarea from './textarea.js';
-import { layouts as layoutsImported } from './layouts.js';
+import {
+  layouts as layoutsImported
+} from './layouts.js';
 
 export default class KEYBOARD {
   constructor() {
@@ -37,8 +39,8 @@ export default class KEYBOARD {
 
     this.elements.info = document.body.appendChild(document.createElement('div'));
     this.elements.info.classList.add('info');
-    this.elements.info.innerHTML = 'Keyboard works properly in Windows. Press <strong>&nbspShift + Ctrl </strong>&nbsp or <strong>&nbspShift + Alt </strong>&nbspto change language.';
-    document.body.prepend(this.elements.info);
+    this.elements.info.innerHTML = (this.properties.english) ? this.elements.layouts.infoEn : this.elements.layouts.infoRu;
+    document.body.append(this.elements.info);
 
     if (localStorage.capsLock === 'true') {
       this.toggleCapsLock();
@@ -510,6 +512,8 @@ export default class KEYBOARD {
       ruShifted,
       en,
       enShifted,
+      infoEn,
+      infoRu,
     } = this.elements.layouts;
     const {
       capsLock,
@@ -526,6 +530,8 @@ export default class KEYBOARD {
       // Change only symbol buttons
       if (buttonIsSymbol) {
         if (english) {
+          this.elements.info.innerHTML = infoRu;
+
           if (capsLock) {
             keys[index].textContent = shift ? ruShifted[index] : ru[index].toUpperCase();
           } else {
@@ -533,6 +539,7 @@ export default class KEYBOARD {
           }
         }
         if (!english) {
+          this.elements.info.innerHTML = infoEn;
           if (capsLock) {
             keys[index].textContent = shift ? enShifted[index] : en[index].toUpperCase();
           } else {

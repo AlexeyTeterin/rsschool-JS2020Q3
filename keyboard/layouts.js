@@ -33,6 +33,8 @@ const layouts = {
     20, 65, 83, 68, 70, 71, 72, 74, 75, 76, 186, 222, 13,
     999, 90, 88, 67, 86, 66, 78, 77, 188, 190, 191,
   ],
+  infoEn: 'Use <strong>&nbspShift + Ctrl </strong>&nbspor <strong>&nbspShift + Alt </strong>&nbspto change layout',
+  infoRu: 'Для смены раскладки используйте <strong>&nbspShift + Ctrl </strong>&nbspили <strong>&nbspShift + Alt </strong>&nbsp',
 };
 
 export { layouts };
