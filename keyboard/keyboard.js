@@ -110,7 +110,6 @@ export default class KEYBOARD {
     } = this.elements;
     const {
       en,
-      ru,
       ruShifted,
       enShifted,
     } = this.elements.layouts;
@@ -143,8 +142,6 @@ export default class KEYBOARD {
     const {
       ru,
       en,
-      ruShifted,
-      enShifted,
     } = this.elements.layouts;
     const {
       capsLock,
@@ -277,10 +274,9 @@ export default class KEYBOARD {
           keyElement.id = 'Shift';
 
           keyElement.addEventListener('click', () => {
-            console.log(this.properties.shift);
             if (!this.properties.shift) this.shiftPress();
             else this.shiftUnpress();
-            this.soundClick('./audio/switch-4.wav');
+            this.soundClick('./audio/switch-1.mp3');
           });
           break;
 
@@ -289,7 +285,7 @@ export default class KEYBOARD {
           keyElement.textContent = 'Backspace';
 
           keyElement.addEventListener('click', () => {
-            this.soundClick('./audio/switch-4.wav');
+            this.soundClick('./audio/switch-4.mp3');
             if (textarea.selectionStart === 0 &&
               textarea.selectionEnd === textarea.selectionStart) {
               return;
@@ -308,7 +304,7 @@ export default class KEYBOARD {
 
           keyElement.addEventListener('click', (e) => {
             e.preventDefault();
-            this.soundClick('./audio/switch-4.wav');
+            this.soundClick('./audio/switch-10.mp3');
             textarea.setRangeText('\t', textarea.selectionStart, textarea.selectionEnd, 'end');
           });
           break;
@@ -321,23 +317,9 @@ export default class KEYBOARD {
           keyElement.addEventListener('click', () => {
             this.toggleCapsLock();
             keyElement.classList.toggle('keyboard__key--active', this.properties.capsLock);
-            this.soundClick('./audio/switch-4.wav');
+            this.soundClick('./audio/switch-2.mp3');
           });
           break;
-
-          // case 'lshift':
-          //   keyElement.classList.add('keyboard__key--wide');
-          //   keyElement.textContent = 'Shift';
-          //   keyElement.id = 'ShiftLeft';
-
-          //   keyElement.addEventListener('mousedown', () => {
-          //     this.shiftPress();
-          //     this.soundClick('./audio/switch-4.wav');
-          //   });
-          //   keyElement.addEventListener('mouseup', () => {
-          //     this.shiftUnpress();
-          //   });
-          //   break;
 
         case 'ctrl':
           keyElement.textContent = 'Ctrl';
@@ -386,7 +368,7 @@ export default class KEYBOARD {
           keyElement.textContent = 'Enter';
 
           keyElement.addEventListener('click', () => {
-            this.soundClick('./audio/switch-4.wav');
+            this.soundClick('./audio/switch-3.mp3');
             textarea.setRangeText('\n', textarea.selectionStart, textarea.selectionEnd, 'end');
           });
           break;
@@ -613,19 +595,25 @@ export default class KEYBOARD {
       let counter = -1;
 
       switch (event.key) {
-        case 'Enter':
         case 'Tab':
+          break;
+
+        case 'Enter':
+          this.soundClick('./audio/switch-3.mp3');
+          break;
+
         case 'Backspace':
+          this.soundClick('./audio/switch-4.mp3');
           break;
 
         case 'Shift':
-          this.soundClick('./audio/switch-4.wav');
+          this.soundClick('./audio/switch-1.mp3');
           document.querySelector('#Shift').classList.remove('red');
           this.shiftUnpress();
           break;
 
         case 'CapsLock':
-          this.soundClick('./audio/switch-4.wav');
+          this.soundClick('./audio/switch-2.mp3');
           document.querySelector('#Caps').classList.toggle('keyboard__key--active', !this.properties.capsLock);
           this.toggleCapsLock();
           break;
@@ -681,7 +669,8 @@ export default class KEYBOARD {
   }
 
   soundClick(sound) {
-    const audio = new Audio(sound);
+    const src = this.properties.english ? `${sound.slice(0, -4)}-en.mp3` : sound;
+    const audio = new Audio(src);
     if (this.properties.sound) {
       audio.play();
     }
