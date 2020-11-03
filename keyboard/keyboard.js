@@ -62,14 +62,13 @@ export default class KEYBOARD {
     } = this.elements;
     const {
       english,
-      capsLock,
       shift,
     } = this.properties;
     const {
       en,
       ru,
-      ruShifted,
       enShifted,
+      ruShifted,
     } = this.elements.layouts;
 
     this.properties.capsLock = !this.properties.capsLock;
@@ -80,7 +79,7 @@ export default class KEYBOARD {
         const buttonIsSymbol = en[index].length === 1;
         if (buttonIsSymbol) {
           if (shift) {
-            key.textContent = english ? en[index] : ru[index];
+            key.textContent = english ? enShifted[index].toLowerCase() : ruShifted[index].toLowerCase();
           }
           if (!shift) {
             key.textContent = english ? en[index].toUpperCase() : ru[index].toUpperCase();
@@ -93,7 +92,7 @@ export default class KEYBOARD {
         const buttonIsSymbol = en[index].length === 1;
         if (buttonIsSymbol) {
           if (shift) {
-            key.textContent = english ? en[index] : ru[index];
+            key.textContent = english ? enShifted[index] : ruShifted[index];
           }
           if (!shift) {
             key.textContent = english ? en[index].toLowerCase() : ru[index].toLowerCase();
@@ -687,8 +686,6 @@ export default class KEYBOARD {
       audio.play();
     }
   }
-<<<<<<< HEAD
-=======
 
   toggleLang() {
     const {
@@ -766,68 +763,4 @@ export default class KEYBOARD {
       }
     });
   }
-
-  shiftPress() {
-    const {
-      en,
-      ru,
-      ruShifted,
-      enShifted,
-    } = this.elements.layouts;
-    const {
-      keys,
-    } = this.elements;
-    const {
-      english,
-      capsLock,
-    } = this.properties;
-
-    for (let index = 0; index < keys.length; index += 1) {
-      const buttonIsSymbol = en[index].length === 1;
-      // Change only symbol buttons
-      if (buttonIsSymbol) {
-        if (english) {
-          keys[index].textContent = capsLock ? en[index] : enShifted[index];
-        } else if (!english) {
-          keys[index].textContent = capsLock ? ru[index] : ruShifted[index];
-        }
-      }
-    }
-
-    this.properties.shift = true;
-    this.phisycalInput();
-  }
-
-  shiftUnpress() {
-    const {
-      ru,
-      en,
-      ruShifted,
-      enShifted,
-    } = this.elements.layouts;
-    const {
-      keys,
-    } = this.elements;
-    const {
-      capsLock,
-      english,
-    } = this.properties;
-
-    for (let index = 0; index < keys.length; index += 1) {
-      const buttonIsSymbol = en[index].length === 1;
-      // Change only symbol buttons
-      if (buttonIsSymbol) {
-        if (english) {
-          keys[index].textContent = capsLock ? enShifted[index] : en[index];
-        }
-        if (!english) {
-          keys[index].textContent = capsLock ? ruShifted[index] : ru[index];
-        }
-      }
-    }
-
-    this.properties.shift = false;
-    this.phisycalInput();
-  }
->>>>>>> 3ada5ad637d9b7be0ea423a302a7cf8741acf9a7
 }
