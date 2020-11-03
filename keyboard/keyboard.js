@@ -687,4 +687,147 @@ export default class KEYBOARD {
       audio.play();
     }
   }
+<<<<<<< HEAD
+=======
+
+  toggleLang() {
+    const {
+      ru,
+      ruShifted,
+      en,
+      enShifted,
+      infoEn,
+      infoRu,
+    } = this.elements.layouts;
+    const {
+      capsLock,
+      shift,
+      english,
+    } = this.properties;
+    const {
+      keys,
+    } = this.elements;
+    const langButtonText = document.getElementById('lang').textContent;
+
+    for (let index = 0; index < keys.length; index += 1) {
+      const buttonIsSymbol = en[index].length === 1;
+      // Change only symbol buttons
+      if (buttonIsSymbol) {
+        if (english) {
+          this.elements.info.innerHTML = infoRu;
+          document.querySelector('.modal').innerText = 'Распознавание речи...';
+          if (capsLock) {
+            keys[index].textContent = shift ? ruShifted[index] : ru[index].toUpperCase();
+          } else {
+            keys[index].textContent = shift ? ruShifted[index] : ru[index];
+          }
+        }
+        if (!english) {
+          this.elements.info.innerHTML = infoEn;
+          document.querySelector('.modal').innerText = 'Recognizing your speech...';
+          if (capsLock) {
+            keys[index].textContent = shift ? enShifted[index] : en[index].toUpperCase();
+          } else {
+            keys[index].textContent = shift ? enShifted[index] : en[index];
+          }
+        }
+      }
+    }
+
+    if (langButtonText === 'EN') {
+      document.getElementById('lang').textContent = 'RU';
+    } else document.getElementById('lang').textContent = 'EN';
+
+    localStorage.setItem('english', !this.properties.english);
+    this.properties.english = !this.properties.english;
+
+    this.phisycalInput();
+  }
+
+  langTrigger() {
+    let counter = 0;
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Shift' && (counter === 5 || counter === 0)) {
+        counter += 3;
+      }
+      if (['Control', 'Alt'].includes(event.key) && (counter === 3 || counter === 0)) {
+        counter += 5;
+      }
+      if (counter === 8) this.toggleLang();
+    });
+
+    document.addEventListener('keyup', (event) => {
+      if (event.key === 'Shift' && (counter === 3 || counter === 8)) {
+        counter -= 3;
+      }
+      if (['Control', 'Alt'].includes(event.key) && (counter === 5 || counter === 8)) {
+        counter -= 5;
+      }
+    });
+  }
+
+  shiftPress() {
+    const {
+      en,
+      ru,
+      ruShifted,
+      enShifted,
+    } = this.elements.layouts;
+    const {
+      keys,
+    } = this.elements;
+    const {
+      english,
+      capsLock,
+    } = this.properties;
+
+    for (let index = 0; index < keys.length; index += 1) {
+      const buttonIsSymbol = en[index].length === 1;
+      // Change only symbol buttons
+      if (buttonIsSymbol) {
+        if (english) {
+          keys[index].textContent = capsLock ? en[index] : enShifted[index];
+        } else if (!english) {
+          keys[index].textContent = capsLock ? ru[index] : ruShifted[index];
+        }
+      }
+    }
+
+    this.properties.shift = true;
+    this.phisycalInput();
+  }
+
+  shiftUnpress() {
+    const {
+      ru,
+      en,
+      ruShifted,
+      enShifted,
+    } = this.elements.layouts;
+    const {
+      keys,
+    } = this.elements;
+    const {
+      capsLock,
+      english,
+    } = this.properties;
+
+    for (let index = 0; index < keys.length; index += 1) {
+      const buttonIsSymbol = en[index].length === 1;
+      // Change only symbol buttons
+      if (buttonIsSymbol) {
+        if (english) {
+          keys[index].textContent = capsLock ? enShifted[index] : en[index];
+        }
+        if (!english) {
+          keys[index].textContent = capsLock ? ruShifted[index] : ru[index];
+        }
+      }
+    }
+
+    this.properties.shift = false;
+    this.phisycalInput();
+  }
+>>>>>>> 3ada5ad637d9b7be0ea423a302a7cf8741acf9a7
 }
