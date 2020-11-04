@@ -13,6 +13,8 @@ export default class KEYBOARD {
       sound: false,
       micOn: false,
       control: false,
+      altGraph: false,
+      alt: false,
     };
     this.elements = {
       info: '',
@@ -51,8 +53,7 @@ export default class KEYBOARD {
       this.toggleSound();
       document.querySelector('#sound').classList.add('keyboard__key--active');
     }
-
-    this.langTrigger();
+    
     this.phisycalInput();
   }
 
@@ -216,29 +217,6 @@ export default class KEYBOARD {
     this.properties.english = !this.properties.english;
 
     this.phisycalInput();
-  }
-
-  langTrigger() {
-    let counter = 0;
-
-    document.addEventListener('keydown', (event) => {
-      if (event.key === 'Shift' && (counter === 5 || counter === 0)) {
-        counter += 3;
-      }
-      if (['Control', 'Alt'].includes(event.key) && (counter === 3 || counter === 0)) {
-        counter += 5;
-      }
-      if (counter === 8) this.toggleLang();
-    });
-
-    document.addEventListener('keyup', (event) => {
-      if (event.key === 'Shift' && (counter === 3 || counter === 8)) {
-        counter -= 3;
-      }
-      if (['Control', 'Alt'].includes(event.key) && (counter === 5 || counter === 8)) {
-        counter -= 5;
-      }
-    });
   }
 
   createKeys() {
@@ -564,7 +542,8 @@ export default class KEYBOARD {
         counter += 1;
         if (key.innerText === event.code || event.code === key.id || pos === counter) {
           key.classList.add('red');
-        }
+          if (event.key === 'AltGraph')(document.querySelector('#ControlLeft').classList.remove('red'));
+        };
       });
 
       switch (event.key) {
@@ -584,9 +563,27 @@ export default class KEYBOARD {
 
         case 'Tab':
           event.preventDefault();
-
           textarea
             .setRangeText('\t', textarea.selectionStart, textarea.selectionEnd, 'end');
+          break;
+
+        case 'Alt':
+          event.preventDefault();
+          this.properties.alt = true;
+          this.properties.control = false;
+          break;
+
+        case 'AltGraph':
+          event.preventDefault();
+          this.properties.altGraph = true;
+          this.properties.alt = false;
+          this.properties.control = true;
+          break;
+
+        case 'Control':
+          event.preventDefault();
+          this.properties.control = true;
+          if (this.properties.shift) this.toggleLang();
           break;
 
         default:
@@ -622,9 +619,10 @@ export default class KEYBOARD {
           break;
 
         case 'Shift':
+          this.shiftUnpress();
           this.soundClick('./audio/switch-1.mp3');
           document.querySelector('#Shift').classList.remove('red');
-          this.shiftUnpress();
+          if (this.properties.control || this.properties.alt) this.toggleLang();
           break;
 
         case 'CapsLock':
@@ -633,9 +631,24 @@ export default class KEYBOARD {
           this.toggleCapsLock();
           break;
 
-        case 'Control':
-          this.soundClick('./audio/switch-10.mp3');
+        case 'Alt':
+          event.preventDefault();
+          this.properties.alt = false;
           this.properties.control = false;
+          this.soundClick('./audio/switch-10.mp3');
+          if (this.properties.shift) this.toggleLang();
+          break;
+
+        case 'AltGraph':
+          this.properties.altGraph = false;
+          this.properties.alt = false;
+          this.properties.control = false;
+          this.soundClick('./audio/switch-10.mp3');
+          break;
+
+        case 'Control':
+          this.properties.control = false;
+          if (!this.properties.altGraph) this.soundClick('./audio/switch-10.mp3');
           break;
 
         default:
@@ -649,7 +662,7 @@ export default class KEYBOARD {
           key.classList.remove('red');
         }
         if (event.key === 'Shift') {
-          // this.shiftUnpress();
+          this.shiftUnpress();
         }
       });
     };
@@ -744,28 +757,5 @@ export default class KEYBOARD {
     this.properties.english = !this.properties.english;
 
     this.phisycalInput();
-  }
-
-  langTrigger() {
-    let counter = 0;
-
-    document.addEventListener('keydown', (event) => {
-      if (event.key === 'Shift' && (counter === 5 || counter === 0)) {
-        counter += 3;
-      }
-      if (['Control', 'Alt'].includes(event.key) && (counter === 3 || counter === 0)) {
-        counter += 5;
-      }
-      if (counter === 8) this.toggleLang();
-    });
-
-    document.addEventListener('keyup', (event) => {
-      if (event.key === 'Shift' && (counter === 3 || counter === 8)) {
-        counter -= 3;
-      }
-      if (['Control', 'Alt'].includes(event.key) && (counter === 5 || counter === 8)) {
-        counter -= 5;
-      }
-    });
   }
 }
