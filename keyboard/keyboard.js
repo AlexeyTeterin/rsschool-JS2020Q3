@@ -619,6 +619,7 @@ export default class KEYBOARD {
           break;
 
         case 'Control':
+          this.soundClick('./audio/switch-10.mp3');
           this.properties.control = false;
           break;
 
