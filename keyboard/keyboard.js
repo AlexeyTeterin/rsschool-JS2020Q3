@@ -53,7 +53,7 @@ export default class KEYBOARD {
       this.toggleSound();
       document.querySelector('#sound').classList.add('keyboard__key--active');
     }
-    
+
     this.phisycalInput();
   }
 
@@ -570,7 +570,6 @@ export default class KEYBOARD {
         case 'Alt':
           event.preventDefault();
           this.properties.alt = true;
-          this.properties.control = false;
           break;
 
         case 'AltGraph':
@@ -619,8 +618,8 @@ export default class KEYBOARD {
           break;
 
         case 'Shift':
-          this.shiftUnpress();
           this.soundClick('./audio/switch-1.mp3');
+          this.shiftUnpress();
           document.querySelector('#Shift').classList.remove('red');
           if (this.properties.control || this.properties.alt) this.toggleLang();
           break;
@@ -633,22 +632,21 @@ export default class KEYBOARD {
 
         case 'Alt':
           event.preventDefault();
-          this.properties.alt = false;
-          this.properties.control = false;
-          this.soundClick('./audio/switch-10.mp3');
           if (this.properties.shift) this.toggleLang();
+          this.properties.alt = false;
+          this.soundClick('./audio/switch-10.mp3');
           break;
 
         case 'AltGraph':
+          this.soundClick('./audio/switch-10.mp3');
           this.properties.altGraph = false;
           this.properties.alt = false;
           this.properties.control = false;
-          this.soundClick('./audio/switch-10.mp3');
           break;
 
         case 'Control':
+          if (!this.properties.altGraph && this.properties.control) this.soundClick('./audio/switch-10.mp3');
           this.properties.control = false;
-          if (!this.properties.altGraph) this.soundClick('./audio/switch-10.mp3');
           break;
 
         default:
@@ -698,6 +696,7 @@ export default class KEYBOARD {
   }
 
   soundClick(sound) {
+    // console.trace();
     const src = this.properties.english ? `${sound.slice(0, -4)}-en.mp3` : sound;
     const audio = new Audio(src);
     if (this.properties.sound) {
