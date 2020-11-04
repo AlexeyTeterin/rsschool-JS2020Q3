@@ -40,9 +40,8 @@ strong {
 
 .info {
   margin: 10px auto;
-  /* width: 814px; */
   text-align: center;
-  font-size: small;
+  /* font-size: small; */
   color: grey;
   min-width: 500px;
 }
@@ -227,7 +226,6 @@ strong {
 
   .modal {
     bottom: 215px;
-    font-size: 12px;
   }
 
   textarea {
