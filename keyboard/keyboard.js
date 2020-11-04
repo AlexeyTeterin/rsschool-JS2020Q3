@@ -257,6 +257,8 @@ export default class KEYBOARD {
     // Create keys
     keyLayout.forEach((key) => {
 
+
+
       const keyElement = document.createElement('button');
       const insertLineBreak = ['backspace', '\\', 'enter', 'uarr'].indexOf(key) !== -1;
 
@@ -282,7 +284,8 @@ export default class KEYBOARD {
 
         case 'backspace':
           keyElement.classList.add('keyboard__key--wide');
-          keyElement.textContent = 'Backspace';
+          keyElement.id = 'Backspace';
+          keyElement.textContent = window.innerWidth > 600 ? 'Backspace' : 'Del';
 
           keyElement.addEventListener('click', () => {
             this.soundClick('./audio/switch-4.mp3');
@@ -311,8 +314,8 @@ export default class KEYBOARD {
 
         case 'caps':
           keyElement.classList.add('keyboard__key--wide', 'keyboard__key--activatable');
-          keyElement.textContent = 'CapsLock';
           keyElement.id = 'Caps';
+          keyElement.textContent = window.innerWidth > 600 ? 'CapsLock' : 'Caps';
 
           keyElement.addEventListener('click', () => {
             this.toggleCapsLock();
@@ -324,12 +327,14 @@ export default class KEYBOARD {
         case 'ctrl':
           keyElement.textContent = 'Ctrl';
           keyElement.id = 'ControlRight';
+          if (window.innerWidth <=600) keyElement.style.setProperty('letter-spacing', '-1px');
           keyElement.addEventListener('click', () => {
             this.soundClick('./audio/switch-10.mp3');
           });
           break;
 
         case 'lctrl':
+          keyElement.classList.add('keyboard__key--wide');
           keyElement.textContent = 'Ctrl';
           keyElement.id = 'ControlLeft';
           keyElement.addEventListener('click', () => {
@@ -481,6 +486,18 @@ export default class KEYBOARD {
 
       if (insertLineBreak) {
         fragment.appendChild(document.createElement('br'));
+      }
+    });
+
+    window.addEventListener('resize', () => {
+      if (window.innerWidth <= 600) {
+        document.querySelector('#Caps').textContent = 'Caps';
+        document.querySelector('#Backspace').textContent = 'Del';
+        document.querySelector('#ControlRight').style.setProperty('letter-spacing', '-1px');
+      } else {
+        document.querySelector('#Caps').textContent = 'CapsLock';
+        document.querySelector('#Backspace').textContent = 'Backspace';
+        document.querySelector('#ControlRight').style.setProperty('letter-spacing', '0');
       }
     });
 

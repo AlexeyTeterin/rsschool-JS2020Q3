@@ -202,7 +202,6 @@ strong {
 
 @media (max-width: 600px) {
   .keyboard__key {
-    font-size: 11px;
     height: 36px;
     margin: 2px;
   }
@@ -221,6 +220,11 @@ strong {
     height: 4px;
   }
 
+  .keyboard__key--wide {
+    width: 10%;
+    max-width: 90px;
+  }
+
   .modal {
     bottom: 215px;
     font-size: 12px;
@@ -230,4 +234,3 @@ strong {
     width: 94vw;
   }
 }
-
