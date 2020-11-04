@@ -327,7 +327,7 @@ export default class KEYBOARD {
         case 'ctrl':
           keyElement.textContent = 'Ctrl';
           keyElement.id = 'ControlRight';
-          if (window.innerWidth <=600) keyElement.style.setProperty('letter-spacing', '-1px');
+          if (window.innerWidth <= 600) keyElement.style.setProperty('letter-spacing', '-1px');
           keyElement.addEventListener('click', () => {
             this.soundClick('./audio/switch-10.mp3');
           });
@@ -577,10 +577,6 @@ export default class KEYBOARD {
         case 'CapsLock':
           break;
 
-        case 'Control':
-          // this.properties.control = true;
-          break;
-
         case 'Shift':
           this.shiftPress();
           document.querySelector('#Shift').classList.add('red');
@@ -588,6 +584,7 @@ export default class KEYBOARD {
 
         case 'Tab':
           event.preventDefault();
+
           textarea
             .setRangeText('\t', textarea.selectionStart, textarea.selectionEnd, 'end');
           break;
@@ -613,6 +610,7 @@ export default class KEYBOARD {
 
       switch (event.key) {
         case 'Tab':
+          this.soundClick('./audio/switch-10.mp3');
           break;
 
         case 'Enter':
