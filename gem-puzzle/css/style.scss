@@ -11,7 +11,7 @@ body {
 }
 
 .game-board {
-  background-color: rgba(195, 219, 109, 0.8);
+  background-color: rgba(75, 32, 52, 0.6);
   width: 50vw;
   height: 50vw;
   display: grid;
@@ -21,7 +21,7 @@ body {
   margin-top: 3em;
 
   .chip {
-    background-color: rgb(155, 105, 49);
+    background-color: rgba(71, 157, 184, 0.8);
     margin: 2px;
     color: rgba(255, 255, 200, 1);
     border: 1px solid black;
@@ -32,12 +32,17 @@ body {
     align-items: center;
     font-size: 2rem;
     user-select: none;
+    transition: transform 0.15s;
     border-radius: 5px;
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
     -ms-border-radius: 5px;
     -o-border-radius: 5px;
-  }
+    -webkit-transition: transform 0.15s;
+    -moz-transition: transform 0.15s;
+    -ms-transition: transform 0.15s;
+    -o-transition: transform 0.15s;
+}
 
   .chip-empty {
     background-color: unset;

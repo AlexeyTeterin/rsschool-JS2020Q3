@@ -30,7 +30,7 @@ class Game {
     // add last empty chip
     const emptyChip = document.createElement('div');
     emptyChip.classList.add('chip', 'chip-empty');
-    emptyChip.textContent = 'empty';
+    emptyChip.textContent = '';
     this.gameBoard.append(emptyChip);
     this.getChips();
 
@@ -69,16 +69,30 @@ class Game {
     const clickedChip = document.querySelectorAll('.chip')[chipPos];
     const emptyChip = document.querySelector('.chip-empty');
     const temp = emptyChip.innerHTML;
-    console.log(Math.abs(this.chips.indexOf(emptyChip) - chipPos) === this.properties.rows);
-    const chipIsMovable = () => [1, this.properties.rows].includes( Math.abs(this.chips.indexOf(emptyChip) - chipPos));
-    
+    const positionDifference = this.chips.indexOf(emptyChip) - chipPos;
+    const chipIsMovable = () => [1, this.properties.rows].includes(Math.abs(positionDifference));
+
     if (chipIsMovable()) {
-      console.log('success!');
-      emptyChip.innerHTML = chip.innerHTML;
-      emptyChip.classList.remove('chip-empty');
-      clickedChip.innerHTML = temp;
-      clickedChip.classList.add('chip-empty');
-      this.getChips();
+      const params = {
+        [`${this.properties.rows}`]: '(0, 100%)',
+        '1': '(100%, 0)',
+        [`-${this.properties.rows}`]: '(0, -100%)',
+        '-1': '(-100%, 0)',
+      };
+
+      clickedChip.style.setProperty('transform', `translate${params[positionDifference]}`);
+      emptyChip.style.setProperty('visibility', 'hidden');
+
+      setTimeout(() => {
+        emptyChip.innerHTML = chip.innerHTML;
+        emptyChip.classList.remove('chip-empty');
+        clickedChip.innerHTML = temp;
+        clickedChip.classList.add('chip-empty');
+        emptyChip.style.setProperty('visibility', 'visible');
+        clickedChip.style.setProperty('transform', `translate(0)`);
+        this.getChips();
+      }, 150);
+
     }
   }
 }
