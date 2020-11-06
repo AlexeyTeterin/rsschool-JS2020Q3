@@ -10,18 +10,23 @@ body {
 }
 
 .game-board {
-  background-color: #c3db6d;
+  background-color: rgba(195, 219, 109, 0.8);
   width: 50vw;
   height: 50vw;
   display: grid;
   max-width: 420px;
   max-height: 420px;
   border: 1px solid #444;
+  margin-top: 3em;
 }
 
 .game-board .chip {
-  background-color: #9b7d31;
+  background-color: #9b6931;
+  margin: 2px;
+  color: #ffffc8;
   border: 1px solid black;
+  height: auto;
+  width: auto;
   display: flex;
   justify-content: center;
   align-items: center;
