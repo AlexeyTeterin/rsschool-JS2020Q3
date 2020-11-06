@@ -38,4 +38,13 @@ body {
     -ms-border-radius: 5px;
     -o-border-radius: 5px;
   }
+
+  .chip-empty {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: none;
+    border: none;
+
+  }
 }

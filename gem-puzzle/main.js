@@ -24,13 +24,17 @@ class Game {
       chip.textContent = num;
       this.gameBoard.append(chip);
     });
+    const emptyChip = document.createElement('div');
+    emptyChip.classList.add('chip-empty');
+    emptyChip.textContent = 'empty';
+    this.gameBoard.append(emptyChip);
 
     this.chips = document.querySelectorAll('.chip');
   }
 
   shuffleChips() {
     const nums = [];
-    const numOfChips = this.properties.rows ** 2 - 1
+    const numOfChips = this.properties.rows ** 2 - 1;
     let generateRandom = () => Math.ceil(Math.random() * numOfChips);
     for (let i = 0; i < numOfChips; i++) {
       let random = generateRandom();
