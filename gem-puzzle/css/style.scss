@@ -11,7 +11,7 @@ body {
 }
 
 .game-board {
-  background-color: rgba(75, 32, 52, 0.6);
+  background-color: #5d8689;
   width: 50vw;
   height: 50vw;
   display: grid;
@@ -21,9 +21,9 @@ body {
   margin-top: 3em;
 
   .chip {
-    background-color: rgba(71, 157, 184, 0.8);
+    background-color: #6f4c5c;
     margin: 2px;
-    color: rgba(255, 255, 200, 1);
+    color: #f0f4f5;
     border: 1px solid black;
     height: auto;
     width: auto;
