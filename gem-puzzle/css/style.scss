@@ -8,6 +8,24 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
+
+  header {
+    margin-top: 3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 50vw;
+    max-width: 420px;
+
+    time {
+      
+    }
+
+    moves {
+
+    }
+  }
 }
 
 .game-board {
@@ -18,7 +36,7 @@ body {
   max-width: 420px;
   max-height: 420px;
   border: 1px solid #444;
-  margin-top: 3em;
+  margin-top: 0.2em;
 
   .chip {
     background-color: #6f4c5c;

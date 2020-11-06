@@ -2,14 +2,23 @@ class Game {
   constructor() {
     this.properties = {
       rows: 4,
-      time: null,
-      moves: 0,
+      timer: 0,
+      playing: false,
+      movesCounter: 0,
     }
+    this.header = null;
     this.gameBoard = null;
     this.chipsNumbers = null;
     this.chips = [];
   }
   init() {
+    // create header
+    this.header = document.createElement('header');
+    this.header.append(document.createElement('time'));
+    this.header.append(document.createElement('moves'));
+    document.body.append(this.header);
+    this.updateHeader();
+
     // create game board
     this.gameBoard = document.createElement('div');
     this.gameBoard.classList.add('game-board');
@@ -26,7 +35,10 @@ class Game {
 
     // moving chips event listener
     this.chips.forEach((chip) =>
-      chip.addEventListener('click', () => this.moveChips(chip)));
+      chip.addEventListener('click', () => {
+        if (!this.properties.playing) this.setTimer('on');
+        this.moveChips(chip);
+      }));
   }
 
   createChips() {
@@ -53,14 +65,18 @@ class Game {
   }
 
   saveGame() {
-    localStorage.savedGame = JSON.stringify(this.chipsNumbers);
+    localStorage.savedGame = JSON.stringify(this);
     localStorage.savedGameRows = this.properties.rows;
   }
 
   loadGame() {
     try {
-      this.fillChips(JSON.parse(localStorage.savedGame));
+      const savedGame = JSON.parse(localStorage.savedGame);
+      this.fillChips(savedGame.chipsNumbers);
       this.properties.rows = +localStorage.savedGameRows;
+      this.properties.movesCounter = savedGame.properties.movesCounter;
+      this.properties.timer = savedGame.properties.timer;
+      this.updateHeader();
     } catch (error) {
       alert('No any saved game found');
     }
@@ -93,11 +109,10 @@ class Game {
       '-1': '(-100%, 0)',
     };
 
-    console.log(Math.abs(positionDifference));
-    console.log(chipIsMovable());
     if (!chipIsMovable()) return;
 
     clickedChip.style.setProperty('transform', `translate${params[positionDifference]}`);
+    this.updateHeader(1);
 
     setTimeout(() => {
       emptyChip.innerHTML = chip.innerHTML;
@@ -107,6 +122,33 @@ class Game {
       clickedChip.style.setProperty('transform', `translate(0)`);
       this.getChips();
     }, 150);
+  }
+
+  updateHeader(n) {
+    const {
+      timer
+    } = this.properties;
+    let minutes = Math.floor(timer / 60);
+    minutes = minutes < 10 ? `0${minutes}` : minutes;
+    let seconds = timer % 60;
+    seconds = seconds < 10 ? `0${seconds}` : seconds;
+    document.querySelector('time').innerHTML = `Time: ${minutes}:${seconds}`;
+    document.querySelector('moves').innerHTML = n ? `Moves: ${++this.properties.movesCounter}` : `Moves: ${this.properties.movesCounter}`;
+  }
+
+  setTimer(switcher) {
+    const tick = () => {
+      this.properties.timer += 1;
+      this.updateHeader();
+    }
+    
+    if (switcher === 'on') {
+      this.properties.playing = true;
+      window.timer = window.setInterval(tick, 1000);
+    } else if (switcher === 'off') {
+      this.properties.playing = false;
+      window.clearInterval(timer);
+    }
   }
 }
 
