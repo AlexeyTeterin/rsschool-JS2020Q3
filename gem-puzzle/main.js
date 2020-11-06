@@ -58,8 +58,12 @@ class Game {
   }
 
   loadGame() {
-    this.properties.rows = +localStorage.savedGameRows;
-    this.fillChips(JSON.parse(localStorage.savedGame));
+    try {
+      this.fillChips(JSON.parse(localStorage.savedGame));
+      this.properties.rows = +localStorage.savedGameRows;
+    } catch (error) {
+      alert('No any saved game found');
+    }
   }
 
   randomizeChips() {
