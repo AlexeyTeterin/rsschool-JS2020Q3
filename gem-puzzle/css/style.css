@@ -54,6 +54,10 @@ body header {
   -o-transition: transform 0.15s;
 }
 
+.game-board .chip:hover {
+  opacity: 0.7;
+}
+
 .game-board .chip-empty {
   background-color: unset;
   border: none;

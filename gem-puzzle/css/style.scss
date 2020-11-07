@@ -60,6 +60,10 @@ body {
     -moz-transition: transform 0.15s;
     -ms-transition: transform 0.15s;
     -o-transition: transform 0.15s;
+
+    &:hover {
+      opacity: 0.7;
+    }
 }
 
   .chip-empty {
