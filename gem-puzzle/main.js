@@ -58,6 +58,9 @@ class Game {
       </ul>`;
     this.gameBoard.append(this.menu);
 
+    // settings menu
+    document.querySelector('.btn-settings').addEventListener('click', () => this.showSettings());
+
     document.querySelector('.btn-newGame').addEventListener('click', () => this.newGame());
   }
 
@@ -82,6 +85,11 @@ class Game {
 
   showMenu() {
     this.menu.classList.remove('hidden');
+  }
+
+  showSettings() {
+    
+    console.log('settings');
   }
 
   createChips() {
