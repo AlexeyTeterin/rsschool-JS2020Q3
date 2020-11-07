@@ -1,16 +1,15 @@
 class Game {
-  constructor() {
-    this.properties = {
-      rows: 4,
-      timer: 0,
-      playing: false,
-      movesCounter: 0,
-    }
-    this.header = null;
-    this.gameBoard = null;
-    this.chipsNumbers = null;
-    this.chips = [];
+  properties = {
+    rows: 4,
+    timer: 0,
+    playing: false,
+    movesCounter: 0,
   }
+  header = null;
+  gameBoard = null;
+  chipsNumbers = null;
+  chips = [];
+
   init() {
     // create header
     this.header = document.createElement('header');
@@ -73,13 +72,14 @@ class Game {
     try {
       const savedGame = JSON.parse(localStorage.savedGame);
       this.fillChips(savedGame.chipsNumbers);
-      this.properties.rows = +localStorage.savedGameRows;
+      this.properties.rows = +localStorage.savedGameRows;  
       this.properties.movesCounter = savedGame.properties.movesCounter;
       this.properties.timer = savedGame.properties.timer;
       this.updateHeader();
     } catch (error) {
       alert('No any saved game found');
     }
+    if (window.timer) this.setTimer('off');
   }
 
   randomizeChips() {
@@ -141,7 +141,7 @@ class Game {
       this.properties.timer += 1;
       this.updateHeader();
     }
-    
+
     if (switcher === 'on') {
       this.properties.playing = true;
       window.timer = window.setInterval(tick, 1000);
