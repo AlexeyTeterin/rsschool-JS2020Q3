@@ -22,6 +22,16 @@ body {
       
     }
 
+    pause {
+      &:hover {
+        color: aquamarine;
+        cursor: pointer;
+      }
+      &:active {
+        opacity: 0.5;
+      }
+    }
+
     moves {
 
     }

@@ -9,14 +9,22 @@ class Game {
   gameBoard = null;
   chipsNumbers = null;
   chips = [];
+  pauseBtn = null;
+  modal = null;
 
   init() {
     // create header
     this.header = document.createElement('header');
     this.header.append(document.createElement('time'));
     this.header.append(document.createElement('moves'));
+    this.pauseBtn = document.createElement('pause');
+    this.header.append(this.pauseBtn);
     document.body.append(this.header);
     this.updateHeader();
+
+    // pause button
+    this.pauseBtn.textContent = this.properties.playing ? 'Pause' : 'Play';
+    this.pauseBtn.addEventListener('click', () => this.setTimer(this.properties.playing ? 'off' : 'on'));
 
     // create game board
     this.gameBoard = document.createElement('div');
@@ -29,15 +37,24 @@ class Game {
     this.chipsNumbers = this.randomizeChips();
     this.createChips();
     this.fillChips(this.chipsNumbers);
-
     this.getChips();
+  }
 
-    // moving chips event listener
-    this.chips.forEach((chip) =>
-      chip.addEventListener('click', () => {
-        if (!this.properties.playing) this.setTimer('on');
-        this.moveChips(chip);
-      }));
+  setTimer(switcher) {
+    const tick = () => {
+      this.properties.timer += 1;
+      this.updateHeader();
+    }
+
+    if (switcher === 'on') {
+      this.properties.playing = true;
+      this.pauseBtn.textContent = 'Pause';
+      window.timer = window.setInterval(tick, 1000);
+    } else if (switcher === 'off') {
+      this.properties.playing = false;
+      this.pauseBtn.textContent = 'Play';
+      window.clearInterval(timer);
+    }
   }
 
   createChips() {
@@ -47,6 +64,13 @@ class Game {
       this.gameBoard.append(chip);
       this.chips.push(chip);
     })
+
+    // chips movement event listener
+    this.chips.forEach((chip) =>
+      chip.addEventListener('click', () => {
+        if (!this.properties.playing) this.setTimer('on');
+        this.moveChips(chip);
+      }));
   }
 
   getChips() {
@@ -72,7 +96,7 @@ class Game {
     try {
       const savedGame = JSON.parse(localStorage.savedGame);
       this.fillChips(savedGame.chipsNumbers);
-      this.properties.rows = +localStorage.savedGameRows;  
+      this.properties.rows = +localStorage.savedGameRows;
       this.properties.movesCounter = savedGame.properties.movesCounter;
       this.properties.timer = savedGame.properties.timer;
       this.updateHeader();
@@ -134,21 +158,6 @@ class Game {
     seconds = seconds < 10 ? `0${seconds}` : seconds;
     document.querySelector('time').innerHTML = `Time: ${minutes}:${seconds}`;
     document.querySelector('moves').innerHTML = n ? `Moves: ${++this.properties.movesCounter}` : `Moves: ${this.properties.movesCounter}`;
-  }
-
-  setTimer(switcher) {
-    const tick = () => {
-      this.properties.timer += 1;
-      this.updateHeader();
-    }
-
-    if (switcher === 'on') {
-      this.properties.playing = true;
-      window.timer = window.setInterval(tick, 1000);
-    } else if (switcher === 'off') {
-      this.properties.playing = false;
-      window.clearInterval(timer);
-    }
   }
 }
 

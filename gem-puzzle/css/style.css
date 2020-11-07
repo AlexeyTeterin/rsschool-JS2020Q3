@@ -19,6 +19,15 @@ body header {
   max-width: 420px;
 }
 
+body header pause:hover {
+  color: aquamarine;
+  cursor: pointer;
+}
+
+body header pause:active {
+  opacity: 0.5;
+}
+
 .game-board {
   background-color: #5d8689;
   width: 50vw;
