@@ -6,8 +6,7 @@ const MENU = {
       <li class="menu-li btn-scores">Scores</li>
       <li class="menu-li btn-settings">Settings</li>
       </ul>`,
-  settings: `<h1>Settings</h1>
-      <p>Field size:</p>
+  settings: `<p>Field size:</p>
       <ul>
       <li class='rows'>3x3</li>
       <li class='rows'>4x4</li>
@@ -17,9 +16,7 @@ const MENU = {
       <li class='rows'>8x8</li>
       </ul>
       <div class="btn-goBack">go back</div>`,
-  // savedPattern: 'JSON.parse(localStorage.savedGame)',
-  savedGames: `<h1>Saved games:</h1>
-      <ul>
+  savedGames: `<ul>
       <li class='slot autosaved'>1. Autosaved</li>
       <li class='slot'>1. ---</li>
       <li class='slot'>2. ---</li>
@@ -114,6 +111,8 @@ class Game {
     this.getChips();
     // clear timer & moves
     this.updateHeader(0, 0);
+    // start timer
+    this.setTimer('on');
   }
 
   hideMenu() {
@@ -132,6 +131,7 @@ class Game {
     });
     document.querySelector('.btn-saveGame').addEventListener('click', () => this.showSaveMenu());
     document.querySelector('.btn-loadGame').addEventListener('click', () => this.showLoadMenu());
+    document.querySelector('.btn-scores').addEventListener('click', () => this.showScores());
   }
 
   showSettings() {
@@ -139,8 +139,8 @@ class Game {
 
     setTimeout(() => {
       this.menu.innerHTML = MENU.settings;
+      this.createMenuHeader('Settings');
       this.menu.classList.add('menu-settings');
-      this.menu.classList.remove('hidden-content');
       document.querySelector('.btn-goBack').addEventListener('click', () => this.goBack());
       const rows = document.querySelectorAll('.rows');
 
@@ -162,6 +162,8 @@ class Game {
           this.createChips();
         });
       });
+
+      this.menu.classList.remove('hidden-content');
     }, 250);
   }
 
@@ -170,8 +172,8 @@ class Game {
 
     setTimeout(() => {
       this.menu.innerHTML = MENU.savedGames;
+      this.createMenuHeader('Save game:');
       this.menu.classList.add('menu-saved-games');
-      this.menu.classList.remove('hidden-content');
       document.querySelector('.btn-goBack').addEventListener('click', () => this.goBack());
       const slots = document.querySelectorAll('.slot');
       document.querySelector('.autosaved').remove();
@@ -188,6 +190,8 @@ class Game {
           this.showSaveMenu();
         });
       });
+
+      this.menu.classList.remove('hidden-content');
     }, 250);
   }
 
@@ -196,8 +200,8 @@ class Game {
 
     setTimeout(() => {
       this.menu.innerHTML = MENU.savedGames;
+      this.createMenuHeader('Load game:');
       this.menu.classList.add('menu-saved-games');
-      this.menu.classList.remove('hidden-content');
       document.querySelector('.btn-goBack').addEventListener('click', () => this.goBack());
       const slots = document.querySelectorAll('.slot');
 
@@ -205,12 +209,36 @@ class Game {
         const index = i || '';
         const slot = el;
         const localSaved = JSON.parse(localStorage.getItem(`savedGame${index}`));
-        if (localSaved) slot.innerText = `${index}. ${localSaved.properties.rows} rows, ${localSaved.properties.movesCounter} moves`;
-        if (index === '') slot.innerText = slot.innerText.replace('.', 'Autosaved: ');
+        if (localSaved) slot.textContent = `${index}. ${localSaved.properties.rows} rows, ${localSaved.properties.movesCounter} moves`;
+        if (index === '') slot.textContent = slot.textContent.replace('.', 'Autosaved: ');
         slot.addEventListener('click', () => {
           if (localSaved) this.loadGame(index);
         });
+        return slot;
       });
+
+      this.menu.classList.remove('hidden-content');
+    }, 250);
+  }
+
+  showScores() {
+    this.menu.classList.add('hidden-content');
+    setTimeout(() => {
+      this.menu.innerText = '';
+
+      const scoresHeader = document.createElement('h1');
+      scoresHeader.innerText = 'Scores:';
+
+      const scoresList = document.createElement('ul');
+      for (let i = 0; i < 10; i += 1) {
+        const li = document.createElement('li');
+        li.textContent = `${i + 1}. ---`;
+        scoresList.append(li);
+      }
+
+      this.menu.append(scoresHeader, scoresList, this.createGoBackBtn());
+
+      this.menu.classList.remove('hidden-content');
     }, 250);
   }
 
@@ -219,6 +247,20 @@ class Game {
     setTimeout(() => {
       this.showMenu();
     }, 250);
+  }
+
+  createGoBackBtn() {
+    const goBackBtn = document.createElement('div');
+    goBackBtn.classList.add('btn-goBack');
+    goBackBtn.innerText = 'go back';
+    goBackBtn.addEventListener('click', () => this.goBack());
+    return goBackBtn;
+  }
+
+  createMenuHeader(text) {
+    const menuHeader = document.createElement('h1');
+    menuHeader.textContent = text;
+    this.menu.prepend(menuHeader);
   }
 
   createChips() {
@@ -270,7 +312,6 @@ class Game {
   loadGame(src) {
     let source = src;
     if (!src) source = '';
-    console.log(source);
     const localSaved = localStorage.getItem(`savedGame${source}`);
     try {
       const savedGame = JSON.parse(localSaved);
@@ -284,9 +325,9 @@ class Game {
       this.properties.timer = savedGame.properties.timer;
       this.updateHeader();
     } catch (error) {
-      console.log('No any saved game found');
+      throw new Error('No any saved game found');
     }
-    if (window.timer) this.setTimer('off');
+    this.setTimer('on');
 
     this.hideMenu();
   }

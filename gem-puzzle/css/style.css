@@ -72,6 +72,7 @@ body .game-board .menu {
   flex-direction: column;
   background-color: rgba(0, 0, 0, 0.75);
   color: #f4e1d2;
+  font-weight: bold;
   transition: all 0.25s;
   -webkit-transition: all 0.25s;
   -moz-transition: all 0.25s;
@@ -150,11 +151,15 @@ body .game-board .menu .btn-goBack:active {
 }
 
 body .game-board .menu > * {
-  transition: all 0.25s;
+  transition: all 025s;
   -webkit-transition: all 0.25s;
   -moz-transition: all 0.25s;
   -ms-transition: all 0.25s;
   -o-transition: all 0.25s;
+}
+
+body .game-board .menu .rows, body .game-board .menu .slot {
+  font-weight: normal;
 }
 
 body .game-board .menu-settings .selected {
@@ -175,6 +180,7 @@ body .game-board .menu-settings ul {
 
 body .game-board .menu-settings ul li {
   margin: 0 10px;
+  font-weight: normal;
 }
 
 body .game-board .chip {
