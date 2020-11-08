@@ -8,6 +8,7 @@ const MENU = {
       </ul>`,
   settings: `<p>Field size:</p>
       <ul>
+            <li class='rows'>2x2</li>
       <li class='rows'>3x3</li>
       <li class='rows'>4x4</li>
       <li class='rows'>5x5</li>
@@ -50,6 +51,8 @@ class Game {
 
   settings = null
 
+  scores = [];
+
   init() {
     // create header with elements
     this.header = document.createElement('header');
@@ -72,6 +75,9 @@ class Game {
     // append header to body
     document.body.append(this.header);
     this.updateHeader(0, 0);
+
+    // load scores
+    this.scores = JSON.parse(localStorage.getItem('GemScores')) || [];
 
     // create game board
     this.gameBoard = document.createElement('div');
@@ -232,7 +238,10 @@ class Game {
       const scoresList = document.createElement('ul');
       for (let i = 0; i < 10; i += 1) {
         const li = document.createElement('li');
-        li.textContent = `${i + 1}. ---`;
+        // const score = localStorage.getItem('GameScores');
+        const currScore = this.scores[i];
+        if (currScore) li.textContent = `${i + 1}. ${currScore.rows} rows, ${currScore.moves} moves and ${currScore.time} s`;
+        else li.textContent = `${i + 1}. ---`;
         scoresList.append(li);
       }
 
@@ -392,7 +401,28 @@ class Game {
       clickedChip.classList.add('chip-empty');
       clickedChip.style.setProperty('transform', 'translate(0)');
       this.getChips();
+      this.checkResult();
     }, 150);
+  }
+
+  checkResult() {
+    const result = [];
+    for (let i = 1; i < this.properties.rows ** 2; i += 1) result.push(i);
+    result.push('');
+    console.log(result.join(), this.chipsNumbers.join());
+    if (result.join() === this.chipsNumbers.join()) {
+      this.setTimer('off');
+      console.log('Victory!!!');
+      const currScore = {
+        rows: this.properties.rows,
+        moves: this.properties.movesCounter,
+        time: this.properties.timer,
+      };
+      this.scores.push(currScore);
+      this.scores.sort((a, b) => a.time - b.time);
+      if (this.scores.length > 10) this.scores.pop();
+      localStorage.GemScores = JSON.stringify(this.scores);
+    }
   }
 
   updateHeader(moves, time = this.properties.timer) {
