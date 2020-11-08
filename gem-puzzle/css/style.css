@@ -4,6 +4,21 @@
   padding: 0;
 }
 
+.hidden {
+  visibility: hidden;
+  opacity: 0;
+}
+
+.hidden-content > * {
+  visibility: hidden;
+  opacity: 0;
+}
+
+h1 {
+  font-size: 1.5rem;
+  margin-bottom: 2rem;
+}
+
 body {
   margin: 0 auto;
   display: flex;
@@ -40,6 +55,7 @@ body .game-board {
   max-height: 420px;
   border: 1px solid #444;
   margin-top: 0.2em;
+  overflow: hidden;
 }
 
 body .game-board .menu {
@@ -52,8 +68,14 @@ body .game-board .menu {
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
   background-color: rgba(0, 0, 0, 0.75);
   color: white;
+  transition: all 0.25s;
+  -webkit-transition: all 0.25s;
+  -moz-transition: all 0.25s;
+  -ms-transition: all 0.25s;
+  -o-transition: all 0.25s;
 }
 
 body .game-board .menu ul {
@@ -65,9 +87,14 @@ body .game-board .menu ul {
 }
 
 body .game-board .menu ul li {
-  list-style-type: none;
   cursor: pointer;
+  transition: all 0.15s;
+  -webkit-transition: all 0.15s;
+  -moz-transition: all 0.15s;
+  -ms-transition: all 0.15s;
+  -o-transition: all 0.15s;
   user-select: none;
+  list-style-type: none;
 }
 
 body .game-board .menu ul li:hover {
@@ -78,8 +105,51 @@ body .game-board .menu ul li:active {
   opacity: 0.5;
 }
 
-body .game-board .hidden {
-  visibility: hidden;
+body .game-board .menu .btn-goBack {
+  cursor: pointer;
+  transition: all 0.15s;
+  -webkit-transition: all 0.15s;
+  -moz-transition: all 0.15s;
+  -ms-transition: all 0.15s;
+  -o-transition: all 0.15s;
+  user-select: none;
+  margin-top: 2rem;
+}
+
+body .game-board .menu .btn-goBack:hover {
+  opacity: 0.7;
+}
+
+body .game-board .menu .btn-goBack:active {
+  opacity: 0.5;
+}
+
+body .game-board .menu > * {
+  transition: all 0.25s;
+  -webkit-transition: all 0.25s;
+  -moz-transition: all 0.25s;
+  -ms-transition: all 0.25s;
+  -o-transition: all 0.25s;
+}
+
+body .game-board .menu-settings .selected {
+  font-size: 1.5rem;
+  font-weight: bold;
+  cursor: default;
+}
+
+body .game-board .menu-settings .selected:hover,
+body .game-board .menu-settings .selected :active {
+  opacity: 1;
+}
+
+body .game-board .menu-settings ul {
+  flex-direction: row;
+  height: 25%;
+}
+
+body .game-board .menu-settings ul li {
+  margin: 0 10px;
 }
 
 body .game-board .chip {

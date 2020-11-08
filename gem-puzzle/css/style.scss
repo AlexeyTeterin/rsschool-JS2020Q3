@@ -4,6 +4,42 @@
   padding: 0;
 }
 
+@mixin menu-btn {
+  cursor: pointer;
+  transition: all 0.15s;
+  -webkit-transition: all 0.15s;
+  -moz-transition: all 0.15s;
+  -ms-transition: all 0.15s;
+  -o-transition: all 0.15s;
+
+  &:hover {
+    opacity: 0.7;
+  }
+
+  &:active {
+    opacity: 0.5;
+  }
+
+  user-select: none;
+}
+
+.hidden {
+  visibility: hidden;
+  opacity: 0;
+}
+
+.hidden-content {
+  >* {
+    visibility: hidden;
+    opacity: 0;
+  }
+}
+
+h1 {
+  font-size: 1.5rem;
+  margin-bottom: 2rem;
+}
+
 body {
   margin: 0 auto;
   display: flex;
@@ -19,8 +55,6 @@ body {
     width: 50vw;
     max-width: 420px;
 
-    time {}
-
     .pause {
       &:hover {
         color: aquamarine;
@@ -31,8 +65,6 @@ body {
         opacity: 0.5;
       }
     }
-
-    .moves {}
   }
 
   .game-board {
@@ -45,6 +77,7 @@ body {
     max-height: 420px;
     border: 1px solid #444;
     margin-top: 0.2em;
+    overflow: hidden;
 
     .menu {
       position: absolute;
@@ -56,8 +89,14 @@ body {
       display: flex;
       justify-content: center;
       align-items: center;
+      flex-direction: column;
       background-color: rgba(0, 0, 0, 0.75);
       color: white;
+      transition: all 0.25s;
+      -webkit-transition: all 0.25s;
+      -moz-transition: all 0.25s;
+      -ms-transition: all 0.25s;
+      -o-transition: all 0.25s;
 
       ul {
         height: 50%;
@@ -67,23 +106,46 @@ body {
         align-items: center;
 
         li {
+          @include menu-btn();
           list-style-type: none;
-          cursor: pointer;
-          user-select: none;
-
-          &:hover {
-            opacity: 0.7;
-          }
-
-          &:active {
-            opacity: 0.5;
-          }
         }
+      }
+
+      .btn-goBack {
+        @include menu-btn();
+        margin-top: 2rem;
+      }
+
+      >* {
+        transition: all 0.25s;
+        -webkit-transition: all 0.25s;
+        -moz-transition: all 0.25s;
+        -ms-transition: all 0.25s;
+        -o-transition: all 0.25s;
       }
     }
 
-    .hidden {
-      visibility: hidden;
+    .menu-settings {
+
+      .selected {
+        font-size: 1.5rem;
+        font-weight: bold;
+        cursor: default;
+
+        &:hover,
+        :active {
+          opacity: 1;
+        }
+      }
+
+      ul {
+        flex-direction: row;
+        height: 25%;
+
+        li {
+          margin: 0 10px;
+        }
+      }
     }
 
     .chip {

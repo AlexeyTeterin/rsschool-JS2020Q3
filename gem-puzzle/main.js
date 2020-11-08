@@ -1,3 +1,23 @@
+const MENU = {
+  main: `<ul class="menu-ul">
+      <li class="menu-li btn-newGame">New game</li>
+      <li class="menu-li btn-saveGame">Save game</li>
+      <li class="menu-li btn-loadGame">Load game</li>
+      <li class="menu-li btn-scores">Scores</li>
+      <li class="menu-li btn-settings">Settings</li>
+      </ul>`,
+  settings: `<h1>Settings</h1>
+      <p>Field size:</p>
+      <ul>
+      <li class='rows'>3x3</li>
+      <li class='rows'>4x4</li>
+      <li class='rows'>5x5</li>
+      <li class='rows'>6x6</li>
+      <li class='rows'>7x7</li>
+      <li class='rows'>8x8</li>
+      </ul>
+      <div class="btn-goBack">go back</div>`,
+};
 class Game {
   properties = {
     rows: 4,
@@ -20,6 +40,8 @@ class Game {
 
   menu = null
 
+  settings = null
+
   init() {
     // create header with elements
     this.header = document.createElement('header');
@@ -34,8 +56,12 @@ class Game {
     this.header.pauseBtn = document.createElement('div');
     this.header.pauseBtn.classList.add('pause');
     this.header.pauseBtn.textContent = this.properties.playing ? 'Pause game' : 'Resume game';
-    this.header.pauseBtn.addEventListener('click', () => this.setTimer(this.properties.playing ? 'off' : 'on'));
+    this.header.pauseBtn.addEventListener('click', () => {
+      if (this.chipsNumbers) this.setTimer(this.properties.playing ? 'off' : 'on');
+    });
+    if (!this.chipsNumbers) this.header.pauseBtn.textContent = '';
     this.header.append(this.header.pauseBtn);
+    // append header to body
     document.body.append(this.header);
     this.updateHeader(0, 0);
 
@@ -45,23 +71,16 @@ class Game {
     this.gameBoard.style.setProperty('grid-template-columns',
       `repeat(${this.properties.rows}, 1fr)`);
     document.body.append(this.gameBoard);
+    // generate random chips
+    this.chipsNumbers = this.randomizeChips();
+    // create chips boxes
+    this.createChips();
 
     // create menu
     this.menu = document.createElement('div');
-    this.menu.classList.add('menu');
-    this.menu.innerHTML = `<ul class="menu-ul">
-      <li class="menu-li btn-newGame">New game</li>
-      <li class="menu-li btn-saveGame">Save game</li>
-      <li class="menu-li btn-loadGame">Load game</li>
-      <li class="menu-li btn-scores">Scores</li>
-      <li class="menu-li btn-settings">Settings</li>
-      </ul>`;
+    this.menu.classList.add('menu', 'hidden', 'hidden-content');
     this.gameBoard.append(this.menu);
-
-    // settings menu
-    document.querySelector('.btn-settings').addEventListener('click', () => this.showSettings());
-
-    document.querySelector('.btn-newGame').addEventListener('click', () => this.newGame());
+    this.showMenu();
   }
 
   newGame() {
@@ -75,8 +94,6 @@ class Game {
     this.getChips();
     // clear timer & moves
     this.updateHeader(0, 0);
-    // hide menu
-    this.hideMenu();
   }
 
   hideMenu() {
@@ -84,12 +101,53 @@ class Game {
   }
 
   showMenu() {
-    this.menu.classList.remove('hidden');
+    this.menu.innerHTML = MENU.main;
+    this.menu.classList = 'menu';
+
+    // event listeners
+    document.querySelector('.btn-settings').addEventListener('click', () => this.showSettings());
+    document.querySelector('.btn-newGame').addEventListener('click', () => {
+      this.newGame();
+      this.hideMenu();
+    });
   }
 
   showSettings() {
-    
-    console.log('settings');
+    this.menu.classList.add('hidden-content');
+
+    setTimeout(() => {
+      this.menu.innerHTML = MENU.settings;
+      this.menu.classList.add('menu-settings');
+      this.menu.classList.remove('hidden-content');
+      document.querySelector('.btn-goBack').addEventListener('click', () => this.goBack());
+      const rows = document.querySelectorAll('.rows');
+
+      // show selection on current rows number
+      rows.forEach((option) => {
+        if (this.properties.rows.toString() === option.textContent.slice(0, 1)) option.classList.add('selected');
+      });
+
+      // select another rows number
+      rows.forEach((option) => {
+        option.addEventListener('click', () => {
+          document.querySelector('.selected').classList.remove('selected');
+          option.classList.add('selected');
+
+          this.properties.rows = parseInt(option.textContent.slice(0, 1), 10);
+          this.gameBoard.style.setProperty('grid-template-columns',
+            `repeat(${this.properties.rows}, 1fr)`);
+          this.chipsNumbers = this.randomizeChips();
+          this.createChips();
+        });
+      });
+    }, 250);
+  }
+
+  goBack() {
+    this.menu.classList.add('hidden-content');
+    setTimeout(() => {
+      this.showMenu();
+    }, 250);
   }
 
   createChips() {
@@ -137,10 +195,12 @@ class Game {
   loadGame() {
     try {
       const savedGame = JSON.parse(localStorage.savedGame);
+      this.properties.rows = +localStorage.savedGameRows;
+      this.gameBoard.style.setProperty('grid-template-columns',
+        `repeat(${this.properties.rows}, 1fr)`);
       this.chipsNumbers = savedGame.chipsNumbers;
       this.createChips();
       this.fillChips(savedGame.chipsNumbers);
-      this.properties.rows = +localStorage.savedGameRows;
       this.properties.movesCounter = savedGame.properties.movesCounter;
       this.properties.timer = savedGame.properties.timer;
       this.updateHeader();
@@ -174,12 +234,12 @@ class Game {
     if (switcher === 'on') {
       this.properties.playing = true;
       this.header.pauseBtn.textContent = 'Pause game';
-      this.menu.classList.add('hidden');
+      this.hideMenu();
       window.timer = window.setInterval(tick, 1000);
     } else if (switcher === 'off') {
       this.properties.playing = false;
       this.header.pauseBtn.textContent = 'Resume game';
-      this.menu.classList.remove('hidden');
+      this.showMenu();
       window.clearInterval(window.timer);
     }
   }
