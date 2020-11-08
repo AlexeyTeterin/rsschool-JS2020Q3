@@ -191,7 +191,14 @@ class Game {
       slots.forEach((el, index) => {
         const slot = el;
         const localSaved = JSON.parse(localStorage.getItem(`savedGame${index}`));
-        if (localSaved) slot.innerText = `${index}. ${localSaved.properties.rows} rows, ${localSaved.properties.movesCounter} moves`;
+        if (localSaved) {
+          const {
+            rows,
+            movesCounter,
+            timer,
+          } = localSaved.properties;
+          slot.textContent = `${index}. ${timer} s,  ${movesCounter} moves (${rows}x${rows})`;
+        }
       });
 
       slots.forEach((slot, index) => {
@@ -219,8 +226,15 @@ class Game {
         const index = i || '';
         const slot = el;
         const localSaved = JSON.parse(localStorage.getItem(`savedGame${index}`));
-        if (localSaved) slot.textContent = `${index}. ${localSaved.properties.rows} rows, ${localSaved.properties.movesCounter} moves`;
-        if (index === '') slot.textContent = slot.textContent.replace('.', 'Autosaved: ');
+        if (localSaved) {
+          const {
+            rows,
+            movesCounter,
+            timer,
+          } = localSaved.properties;
+          slot.textContent = `${index}. ${timer} s,  ${movesCounter} moves (${rows}x${rows})`;
+          if (index === '') slot.textContent = slot.textContent.replace('.', 'Autosaved: ');
+        }
         slot.addEventListener('click', () => {
           if (localSaved) this.loadGame(index);
         });
@@ -316,7 +330,7 @@ class Game {
   saveGame(src) {
     if (!src) {
       localStorage.savedGame = JSON.stringify(this);
-      localStorage.savedGameRows = this.properties.rows;
+      // localStorage.savedGameRows = this.properties.rows;
     } else {
       localStorage.setItem(`savedGame${src}`, JSON.stringify(this));
     }
