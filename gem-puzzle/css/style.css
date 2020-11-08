@@ -106,6 +106,30 @@ body .game-board .menu ul li:active {
   opacity: 0.5;
 }
 
+body .game-board .menu .saved-game-alert {
+  margin-bottom: 3rem;
+  font-size: 0.9rem;
+}
+
+body .game-board .menu .saved-game-alert span {
+  cursor: pointer;
+  transition: all 0.15s;
+  -webkit-transition: all 0.15s;
+  -moz-transition: all 0.15s;
+  -ms-transition: all 0.15s;
+  -o-transition: all 0.15s;
+  user-select: none;
+  font-weight: bold;
+}
+
+body .game-board .menu .saved-game-alert span:hover {
+  opacity: 0.7;
+}
+
+body .game-board .menu .saved-game-alert span:active {
+  opacity: 0.5;
+}
+
 body .game-board .menu .btn-goBack {
   cursor: pointer;
   transition: all 0.15s;

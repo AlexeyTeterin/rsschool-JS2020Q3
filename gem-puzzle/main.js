@@ -17,6 +17,17 @@ const MENU = {
       <li class='rows'>8x8</li>
       </ul>
       <div class="btn-goBack">go back</div>`,
+  // savedPattern: 'JSON.parse(localStorage.savedGame)',
+  savedGames: `<h1>Saved games:</h1>
+      <ul>
+      <li class='slot autosaved'>1. Autosaved</li>
+      <li class='slot'>1. ---</li>
+      <li class='slot'>2. ---</li>
+      <li class='slot'>3. ---</li>
+      <li class='slot'>4. ---</li>
+      <li class='slot'>5. ---</li>
+      </ul>
+      <div class="btn-goBack">go back</div>`,
 };
 class Game {
   properties = {
@@ -81,6 +92,15 @@ class Game {
     this.menu.classList.add('menu', 'hidden', 'hidden-content');
     this.gameBoard.append(this.menu);
     this.showMenu();
+
+    // alert saved game
+    if (localStorage.savedGame !== undefined) {
+      const savedGameAlert = document.createElement('div');
+      savedGameAlert.classList.add('saved-game-alert');
+      savedGameAlert.innerHTML = 'You have unfinished game, <span class="load-game">continue</span>?';
+      this.menu.prepend(savedGameAlert);
+      document.querySelector('.load-game').addEventListener('click', () => this.loadGame());
+    }
   }
 
   newGame() {
@@ -110,6 +130,8 @@ class Game {
       this.newGame();
       this.hideMenu();
     });
+    document.querySelector('.btn-saveGame').addEventListener('click', () => this.showSaveMenu());
+    document.querySelector('.btn-loadGame').addEventListener('click', () => this.showLoadMenu());
   }
 
   showSettings() {
@@ -138,6 +160,55 @@ class Game {
             `repeat(${this.properties.rows}, 1fr)`);
           this.chipsNumbers = this.randomizeChips();
           this.createChips();
+        });
+      });
+    }, 250);
+  }
+
+  showSaveMenu() {
+    this.menu.classList.add('hidden-content');
+
+    setTimeout(() => {
+      this.menu.innerHTML = MENU.savedGames;
+      this.menu.classList.add('menu-saved-games');
+      this.menu.classList.remove('hidden-content');
+      document.querySelector('.btn-goBack').addEventListener('click', () => this.goBack());
+      const slots = document.querySelectorAll('.slot');
+      document.querySelector('.autosaved').remove();
+
+      slots.forEach((el, index) => {
+        const slot = el;
+        const localSaved = JSON.parse(localStorage.getItem(`savedGame${index}`));
+        if (localSaved) slot.innerText = `${index}. ${localSaved.properties.rows} rows, ${localSaved.properties.movesCounter} moves`;
+      });
+
+      slots.forEach((slot, index) => {
+        slot.addEventListener('click', () => {
+          this.saveGame(index);
+          this.showSaveMenu();
+        });
+      });
+    }, 250);
+  }
+
+  showLoadMenu() {
+    this.menu.classList.add('hidden-content');
+
+    setTimeout(() => {
+      this.menu.innerHTML = MENU.savedGames;
+      this.menu.classList.add('menu-saved-games');
+      this.menu.classList.remove('hidden-content');
+      document.querySelector('.btn-goBack').addEventListener('click', () => this.goBack());
+      const slots = document.querySelectorAll('.slot');
+
+      slots.forEach((el, i) => {
+        const index = i || '';
+        const slot = el;
+        const localSaved = JSON.parse(localStorage.getItem(`savedGame${index}`));
+        if (localSaved) slot.innerText = `${index}. ${localSaved.properties.rows} rows, ${localSaved.properties.movesCounter} moves`;
+        if (index === '') slot.innerText = slot.innerText.replace('.', 'Autosaved: ');
+        slot.addEventListener('click', () => {
+          if (localSaved) this.loadGame(index);
         });
       });
     }, 250);
@@ -187,15 +258,23 @@ class Game {
     });
   }
 
-  saveGame() {
-    localStorage.savedGame = JSON.stringify(this);
-    localStorage.savedGameRows = this.properties.rows;
+  saveGame(src) {
+    if (!src) {
+      localStorage.savedGame = JSON.stringify(this);
+      localStorage.savedGameRows = this.properties.rows;
+    } else {
+      localStorage.setItem(`savedGame${src}`, JSON.stringify(this));
+    }
   }
 
-  loadGame() {
+  loadGame(src) {
+    let source = src;
+    if (!src) source = '';
+    console.log(source);
+    const localSaved = localStorage.getItem(`savedGame${source}`);
     try {
-      const savedGame = JSON.parse(localStorage.savedGame);
-      this.properties.rows = +localStorage.savedGameRows;
+      const savedGame = JSON.parse(localSaved);
+      this.properties.rows = +savedGame.properties.rows;
       this.gameBoard.style.setProperty('grid-template-columns',
         `repeat(${this.properties.rows}, 1fr)`);
       this.chipsNumbers = savedGame.chipsNumbers;

@@ -92,7 +92,7 @@ body {
       align-items: center;
       flex-direction: column;
       background-color: rgba(0, 0, 0, 0.75);
-      color:#f4e1d2;
+      color: #f4e1d2;
       transition: all 0.25s;
       -webkit-transition: all 0.25s;
       -moz-transition: all 0.25s;
@@ -109,6 +109,16 @@ body {
         li {
           @include menu-btn();
           list-style-type: none;
+        }
+      }
+
+      .saved-game-alert {
+        margin-bottom: 3rem;
+        font-size: 0.9rem;
+
+        & span {
+          @include menu-btn();
+          font-weight: bold;
         }
       }
 
@@ -147,6 +157,10 @@ body {
           margin: 0 10px;
         }
       }
+    }
+
+    .menu-saved-games {
+      
     }
 
     .chip {
