@@ -229,6 +229,7 @@ class Game {
     const tick = () => {
       this.properties.timer += 1;
       this.updateHeader();
+      this.saveGame();
     };
 
     if (switcher === 'on') {

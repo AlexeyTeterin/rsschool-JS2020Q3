@@ -25,6 +25,7 @@ body {
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  color: #50394c;
 }
 
 body header {
@@ -37,7 +38,7 @@ body header {
 }
 
 body header .pause:hover {
-  color: aquamarine;
+  color: #b2b2b2;
   cursor: pointer;
 }
 
@@ -47,7 +48,7 @@ body header .pause:active {
 
 body .game-board {
   position: relative;
-  background-color: #5d8689;
+  background-color: #ffef96;
   width: 50vw;
   height: 50vw;
   display: grid;
@@ -70,7 +71,7 @@ body .game-board .menu {
   align-items: center;
   flex-direction: column;
   background-color: rgba(0, 0, 0, 0.75);
-  color: white;
+  color: #f4e1d2;
   transition: all 0.25s;
   -webkit-transition: all 0.25s;
   -moz-transition: all 0.25s;
@@ -153,9 +154,9 @@ body .game-board .menu-settings ul li {
 }
 
 body .game-board .chip {
-  background-color: #6f4c5c;
+  background-color: #50394c;
   margin: 2px;
-  color: #f0f4f5;
+  color: #f4e1d2;
   border: 1px solid black;
   height: auto;
   width: auto;
