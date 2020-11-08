@@ -77,7 +77,11 @@ class Game {
     this.updateHeader(0, 0);
 
     // load scores
-    this.scores = JSON.parse(localStorage.getItem('GemScores')) || [];
+    try {
+      this.scores = JSON.parse(localStorage.getItem('GemScores'));
+    } catch (error) {
+      this.scores = [];
+    }
 
     // create game board
     this.gameBoard = document.createElement('div');
@@ -240,7 +244,7 @@ class Game {
         const li = document.createElement('li');
         // const score = localStorage.getItem('GameScores');
         const currScore = this.scores[i];
-        if (currScore) li.textContent = `${i + 1}. ${currScore.rows} rows, ${currScore.moves} moves and ${currScore.time} s`;
+        if (currScore) li.textContent = `${i + 1}. ${currScore.date} - ${currScore.time} s, ${currScore.moves} moves (${currScore.rows}x${currScore.rows})`;
         else li.textContent = `${i + 1}. ---`;
         scoresList.append(li);
       }
@@ -345,12 +349,14 @@ class Game {
     const nums = [];
     const numOfChips = this.properties.rows ** 2 - 1;
     const generateRandom = () => Math.ceil(Math.random() * numOfChips);
+
     for (let i = 0; i < numOfChips; i += 1) {
       let random = generateRandom();
       while (nums.includes(random)) random = generateRandom();
       nums.push(random);
     }
     nums.push('');
+
     return nums;
   }
 
@@ -413,7 +419,9 @@ class Game {
     if (result.join() === this.chipsNumbers.join()) {
       this.setTimer('off');
       console.log('Victory!!!');
+      const today = new Date();
       const currScore = {
+        date: `${today.getFullYear()}/${today.getMonth()}/${today.getDate()}`,
         rows: this.properties.rows,
         moves: this.properties.movesCounter,
         time: this.properties.timer,
