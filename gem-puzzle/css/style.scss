@@ -42,6 +42,7 @@ h1 {
 
 body {
   margin: 0 auto;
+  height: 80vh;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -49,7 +50,7 @@ body {
   color: #50394c;
 
   header {
-    margin-top: 3rem;
+    // margin-top: 3rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -136,7 +137,8 @@ body {
         -o-transition: all 0.25s;
       }
 
-      .rows, .slot {
+      .rows,
+      .slot {
         font-weight: normal;
       }
     }

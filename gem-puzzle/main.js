@@ -51,7 +51,7 @@ class Game {
 
   settings = null
 
-  scores = [];
+  scores = []
 
   init() {
     // create header with elements
@@ -77,11 +77,7 @@ class Game {
     this.updateHeader(0, 0);
 
     // load scores
-    try {
-      this.scores = JSON.parse(localStorage.getItem('GemScores'));
-    } catch (error) {
-      this.scores = [];
-    }
+    this.loadScores();
 
     // create game board
     this.gameBoard = document.createElement('div');
@@ -107,6 +103,15 @@ class Game {
       savedGameAlert.innerHTML = 'You have unfinished game, <span class="load-game">continue</span>?';
       this.menu.prepend(savedGameAlert);
       document.querySelector('.load-game').addEventListener('click', () => this.loadGame());
+    }
+  }
+
+  loadScores() {
+    try {
+      const localScores = JSON.parse(localStorage.getItem('GemScores'));
+      this.scores = (localScores) ? localScores : [];
+    } catch (error) {
+      this.scores = [];
     }
   }
 
@@ -256,10 +261,10 @@ class Game {
       const scoresList = document.createElement('ul');
       for (let i = 0; i < 10; i += 1) {
         const li = document.createElement('li');
-        // const score = localStorage.getItem('GameScores');
-        const currScore = this.scores[i];
-        if (currScore) li.textContent = `${i + 1}. ${currScore.date} - ${currScore.time} s, ${currScore.moves} moves (${currScore.rows}x${currScore.rows})`;
-        else li.textContent = `${i + 1}. ---`;
+        if (this.scores.length > 0) {
+          const currScore = this.scores[i];
+          if (currScore) li.textContent = `${i + 1}. ${currScore.date} - ${currScore.time} s, ${currScore.moves} moves (${currScore.rows}x${currScore.rows})`;
+        } else li.textContent = `${i + 1}. ---`;
         scoresList.append(li);
       }
 
