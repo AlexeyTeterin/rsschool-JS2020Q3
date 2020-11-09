@@ -109,7 +109,7 @@ class Game {
   loadScores() {
     try {
       const localScores = JSON.parse(localStorage.getItem('GemScores'));
-      this.scores = (localScores) ? localScores : [];
+      this.scores = localScores || [];
     } catch (error) {
       this.scores = [];
     }
