@@ -185,6 +185,10 @@ body .game-board .menu-settings ul li {
   font-weight: normal;
 }
 
+body .game-board .scores {
+  font-weight: normal;
+}
+
 body .game-board .chip {
   background-color: #50394c;
   margin: 2px;

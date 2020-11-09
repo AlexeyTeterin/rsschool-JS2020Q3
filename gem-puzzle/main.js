@@ -262,6 +262,7 @@ class Game {
       scoresHeader.innerText = 'Scores:';
 
       const scoresList = document.createElement('ul');
+      scoresList.classList.add('scores');
       for (let i = 0; i < 10; i += 1) {
         const li = document.createElement('li');
         if (this.scores.length > 0) {
