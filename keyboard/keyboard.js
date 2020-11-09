@@ -1,6 +1,6 @@
 import textarea from './textarea.js';
 import {
-  layouts as layoutsImported
+  layouts as layoutsImported,
 } from './layouts.js';
 
 export default class KEYBOARD {
@@ -129,7 +129,7 @@ export default class KEYBOARD {
           key.textContent = capsLock ? ruShifted[index].toLowerCase() : ruShifted[index];
         }
       }
-    })
+    });
 
     this.properties.shift = true;
     document.querySelector('#Shift').classList.add('keyboard__key--active', 'red');
@@ -159,63 +159,10 @@ export default class KEYBOARD {
           key.textContent = capsLock ? ru[index].toUpperCase() : ru[index];
         }
       }
-    })
+    });
 
     this.properties.shift = false;
     document.querySelector('#Shift').classList.remove('keyboard__key--active', 'red');
-    this.phisycalInput();
-  }
-
-  toggleLang() {
-    const {
-      ru,
-      ruShifted,
-      en,
-      enShifted,
-      infoEn,
-      infoRu,
-    } = this.elements.layouts;
-    const {
-      capsLock,
-      shift,
-      english,
-    } = this.properties;
-    const {
-      keys,
-    } = this.elements;
-    const langButtonText = document.getElementById('lang').textContent;
-
-    for (let index = 0; index < keys.length; index += 1) {
-      const buttonIsSymbol = en[index].length === 1;
-      // Change only symbol buttons
-      if (buttonIsSymbol) {
-        if (english) {
-          this.elements.info.innerHTML = infoRu;
-
-          if (capsLock) {
-            keys[index].textContent = shift ? ruShifted[index] : ru[index].toUpperCase();
-          } else {
-            keys[index].textContent = shift ? ruShifted[index] : ru[index];
-          }
-        }
-        if (!english) {
-          this.elements.info.innerHTML = infoEn;
-          if (capsLock) {
-            keys[index].textContent = shift ? enShifted[index] : en[index].toUpperCase();
-          } else {
-            keys[index].textContent = shift ? enShifted[index] : en[index];
-          }
-        }
-      }
-    }
-
-    if (langButtonText === 'EN') {
-      document.getElementById('lang').textContent = 'RU';
-    } else document.getElementById('lang').textContent = 'EN';
-
-    localStorage.setItem('english', !this.properties.english);
-    this.properties.english = !this.properties.english;
-
     this.phisycalInput();
   }
 
@@ -234,9 +181,6 @@ export default class KEYBOARD {
 
     // Create keys
     keyLayout.forEach((key) => {
-
-
-
       const keyElement = document.createElement('button');
       const insertLineBreak = ['backspace', '\\', 'enter', 'uarr'].indexOf(key) !== -1;
 
@@ -247,7 +191,6 @@ export default class KEYBOARD {
       });
 
       switch (key) {
-
         case 'shift':
           keyElement.classList.add('keyboard__key--wide', 'keyboard__key--activatable');
           keyElement.textContent = 'Shift';
@@ -543,7 +486,7 @@ export default class KEYBOARD {
         if (key.innerText === event.code || event.code === key.id || pos === counter) {
           key.classList.add('red');
           if (event.key === 'AltGraph')(document.querySelector('#ControlLeft').classList.remove('red'));
-        };
+        }
       });
 
       switch (event.key) {
