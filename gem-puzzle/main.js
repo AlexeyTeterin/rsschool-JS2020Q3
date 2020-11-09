@@ -31,6 +31,7 @@ class Game {
   properties = {
     rows: 4,
     timer: 0,
+    formattedTime: 0,
     playing: false,
     movesCounter: 0,
   }
@@ -128,6 +129,8 @@ class Game {
     this.updateHeader(0, 0);
     // start timer
     this.setTimer('on');
+    // check if puzzle solved on start
+    this.checkResult();
   }
 
   hideMenu() {
@@ -264,7 +267,8 @@ class Game {
         if (this.scores.length > 0) {
           const currScore = this.scores[i];
           if (currScore) li.textContent = `${i + 1}. ${currScore.date} - ${currScore.time} s, ${currScore.moves} moves (${currScore.rows}x${currScore.rows})`;
-        } else li.textContent = `${i + 1}. ---`;
+          else li.textContent = `${i + 1}. ---`;
+        }
         scoresList.append(li);
       }
 
@@ -434,9 +438,10 @@ class Game {
     const result = [];
     for (let i = 1; i < this.properties.rows ** 2; i += 1) result.push(i);
     result.push('');
-    console.log(result.join(), this.chipsNumbers.join());
+    console.table(result.join(), this.chipsNumbers.join());
     if (result.join() === this.chipsNumbers.join()) {
       this.setTimer('off');
+      this.showCongrats();
       console.log('Victory!!!');
       const today = new Date();
       const currScore = {
@@ -452,17 +457,36 @@ class Game {
     }
   }
 
+  showCongrats() {
+    this.menu.innerText = '';
+    this.menu.classList = 'menu';
+    setTimeout(() => {
+      const congratsHeader = document.createElement('h1');
+      congratsHeader.innerText = 'Well done!';
+
+      const congratsText = document.createElement('div');
+      congratsText.innerText = `You solved this puzzle in ${this.properties.formattedTime} and ${this.properties.movesCounter} moves`;
+
+      this.menu.append(congratsHeader, congratsText, this.createGoBackBtn());
+    }, 250);
+  }
+
   updateHeader(moves, time = this.properties.timer) {
     if (time === 0) this.properties.timer = 0;
-    let minutes = Math.floor(time / 60);
-    minutes = minutes < 10 ? `0${minutes}` : minutes;
-    let seconds = time % 60;
-    seconds = seconds < 10 ? `0${seconds}` : seconds;
-    document.querySelector('time').innerHTML = `Time: ${minutes}:${seconds}`;
+    this.header.time.innerText = this.formatTime(time);
 
     if (moves === 0) this.properties.movesCounter = 0;
     if (moves === 1) this.properties.movesCounter += 1;
     document.querySelector('.moves').innerHTML = `Moves: ${this.properties.movesCounter}`;
+  }
+
+  formatTime(time) {
+    let minutes = Math.floor(time / 60);
+    minutes = minutes < 10 ? `0${minutes}` : minutes;
+    let seconds = time % 60;
+    seconds = seconds < 10 ? `0${seconds}` : seconds;
+    this.properties.formattedTime = `${minutes}:${seconds}`;
+    return `Time: ${minutes}:${seconds}`;
   }
 }
 
