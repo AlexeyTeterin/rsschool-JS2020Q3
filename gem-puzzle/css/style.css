@@ -50,6 +50,7 @@ body header .pause:active {
 
 body .game-board {
   position: relative;
+  padding: 2px;
   background-color: #ffef96;
   width: 50vw;
   min-width: 320px;
@@ -58,9 +59,14 @@ body .game-board {
   display: grid;
   max-width: 600px;
   max-height: 600px;
-  border: 1px solid #444;
+  border-radius: 5px;
   margin-top: 0.2em;
   overflow: hidden;
+  border-radius: 5px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
 }
 
 body .game-board .menu {
@@ -199,10 +205,9 @@ body .game-board .scores {
 }
 
 body .game-board .chip {
-  background-color: #50394c;
+  background-color: #644a60;
   margin: 2px;
   color: #f4e1d2;
-  border: 1px solid black;
   height: auto;
   width: auto;
   display: flex;
@@ -212,11 +217,11 @@ body .game-board .chip {
   user-select: none;
   transition: transform 0.15s;
   cursor: pointer;
-  border-radius: 5px;
-  -webkit-border-radius: 5px;
-  -moz-border-radius: 5px;
-  -ms-border-radius: 5px;
-  -o-border-radius: 5px;
+  border-radius: 4px;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  -ms-border-radius: 4px;
+  -o-border-radius: 4px;
   -webkit-transition: transform 0.15s;
   -moz-transition: transform 0.15s;
   -ms-transition: transform 0.15s;

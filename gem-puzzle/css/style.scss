@@ -7,6 +7,9 @@
 
 $min-width: 320px;
 $max-width: 600px;
+$col-primary: #644a60;
+$col-bg: #ffef96;
+$col-menu: #f4e1d2;
 
 @mixin menu-btn {
   cursor: pointer;
@@ -76,7 +79,8 @@ body {
 
   .game-board {
     position: relative;
-    background-color: #ffef96;
+    padding: 2px;
+    background-color: $col-bg;
     width: 50vw;
     min-width: $min-width;
     min-height: $min-width;
@@ -84,9 +88,14 @@ body {
     display: grid;
     max-width: $max-width;
     max-height: $max-width;
-    border: 1px solid #444;
+    border-radius: 5px;
     margin-top: 0.2em;
     overflow: hidden;
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -ms-border-radius: 5px;
+    -o-border-radius: 5px;
 
     .menu {
       position: absolute;
@@ -100,7 +109,7 @@ body {
       align-items: center;
       flex-direction: column;
       background-color: rgba(0, 0, 0, 0.7);
-      color: #f4e1d2;
+      color: $col-menu;
       font-weight: bold;
       backdrop-filter: blur(4px);
       transition: all 0.25s;
@@ -185,10 +194,9 @@ body {
     }
 
     .chip {
-      background-color: #50394c;
+      background-color: $col-primary;
       margin: 2px;
-      color: #f4e1d2;
-      border: 1px solid black;
+      color: $col-menu;
       height: auto;
       width: auto;
       display: flex;
@@ -198,11 +206,11 @@ body {
       user-select: none;
       transition: transform 0.15s;
       cursor: pointer;
-      border-radius: 5px;
-      -webkit-border-radius: 5px;
-      -moz-border-radius: 5px;
-      -ms-border-radius: 5px;
-      -o-border-radius: 5px;
+      border-radius: 4px;
+      -webkit-border-radius: 4px;
+      -moz-border-radius: 4px;
+      -ms-border-radius: 4px;
+      -o-border-radius: 4px;
       -webkit-transition: transform 0.15s;
       -moz-transition: transform 0.15s;
       -ms-transition: transform 0.15s;
