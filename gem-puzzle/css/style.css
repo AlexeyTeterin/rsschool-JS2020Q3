@@ -34,6 +34,7 @@ body header {
   justify-content: space-between;
   align-items: center;
   width: 50vw;
+  min-width: 320px;
   max-width: 420px;
 }
 
@@ -50,6 +51,8 @@ body .game-board {
   position: relative;
   background-color: #ffef96;
   width: 50vw;
+  min-width: 320px;
+  min-height: 320px;
   height: 50vw;
   display: grid;
   max-width: 420px;

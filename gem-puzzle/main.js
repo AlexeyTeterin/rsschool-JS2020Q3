@@ -107,15 +107,6 @@ class Game {
     }
   }
 
-  loadScores() {
-    try {
-      const localScores = JSON.parse(localStorage.getItem('GemScores'));
-      this.scores = localScores || [];
-    } catch (error) {
-      this.scores = [];
-    }
-  }
-
   newGame() {
     // generate random chips
     this.chipsNumbers = this.randomizeChips();
@@ -279,6 +270,29 @@ class Game {
     }, 250);
   }
 
+  showCongrats() {
+    this.menu.innerText = '';
+    this.menu.classList = 'menu';
+    setTimeout(() => {
+      const congratsHeader = document.createElement('h1');
+      congratsHeader.innerText = 'Well done!';
+
+      const congratsText = document.createElement('div');
+      congratsText.innerText = `You solved this puzzle in ${this.properties.formattedTime} and ${this.properties.movesCounter} moves`;
+
+      this.menu.append(congratsHeader, congratsText, this.createGoBackBtn());
+    }, 250);
+  }
+
+  loadScores() {
+    try {
+      const localScores = JSON.parse(localStorage.getItem('GemScores'));
+      this.scores = localScores || [];
+    } catch (error) {
+      this.scores = [];
+    }
+  }
+
   goBack() {
     this.menu.classList.add('hidden-content');
     setTimeout(() => {
@@ -299,6 +313,22 @@ class Game {
     menuHeader.textContent = text;
     this.menu.prepend(menuHeader);
   }
+
+  randomizeChips() {
+    const nums = [];
+    const numOfChips = this.properties.rows ** 2 - 1;
+    const generateRandom = () => Math.ceil(Math.random() * numOfChips);
+
+    for (let i = 0; i < numOfChips; i += 1) {
+      let random = generateRandom();
+      while (nums.includes(random)) random = generateRandom();
+      nums.push(random);
+    }
+    nums.push('');
+
+    return nums;
+  }
+
 
   createChips() {
     // clear existing chips
@@ -337,6 +367,37 @@ class Game {
     });
   }
 
+  moveChips(chip) {
+    const chipPos = this.chips.indexOf(chip);
+    const clickedChip = document.querySelectorAll('.chip')[chipPos];
+    const emptyChip = document.querySelector('.chip-empty');
+    const temp = emptyChip.innerHTML;
+    const positionDifference = this.chips.indexOf(emptyChip) - chipPos;
+    const chipIsMovable = () => [1, this.properties.rows].includes((Math.abs(positionDifference)));
+    const params = {
+      [`${this.properties.rows}`]: '(0, 100%)',
+      1: '(100%, 0)',
+      [`-${this.properties.rows}`]: '(0, -100%)',
+      '-1': '(-100%, 0)',
+    };
+
+    if (!chipIsMovable()) return;
+
+    clickedChip.style.setProperty('transform', `translate${params[positionDifference]}`);
+
+    this.updateHeader(1);
+
+    setTimeout(() => {
+      emptyChip.innerHTML = chip.innerHTML;
+      emptyChip.classList.remove('chip-empty');
+      clickedChip.innerHTML = temp;
+      clickedChip.classList.add('chip-empty');
+      clickedChip.style.setProperty('transform', 'translate(0)');
+      this.getChips();
+      this.checkResult();
+    }, 150);
+  }
+
   saveGame(src) {
     if (!src) {
       localStorage.savedGame = JSON.stringify(this);
@@ -369,21 +430,6 @@ class Game {
     this.hideMenu();
   }
 
-  randomizeChips() {
-    const nums = [];
-    const numOfChips = this.properties.rows ** 2 - 1;
-    const generateRandom = () => Math.ceil(Math.random() * numOfChips);
-
-    for (let i = 0; i < numOfChips; i += 1) {
-      let random = generateRandom();
-      while (nums.includes(random)) random = generateRandom();
-      nums.push(random);
-    }
-    nums.push('');
-
-    return nums;
-  }
-
   setTimer(switcher) {
     const tick = () => {
       this.properties.timer += 1;
@@ -402,37 +448,6 @@ class Game {
       this.showMenu();
       window.clearInterval(window.timer);
     }
-  }
-
-  moveChips(chip) {
-    const chipPos = this.chips.indexOf(chip);
-    const clickedChip = document.querySelectorAll('.chip')[chipPos];
-    const emptyChip = document.querySelector('.chip-empty');
-    const temp = emptyChip.innerHTML;
-    const positionDifference = this.chips.indexOf(emptyChip) - chipPos;
-    const chipIsMovable = () => [1, this.properties.rows].includes((Math.abs(positionDifference)));
-    const params = {
-      [`${this.properties.rows}`]: '(0, 100%)',
-      1: '(100%, 0)',
-      [`-${this.properties.rows}`]: '(0, -100%)',
-      '-1': '(-100%, 0)',
-    };
-
-    if (!chipIsMovable()) return;
-
-    clickedChip.style.setProperty('transform', `translate${params[positionDifference]}`);
-
-    this.updateHeader(1);
-
-    setTimeout(() => {
-      emptyChip.innerHTML = chip.innerHTML;
-      emptyChip.classList.remove('chip-empty');
-      clickedChip.innerHTML = temp;
-      clickedChip.classList.add('chip-empty');
-      clickedChip.style.setProperty('transform', 'translate(0)');
-      this.getChips();
-      this.checkResult();
-    }, 150);
   }
 
   checkResult() {
@@ -456,20 +471,6 @@ class Game {
       if (this.scores.length > 10) this.scores.pop();
       localStorage.GemScores = JSON.stringify(this.scores);
     }
-  }
-
-  showCongrats() {
-    this.menu.innerText = '';
-    this.menu.classList = 'menu';
-    setTimeout(() => {
-      const congratsHeader = document.createElement('h1');
-      congratsHeader.innerText = 'Well done!';
-
-      const congratsText = document.createElement('div');
-      congratsText.innerText = `You solved this puzzle in ${this.properties.formattedTime} and ${this.properties.movesCounter} moves`;
-
-      this.menu.append(congratsHeader, congratsText, this.createGoBackBtn());
-    }, 250);
   }
 
   updateHeader(moves, time = this.properties.timer) {
