@@ -65,7 +65,7 @@ class Game {
     // pauseBtn
     this.header.pauseBtn = document.createElement('div');
     this.header.pauseBtn.classList.add('pause');
-    this.header.pauseBtn.textContent = this.properties.playing ? 'Pause game' : 'Resume game';
+    this.header.pauseBtn.textContent = this.properties.playing ? 'Pause' : 'Resume game';
     this.header.pauseBtn.addEventListener('click', () => {
       if (this.chipsNumbers) this.setTimer(this.properties.playing ? 'off' : 'on');
     });
@@ -468,11 +468,13 @@ class Game {
 
     if (switcher === 'on') {
       this.properties.playing = true;
-      this.header.pauseBtn.textContent = 'Pause game';
+      this.header.pauseBtn.textContent = 'Pause';
+      this.header.pauseBtn.classList.remove('pulsate');
       this.hideMenu();
       window.timer = window.setInterval(tick, 1000);
     } else if (switcher === 'off') {
       this.properties.playing = false;
+      this.header.pauseBtn.classList.add('pulsate');
       this.header.pauseBtn.textContent = 'Resume game';
       this.showMenu();
       window.clearInterval(window.timer);

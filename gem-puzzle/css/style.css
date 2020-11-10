@@ -289,3 +289,22 @@ input[type="checkbox"]:focus {
   -ms-transform: translatex(1rem);
   -o-transform: translatex(1rem);
 }
+
+.pulsate {
+  -webkit-animation: pulsate 1s ease-out;
+  -webkit-animation-iteration-count: infinite;
+  opacity: 0.1;
+  font-weight: bold;
+}
+
+@-webkit-keyframes pulsate {
+  0% {
+    opacity: 0.2;
+  }
+  50% {
+    opacity: 1.0;
+  }
+  100% {
+    opacity: 0.2;
+  }
+}
