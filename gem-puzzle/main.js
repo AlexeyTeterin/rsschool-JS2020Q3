@@ -7,8 +7,7 @@ const MENU = {
       <li class="menu-li btn-settings">Settings</li>
       </ul>`,
   settings: `<p>Field size:</p>
-      <ul>
-            <li class='rows'>2x2</li>
+      <ul><li class='rows'>2x2</li>
       <li class='rows'>3x3</li>
       <li class='rows'>4x4</li>
       <li class='rows'>5x5</li>
@@ -16,6 +15,8 @@ const MENU = {
       <li class='rows'>7x7</li>
       <li class='rows'>8x8</li>
       </ul>
+      <div class='sound'>Sound:&nbsp<input type="checkbox" class="toggle" checked></div>
+      
       <div class="btn-goBack">go back</div>`,
   savedGames: `<ul>
       <li class='slot autosaved'>1. Autosaved</li>
