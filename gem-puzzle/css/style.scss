@@ -5,6 +5,9 @@
   box-sizing: border-box;
 }
 
+$min-width: 320px;
+$max-width: 600px;
+
 @mixin menu-btn {
   cursor: pointer;
   transition: all 0.15s;
@@ -56,8 +59,8 @@ body {
     justify-content: space-between;
     align-items: center;
     width: 50vw;
-    min-width: 320px;
-    max-width: 420px;
+    min-width: $min-width;
+    max-width: $max-width;
 
     .pause {
       &:hover {
@@ -75,12 +78,12 @@ body {
     position: relative;
     background-color: #ffef96;
     width: 50vw;
-    min-width: 320px;
-    min-height: 320px;
+    min-width: $min-width;
+    min-height: $min-width;
     height: 50vw;
     display: grid;
-    max-width: 420px;
-    max-height: 420px;
+    max-width: $max-width;
+    max-height: $max-width;
     border: 1px solid #444;
     margin-top: 0.2em;
     overflow: hidden;
@@ -253,7 +256,7 @@ input[type="checkbox"]:focus {
   width: 1rem;
   height: 1rem;
   border-radius: 50%;
-    background: #f4e1d2;
+  background: #f4e1d2;
   box-shadow: 0 1px 2px rgba(44, 44, 44, 0.2);
   transition: all 0.2s cubic-bezier(0.5, 0.1, 0.75, 1.35);
 }

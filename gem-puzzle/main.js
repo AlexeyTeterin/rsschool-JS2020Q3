@@ -151,7 +151,7 @@ class Game {
       // create sound switcher
       const sound = document.createElement('div');
       sound.classList.add('sound');
-      sound.innerHTML = 'Sound: &nbsp';
+      sound.innerHTML = 'Chip sounds: &nbsp';
       const switcher = document.createElement('input');
       switcher.classList.add('toggle');
       switcher.type = 'checkbox';
