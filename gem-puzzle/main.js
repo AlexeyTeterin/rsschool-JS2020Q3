@@ -209,7 +209,7 @@ class Game {
             movesCounter,
             timer,
           } = localSaved.properties;
-          slot.textContent = `${index}. ${timer} s,  ${movesCounter} moves (${rows}x${rows})`;
+          slot.textContent = `${index}. ${this.formatTime(timer)} s,  ${movesCounter} moves (${rows}x${rows})`;
         }
       });
 
@@ -245,7 +245,7 @@ class Game {
             movesCounter,
             timer,
           } = localSaved.properties;
-          slot.textContent = `${index}. ${timer} s,  ${movesCounter} moves (${rows}x${rows})`;
+          slot.textContent = `${index}. ${this.formatTime(timer)} s,  ${movesCounter} moves (${rows}x${rows})`;
           if (index === '') slot.textContent = slot.textContent.replace('.', 'Autosaved: ');
         }
         slot.addEventListener('click', () => {
@@ -431,7 +431,6 @@ class Game {
   saveGame(src) {
     if (!src) {
       localStorage.savedGame = JSON.stringify(this);
-      // localStorage.savedGameRows = this.properties.rows;
     } else {
       localStorage.setItem(`savedGame${src}`, JSON.stringify(this));
     }
@@ -518,7 +517,7 @@ class Game {
     let seconds = time % 60;
     seconds = seconds < 10 ? `0${seconds}` : seconds;
     this.properties.formattedTime = `${minutes}:${seconds}`;
-    return `Time: ${minutes}:${seconds}`;
+    return `${minutes}:${seconds}`;
   }
 }
 
