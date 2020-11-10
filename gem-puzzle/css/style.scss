@@ -54,10 +54,10 @@ body {
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  color: #50394c;
+  color: $col-primary;
 
   header {
-    // margin-top: 3rem;
+    margin-bottom: 0.25rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -67,7 +67,7 @@ body {
 
     .pause {
       &:hover {
-        color: #b2b2b2;
+        opacity: 0.7;
         cursor: pointer;
       }
 
@@ -89,7 +89,6 @@ body {
     max-width: $max-width;
     max-height: $max-width;
     border-radius: 5px;
-    margin-top: 0.2em;
     overflow: hidden;
     border-radius: 5px;
     -webkit-border-radius: 5px;
