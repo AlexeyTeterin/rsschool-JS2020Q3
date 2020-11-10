@@ -14,10 +14,7 @@ const MENU = {
       <li class='rows'>6x6</li>
       <li class='rows'>7x7</li>
       <li class='rows'>8x8</li>
-      </ul>
-      <div class='sound'>Sound:&nbsp<input type="checkbox" class="toggle" checked></div>
-      
-      <div class="btn-goBack">go back</div>`,
+      </ul>`,
   savedGames: `<ul>
       <li class='slot autosaved'>1. Autosaved</li>
       <li class='slot'>1. ---</li>
@@ -25,8 +22,7 @@ const MENU = {
       <li class='slot'>3. ---</li>
       <li class='slot'>4. ---</li>
       <li class='slot'>5. ---</li>
-      </ul>
-      <div class="btn-goBack">go back</div>`,
+      </ul>`,
 };
 class Game {
   properties = {
@@ -35,6 +31,7 @@ class Game {
     formattedTime: 0,
     playing: false,
     movesCounter: 0,
+    sound: true,
   }
 
   header = {
@@ -149,9 +146,23 @@ class Game {
 
     setTimeout(() => {
       this.menu.innerHTML = MENU.settings;
-      this.createMenuHeader('Settings');
       this.menu.classList.add('menu-settings');
-      document.querySelector('.btn-goBack').addEventListener('click', () => this.goBack());
+      this.createMenuHeader('Settings');
+      // create sound switcher
+      const sound = document.createElement('div');
+      sound.classList.add('sound');
+      sound.innerHTML = 'Sound: &nbsp';
+      const switcher = document.createElement('input');
+      switcher.classList.add('toggle');
+      switcher.type = 'checkbox';
+      switcher.checked = this.properties.sound;
+      switcher.addEventListener('click', () => {
+        this.properties.sound = !!switcher.checked;
+      });
+      sound.append(switcher);
+      this.menu.append(sound);
+
+      this.menu.append(this.createGoBackBtn());
       const rows = document.querySelectorAll('.rows');
 
       // show selection on current rows number
@@ -182,9 +193,10 @@ class Game {
 
     setTimeout(() => {
       this.menu.innerHTML = MENU.savedGames;
-      this.createMenuHeader('Save game:');
       this.menu.classList.add('menu-saved-games');
-      document.querySelector('.btn-goBack').addEventListener('click', () => this.goBack());
+      this.createMenuHeader('Save game:');
+      this.menu.append(this.createGoBackBtn());
+
       const slots = document.querySelectorAll('.slot');
       document.querySelector('.autosaved').remove();
 
@@ -217,9 +229,10 @@ class Game {
 
     setTimeout(() => {
       this.menu.innerHTML = MENU.savedGames;
-      this.createMenuHeader('Load game:');
       this.menu.classList.add('menu-saved-games');
-      document.querySelector('.btn-goBack').addEventListener('click', () => this.goBack());
+      this.createMenuHeader('Load game:');
+      this.menu.append(this.createGoBackBtn());
+
       const slots = document.querySelectorAll('.slot');
 
       slots.forEach((el, i) => {
@@ -330,7 +343,6 @@ class Game {
     return nums;
   }
 
-
   createChips() {
     // clear existing chips
     document.querySelectorAll('.chip').forEach((chip) => chip.remove());
@@ -386,8 +398,6 @@ class Game {
 
     clickedChip.style.setProperty('transform', `translate${params[positionDifference]}`);
 
-    this.updateHeader(1);
-
     setTimeout(() => {
       emptyChip.innerHTML = chip.innerHTML;
       emptyChip.classList.remove('chip-empty');
@@ -397,6 +407,25 @@ class Game {
       this.getChips();
       this.checkResult();
     }, 150);
+
+    this.updateHeader(1);
+    this.playSound('chip');
+  }
+
+  playSound(which) {
+    if (!this.properties.sound) return;
+    const sound = new Audio();
+
+    switch (which) {
+      case 'chip':
+        sound.src = './assets/audio/chip.wav';
+        break;
+
+      default:
+        break;
+    }
+
+    sound.play();
   }
 
   saveGame(src) {
@@ -411,20 +440,20 @@ class Game {
   loadGame(src) {
     let source = src;
     if (!src) source = '';
-    const localSaved = localStorage.getItem(`savedGame${source}`);
+    const savedGame = JSON.parse(localStorage.getItem(`savedGame${source}`));
     try {
-      const savedGame = JSON.parse(localSaved);
-      this.properties.rows = +savedGame.properties.rows;
+      Object.keys(this.properties).forEach((key) => {
+        this.properties[key] = savedGame.properties[key];
+      });
       this.gameBoard.style.setProperty('grid-template-columns',
         `repeat(${this.properties.rows}, 1fr)`);
       this.chipsNumbers = savedGame.chipsNumbers;
+      this.sound = savedGame.sound;
       this.createChips();
       this.fillChips(savedGame.chipsNumbers);
-      this.properties.movesCounter = savedGame.properties.movesCounter;
-      this.properties.timer = savedGame.properties.timer;
       this.updateHeader();
     } catch (error) {
-      throw new Error('No any saved game found');
+      throw new Error('Can`t load this game');
     }
     this.setTimer('on');
 
