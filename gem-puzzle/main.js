@@ -317,7 +317,7 @@ class Game {
   createGoBackBtn() {
     const goBackBtn = document.createElement('div');
     goBackBtn.classList.add('btn-goBack');
-    goBackBtn.innerText = 'go back';
+    // goBackBtn.innerText = 'go back';
     goBackBtn.addEventListener('click', () => this.goBack());
     return goBackBtn;
   }
