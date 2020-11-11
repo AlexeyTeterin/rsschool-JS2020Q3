@@ -39,6 +39,7 @@ body header {
   min-width: 320px;
   max-width: 600px;
   user-select: none;
+  overflow: hidden;
   text-shadow: 0px 0px 1px #969696;
 }
 
@@ -57,9 +58,28 @@ body header time:nth-child(2) {
   text-align: center;
 }
 
+body header .pause {
+  position: relative;
+}
+
+body header .pause span {
+  right: -.5rem;
+  transition: all 0.5s;
+  -webkit-transition: all 0.5s;
+  -moz-transition: all 0.5s;
+  -ms-transition: all 0.5s;
+  -o-transition: all 0.5s;
+}
+
 body header .pause:hover {
   opacity: 0.7;
   cursor: pointer;
+}
+
+body header .pause:hover span {
+  right: 1.5rem;
+  opacity: 1;
+  visibility: visible;
 }
 
 body header .pause:active {

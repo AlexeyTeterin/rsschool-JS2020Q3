@@ -492,7 +492,7 @@ class Game {
 
     if (switcher === 'on') {
       this.properties.playing = true;
-      this.header.pauseBtn.innerHTML = 'Menu &#9776;';
+      this.header.pauseBtn.innerHTML = '<span class="hidden">Menu</span> &#9776;';
       this.header.pauseBtn.classList.remove('pulsate');
       this.hideMenu();
       window.timer = window.setInterval(tick, 1000);
