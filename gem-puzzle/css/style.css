@@ -35,17 +35,19 @@ body header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 50vw;
+  width: 70vw;
   min-width: 320px;
   max-width: 600px;
   user-select: none;
   overflow: hidden;
   text-shadow: 0px 0px 1px #969696;
+  padding: 0 2px;
 }
 
 body header > div,
 body header time {
   width: 33%;
+  opacity: 0.7;
 }
 
 body header > div:last-child,
@@ -63,7 +65,6 @@ body header .pause {
 }
 
 body header .pause span {
-  right: -.5rem;
   transition: all 0.5s;
   -webkit-transition: all 0.5s;
   -moz-transition: all 0.5s;
@@ -72,7 +73,7 @@ body header .pause span {
 }
 
 body header .pause:hover {
-  opacity: 0.7;
+  opacity: 1;
   cursor: pointer;
 }
 
@@ -90,10 +91,10 @@ body .game-board {
   position: relative;
   padding: 2px;
   background-color: #ffef96;
-  width: 50vw;
+  width: 70vw;
+  height: 70vw;
   min-width: 320px;
   min-height: 320px;
-  height: 50vw;
   display: grid;
   max-width: 600px;
   max-height: 600px;
@@ -259,7 +260,8 @@ body .game-board .congrats {
 }
 
 body .game-board .chip {
-  background-color: #644a60;
+  background: #9e687f;
+  background: radial-gradient(circle, #9e687f 0%, #644a60 100%);
   margin: 2px;
   color: #f4e1d2;
   height: auto;
@@ -271,6 +273,7 @@ body .game-board .chip {
   user-select: none;
   transition: transform 0.15s, opacity 0.05s;
   cursor: pointer;
+  text-shadow: 0px 0px 1px #969696;
   border-radius: 4px;
   -webkit-border-radius: 4px;
   -moz-border-radius: 4px;
@@ -287,7 +290,7 @@ body .game-board .chip:hover {
 }
 
 body .game-board .chip-empty {
-  background-color: unset;
+  background: unset;
   border: none;
   cursor: default;
 }

@@ -61,16 +61,18 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 50vw;
+    width: 70vw;
     min-width: $min-width;
     max-width: $max-width;
     user-select: none;
     overflow: hidden;
     text-shadow: 0px 0px 1px rgba(150, 150, 150, 1);
+    padding: 0 2px;
 
     >div,
     time {
       width: 33%;
+      opacity: 0.7;
 
       &:last-child {
         text-align: right;
@@ -86,16 +88,15 @@ body {
       position: relative;
 
       span {
-        right: -.5rem;
         transition: all 0.5s;
         -webkit-transition: all 0.5s;
         -moz-transition: all 0.5s;
         -ms-transition: all 0.5s;
         -o-transition: all 0.5s;
-}
+      }
 
       &:hover {
-        opacity: 0.7;
+        opacity: 1;
         cursor: pointer;
       }
 
@@ -115,10 +116,10 @@ body {
     position: relative;
     padding: 2px;
     background-color: $col-bg;
-    width: 50vw;
+    width: 70vw;
+    height: 70vw;
     min-width: $min-width;
     min-height: $min-width;
-    height: 50vw;
     display: grid;
     max-width: $max-width;
     max-height: $max-width;
@@ -244,7 +245,9 @@ body {
     }
 
     .chip {
-      background-color: $col-primary;
+      // background-color: $col-primary;
+      background: rgb(158, 104, 127);
+      background: radial-gradient(circle, rgba(158, 104, 127, 1) 0%, rgba(100, 74, 96, 1) 100%);
       margin: 2px;
       color: $col-menu;
       height: auto;
@@ -256,6 +259,7 @@ body {
       user-select: none;
       transition: transform 0.15s, opacity 0.05s;
       cursor: pointer;
+      text-shadow: 0px 0px 1px rgba(150, 150, 150, 1);
       border-radius: 4px;
       -webkit-border-radius: 4px;
       -moz-border-radius: 4px;
@@ -272,7 +276,7 @@ body {
     }
 
     .chip-empty {
-      background-color: unset;
+      background: unset;
       border: none;
       cursor: default;
     }
