@@ -395,16 +395,28 @@ class Game {
   }
 
   moveChips(chip) {
+    const {
+      rows,
+    } = this.properties;
     const chipPos = this.chips.indexOf(chip);
     const clickedChip = document.querySelectorAll('.chip')[chipPos];
     const emptyChip = document.querySelector('.chip-empty');
+    const emptyChipPos = this.chips.indexOf(emptyChip);
     const temp = emptyChip.innerHTML;
     const positionDifference = this.chips.indexOf(emptyChip) - chipPos;
-    const chipIsMovable = () => [1, this.properties.rows].includes((Math.abs(positionDifference)));
+    const chipIsMovable = () => {
+      if (Math.abs(positionDifference) === rows) return true;
+      if (Math.abs(positionDifference) === 1) {
+        if (clickedChip.offsetTop === emptyChip.offsetTop) return true;
+      }
+      return false;
+    };
+
+    console.log((chipPos % rows) - (emptyChipPos % rows));
     const params = {
-      [`${this.properties.rows}`]: '(0, 100%)',
+      [`${rows}`]: '(0, 100%)',
       1: '(100%, 0)',
-      [`-${this.properties.rows}`]: '(0, -100%)',
+      [`-${rows}`]: '(0, -100%)',
       '-1': '(-100%, 0)',
     };
 
