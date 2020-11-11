@@ -16,7 +16,7 @@ const MENU = {
       <li class='rows'>8x8</li>
       </ul>`,
   savedGames: `<ul>
-      <li class='slot autosaved'>1. Autosaved</li>
+      <li class='slot autosaved'>Autosaved - empty</li>
       <li class='slot'>1. ---</li>
       <li class='slot'>2. ---</li>
       <li class='slot'>3. ---</li>
@@ -94,15 +94,6 @@ class Game {
     this.menu.classList.add('menu', 'hidden', 'hidden-content');
     this.gameBoard.append(this.menu);
     this.showMenu();
-
-    // alert saved game
-    if (localStorage.savedGame !== undefined) {
-      const savedGameAlert = document.createElement('div');
-      savedGameAlert.classList.add('saved-game-alert');
-      savedGameAlert.innerHTML = 'You have unfinished game, <span class="load-game">continue</span>?';
-      this.menu.prepend(savedGameAlert);
-      document.querySelector('.load-game').addEventListener('click', () => this.loadGame());
-    }
   }
 
   newGame() {
@@ -139,6 +130,15 @@ class Game {
     document.querySelector('.btn-saveGame').addEventListener('click', () => this.showSaveMenu());
     document.querySelector('.btn-loadGame').addEventListener('click', () => this.showLoadMenu());
     document.querySelector('.btn-scores').addEventListener('click', () => this.showScores());
+
+    // alert saved game
+    if (localStorage.savedGame !== undefined && this.header.pauseBtn.classList.contains('hidden')) {
+      const savedGameAlert = document.createElement('div');
+      savedGameAlert.classList.add('saved-game-alert');
+      savedGameAlert.innerHTML = 'You have unfinished game, <span class="load-game pulsate">continue</span>?';
+      this.menu.prepend(savedGameAlert);
+      document.querySelector('.load-game').addEventListener('click', () => this.loadGame());
+    }
   }
 
   showSettings() {
@@ -173,6 +173,7 @@ class Game {
       // select another rows number
       rows.forEach((option) => {
         option.addEventListener('click', () => {
+          this.header.pauseBtn.classList.add('hidden');
           document.querySelector('.selected').classList.remove('selected');
           option.classList.add('selected');
 
@@ -273,8 +274,7 @@ class Game {
         if (this.scores.length > 0) {
           const currScore = this.scores[i];
           if (currScore) li.textContent = `${i + 1}. ${currScore.date} - ${currScore.time} s, ${currScore.moves} moves (${currScore.rows}x${currScore.rows})`;
-          else li.textContent = `${i + 1}. ---`;
-        }
+        } else li.textContent = `${i + 1}. ---`;
         scoresList.append(li);
       }
 
@@ -460,6 +460,8 @@ class Game {
   }
 
   setTimer(switcher) {
+    this.header.pauseBtn.classList.remove('hidden');
+
     const tick = () => {
       this.properties.timer += 1;
       this.updateHeader();
@@ -487,6 +489,8 @@ class Game {
     result.push('');
     console.table(result.join(), this.chipsNumbers.join());
     if (result.join() === this.chipsNumbers.join()) {
+      localStorage.removeItem('savedGame');
+      this.header.pauseBtn.classList.add('hidden');
       this.setTimer('off');
       this.showCongrats();
       console.log('Victory!!!');
