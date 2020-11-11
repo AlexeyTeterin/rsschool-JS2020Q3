@@ -242,17 +242,17 @@ body .game-board .chip {
   align-items: center;
   font-size: 2rem;
   user-select: none;
-  transition: transform 0.15s;
+  transition: transform 0.15s, opacity 0.05s;
   cursor: pointer;
   border-radius: 4px;
   -webkit-border-radius: 4px;
   -moz-border-radius: 4px;
   -ms-border-radius: 4px;
   -o-border-radius: 4px;
-  -webkit-transition: transform 0.15s;
-  -moz-transition: transform 0.15s;
-  -ms-transition: transform 0.15s;
-  -o-transition: transform 0.15s;
+  -webkit-transition: transform 0.15s, opacity 0.051s;
+  -moz-transition: transform 0.15s, opacity 0.051s;
+  -ms-transition: transform 0.15s, opacity 0.051s;
+  -o-transition: transform 0.15s, opacity 0.051s;
 }
 
 body .game-board .chip:hover {
@@ -333,5 +333,53 @@ input[type="checkbox"]:focus {
   }
   100% {
     opacity: 0.2;
+  }
+}
+
+.shake {
+  animation: shake 0.5s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+  -webkit-animation: shake 0.5s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+  -webkit-transform: translate3d(0, 0, 0);
+  -moz-transform: translate3d(0, 0, 0);
+  -ms-transform: translate3d(0, 0, 0);
+  -o-transform: translate3d(0, 0, 0);
+}
+
+@keyframes shake {
+  10%,
+90% {
+    transform: translate3d(-1px, 0, 0);
+    -webkit-transform: translate3d(-1px, 0, 0);
+    -moz-transform: translate3d(-1px, 0, 0);
+    -ms-transform: translate3d(-1px, 0, 0);
+    -o-transform: translate3d(-1px, 0, 0);
+  }
+  20%,
+80% {
+    transform: translate3d(2px, 0, 0);
+    -webkit-transform: translate3d(2px, 0, 0);
+    -moz-transform: translate3d(2px, 0, 0);
+    -ms-transform: translate3d(2px, 0, 0);
+    -o-transform: translate3d(2px, 0, 0);
+  }
+  30%,
+50%,
+70% {
+    transform: translate3d(-3px, 0, 0);
+    -webkit-transform: translate3d(-3px, 0, 0);
+    -moz-transform: translate3d(-3px, 0, 0);
+    -ms-transform: translate3d(-3px, 0, 0);
+    -o-transform: translate3d(-3px, 0, 0);
+  }
+  40%,
+60% {
+    transform: translate3d(3px, 0, 0);
+    -webkit-transform: translate3d(3px, 0, 0);
+    -moz-transform: translate3d(3px, 0, 0);
+    -ms-transform: translate3d(3px, 0, 0);
+    -o-transform: translate3d(3px, 0, 0);
   }
 }

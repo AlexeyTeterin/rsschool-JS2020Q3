@@ -401,7 +401,15 @@ class Game {
       '-1': '(-100%, 0)',
     };
 
-    if (!chipIsMovable()) return;
+    if (!chipIsMovable()) {
+      setTimeout(() => {
+        clickedChip.classList.add('shake');
+      }, 0);
+      setTimeout(() => {
+        clickedChip.classList.remove('shake');
+      }, 500);
+      return;
+    }
 
     clickedChip.style.setProperty('transform', `translate${params[positionDifference]}`);
 
