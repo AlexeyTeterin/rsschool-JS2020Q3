@@ -64,7 +64,7 @@ class Game {
     this.header.append(this.header.moves);
     // pauseBtn
     this.header.pauseBtn = document.createElement('div');
-    this.header.pauseBtn.classList.add('pause');
+    this.header.pauseBtn.classList.add('pause', 'hidden');
     this.header.pauseBtn.addEventListener('click', () => {
       if (this.chipsNumbers) this.setTimer(this.properties.playing ? 'off' : 'on');
     });
