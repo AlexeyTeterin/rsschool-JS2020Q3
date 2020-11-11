@@ -509,13 +509,11 @@ class Game {
     const result = [];
     for (let i = 1; i < this.properties.rows ** 2; i += 1) result.push(i);
     result.push('');
-    console.table(result.join(), this.chipsNumbers.join());
     if (result.join() === this.chipsNumbers.join()) {
       localStorage.removeItem('savedGame');
       this.header.pauseBtn.classList.add('hidden');
       this.setTimer('off');
       this.showCongrats();
-      console.log('Victory!!!');
       const today = new Date();
       const currScore = {
         date: `${today.getFullYear()}/${today.getMonth()}/${today.getDate()}`,
