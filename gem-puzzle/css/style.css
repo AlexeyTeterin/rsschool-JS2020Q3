@@ -40,6 +40,21 @@ body header {
   max-width: 600px;
 }
 
+body header > div,
+body header time {
+  width: 33%;
+}
+
+body header > div:last-child,
+body header time:last-child {
+  text-align: right;
+}
+
+body header > div:nth-child(2),
+body header time:nth-child(2) {
+  text-align: center;
+}
+
 body header .pause:hover {
   opacity: 0.7;
   cursor: pointer;
@@ -209,6 +224,11 @@ body .game-board .menu-settings .sound {
 
 body .game-board .scores {
   font-weight: normal;
+}
+
+body .game-board .congrats {
+  font-weight: normal;
+  text-align: center;
 }
 
 body .game-board .chip {

@@ -65,6 +65,20 @@ body {
     min-width: $min-width;
     max-width: $max-width;
 
+    >div,
+    time {
+      width: 33%;
+
+      &:last-child {
+        text-align: right;
+      }
+
+      &:nth-child(2) {
+        text-align: center;
+      }
+    }
+
+
     .pause {
       &:hover {
         opacity: 0.7;
@@ -150,9 +164,7 @@ body {
         width: 1.5rem;
         height: 1.5rem;
 
-        &:hover {
-
-        }
+        &:hover {}
       }
 
       >* {
@@ -201,6 +213,11 @@ body {
 
     .scores {
       font-weight: normal;
+    }
+
+    .congrats {
+      font-weight: normal;
+      text-align: center;
     }
 
     .chip {

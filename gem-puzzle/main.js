@@ -173,10 +173,14 @@ class Game {
       // select another rows number
       rows.forEach((option) => {
         option.addEventListener('click', () => {
+          // clear header
           this.header.pauseBtn.classList.add('hidden');
+          this.properties.timer = 0;
+          this.updateHeader(0);
+          // selection styling
           document.querySelector('.selected').classList.remove('selected');
           option.classList.add('selected');
-
+          // create new empty game board
           this.properties.rows = parseInt(option.textContent.slice(0, 1), 10);
           this.gameBoard.style.setProperty('grid-template-columns',
             `repeat(${this.properties.rows}, 1fr)`);
@@ -274,6 +278,7 @@ class Game {
         if (this.scores.length > 0) {
           const currScore = this.scores[i];
           if (currScore) li.textContent = `${i + 1}. ${currScore.date} - ${currScore.time} s, ${currScore.moves} moves (${currScore.rows}x${currScore.rows})`;
+          else li.textContent = `${i + 1}. ---`;
         } else li.textContent = `${i + 1}. ---`;
         scoresList.append(li);
       }
@@ -287,12 +292,14 @@ class Game {
   showCongrats() {
     this.menu.innerText = '';
     this.menu.classList = 'menu';
+    this.header.pauseBtn.classList.add('hidden');
     setTimeout(() => {
       const congratsHeader = document.createElement('h1');
       congratsHeader.innerText = 'Well done!';
 
       const congratsText = document.createElement('div');
       congratsText.innerText = `You solved this puzzle in ${this.properties.formattedTime} and ${this.properties.movesCounter} moves`;
+      congratsText.classList.add('congrats');
 
       this.menu.append(congratsHeader, congratsText, this.createGoBackBtn());
     }, 250);
