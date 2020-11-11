@@ -195,7 +195,7 @@ body .game-board .menu .btn-goBack {
   -o-transition: all 0.15s;
   user-select: none;
   margin-top: 2rem;
-  background-image: url(/assets/img/back.png);
+  background-image: url(./assets/img/back.png);
   background-size: contain;
   background-repeat: no-repeat;
   width: 1.5rem;

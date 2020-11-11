@@ -184,7 +184,7 @@ body {
       .btn-goBack {
         @include menu-btn();
         margin-top: 2rem;
-        background-image: url(/assets/img/back.png);
+        background-image: url(../assets/img/back.png);
         background-size: contain;
         background-repeat: no-repeat;
         width: 1.5rem;
