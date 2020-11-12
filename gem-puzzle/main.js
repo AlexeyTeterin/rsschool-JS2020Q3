@@ -395,7 +395,6 @@ class Game {
     const chipPos = this.chips.indexOf(chip);
     const clickedChip = document.querySelectorAll('.chip')[chipPos];
     const emptyChip = document.querySelector('.chip-empty');
-    const emptyChipPos = this.chips.indexOf(emptyChip);
     const temp = emptyChip.innerHTML;
     const positionDifference = this.chips.indexOf(emptyChip) - chipPos;
     const chipIsMovable = () => {
@@ -405,8 +404,6 @@ class Game {
       }
       return false;
     };
-
-    console.log((chipPos % rows) - (emptyChipPos % rows));
     const params = {
       [`${rows}`]: '(0, 100%)',
       1: '(100%, 0)',
@@ -426,7 +423,7 @@ class Game {
     }
 
     // moving chip if it's unblocked
-    this.playSound('chip');
+    setTimeout(() => this.playSound('chip'), 0);
     clickedChip.style.setProperty('transform', `translate${params[positionDifference]}`);
     setTimeout(() => {
       emptyChip.innerHTML = chip.innerHTML;
