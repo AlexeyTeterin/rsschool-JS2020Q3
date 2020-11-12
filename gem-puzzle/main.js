@@ -423,7 +423,7 @@ class Game {
     }
 
     // moving chip if it's unblocked
-    setTimeout(() => this.playSound('chip'), 0);
+    this.playSound('chip');
     clickedChip.style.setProperty('transform', `translate${params[positionDifference]}`);
     setTimeout(() => {
       emptyChip.innerHTML = chip.innerHTML;
