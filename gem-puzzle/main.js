@@ -126,6 +126,14 @@ class Game {
     this.menu.innerHTML = MENU.main;
     this.menu.classList = 'menu';
 
+    // alert saved game
+    if (localStorage.savedGame !== undefined && this.header.pauseBtn.classList.contains('hidden')) {
+      const savedGameAlert = document.createElement('div');
+      savedGameAlert.classList.add('saved-game-alert');
+      savedGameAlert.innerHTML = 'You have unfinished game, <span data-action="loadGame" class="pulsate">continue</span>?';
+      this.menu.prepend(savedGameAlert);
+    }
+
     // event listeners
     this.menu.addEventListener('click', (event) => {
       const {
@@ -133,15 +141,6 @@ class Game {
       } = event.target.dataset;
       if (action) this[action]();
     });
-
-    // alert saved game
-    if (localStorage.savedGame !== undefined && this.header.pauseBtn.classList.contains('hidden')) {
-      const savedGameAlert = document.createElement('div');
-      savedGameAlert.classList.add('saved-game-alert');
-      savedGameAlert.innerHTML = 'You have unfinished game, <span class="load-game pulsate">continue</span>?';
-      this.menu.prepend(savedGameAlert);
-      document.querySelector('.load-game').addEventListener('click', () => this.loadGame());
-    }
   }
 
   showSettings() {
