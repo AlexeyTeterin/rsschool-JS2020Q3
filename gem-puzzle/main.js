@@ -1,10 +1,10 @@
 const MENU = {
   main: `<ul class="menu-ul">
-      <li class="menu-li btn-newGame">New game</li>
-      <li class="menu-li btn-saveGame">Save game</li>
-      <li class="menu-li btn-loadGame">Load game</li>
-      <li class="menu-li btn-scores">Scores</li>
-      <li class="menu-li btn-settings">Settings</li>
+      <li data-action="newGame" class="menu-li btn-newGame">New game</li>
+      <li data-action="showSaveMenu" class="menu-li btn-saveGame">Save game</li>
+      <li data-action="showLoadMenu" class="menu-li btn-loadGame">Load game</li>
+      <li data-action="showScores" class="menu-li btn-scores">Scores</li>
+      <li data-action="showSettings" class="menu-li btn-settings">Settings</li>
       </ul>`,
   settings: `<p>Field size:</p>
       <ul><li class='rows'>2x2</li>
@@ -115,6 +115,7 @@ class Game {
     this.setTimer('on');
     // check if puzzle solved on start
     this.checkResult();
+    this.hideMenu();
   }
 
   hideMenu() {
@@ -126,14 +127,12 @@ class Game {
     this.menu.classList = 'menu';
 
     // event listeners
-    document.querySelector('.btn-settings').addEventListener('click', () => this.showSettings());
-    document.querySelector('.btn-newGame').addEventListener('click', () => {
-      this.newGame();
-      this.hideMenu();
+    this.menu.addEventListener('click', (event) => {
+      const {
+        action,
+      } = event.target.dataset;
+      if (action) this[action]();
     });
-    document.querySelector('.btn-saveGame').addEventListener('click', () => this.showSaveMenu());
-    document.querySelector('.btn-loadGame').addEventListener('click', () => this.showLoadMenu());
-    document.querySelector('.btn-scores').addEventListener('click', () => this.showScores());
 
     // alert saved game
     if (localStorage.savedGame !== undefined && this.header.pauseBtn.classList.contains('hidden')) {
