@@ -1,11 +1,4 @@
 const MENU = {
-  main: `<ul class="menu-ul">
-      <li data-action="newGame" class="menu-li btn-newGame">New game</li>
-      <li data-action="showSaveMenu" class="menu-li btn-saveGame">Save game</li>
-      <li data-action="showLoadMenu" class="menu-li btn-loadGame">Load game</li>
-      <li data-action="showScores" class="menu-li btn-scores">Scores</li>
-      <li data-action="showSettings" class="menu-li btn-settings">Settings</li>
-      </ul>`,
   settings: `<p>Field size:</p>
       <ul><li class='rows'>2x2</li>
       <li class='rows'>3x3</li>
@@ -33,12 +26,6 @@ class Game {
     movesCounter: 0,
     sound: true,
   }
-
-  // header = {
-  //   time: null,
-  //   moves: null,
-  //   pauseBtn: null,
-  // }
 
   mainMenuList = {
     newGame: 'New Game',
@@ -154,6 +141,10 @@ class Game {
 
     setTimeout(() => {
       this.menu.innerHTML = MENU.settings;
+
+      // this.menu.innerHTML = ''; // TODO: complete generation of settings
+      // const p = document.createElement('p');
+
       this.menu.classList.add('menu-settings');
       this.createMenuHeader('Settings');
       // create sound switcher
