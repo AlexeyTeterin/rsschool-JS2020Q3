@@ -25,6 +25,7 @@ class Game {
     playing: false,
     movesCounter: 0,
     sound: true,
+    chhipIsMoving: false,
   }
 
   mainMenuList = {
@@ -398,8 +399,8 @@ class Game {
     const temp = emptyChip.innerHTML;
     const positionDifference = this.chips.indexOf(emptyChip) - chipPos;
     const chipIsMovable = () => {
-      if (Math.abs(positionDifference) === rows) return true;
-      if (Math.abs(positionDifference) === 1) {
+      if (Math.abs(positionDifference) === rows && !this.properties.chipIsMoving) return true;
+      if (Math.abs(positionDifference) === 1 && !this.properties.chipIsMoving) {
         if (clickedChip.offsetTop === emptyChip.offsetTop) return true;
       }
       return false;
@@ -425,6 +426,7 @@ class Game {
     // moving chip if it's unblocked
     this.playSound('chip');
     clickedChip.style.setProperty('transform', `translate${params[positionDifference]}`);
+    this.properties.chipIsMoving = true;
     setTimeout(() => {
       emptyChip.innerHTML = chip.innerHTML;
       emptyChip.classList.remove('chip-empty');
@@ -433,7 +435,8 @@ class Game {
       clickedChip.style.setProperty('transform', 'translate(0)');
       this.getChips();
       this.checkResult();
-    }, 150);
+      this.properties.chipIsMoving = false;
+    }, 125);
 
     this.updateHeader(1);
   }

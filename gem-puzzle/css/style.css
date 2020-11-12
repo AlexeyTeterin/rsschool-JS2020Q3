@@ -281,18 +281,18 @@ body .game-board .chip {
   align-items: center;
   font-size: 2rem;
   user-select: none;
-  transition: transform 0.15s, opacity 0.05s;
+  transition: transform .125s ease-out, opacity .05s;
   cursor: pointer;
   text-shadow: 0px 0px 4px rgba(0, 0, 0, 0.5);
-  border-radius: 4px;
-  -webkit-border-radius: 4px;
-  -moz-border-radius: 4px;
-  -ms-border-radius: 4px;
-  -o-border-radius: 4px;
-  -webkit-transition: transform 0.15s, opacity 0.051s;
-  -moz-transition: transform 0.15s, opacity 0.051s;
-  -ms-transition: transform 0.15s, opacity 0.051s;
-  -o-transition: transform 0.15s, opacity 0.051s;
+  border-radius: 6px;
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  -ms-border-radius: 6px;
+  -o-border-radius: 6px;
+  -webkit-transition: transform .125s ease-out, opacity .05s;
+  -moz-transition: transform .125s ease-out, opacity .05s;
+  -ms-transition: transform .125s ease-out, opacity .05s;
+  -o-transition: transform .125s ease-out, opacity .05s;
 }
 
 body .game-board .chip:hover {
