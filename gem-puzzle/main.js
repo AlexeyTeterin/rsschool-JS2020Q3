@@ -82,6 +82,12 @@ class Game {
     this.gameBoard.style.setProperty('grid-template-columns',
       `repeat(${this.properties.rows}, 1fr)`);
     document.body.append(this.gameBoard);
+    // chips movement event listener (using event delegation)
+    this.gameBoard.addEventListener('click', (event) => {
+      if (event.target.className !== 'chip') return;
+      if (!this.properties.playing) this.setTimer('on');
+      this.moveChips(event.target);
+    });
     // generate random chips
     this.chipsNumbers = this.randomizeChips();
     // create chips boxes
@@ -367,12 +373,6 @@ class Game {
       this.gameBoard.append(chip);
       this.chips.push(chip);
     });
-
-    // chips movement event listener
-    this.chips.forEach((chip) => chip.addEventListener('click', () => {
-      if (!this.properties.playing) this.setTimer('on');
-      this.moveChips(chip);
-    }));
   }
 
   getChips() {
@@ -394,19 +394,32 @@ class Game {
   }
 
   moveChips(chip) {
+    const {
+      rows,
+    } = this.properties;
     const chipPos = this.chips.indexOf(chip);
     const clickedChip = document.querySelectorAll('.chip')[chipPos];
     const emptyChip = document.querySelector('.chip-empty');
+    const emptyChipPos = this.chips.indexOf(emptyChip);
     const temp = emptyChip.innerHTML;
     const positionDifference = this.chips.indexOf(emptyChip) - chipPos;
-    const chipIsMovable = () => [1, this.properties.rows].includes((Math.abs(positionDifference)));
+    const chipIsMovable = () => {
+      if (Math.abs(positionDifference) === rows) return true;
+      if (Math.abs(positionDifference) === 1) {
+        if (clickedChip.offsetTop === emptyChip.offsetTop) return true;
+      }
+      return false;
+    };
+
+    console.log((chipPos % rows) - (emptyChipPos % rows));
     const params = {
-      [`${this.properties.rows}`]: '(0, 100%)',
+      [`${rows}`]: '(0, 100%)',
       1: '(100%, 0)',
-      [`-${this.properties.rows}`]: '(0, -100%)',
+      [`-${rows}`]: '(0, -100%)',
       '-1': '(-100%, 0)',
     };
 
+    // shaking blocked chips
     if (!chipIsMovable()) {
       setTimeout(() => {
         clickedChip.classList.add('shake');
@@ -417,8 +430,9 @@ class Game {
       return;
     }
 
+    // moving chip if it's unblocked
+    this.playSound('chip');
     clickedChip.style.setProperty('transform', `translate${params[positionDifference]}`);
-
     setTimeout(() => {
       emptyChip.innerHTML = chip.innerHTML;
       emptyChip.classList.remove('chip-empty');
@@ -430,7 +444,6 @@ class Game {
     }, 150);
 
     this.updateHeader(1);
-    this.playSound('chip');
   }
 
   playSound(which) {
