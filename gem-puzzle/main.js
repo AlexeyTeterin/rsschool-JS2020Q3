@@ -66,7 +66,11 @@ class Game {
       `repeat(${this.properties.rows}, 1fr)`);
     document.body.append(this.gameBoard);
     // chips movement event listener (using event delegation)
-    this.gameBoard.addEventListener('click', (event) => this.chipHandler(event));
+    this.gameBoard.addEventListener('click', (event) => {
+      if (event.target.className !== 'chip') return;
+      if (!this.properties.playing) this.setTimer('on');
+      this.moveChips(event.target);
+    });
     // generate random chips
     this.chipsNumbers = this.randomizeChips();
     // create chips boxes
@@ -384,15 +388,14 @@ class Game {
     });
   }
 
-  chipHandler(event) {
-    if (event.target.className !== 'chip') return;
-
+  moveChips(chip) {
     const {
       rows,
     } = this.properties;
-    const chipPos = this.chips.indexOf(event.target);
+    const chipPos = this.chips.indexOf(chip);
     const clickedChip = document.querySelectorAll('.chip')[chipPos];
     const emptyChip = document.querySelector('.chip-empty');
+    const temp = emptyChip.innerHTML;
     const positionDifference = this.chips.indexOf(emptyChip) - chipPos;
     const chipIsMovable = () => {
       if (Math.abs(positionDifference) === rows) return true;
@@ -400,6 +403,12 @@ class Game {
         if (clickedChip.offsetTop === emptyChip.offsetTop) return true;
       }
       return false;
+    };
+    const params = {
+      [`${rows}`]: '(0, 100%)',
+      1: '(100%, 0)',
+      [`-${rows}`]: '(0, -100%)',
+      '-1': '(-100%, 0)',
     };
 
     // shaking blocked chips
@@ -413,29 +422,8 @@ class Game {
       return;
     }
 
-    this.playSound('chip');
-    if (!this.properties.playing) this.setTimer('on');
-    this.moveChips(event.target);
-  }
-
-  moveChips(chip) {
-    const {
-      rows,
-    } = this.properties;
-    const chipPos = this.chips.indexOf(chip);
-    const clickedChip = document.querySelectorAll('.chip')[chipPos];
-    const emptyChip = document.querySelector('.chip-empty');
-    const temp = emptyChip.innerHTML;
-    const positionDifference = this.chips.indexOf(emptyChip) - chipPos;
-
-    const params = {
-      [`${rows}`]: '(0, 100%)',
-      1: '(100%, 0)',
-      [`-${rows}`]: '(0, -100%)',
-      '-1': '(-100%, 0)',
-    };
-
-    // moving chip
+    // moving chip if it's unblocked
+    setTimeout(() => this.playSound('chip'), 0);
     clickedChip.style.setProperty('transform', `translate${params[positionDifference]}`);
     setTimeout(() => {
       emptyChip.innerHTML = chip.innerHTML;
