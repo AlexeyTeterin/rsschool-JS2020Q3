@@ -34,23 +34,19 @@ class Game {
     sound: true,
   }
 
-  header = {
-    time: null,
-    moves: null,
-    pauseBtn: null,
+  // header = {
+  //   time: null,
+  //   moves: null,
+  //   pauseBtn: null,
+  // }
+
+  mainMenuList = {
+    newGame: 'New Game',
+    showSaveMenu: 'Save Game',
+    showLoadMenu: 'Load Game',
+    showScores: 'Scores',
+    showSettings: 'Settings',
   }
-
-  gameBoard = null
-
-  chipsNumbers = null
-
-  chips = []
-
-  menu = null
-
-  settings = null
-
-  scores = []
 
   init() {
     // create header with elements
@@ -123,7 +119,17 @@ class Game {
   }
 
   showMenu() {
-    this.menu.innerHTML = MENU.main;
+    this.menu.innerHTML = null;
+    const ul = document.createElement('ul');
+    const list = Object.keys(this.mainMenuList);
+    list.forEach((key) => {
+      const li = document.createElement('li');
+      li.setAttribute('data-action', key);
+      li.innerText = this.mainMenuList[key];
+      ul.append(li);
+    });
+    this.menu.append(ul);
+
     this.menu.classList = 'menu';
 
     // alert saved game
