@@ -10,8 +10,5 @@
   "parserOptions": {
     "ecmaVersion": 12
   },
-  "rules": {
-    "trailingComma": "none"
-    // "linebreak-style": ["error", "unix"] // changes the file to LF
-  }
+  "rules": {}
 }

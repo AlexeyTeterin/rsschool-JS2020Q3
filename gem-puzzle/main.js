@@ -141,10 +141,20 @@ class Game {
     this.menu.classList.add('hidden-content');
 
     setTimeout(() => {
-      this.menu.innerHTML = MENU.settings;
+      // this.menu.innerHTML = MENU.settings;
 
-      // this.menu.innerHTML = ''; // TODO: complete generation of settings
-      // const p = document.createElement('p');
+      this.menu.innerHTML = null; // TODO: complete generation of settings
+      const p = document.createElement('p');
+      p.innerText = 'Field size:';
+      const ul = document.createElement('ul');
+      ul.classList.add('rows');
+      this.menu.append(p, ul);
+      for (let i = 3; i < 9; i += 1) {
+        const li = document.createElement('li');
+        li.textContent = `${i}x${i}`;
+        li.setAttribute('data-rows', i);
+        ul.append(li);
+      }
 
       this.menu.classList.add('menu-settings');
       this.createMenuHeader('Settings');
@@ -163,20 +173,19 @@ class Game {
       this.menu.append(sound);
 
       this.menu.append(this.createGoBackBtn());
-      const rows = document.querySelectorAll('.rows');
+      const rows = document.querySelector('.rows');
 
       // show selection on current rows number
-      rows.forEach((option) => {
-        if (this.properties.rows.toString() === option.textContent.slice(0, 1)) option.classList.add('selected');
+      rows.childNodes.forEach((option) => {
+        if (this.properties.rows === parseInt(option.dataset.rows, 10)) option.classList.add('selected');
       });
 
       // select another rows number
-      rows.forEach((option) => {
+      rows.childNodes.forEach((option) => {
         option.addEventListener('click', () => {
           // clear header
           this.header.pauseBtn.classList.add('hidden');
-          this.properties.timer = 0;
-          this.updateHeader(0);
+          this.updateHeader(0, 0);
           // selection styling
           document.querySelector('.selected').classList.remove('selected');
           option.classList.add('selected');
@@ -466,6 +475,7 @@ class Game {
   }
 
   loadGame(src) {
+    this.setTimer('off');
     let source = src;
     if (!src) source = '';
     const savedGame = JSON.parse(localStorage.getItem(`savedGame${source}`));
@@ -484,7 +494,6 @@ class Game {
       throw new Error('Can`t load this game');
     }
     this.setTimer('on');
-
     this.hideMenu();
   }
 
