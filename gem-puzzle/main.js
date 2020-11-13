@@ -197,34 +197,43 @@ class Game {
     }, 250);
   }
 
+  createSlots(first, last) {
+    const ul = document.createElement('ul');
+    ul.classList.add('slots');
+    for (let i = first; i <= last; i += 1) {
+      const li = document.createElement('li');
+      li.textContent = `${i}. ---`;
+      console.log(i);
+      setTimeout(ul.append(li));
+    }
+    this.menu.append(ul, this.createGoBackBtn());
+
+    return document.querySelector('.slots').childNodes;
+  }
+
   showSaveMenu() {
     this.menu.classList.add('hidden-content');
 
     setTimeout(() => {
-      this.menu.innerHTML = MENU.savedGames;
+      // this.menu.innerHTML = MENU.savedGames;
+      this.menu.innerHTML = null;
       this.menu.classList.add('menu-saved-games');
       this.createMenuHeader('Save game:');
-      this.menu.append(this.createGoBackBtn());
 
-      const slots = document.querySelectorAll('.slot');
-      document.querySelector('.autosaved').remove();
+      const slots = this.createSlots(1, 5);
 
       slots.forEach((el, index) => {
         const slot = el;
-        const localSaved = JSON.parse(localStorage.getItem(`savedGame${index}`));
+        const localSaved = JSON.parse(localStorage.getItem(`savedGame${index + 1}`));
         if (localSaved) {
-          const {
-            rows,
-            movesCounter,
-            timer,
-          } = localSaved.properties;
-          slot.textContent = `${index}. ${this.formatTime(timer)} s,  ${movesCounter} moves (${rows}x${rows})`;
+          slot.textContent = this.stringifySavedGame(localSaved, index + 1);
         }
       });
 
+      // save current game to slot on click
       slots.forEach((slot, index) => {
         slot.addEventListener('click', () => {
-          this.saveGame(index);
+          this.saveGame(index + 1);
           this.showSaveMenu();
         });
       });
@@ -237,36 +246,26 @@ class Game {
     this.menu.classList.add('hidden-content');
 
     setTimeout(() => {
-      this.menu.innerHTML = MENU.savedGames;
+      // this.menu.innerHTML = MENU.savedGames;
+      this.menu.innerHTML = null;
       this.menu.classList.add('menu-saved-games');
       this.createMenuHeader('Load game:');
-      this.menu.append(this.createGoBackBtn());
 
-      const slots = document.querySelectorAll('.slot');
+      const slots = this.createSlots(0, 5);
 
       slots.forEach((el, i) => {
-        const index = i || '';
+        const index = i === 0 ? '' : i;
         const slot = el;
         const localSaved = JSON.parse(localStorage.getItem(`savedGame${index}`));
         if (localSaved) {
-          const {
-            rows,
-            movesCounter,
-            timer,
-          } = localSaved.properties;
-          slot.textContent = `${index}. ${this.formatTime(timer)} s,  ${movesCounter} moves (${rows}x${rows})`;
+          slot.textContent = this.stringifySavedGame(localSaved, index);
           if (index === '') slot.textContent = slot.textContent.replace('.', 'Autosaved: ');
         }
+
+        // load game on slot click
         slot.addEventListener('click', () => {
           if (localSaved) this.loadGame(index);
-          else {
-            setTimeout(() => {
-              slot.classList.add('shake');
-            }, 0);
-            setTimeout(() => {
-              slot.classList.remove('shake');
-            }, 500);
-          }
+          else Game.shake(slot);
         });
         return slot;
       });
@@ -541,6 +540,15 @@ class Game {
     document.querySelector('.moves').innerHTML = `Moves: ${this.properties.movesCounter}`;
   }
 
+  stringifySavedGame(game, index) {
+    const {
+      rows,
+      movesCounter,
+      timer,
+    } = game.properties;
+    return `${index}. ${this.formatTime(timer)} s, ${movesCounter} moves (${rows}x${rows})`;
+  }
+
   formatTime(time) {
     let minutes = Math.floor(time / 60);
     minutes = minutes < 10 ? `0${minutes}` : minutes;
@@ -548,6 +556,15 @@ class Game {
     seconds = seconds < 10 ? `0${seconds}` : seconds;
     this.properties.formattedTime = `${minutes}:${seconds}`;
     return `${minutes}:${seconds}`;
+  }
+
+  static shake(el) {
+    setTimeout(() => {
+      el.classList.add('shake');
+    }, 0);
+    setTimeout(() => {
+      el.classList.remove('shake');
+    }, 500);
   }
 }
 
