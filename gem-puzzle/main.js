@@ -28,7 +28,7 @@ class Game {
     chhipIsMoving: false,
   }
 
-  mainMenuList = {
+  mainMenuElements = {
     newGame: 'New Game',
     showSaveMenu: 'Save Game',
     showLoadMenu: 'Load Game',
@@ -109,11 +109,11 @@ class Game {
   showMenu() {
     this.menu.innerHTML = null;
     const ul = document.createElement('ul');
-    const list = Object.keys(this.mainMenuList);
+    const list = Object.keys(this.mainMenuElements);
     list.forEach((key) => {
       const li = document.createElement('li');
       li.setAttribute('data-action', key);
-      li.innerText = this.mainMenuList[key];
+      li.innerText = this.mainMenuElements[key];
       ul.append(li);
     });
     this.menu.append(ul);
@@ -121,7 +121,7 @@ class Game {
     this.menu.classList = 'menu';
 
     // alert saved game
-    if (localStorage.savedGame !== undefined && this.header.pauseBtn.classList.contains('hidden')) {
+    if (localStorage.savedGame && this.header.pauseBtn.classList.contains('hidden')) {
       const savedGameAlert = document.createElement('div');
       savedGameAlert.classList.add('saved-game-alert');
       savedGameAlert.innerHTML = 'You have unfinished game, <span data-action="loadGame" class="pulsate">continue</span>?';
