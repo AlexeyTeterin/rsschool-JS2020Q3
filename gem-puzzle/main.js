@@ -378,7 +378,7 @@ class Game {
         if (this.properties.win) return;
         // clear timers on menu call
         if (!this.properties.playing) {
-          let maxId = setTimeout(function () {});
+          let maxId = setTimeout(() => {});
           while (maxId) {
             clearTimeout(maxId);
             maxId -= 1;
