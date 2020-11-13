@@ -26,8 +26,9 @@
 }
 
 h1 {
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   margin-bottom: 2rem;
+  text-align: center;
 }
 
 body {
@@ -46,7 +47,7 @@ body header {
   justify-content: space-between;
   align-items: center;
   width: 70vw;
-  min-width: 320px;
+  min-width: 380px;
   max-width: 600px;
   user-select: none;
   overflow: hidden;
@@ -103,8 +104,8 @@ body .game-board {
   background-color: #ffef96;
   width: 70vw;
   height: 70vw;
-  min-width: 320px;
-  min-height: 320px;
+  min-width: 380px;
+  min-height: 380px;
   display: grid;
   max-width: 600px;
   max-height: 600px;
@@ -122,6 +123,7 @@ body .game-board .menu {
   z-index: 10;
   top: 0;
   left: 0;
+  padding: .5rem;
   width: 100%;
   height: 100%;
   display: flex;
@@ -175,6 +177,7 @@ body .game-board .menu ul li:active {
 body .game-board .menu .saved-game-alert {
   margin-bottom: 3rem;
   font-size: 0.9rem;
+  text-align: center;
 }
 
 body .game-board .menu .saved-game-alert span {
@@ -193,6 +196,37 @@ body .game-board .menu .saved-game-alert span:hover {
 }
 
 body .game-board .menu .saved-game-alert span:active {
+  opacity: 0.5;
+}
+
+body .game-board .menu .solution {
+  font-weight: normal;
+  font-size: 0.8rem;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  min-height: 25%;
+  max-height: 50%;
+  width: 90%;
+  overflow: auto;
+}
+
+body .game-board .menu .btn-play {
+  cursor: pointer;
+  transition: all 0.15s;
+  -webkit-transition: all 0.15s;
+  -moz-transition: all 0.15s;
+  -ms-transition: all 0.15s;
+  -o-transition: all 0.15s;
+  user-select: none;
+  margin-top: 1rem;
+}
+
+body .game-board .menu .btn-play:hover {
+  opacity: 0.7;
+}
+
+body .game-board .menu .btn-play:active {
   opacity: 0.5;
 }
 

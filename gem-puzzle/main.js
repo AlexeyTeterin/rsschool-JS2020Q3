@@ -1,3 +1,6 @@
+/* eslint-disable import/extensions */
+import NPuzzleSolver from './solver.js';
+
 class Game {
   properties = {
     rows: 4,
@@ -6,7 +9,7 @@ class Game {
     playing: false,
     movesCounter: 0,
     sound: true,
-    chhipIsMoving: false,
+    chipIsMoving: false,
   }
 
   mainMenuElements = {
@@ -15,6 +18,7 @@ class Game {
     showLoadMenu: 'Load Game',
     showScores: 'Scores',
     showSettings: 'Settings',
+    showSolution: 'Show solution',
   }
 
   sounds = {
@@ -98,6 +102,7 @@ class Game {
     list.forEach((key) => {
       const li = document.createElement('li');
       li.setAttribute('data-action', key);
+      li.classList.add(key);
       li.innerText = this.mainMenuElements[key];
       ul.append(li);
     });
@@ -176,7 +181,6 @@ class Game {
     for (let i = first; i <= last; i += 1) {
       const li = document.createElement('li');
       li.textContent = `${i}. ---`;
-      console.log(i);
       setTimeout(ul.append(li));
     }
     this.menu.append(ul, this.createGoBackBtn());
@@ -274,8 +278,9 @@ class Game {
   }
 
   showCongrats() {
-    this.menu.innerText = '';
+    this.menu.innerHTML = null;
     this.menu.classList = 'menu';
+    this.properties.win = true;
     this.header.pauseBtn.classList.add('hidden');
     this.playSound('win');
     setTimeout(() => {
@@ -288,6 +293,66 @@ class Game {
 
       this.menu.append(congratsHeader, congratsText, this.createGoBackBtn());
     }, 250);
+  }
+
+  solve() {
+    const arr = this.chipsNumbers.slice().map((el) => parseInt(el, 10) || '');
+    const {
+      rows,
+    } = this.properties;
+    const result = [];
+    // let counter = 0;
+    do result.push(arr.splice(0, rows));
+    while (arr.length > 0);
+
+    const solver = new NPuzzleSolver(result);
+    const solution = solver.solve();
+
+    return solution;
+  }
+
+  showSolution() {
+    if (!this.chips[0].innerText && !this.chips[1].innerText) {
+      this.shake(document.querySelector('.showSolution'));
+      return;
+    }
+    const solution = this.solve();
+    if (!solution) {
+      this.menu.innerHTML = null;
+      this.createMenuHeader('No solution found!');
+      this.menu.append(this.createGoBackBtn());
+    } else {
+      const steps = [];
+      solution.forEach((step) => {
+        steps.push(step.number);
+      });
+
+      this.menu.innerHTML = null;
+      this.createMenuHeader(`Found solution in ${steps.length} steps: `);
+      const p = document.createElement('p');
+      p.classList.add('solution');
+      p.textContent = `${steps.join('-')}`;
+      const play = document.createElement('div');
+      play.classList.add('btn-play');
+      play.textContent = 'Play solution';
+      play.addEventListener('click', () => this.playSolution(steps));
+
+      this.menu.append(p, play, this.createGoBackBtn());
+    }
+  }
+
+  playSolution(steps) {
+    let timeout = 0;
+    this.hideMenu();
+    this.setTimer('on');
+    steps.forEach((step) => {
+      timeout += 200;
+      setTimeout(() => {
+        if (this.properties.win) return;
+        const chip = this.chips.filter((el) => el.textContent === step.toString())[0];
+        this.moveChips(chip);
+      }, timeout);
+    });
   }
 
   loadScores() {
@@ -303,7 +368,16 @@ class Game {
     this.menu.classList.add('hidden-content');
     setTimeout(() => {
       this.showMenu();
+      if (this.properties.win) this.clearChips();
     }, 250);
+  }
+
+  clearChips() {
+    this.chips.map((el) => {
+      const chip = el;
+      chip.textContent = '';
+      return chip;
+    });
   }
 
   createGoBackBtn() {
