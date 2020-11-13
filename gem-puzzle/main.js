@@ -1,13 +1,3 @@
-const MENU = {
-  savedGames: `<ul>
-      <li class='slot autosaved'>Autosaved - empty</li>
-      <li class='slot'>1. ---</li>
-      <li class='slot'>2. ---</li>
-      <li class='slot'>3. ---</li>
-      <li class='slot'>4. ---</li>
-      <li class='slot'>5. ---</li>
-      </ul>`,
-};
 class Game {
   properties = {
     rows: 4,
@@ -30,6 +20,7 @@ class Game {
   sounds = {
     chip: './assets/audio/chip.wav',
     win: './assets/audio/win.mp3',
+    shake: './assets/audio/shake.wav',
   }
 
   init() {
@@ -52,10 +43,8 @@ class Game {
     // append header to body
     document.body.append(this.header);
     this.updateHeader(0, 0);
-
     // load scores
     this.loadScores();
-
     // create game board
     this.gameBoard = document.createElement('div');
     this.gameBoard.classList.add('game-board');
@@ -72,7 +61,6 @@ class Game {
     this.chipsNumbers = this.randomizeChips();
     // create chips boxes
     this.createChips();
-
     // create menu
     this.menu = document.createElement('div');
     this.menu.classList.add('menu', 'hidden', 'hidden-content');
@@ -116,7 +104,6 @@ class Game {
     this.menu.append(ul);
 
     this.menu.classList = 'menu';
-
     // alert saved game
     if (localStorage.savedGame && this.header.pauseBtn.classList.contains('hidden')) {
       const savedGameAlert = document.createElement('div');
@@ -124,7 +111,6 @@ class Game {
       savedGameAlert.innerHTML = 'You have unfinished game, <span data-action="loadGame" class="pulsate">continue</span>?';
       this.menu.prepend(savedGameAlert);
     }
-
     // event listeners
     this.menu.addEventListener('click', (event) => {
       const {
@@ -150,24 +136,11 @@ class Game {
         li.setAttribute('data-rows', i);
         ul.append(li);
       }
-
       this.menu.classList.add('menu-settings');
       this.createMenuHeader('Settings');
-      // create sound switcher
-      const sound = document.createElement('div');
-      sound.classList.add('sound');
-      sound.innerHTML = 'Chip sounds: &nbsp';
-      const switcher = document.createElement('input');
-      switcher.classList.add('toggle');
-      switcher.type = 'checkbox';
-      switcher.checked = this.properties.sound;
-      switcher.addEventListener('click', () => {
-        this.properties.sound = !!switcher.checked;
-      });
-      sound.append(switcher);
-      this.menu.append(sound);
 
-      this.menu.append(this.createGoBackBtn());
+      // append sound switcher and goBack button
+      this.menu.append(this.createSoundSwitcher(), this.createGoBackBtn());
       const rows = document.querySelector('.rows');
 
       // show selection on current rows number
@@ -265,7 +238,7 @@ class Game {
         // load game on slot click
         slot.addEventListener('click', () => {
           if (localSaved) this.loadGame(index);
-          else Game.shake(slot);
+          else this.shake(slot);
         });
         return slot;
       });
@@ -339,6 +312,21 @@ class Game {
     // goBackBtn.innerText = 'go back';
     goBackBtn.addEventListener('click', () => this.goBack());
     return goBackBtn;
+  }
+
+  createSoundSwitcher() {
+    const soundSw = document.createElement('div');
+    soundSw.classList.add('sound');
+    soundSw.innerHTML = 'Chip sounds: &nbsp';
+    const switcher = document.createElement('input');
+    switcher.classList.add('toggle');
+    switcher.type = 'checkbox';
+    switcher.checked = this.properties.sound;
+    switcher.addEventListener('click', () => {
+      this.properties.sound = !!switcher.checked;
+    });
+    soundSw.append(switcher);
+    return soundSw;
   }
 
   createMenuHeader(text) {
@@ -418,12 +406,7 @@ class Game {
 
     // shaking blocked chips
     if (!chipIsMovable()) {
-      setTimeout(() => {
-        clickedChip.classList.add('shake');
-      }, 0);
-      setTimeout(() => {
-        clickedChip.classList.remove('shake');
-      }, 500);
+      this.shake(clickedChip);
       return;
     }
 
@@ -558,7 +541,8 @@ class Game {
     return `${minutes}:${seconds}`;
   }
 
-  static shake(el) {
+  shake(el) {
+    this.playSound('shake');
     setTimeout(() => {
       el.classList.add('shake');
     }, 0);
