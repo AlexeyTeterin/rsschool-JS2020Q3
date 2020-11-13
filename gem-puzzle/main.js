@@ -1,13 +1,4 @@
 const MENU = {
-  settings: `<p>Field size:</p>
-      <ul><li class='rows'>2x2</li>
-      <li class='rows'>3x3</li>
-      <li class='rows'>4x4</li>
-      <li class='rows'>5x5</li>
-      <li class='rows'>6x6</li>
-      <li class='rows'>7x7</li>
-      <li class='rows'>8x8</li>
-      </ul>`,
   savedGames: `<ul>
       <li class='slot autosaved'>Autosaved - empty</li>
       <li class='slot'>1. ---</li>
@@ -34,6 +25,11 @@ class Game {
     showLoadMenu: 'Load Game',
     showScores: 'Scores',
     showSettings: 'Settings',
+  }
+
+  sounds = {
+    chip: './assets/audio/chip.wav',
+    win: './assets/audio/win.mp3',
   }
 
   init() {
@@ -85,6 +81,7 @@ class Game {
   }
 
   newGame() {
+    this.setTimer('off');
     // generate random chips
     this.chipsNumbers = this.randomizeChips();
     // create chips boxes
@@ -95,11 +92,11 @@ class Game {
     this.getChips();
     // clear timer & moves
     this.updateHeader(0, 0);
-    // start timer
-    this.setTimer('on');
     // check if puzzle solved on start
     this.checkResult();
     this.hideMenu();
+    // start timer
+    this.setTimer('on');
   }
 
   hideMenu() {
@@ -141,9 +138,7 @@ class Game {
     this.menu.classList.add('hidden-content');
 
     setTimeout(() => {
-      // this.menu.innerHTML = MENU.settings;
-
-      this.menu.innerHTML = null; // TODO: complete generation of settings
+      this.menu.innerHTML = null;
       const p = document.createElement('p');
       p.innerText = 'Field size:';
       const ul = document.createElement('ul');
@@ -310,6 +305,7 @@ class Game {
     this.menu.innerText = '';
     this.menu.classList = 'menu';
     this.header.pauseBtn.classList.add('hidden');
+    this.playSound('win');
     setTimeout(() => {
       const congratsHeader = document.createElement('h1');
       congratsHeader.innerText = 'Well done!';
@@ -453,16 +449,7 @@ class Game {
   playSound(which) {
     if (!this.properties.sound) return;
     const sound = new Audio();
-
-    switch (which) {
-      case 'chip':
-        sound.src = './assets/audio/chip.wav';
-        break;
-
-      default:
-        break;
-    }
-
+    sound.src = this.sounds[which];
     sound.play();
   }
 
@@ -493,6 +480,7 @@ class Game {
     } catch (error) {
       throw new Error('Can`t load this game');
     }
+    // this.checkResult();
     this.setTimer('on');
     this.hideMenu();
   }
