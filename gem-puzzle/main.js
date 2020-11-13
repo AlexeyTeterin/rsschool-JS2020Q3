@@ -285,7 +285,7 @@ class Game {
         const li = document.createElement('li');
         if (this.scores.length > 0) {
           const currScore = this.scores[i];
-          if (currScore) li.textContent = `${i + 1}. ${currScore.date} - ${currScore.time} s, ${currScore.moves} moves (${currScore.rows}x${currScore.rows})`;
+          if (currScore) li.textContent = `${i + 1}. ${currScore.date} - ${this.formatTime(currScore.time)} s, ${currScore.moves} moves (${currScore.rows}x${currScore.rows})`;
           else li.textContent = `${i + 1}. ---`;
         } else li.textContent = `${i + 1}. ---`;
         scoresList.append(li);
