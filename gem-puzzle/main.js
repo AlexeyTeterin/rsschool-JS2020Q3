@@ -10,6 +10,7 @@ class Game {
     movesCounter: 0,
     sound: true,
     chipIsMoving: false,
+    win: false,
   }
 
   mainMenuElements = {
@@ -55,6 +56,11 @@ class Game {
     this.gameBoard.style.setProperty('grid-template-columns',
       `repeat(${this.properties.rows}, 1fr)`);
     document.body.append(this.gameBoard);
+    // create hint field
+    this.hint = document.createElement('div');
+    this.hint.classList.add('hint');
+    this.hint.textContent = 'Start new game or load saved one';
+    document.body.append(this.hint);
     // chips movement event listener (using event delegation)
     this.gameBoard.addEventListener('click', (event) => {
       if (event.target.className !== 'chip') return;
@@ -69,7 +75,22 @@ class Game {
     this.menu = document.createElement('div');
     this.menu.classList.add('menu', 'hidden', 'hidden-content');
     this.gameBoard.append(this.menu);
+    // event listeners for menu
+    this.menu.addEventListener('click', (event) => {
+      const {
+        action,
+      } = event.target.dataset;
+      if (action) this[action]();
+    });
     this.showMenu();
+  }
+
+  updateHint() {
+    setTimeout(() => {
+      const solution = this.solve();
+      if (!solution) this.hint.textContent = 'This game has NO solution! Try to start another one.';
+      else this.hint.textContent = 'This game can be solved, good luck!';
+    }, 0);
   }
 
   newGame() {
@@ -89,6 +110,8 @@ class Game {
     this.hideMenu();
     // start timer
     this.setTimer('on');
+    // hint if game can be solved ot not
+    this.updateHint();
   }
 
   hideMenu() {
@@ -107,8 +130,8 @@ class Game {
       ul.append(li);
     });
     this.menu.append(ul);
-
     this.menu.classList = 'menu';
+    if (this.chips[0].textContent === this.chips[1].textContent) document.querySelector('.showSolution').remove();
     // alert saved game
     if (localStorage.savedGame && this.header.pauseBtn.classList.contains('hidden')) {
       const savedGameAlert = document.createElement('div');
@@ -116,13 +139,6 @@ class Game {
       savedGameAlert.innerHTML = 'You have unfinished game, <span data-action="loadGame" class="pulsate">continue</span>?';
       this.menu.prepend(savedGameAlert);
     }
-    // event listeners
-    this.menu.addEventListener('click', (event) => {
-      const {
-        action,
-      } = event.target.dataset;
-      if (action) this[action]();
-    });
   }
 
   showSettings() {
@@ -311,15 +327,25 @@ class Game {
     return solution;
   }
 
-  showSolution() {
-    if (!this.chips[0].innerText && !this.chips[1].innerText) {
-      this.shake(document.querySelector('.showSolution'));
-      return;
+  static hasDupsIn(arr) {
+    for (let i = 0; i < arr.length - 1; i += 1) {
+      if (arr[i].number === arr[i + 1].number) {
+        return i;
+      }
     }
+    return -1;
+  }
+
+  showSolution() {
     const solution = this.solve();
+
+    while (Game.hasDupsIn(solution) >= 0) {
+      solution.splice(Game.hasDupsIn(solution), 2);
+    }
+
     if (!solution) {
       this.menu.innerHTML = null;
-      this.createMenuHeader('No solution found!');
+      this.createMenuHeader('This game has NO solution');
       this.menu.append(this.createGoBackBtn());
     } else {
       const steps = [];
@@ -334,23 +360,40 @@ class Game {
       p.textContent = `${steps.join('-')}`;
       const play = document.createElement('div');
       play.classList.add('btn-play');
-      play.textContent = 'Play solution';
+      play.textContent = 'Autoplay solution';
       play.addEventListener('click', () => this.playSolution(steps));
-
       this.menu.append(p, play, this.createGoBackBtn());
     }
   }
 
   playSolution(steps) {
-    let timeout = 0;
+    if (!steps) return;
+    let timeout = 200;
     this.hideMenu();
     this.setTimer('on');
-    steps.forEach((step) => {
+    steps.forEach((step, index) => {
       timeout += 200;
+      const remainingMoves = steps.length - index - 1;
       setTimeout(() => {
         if (this.properties.win) return;
+        // clear timers on menu call
+        if (!this.properties.playing) {
+          let maxId = setTimeout(function () {});
+          while (maxId) {
+            clearTimeout(maxId);
+            maxId -= 1;
+          }
+          this.hint.textContent = 'Autoplay stopped';
+          return;
+        }
         const chip = this.chips.filter((el) => el.textContent === step.toString())[0];
-        this.moveChips(chip);
+        try {
+          this.moveChips(chip);
+          this.hint.textContent = `Autoplay in progress, ${remainingMoves} moves remaining...`;
+          if (remainingMoves === 0) this.hint.textContent = 'Autoplay finished';
+        } catch (error) {
+          this.hint.textContent = 'Autoplay stopped';
+        }
       }, timeout);
     });
   }
@@ -367,8 +410,10 @@ class Game {
   goBack() {
     this.menu.classList.add('hidden-content');
     setTimeout(() => {
+      if (this.properties.win) {
+        this.clearChips();
+      }
       this.showMenu();
-      if (this.properties.win) this.clearChips();
     }, 250);
   }
 
@@ -538,6 +583,7 @@ class Game {
     }
     // this.checkResult();
     this.setTimer('on');
+    this.updateHint();
     this.hideMenu();
   }
 
@@ -555,6 +601,7 @@ class Game {
       this.header.pauseBtn.innerHTML = '<span class="hidden">Menu</span> &#9776;';
       this.header.pauseBtn.classList.remove('pulsate');
       this.hideMenu();
+      this.properties.win = false;
       window.timer = window.setInterval(tick, 1000);
     } else if (switcher === 'off') {
       this.properties.playing = false;
