@@ -235,11 +235,34 @@ body .game-board .menu .solution {
   font-size: 0.85em;
   text-align: center;
   display: flex;
-  align-items: center;
   min-height: 25%;
-  max-height: 50%;
-  width: 90%;
+  max-height: 60%;
+  width: 94%;
   overflow: auto;
+}
+
+body .game-board .menu .solution::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.8);
+  -webkit-box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.8);
+  background-color: #f4e1d2;
+  border-radius: 4px;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  -ms-border-radius: 4px;
+  -o-border-radius: 4px;
+}
+
+body .game-board .menu .solution::-webkit-scrollbar {
+  width: 10px;
+}
+
+body .game-board .menu .solution::-webkit-scrollbar-thumb {
+  background-color: #f4e1d2;
+  border-radius: 4px;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  -ms-border-radius: 4px;
+  -o-border-radius: 4px;
 }
 
 body .game-board .menu .btn-play {
@@ -379,10 +402,23 @@ body .hint {
   min-width: 380px;
   max-width: 600px;
   user-select: none;
-  text-shadow: 0px 0px 1px #969696;
+  text-shadow: 0px 0px 1px rgba(100, 74, 96, 0.25);
   padding: 0 2px;
-  opacity: 0.4;
-  font-size: 0.8rem;
+  font-size: 0.85rem;
+  color: rgba(100, 74, 96, 0.45);
+}
+
+body .hint .hint-link {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+body .hint .hint-link:hover {
+  color: rgba(100, 74, 96, 0.7);
+}
+
+body .hint .hint-link:active {
+  opacity: 0.5;
 }
 
 input[type="checkbox"] {
