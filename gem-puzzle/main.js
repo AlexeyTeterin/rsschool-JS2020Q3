@@ -342,15 +342,12 @@ class Game {
   showSolution() {
     const solution = this.solve();
 
-    while (Game.hasDupsIn(solution) >= 0) {
-      solution.splice(Game.hasDupsIn(solution), 2);
-    }
-
     if (!solution) {
       this.menu.innerHTML = null;
       this.createMenuHeader('This game has NO solution');
       this.menu.append(this.createGoBackBtn());
     } else {
+      while (Game.hasDupsIn(solution) >= 0) solution.splice(Game.hasDupsIn(solution), 2);
       const steps = [];
       solution.forEach((step) => {
         steps.push(step.number);

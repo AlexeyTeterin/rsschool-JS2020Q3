@@ -273,7 +273,7 @@ body .game-board .menu .btn-play {
   -ms-transition: all 0.15s;
   -o-transition: all 0.15s;
   user-select: none;
-  margin-top: 1rem;
+  margin-top: 2rem;
 }
 
 body .game-board .menu .btn-play:hover {
