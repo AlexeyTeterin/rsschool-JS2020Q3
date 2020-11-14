@@ -23,9 +23,9 @@ export default class Game {
   }
 
   sounds = {
-    chip: '../assets/audio/chip.wav',
-    win: '../assets/audio/win.mp3',
-    shake: '../assets/audio/shake.wav',
+    chip: 'assets/audio/chip.wav',
+    win: 'assets/audio/win.mp3',
+    shake: 'assets/audio/shake.wav',
   }
 
   init() {
