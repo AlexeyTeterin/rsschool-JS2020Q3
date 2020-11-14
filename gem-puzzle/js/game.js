@@ -1,7 +1,7 @@
 /* eslint-disable import/extensions */
 import NPuzzleSolver from './solver.js';
 
-class Game {
+export default class Game {
   properties = {
     rows: 4,
     timer: 0,
@@ -23,9 +23,9 @@ class Game {
   }
 
   sounds = {
-    chip: './assets/audio/chip.wav',
-    win: './assets/audio/win.mp3',
-    shake: './assets/audio/shake.wav',
+    chip: '../assets/audio/chip.wav',
+    win: '../assets/audio/win.mp3',
+    shake: '../assets/audio/shake.wav',
   }
 
   init() {
@@ -680,6 +680,3 @@ class Game {
     if (action) this[action]();
   }
 }
-
-const game = new Game();
-game.init();
