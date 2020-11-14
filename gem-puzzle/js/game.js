@@ -379,7 +379,7 @@ export default class Game {
     this.setTimer('on');
     steps.forEach((step, index) => {
       timeout += 300;
-      if (isIos) timeout += 700;
+      if (isIos) timeout += 200;
       const remainingMoves = steps.length - index - 1;
       setTimeout(() => {
         if (this.properties.win) return;
