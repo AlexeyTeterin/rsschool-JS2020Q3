@@ -34,7 +34,7 @@ NPuzzleSolver.prototype.solve = function () {
   try {
     this.solveGrid(this.grid.length);
   } catch (err) {
-    console.log(err.message);
+    // console.log(err.message);
     return null;
   }
   return this.solution;

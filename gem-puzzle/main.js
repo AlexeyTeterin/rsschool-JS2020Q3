@@ -64,7 +64,6 @@ class Game {
     // chips movement event listener (using event delegation)
     this.gameBoard.addEventListener('click', (event) => {
       if (event.target.className !== 'chip') return;
-      if (!this.properties.playing) this.setTimer('on');
       this.moveChips(event.target);
     });
     // generate random chips
@@ -76,20 +75,24 @@ class Game {
     this.menu.classList.add('menu', 'hidden', 'hidden-content');
     this.gameBoard.append(this.menu);
     // event listeners for menu
-    this.menu.addEventListener('click', (event) => {
-      const {
-        action,
-      } = event.target.dataset;
-      if (action) this[action]();
-    });
+    this.menu.addEventListener('click', (e) => this.clickHandler(e));
+    this.hint.addEventListener('click', (e) => this.clickHandler(e));
+
     this.showMenu();
+  }
+
+  clickHandler(event) {
+    const {
+      action,
+    } = event.target.dataset;
+    if (action) this[action]();
   }
 
   updateHint() {
     setTimeout(() => {
       const solution = this.solve();
-      if (!solution) this.hint.textContent = 'This game has NO solution! Try to start another one.';
-      else this.hint.textContent = 'This game can be solved, good luck!';
+      if (!solution) this.hint.innerHTML = 'This game has NO solution! Try to start a&nbsp<span data-action="newGame" class="hint-link">new one</span>';
+      else this.hint.innerHTML = 'This game can be solved, good luck!';
     }, 0);
   }
 
