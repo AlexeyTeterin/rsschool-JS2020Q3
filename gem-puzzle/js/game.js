@@ -373,7 +373,7 @@ export default class Game {
   playSolution(steps) {
     if (!steps) return;
     const isIos = /iPad|iPod|iPhone/i
-      .test(navigator.userAgent);
+      .test(navigator.platform);
     let timeout = 200;
     this.hideMenu();
     this.setTimer('on');
