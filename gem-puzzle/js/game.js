@@ -376,7 +376,7 @@ export default class Game {
     this.hideMenu();
     this.setTimer('on');
     steps.forEach((step, index) => {
-      timeout += 200;
+      timeout += 300;
       const remainingMoves = steps.length - index - 1;
       setTimeout(() => {
         if (this.properties.win) return;
