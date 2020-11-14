@@ -372,11 +372,14 @@ export default class Game {
 
   playSolution(steps) {
     if (!steps) return;
+    const isIos = /iPad|iPod|iPhone/i
+      .test(navigator.userAgent);
     let timeout = 200;
     this.hideMenu();
     this.setTimer('on');
     steps.forEach((step, index) => {
       timeout += 300;
+      if (isIos) timeout += 700;
       const remainingMoves = steps.length - index - 1;
       setTimeout(() => {
         if (this.properties.win) return;
