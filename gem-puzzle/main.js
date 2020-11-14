@@ -252,7 +252,10 @@ class Game {
         const localSaved = JSON.parse(localStorage.getItem(`savedGame${index}`));
         if (localSaved) {
           slot.textContent = this.stringifySavedGame(localSaved, index);
-          if (index === '') slot.textContent = slot.textContent.replace('.', 'Autosaved: ');
+          if (index === '') {
+            slot.textContent = slot.textContent.replace('.', 'Autosaved: ');
+            slot.classList.add('italic');
+          }
         }
 
         // load game on slot click

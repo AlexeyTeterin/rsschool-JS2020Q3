@@ -30,6 +30,10 @@ $col-menu: #f4e1d2;
   user-select: none;
 }
 
+@mixin max-768 {
+  
+}
+
 .hidden {
   visibility: hidden;
   opacity: 0;
@@ -52,6 +56,16 @@ $col-menu: #f4e1d2;
   }
 }
 
+.italic {
+  font-style: italic;
+  font-size: 0.9rem;
+  font-weight: normal;
+
+  &::before {
+    content: '*';
+  }
+}
+
 h1 {
   font-size: 1.2rem;
   margin-bottom: 2rem;
@@ -60,12 +74,12 @@ h1 {
 
 body {
   margin: 0 auto;
-  // height: 80vh;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
   color: $col-primary;
+  font-size: 16px;
 
   header {
     margin-top: 1rem;
@@ -205,6 +219,10 @@ body {
         max-height: 50%;
         width: 90%;
         overflow: auto;
+      }
+
+      .showSolution {
+        @extend .italic;
       }
 
       .btn-play {
