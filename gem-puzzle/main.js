@@ -45,31 +45,30 @@ class Game {
       if (this.chipsNumbers) this.setTimer(this.properties.playing ? 'off' : 'on');
     });
     this.header.append(this.header.pauseBtn);
-    // append header to body
     document.body.append(this.header);
     this.updateHeader(0, 0);
+
     // load scores
     this.loadScores();
+
     // create game board
     this.gameBoard = document.createElement('div');
     this.gameBoard.classList.add('game-board');
     this.gameBoard.style.setProperty('grid-template-columns',
       `repeat(${this.properties.rows}, 1fr)`);
     document.body.append(this.gameBoard);
+
     // create hint field
     this.hint = document.createElement('div');
     this.hint.classList.add('hint');
     this.hint.textContent = 'Start new game or load saved one';
     document.body.append(this.hint);
-    // chips movement event listener (using event delegation)
-    this.gameBoard.addEventListener('click', (event) => {
-      if (event.target.className !== 'chip') return;
-      this.moveChips(event.target);
-    });
+
     // generate random chips
     this.chipsNumbers = this.randomizeChips();
     // create chips boxes
     this.createChips();
+
     // create menu
     this.menu = document.createElement('div');
     this.menu.classList.add('menu', 'hidden', 'hidden-content');
@@ -77,23 +76,13 @@ class Game {
     // event listeners for menu
     this.menu.addEventListener('click', (e) => this.clickHandler(e));
     this.hint.addEventListener('click', (e) => this.clickHandler(e));
+    // chips movement event listener
+    this.gameBoard.addEventListener('click', (event) => {
+      if (event.target.className !== 'chip') return;
+      this.moveChips(event.target);
+    });
 
     this.showMenu();
-  }
-
-  clickHandler(event) {
-    const {
-      action,
-    } = event.target.dataset;
-    if (action) this[action]();
-  }
-
-  updateHint() {
-    setTimeout(() => {
-      const solution = this.solve();
-      if (!solution) this.hint.innerHTML = 'This game has NO solution! Try to start a&nbsp<span data-action="newGame" class="hint-link">new one</span>';
-      else this.hint.innerHTML = 'This game can be solved, good luck!';
-    }, 0);
   }
 
   newGame() {
@@ -115,6 +104,39 @@ class Game {
     this.setTimer('on');
     // hint if game can be solved ot not
     this.updateHint();
+  }
+
+  saveGame(src) {
+    if (!src) {
+      localStorage.savedGame = JSON.stringify(this);
+    } else {
+      localStorage.setItem(`savedGame${src}`, JSON.stringify(this));
+    }
+  }
+
+  loadGame(src) {
+    this.setTimer('off');
+    let source = src;
+    if (!src) source = '';
+    const savedGame = JSON.parse(localStorage.getItem(`savedGame${source}`));
+    try {
+      Object.keys(this.properties).forEach((key) => {
+        this.properties[key] = savedGame.properties[key];
+      });
+      this.gameBoard.style.setProperty('grid-template-columns',
+        `repeat(${this.properties.rows}, 1fr)`);
+      this.chipsNumbers = savedGame.chipsNumbers;
+      this.sound = savedGame.sound;
+      this.createChips();
+      this.fillChips(savedGame.chipsNumbers);
+      this.updateHeader();
+    } catch (error) {
+      throw new Error('Can`t load this game');
+    }
+    // this.checkResult();
+    this.setTimer('on');
+    this.updateHint();
+    this.hideMenu();
   }
 
   hideMenu() {
@@ -192,19 +214,6 @@ class Game {
 
       this.menu.classList.remove('hidden-content');
     }, 250);
-  }
-
-  createSlots(first, last) {
-    const ul = document.createElement('ul');
-    ul.classList.add('slots');
-    for (let i = first; i <= last; i += 1) {
-      const li = document.createElement('li');
-      li.textContent = `${i}. ---`;
-      setTimeout(ul.append(li));
-    }
-    this.menu.append(ul, this.createGoBackBtn());
-
-    return document.querySelector('.slots').childNodes;
   }
 
   showSaveMenu() {
@@ -333,15 +342,6 @@ class Game {
     return solution;
   }
 
-  static hasDupsIn(arr) {
-    for (let i = 0; i < arr.length - 1; i += 1) {
-      if (arr[i].number === arr[i + 1].number) {
-        return i;
-      }
-    }
-    return -1;
-  }
-
   showSolution() {
     const solution = this.solve();
 
@@ -350,7 +350,7 @@ class Game {
       this.createMenuHeader('This game has NO solution');
       this.menu.append(this.createGoBackBtn());
     } else {
-      while (Game.hasDupsIn(solution) >= 0) solution.splice(Game.hasDupsIn(solution), 2);
+      while (Game.hasDupsInside(solution) >= 0) solution.splice(Game.hasDupsInside(solution), 2);
       const steps = [];
       solution.forEach((step) => {
         steps.push(step.number);
@@ -420,14 +420,6 @@ class Game {
     }, 250);
   }
 
-  clearChips() {
-    this.chips.map((el) => {
-      const chip = el;
-      chip.textContent = '';
-      return chip;
-    });
-  }
-
   createGoBackBtn() {
     const goBackBtn = document.createElement('div');
     goBackBtn.classList.add('btn-goBack');
@@ -455,6 +447,27 @@ class Game {
     const menuHeader = document.createElement('h1');
     menuHeader.textContent = text;
     this.menu.prepend(menuHeader);
+  }
+
+  createSlots(first, last) {
+    const ul = document.createElement('ul');
+    ul.classList.add('slots');
+    for (let i = first; i <= last; i += 1) {
+      const li = document.createElement('li');
+      li.textContent = `${i}. ---`;
+      setTimeout(ul.append(li));
+    }
+    this.menu.append(ul, this.createGoBackBtn());
+
+    return document.querySelector('.slots').childNodes;
+  }
+
+  clearChips() {
+    this.chips.map((el) => {
+      const chip = el;
+      chip.textContent = '';
+      return chip;
+    });
   }
 
   randomizeChips() {
@@ -557,39 +570,6 @@ class Game {
     sound.play();
   }
 
-  saveGame(src) {
-    if (!src) {
-      localStorage.savedGame = JSON.stringify(this);
-    } else {
-      localStorage.setItem(`savedGame${src}`, JSON.stringify(this));
-    }
-  }
-
-  loadGame(src) {
-    this.setTimer('off');
-    let source = src;
-    if (!src) source = '';
-    const savedGame = JSON.parse(localStorage.getItem(`savedGame${source}`));
-    try {
-      Object.keys(this.properties).forEach((key) => {
-        this.properties[key] = savedGame.properties[key];
-      });
-      this.gameBoard.style.setProperty('grid-template-columns',
-        `repeat(${this.properties.rows}, 1fr)`);
-      this.chipsNumbers = savedGame.chipsNumbers;
-      this.sound = savedGame.sound;
-      this.createChips();
-      this.fillChips(savedGame.chipsNumbers);
-      this.updateHeader();
-    } catch (error) {
-      throw new Error('Can`t load this game');
-    }
-    // this.checkResult();
-    this.setTimer('on');
-    this.updateHint();
-    this.hideMenu();
-  }
-
   setTimer(switcher) {
     this.header.pauseBtn.classList.remove('hidden');
 
@@ -647,6 +627,14 @@ class Game {
     document.querySelector('.moves').innerHTML = `Moves: ${this.properties.movesCounter}`;
   }
 
+  updateHint() {
+    setTimeout(() => {
+      const solution = this.solve();
+      if (!solution) this.hint.innerHTML = 'This game has NO solution! Try to start a&nbsp<span data-action="newGame" class="hint-link">new one</span>';
+      else this.hint.innerHTML = 'This game can be solved, good luck!';
+    }, 0);
+  }
+
   stringifySavedGame(game, index) {
     const {
       rows,
@@ -665,6 +653,15 @@ class Game {
     return `${minutes}:${seconds}`;
   }
 
+  static hasDupsInside(arr) {
+    for (let i = 0; i < arr.length - 1; i += 1) {
+      if (arr[i].number === arr[i + 1].number) {
+        return i;
+      }
+    }
+    return -1;
+  }
+
   shake(el) {
     this.playSound('shake');
     setTimeout(() => {
@@ -673,6 +670,13 @@ class Game {
     setTimeout(() => {
       el.classList.remove('shake');
     }, 500);
+  }
+
+  clickHandler(event) {
+    const {
+      action,
+    } = event.target.dataset;
+    if (action) this[action]();
   }
 }
 
