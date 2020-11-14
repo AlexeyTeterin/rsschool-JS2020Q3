@@ -73,7 +73,8 @@ class Game {
     this.menu = document.createElement('div');
     this.menu.classList.add('menu', 'hidden', 'hidden-content');
     this.gameBoard.append(this.menu);
-    // event listeners for menu
+
+    // event listeners for menu & hint link
     this.menu.addEventListener('click', (e) => this.clickHandler(e));
     this.hint.addEventListener('click', (e) => this.clickHandler(e));
     // chips movement event listener
