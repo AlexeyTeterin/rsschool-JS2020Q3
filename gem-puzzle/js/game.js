@@ -82,6 +82,18 @@ export default class Game {
       if (event.target.className !== 'chip') return;
       this.moveChips(event.target);
     });
+    // drag'n'drop listeners
+    this.gameBoard.addEventListener('dragstart', (event) => {
+      if (event.target.className !== 'chip') return;
+      event.target.classList.add('dragging');
+    });
+    this.gameBoard.addEventListener('dragend', (event) => {
+      event.target.classList.remove('dragging');
+    });
+    this.gameBoard.addEventListener('drop', (event) => {
+      if (!event.target.classList.contains('chip-empty')) return;
+      this.moveChips(document.querySelector('.dragging'));
+    });
 
     this.showMenu();
   }
@@ -507,6 +519,14 @@ export default class Game {
     this.chips.forEach((chip, index) => {
       this.chipsNumbers[index] = chip.textContent;
     });
+
+    this.chips.forEach((chip) => {
+      if (chip.textContent === '') {
+        chip.addEventListener('dragover', (e) => e.preventDefault());
+      } else {
+        chip.setAttribute('draggable', 'true');
+      }
+    });
   }
 
   fillChips(numbers) {
@@ -553,6 +573,7 @@ export default class Game {
     this.playSound('chip');
     clickedChip.style.setProperty('transform', `translate${params[positionDifference]}`);
     this.properties.chipIsMoving = true;
+    clickedChip.setAttribute('draggable', 'false');
     setTimeout(() => {
       emptyChip.innerHTML = chip.innerHTML;
       emptyChip.classList.remove('chip-empty');
@@ -681,5 +702,22 @@ export default class Game {
       action,
     } = event.target.dataset;
     if (action) this[action]();
+  }
+
+  static allowDrop(event) {
+    event.preventDefault();
+  }
+
+  static drag(event) {
+    event.target.classList.add('dragging');
+    // event.dataTransfer.setData("text", event.target.id);
+  }
+
+  static drop(event) {
+    event.preventDefault();
+    this.move(event.target);
+    event.target.classList.remove('dragging');
+    // var data = event.dataTransfer.getData("text");
+    // event.target.appendChild(document.getElementById(data));
   }
 }
