@@ -520,11 +520,16 @@ export default class Game {
       this.chipsNumbers[index] = chip.textContent;
     });
 
+    function dragOverHandler(event) {
+      event.preventDefault();
+    }
+
     this.chips.forEach((chip) => {
       if (chip.textContent === '') {
-        chip.addEventListener('dragover', (e) => e.preventDefault());
+        chip.addEventListener('dragover', dragOverHandler);
       } else {
         chip.setAttribute('draggable', 'true');
+        chip.removeEventListener('dragover', dragOverHandler);
       }
     });
   }
