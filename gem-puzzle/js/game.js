@@ -520,16 +520,15 @@ export default class Game {
       this.chipsNumbers[index] = chip.textContent;
     });
 
-    function dragOverHandler(event) {
-      event.preventDefault();
-    }
-
-    this.chips.forEach((chip) => {
+    // draggable and dragover allow and refuse
+    document.querySelectorAll('.chip').forEach((chip) => {
+      chip.removeAttribute('ondragover');
       if (chip.textContent === '') {
-        chip.addEventListener('dragover', dragOverHandler);
-      } else {
+        chip.setAttribute('ondragover', 'return false');
+      } else if (!this.chipIsMovable(chip)) {
+        chip.setAttribute('draggable', 'false');
+      } else if (this.chipIsMovable(chip)) {
         chip.setAttribute('draggable', 'true');
-        chip.removeEventListener('dragover', dragOverHandler);
       }
     });
   }
@@ -545,22 +544,30 @@ export default class Game {
     });
   }
 
+  chipIsMovable(chip) {
+    const {
+      rows,
+    } = this.properties;
+    const chipPos = this.chips.indexOf(chip);
+    const emptyChip = document.querySelector('.chip-empty');
+    const positionDifference = this.chips.indexOf(emptyChip) - chipPos;
+
+    if (Math.abs(positionDifference) === rows && !this.properties.chipIsMoving) return true;
+    if (Math.abs(positionDifference) === 1 && !this.properties.chipIsMoving) {
+      if (chip.offsetTop === emptyChip.offsetTop) return true;
+    }
+    return false;
+  }
+
   moveChips(chip) {
     const {
       rows,
     } = this.properties;
     const chipPos = this.chips.indexOf(chip);
-    const clickedChip = document.querySelectorAll('.chip')[chipPos];
+    const clickedChip = chip;
     const emptyChip = document.querySelector('.chip-empty');
     const temp = emptyChip.innerHTML;
     const positionDifference = this.chips.indexOf(emptyChip) - chipPos;
-    const chipIsMovable = () => {
-      if (Math.abs(positionDifference) === rows && !this.properties.chipIsMoving) return true;
-      if (Math.abs(positionDifference) === 1 && !this.properties.chipIsMoving) {
-        if (clickedChip.offsetTop === emptyChip.offsetTop) return true;
-      }
-      return false;
-    };
     const params = {
       [`${rows}`]: '(0, 100%)',
       1: '(100%, 0)',
@@ -569,8 +576,8 @@ export default class Game {
     };
 
     // shaking blocked chips
-    if (!chipIsMovable()) {
-      this.shake(clickedChip);
+    if (!this.chipIsMovable(chip)) {
+      this.shake(chip);
       return;
     }
 
@@ -585,11 +592,12 @@ export default class Game {
       clickedChip.innerHTML = temp;
       clickedChip.classList.add('chip-empty');
       clickedChip.style.setProperty('transform', 'translate(0)');
-      this.getChips();
       this.checkResult();
       this.properties.chipIsMoving = false;
     }, 125);
-
+    setTimeout(() => {
+      this.getChips();
+    }, 175);
     this.updateHeader(1);
   }
 
