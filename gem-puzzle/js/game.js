@@ -83,17 +83,9 @@ export default class Game {
       this.moveChips(event.target);
     });
     // drag'n'drop listeners
-    this.gameBoard.addEventListener('dragstart', (event) => {
-      if (event.target.className !== 'chip') return;
-      event.target.classList.add('dragging');
-    });
-    this.gameBoard.addEventListener('dragend', (event) => {
-      event.target.classList.remove('dragging');
-    });
-    this.gameBoard.addEventListener('drop', (event) => {
-      if (!event.target.classList.contains('chip-empty')) return;
-      this.moveChips(document.querySelector('.dragging'));
-    });
+    this.gameBoard.addEventListener('dragstart', (event) => event.target.classList.add('dragging'));
+    this.gameBoard.addEventListener('dragend', (event) => event.target.classList.remove('dragging'));
+    this.gameBoard.addEventListener('drop', () => this.moveChips(document.querySelector('.dragging')));
 
     this.showMenu();
   }
