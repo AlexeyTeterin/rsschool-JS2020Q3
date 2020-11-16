@@ -590,11 +590,11 @@ export default class Game {
     }
 
     // moving chip if it's unblocked
-    this.playSound('chip');
     clickedChip.style.setProperty('transform', `translate${params[positionDifference]}`);
     this.properties.chipIsMoving = true;
     clickedChip.setAttribute('draggable', 'false');
     setTimeout(() => {
+      this.playSound('chip');
       emptyChip.innerHTML = chip.innerHTML;
       emptyChip.classList.remove('chip-empty');
       clickedChip.innerHTML = temp;
@@ -602,10 +602,8 @@ export default class Game {
       clickedChip.style.setProperty('transform', 'translate(0)');
       this.checkResult();
       this.properties.chipIsMoving = false;
-    }, 125);
-    setTimeout(() => {
       this.getChips();
-    }, 175);
+    }, 125);
     this.updateHeader(1);
   }
 
