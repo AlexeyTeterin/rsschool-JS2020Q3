@@ -393,32 +393,60 @@ body .game-board .chip-empty {
   cursor: default;
 }
 
-body .hint {
+footer {
   margin-top: .25rem;
   margin-bottom: 0.25rem;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   width: 70vw;
   min-width: 380px;
   max-width: 600px;
   user-select: none;
-  text-shadow: 0px 0px 1px rgba(100, 74, 96, 0.25);
   padding: 0 2px;
-  font-size: 0.85rem;
-  color: rgba(100, 74, 96, 0.45);
 }
 
-body .hint .hint-link {
+footer .hint {
+  margin-left: 1rem;
+  text-shadow: 0px 0px 1px rgba(100, 74, 96, 0.25);
+  font-size: 0.85rem;
+  color: rgba(100, 74, 96, 0.45);
+  text-align: center;
+  width: 100%;
+}
+
+footer .hint .hint-link {
   text-decoration: underline;
   cursor: pointer;
 }
 
-body .hint .hint-link:hover {
+footer .hint .hint-link:hover {
   color: rgba(100, 74, 96, 0.7);
 }
 
-body .hint .hint-link:active {
+footer .hint .hint-link:active {
   opacity: 0.5;
+}
+
+footer .sound-icon {
+  background-image: url(../assets/img/soundOn.png);
+  background-repeat: no-repeat;
+  background-size: contain;
+  width: 1rem;
+  height: 1rem;
+  opacity: 0.7;
+  cursor: pointer;
+}
+
+footer .sound-icon:hover {
+  opacity: 0.5;
+}
+
+footer .sound-icon:active {
+  opacity: 0.3;
+}
+
+footer .sound-icon-off {
+  background-image: url(../assets/img/mute.png);
 }
 
 input[type="checkbox"] {

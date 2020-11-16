@@ -59,10 +59,14 @@ export default class Game {
     document.body.append(this.gameBoard);
 
     // create hint field
+    this.footer = document.createElement('footer');
     this.hint = document.createElement('div');
     this.hint.classList.add('hint');
     this.hint.textContent = 'Start new game or load saved one';
-    document.body.append(this.hint);
+    this.soundIcon = document.createElement('div');
+    this.soundIcon.classList.add('sound-icon');
+    this.footer.append(this.hint, this.soundIcon);
+    document.body.append(this.footer);
 
     // generate random chips
     this.chipsNumbers = this.randomizeChips();
@@ -86,6 +90,13 @@ export default class Game {
     this.gameBoard.addEventListener('dragstart', (event) => event.target.classList.add('dragging'));
     this.gameBoard.addEventListener('dragend', (event) => event.target.classList.remove('dragging'));
     this.gameBoard.addEventListener('drop', () => this.moveChips(document.querySelector('.dragging')));
+    // sound icon event listener
+    this.soundIcon.addEventListener('click', () => {
+      this.properties.sound = !this.properties.sound;
+      this.soundIcon.classList.toggle('sound-icon-off');
+      const switcherShowed = document.querySelector('#menuSoundSwitcher');
+      if (switcherShowed) switcherShowed.checked = this.properties.sound;
+    });
 
     this.showMenu();
   }
@@ -138,7 +149,7 @@ export default class Game {
     } catch (error) {
       throw new Error('Can`t load this game');
     }
-    // this.checkResult();
+    this.soundIcon.classList.toggle('sound-icon-off', !this.properties.sound);
     this.setTimer('on');
     this.updateHint();
     this.hideMenu();
@@ -442,10 +453,12 @@ export default class Game {
     soundSw.innerHTML = 'Chip sounds: &nbsp';
     const switcher = document.createElement('input');
     switcher.classList.add('toggle');
+    switcher.id = 'menuSoundSwitcher';
     switcher.type = 'checkbox';
     switcher.checked = this.properties.sound;
     switcher.addEventListener('click', () => {
       this.properties.sound = !!switcher.checked;
+      this.soundIcon.classList.toggle('sound-icon-off');
     });
     soundSw.append(switcher);
     return soundSw;

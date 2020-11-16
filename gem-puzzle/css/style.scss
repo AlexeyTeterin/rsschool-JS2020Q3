@@ -369,20 +369,28 @@ body {
       cursor: default;
     }
   }
+}
+
+footer {
+  margin-top: .25rem;
+  margin-bottom: 0.25rem;
+  display: flex;
+  justify-content: space-between;
+  width: 70vw;
+  min-width: $min-width;
+  max-width: $max-width;
+  user-select: none;
+  padding: 0 2px;
 
   .hint {
-    margin-top: .25rem;
-    margin-bottom: 0.25rem;
-    display: flex;
-    justify-content: center;
-    width: 70vw;
-    min-width: $min-width;
-    max-width: $max-width;
-    user-select: none;
+    margin-left: 1rem;
     text-shadow: 0px 0px 1px rgba(100, 74, 96, 0.25);
-    padding: 0 2px;
     font-size: 0.85rem;
     color: rgba(100, 74, 96, 0.45);
+    // display: flex;
+    // justify-content: center;
+    text-align: center;
+    width: 100%;
 
     .hint-link {
       text-decoration: underline;
@@ -396,6 +404,28 @@ body {
         opacity: 0.5;
       }
     }
+  }
+
+  .sound-icon {
+    background-image: url(../assets/img/soundOn.png);
+    background-repeat: no-repeat;
+    background-size: contain;
+    width: 1rem;
+    height: 1rem;
+    opacity: 0.7;
+    cursor: pointer;
+
+    &:hover {
+      opacity: 0.5;
+    }
+
+    &:active {
+      opacity: 0.3;
+    }
+  }
+
+  .sound-icon-off {
+    background-image: url(../assets/img/mute.png);
   }
 }
 
