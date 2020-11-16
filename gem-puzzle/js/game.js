@@ -605,9 +605,9 @@ export default class Game {
       clickedChip.innerHTML = temp;
       clickedChip.classList.add('chip-empty');
       clickedChip.style.setProperty('transform', 'translate(0)');
-      this.checkResult();
       this.properties.chipIsMoving = false;
       this.getChips();
+      this.checkResult();
     }, 125);
     this.updateHeader(1);
   }
