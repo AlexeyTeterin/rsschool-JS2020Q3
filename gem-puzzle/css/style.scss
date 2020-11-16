@@ -13,11 +13,11 @@ $col-menu: #f4e1d2;
 
 @mixin menu-btn {
   cursor: pointer;
-  transition: all 0.15s;
-  -webkit-transition: all 0.15s;
-  -moz-transition: all 0.15s;
-  -ms-transition: all 0.15s;
-  -o-transition: all 0.15s;
+  transition: opacity 0.15s;
+  -webkit-transition: opacity 0.15s;
+  -moz-transition: opacity 0.15s;
+  -ms-transition: opacity 0.15s;
+  -o-transition: opacity 0.15s;
 
   &:hover {
     opacity: 0.7;
@@ -51,12 +51,11 @@ body {
   align-items: center;
   flex-direction: column;
   color: $col-primary;
-
-  transition: all 0.25s;
-  -webkit-transition: all 0.25s;
-  -moz-transition: all 0.25s;
-  -ms-transition: all 0.25s;
-  -o-transition: all 0.25s;
+  transition: opacity 0.25s, font 0.25s;
+  -webkit-transition: opacity 0.25s, font 0.25s;
+  -moz-transition: opacity 0.25s, font 0.25s;
+  -ms-transition: opacity 0.25s, font 0.25s;
+  -o-transition: opacity 0.25s, font 0.25s;
 
   @include max_768() {
     font-size: 14px;
@@ -100,11 +99,11 @@ body {
       position: relative;
 
       span {
-        transition: all 0.5s;
-        -webkit-transition: all 0.5s;
-        -moz-transition: all 0.5s;
-        -ms-transition: all 0.5s;
-        -o-transition: all 0.5s;
+        transition: opacity 0.25s, visibility 0.25s;
+        -webkit-transition: opacity 0.25s, visibility 0.25s;
+        -moz-transition: opacity 0.25s, visibility 0.25s;
+        -ms-transition: opacity 0.25s, visibility 0.25s;
+        -o-transition: opacity 0.25s, visibility 0.25s;
       }
 
       &:hover {
@@ -127,22 +126,22 @@ body {
   .hidden {
     visibility: hidden;
     opacity: 0;
-    transition: all 0.25s;
-    -webkit-transition: all 0.25s;
-    -moz-transition: all 0.25s;
-    -ms-transition: all 0.25s;
-    -o-transition: all 0.25s;
+    transition: opacity 0.25s, visibility 0.25s;
+    -webkit-transition: opacity 0.25s, visibility 0.25s;
+    -moz-transition: opacity 0.25s, visibility 0.25s;
+    -ms-transition: opacity 0.25s, visibility 0.25s;
+    -o-transition: opacity 0.25s, visibility 0.25s;
   }
 
   .hidden-content {
     >* {
       visibility: hidden;
       opacity: 0;
-      transition: all 0.25s;
-      -webkit-transition: all 0.25s;
-      -moz-transition: all 0.25s;
-      -ms-transition: all 0.25s;
-      -o-transition: all 0.25s;
+      transition: opacity 0.25s, visibility 0.25s;
+      -webkit-transition: opacity 0.25s, visibility 0.25s;
+      -moz-transition: opacity 0.25s, visibility 0.25s;
+      -ms-transition: opacity 0.25s, visibility 0.25s;
+      -o-transition: opacity 0.25s, visibility 0.25s;
     }
   }
 
@@ -192,11 +191,11 @@ body {
       font-weight: bold;
       user-select: none;
       backdrop-filter: blur(4px);
-      transition: all 0.25s;
-      -webkit-transition: all 0.25s;
-      -moz-transition: all 0.25s;
-      -ms-transition: all 0.25s;
-      -o-transition: all 0.25s;
+      transition: opacity 0.25s, visibility 0.25s;
+      -webkit-transition: opacity 0.25s, visibility 0.25s;
+      -moz-transition: opacity 0.25s, visibility 0.25s;
+      -ms-transition: opacity 0.25s, visibility 0.25s;
+      -o-transition: opacity 0.25s, visibility 0.25s;
       border-radius: 5px;
       -webkit-border-radius: 5px;
       -moz-border-radius: 5px;
@@ -282,12 +281,12 @@ body {
       }
 
       >* {
-        transition: all 0.25s;
-        -webkit-transition: all 0.25s;
-        -moz-transition: all 0.25s;
-        -ms-transition: all 0.25s;
-        -o-transition: all 0.25s;
-      }
+        transition: opacity 0.25s, visibility 0.25s;
+        -webkit-transition: opacity 0.25s, visibility 0.25s;
+        -moz-transition: opacity 0.25s, visibility 0.25s;
+        -ms-transition: opacity 0.25s, visibility 0.25s;
+        -o-transition: opacity 0.25s, visibility 0.25s;
+}
 
       .rows,
       .slots {
@@ -382,15 +381,23 @@ footer {
   user-select: none;
   padding: 0 2px;
 
+  & div,
+  span {
+    transition: opacity 0.25s, color 0.25s;
+    -webkit-transition: opacity 0.25s, color 0.25s;
+    -moz-transition: opacity 0.25s, color 0.25s;
+    -ms-transition: opacity 0.25s, color 0.25s;
+    -o-transition: opacity 0.25s, color 0.25s;
+  }
+
   .hint {
     margin-left: 1rem;
     text-shadow: 0px 0px 1px rgba(100, 74, 96, 0.25);
     font-size: 0.85rem;
     color: rgba(100, 74, 96, 0.45);
-    // display: flex;
-    // justify-content: center;
     text-align: center;
     width: 100%;
+
 
     .hint-link {
       text-decoration: underline;
@@ -414,6 +421,7 @@ footer {
     height: 1rem;
     opacity: 0.45;
     cursor: pointer;
+
 
     &:hover {
       opacity: 0.7;
@@ -449,11 +457,15 @@ input[type="checkbox"]:focus {
   position: relative;
   margin: 0;
   border: 2px solid #474755;
-  transition: all 0.2s ease;
+  transition: transform 0.2s ease;
   -webkit-border-radius: 1rem;
   -moz-border-radius: 1rem;
   -ms-border-radius: 1rem;
   -o-border-radius: 1rem;
+  -webkit-transition: transform 0.2s ease, border 0.6s;
+  -moz-transition: transform 0.2s ease;
+  -ms-transition: transform 0.2s ease;
+  -o-transition: transform 0.2s ease;
 }
 
 .toggle:after {
@@ -466,7 +478,11 @@ input[type="checkbox"]:focus {
   border-radius: 50%;
   background: #f4e1d2;
   box-shadow: 0 1px 2px rgba(44, 44, 44, 0.2);
-  transition: all 0.2s cubic-bezier(0.5, 0.1, 0.75, 1.35);
+  transition: transform 0.2s cubic-bezier(0.5, 0.1, 0.75, 1.35);
+  -webkit-transition: transform 0.2s cubic-bezier(0.5, 0.1, 0.75, 1.35);
+  -moz-transition: transform 0.2s cubic-bezier(0.5, 0.1, 0.75, 1.35);
+  -ms-transition: transform 0.2s cubic-bezier(0.5, 0.1, 0.75, 1.35);
+  -o-transition: transform 0.2s cubic-bezier(0.5, 0.1, 0.75, 1.35);
 }
 
 .toggle:checked {

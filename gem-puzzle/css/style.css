@@ -22,11 +22,11 @@ body {
   align-items: center;
   flex-direction: column;
   color: #644a60;
-  transition: all 0.25s;
-  -webkit-transition: all 0.25s;
-  -moz-transition: all 0.25s;
-  -ms-transition: all 0.25s;
-  -o-transition: all 0.25s;
+  transition: opacity 0.25s, font 0.25s;
+  -webkit-transition: opacity 0.25s, font 0.25s;
+  -moz-transition: opacity 0.25s, font 0.25s;
+  -ms-transition: opacity 0.25s, font 0.25s;
+  -o-transition: opacity 0.25s, font 0.25s;
 }
 
 @media (max-width: 767px) {
@@ -77,11 +77,11 @@ body header .pause {
 }
 
 body header .pause span {
-  transition: all 0.5s;
-  -webkit-transition: all 0.5s;
-  -moz-transition: all 0.5s;
-  -ms-transition: all 0.5s;
-  -o-transition: all 0.5s;
+  transition: opacity 0.25s, visibility 0.25s;
+  -webkit-transition: opacity 0.25s, visibility 0.25s;
+  -moz-transition: opacity 0.25s, visibility 0.25s;
+  -ms-transition: opacity 0.25s, visibility 0.25s;
+  -o-transition: opacity 0.25s, visibility 0.25s;
 }
 
 body header .pause:hover {
@@ -102,21 +102,21 @@ body header .pause:active {
 body .hidden {
   visibility: hidden;
   opacity: 0;
-  transition: all 0.25s;
-  -webkit-transition: all 0.25s;
-  -moz-transition: all 0.25s;
-  -ms-transition: all 0.25s;
-  -o-transition: all 0.25s;
+  transition: opacity 0.25s, visibility 0.25s;
+  -webkit-transition: opacity 0.25s, visibility 0.25s;
+  -moz-transition: opacity 0.25s, visibility 0.25s;
+  -ms-transition: opacity 0.25s, visibility 0.25s;
+  -o-transition: opacity 0.25s, visibility 0.25s;
 }
 
 body .hidden-content > * {
   visibility: hidden;
   opacity: 0;
-  transition: all 0.25s;
-  -webkit-transition: all 0.25s;
-  -moz-transition: all 0.25s;
-  -ms-transition: all 0.25s;
-  -o-transition: all 0.25s;
+  transition: opacity 0.25s, visibility 0.25s;
+  -webkit-transition: opacity 0.25s, visibility 0.25s;
+  -moz-transition: opacity 0.25s, visibility 0.25s;
+  -ms-transition: opacity 0.25s, visibility 0.25s;
+  -o-transition: opacity 0.25s, visibility 0.25s;
 }
 
 body .italic, body .game-board .menu .showSolution {
@@ -166,11 +166,11 @@ body .game-board .menu {
   font-weight: bold;
   user-select: none;
   backdrop-filter: blur(4px);
-  transition: all 0.25s;
-  -webkit-transition: all 0.25s;
-  -moz-transition: all 0.25s;
-  -ms-transition: all 0.25s;
-  -o-transition: all 0.25s;
+  transition: opacity 0.25s, visibility 0.25s;
+  -webkit-transition: opacity 0.25s, visibility 0.25s;
+  -moz-transition: opacity 0.25s, visibility 0.25s;
+  -ms-transition: opacity 0.25s, visibility 0.25s;
+  -o-transition: opacity 0.25s, visibility 0.25s;
   border-radius: 5px;
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
@@ -188,11 +188,11 @@ body .game-board .menu ul {
 
 body .game-board .menu ul li {
   cursor: pointer;
-  transition: all 0.15s;
-  -webkit-transition: all 0.15s;
-  -moz-transition: all 0.15s;
-  -ms-transition: all 0.15s;
-  -o-transition: all 0.15s;
+  transition: opacity 0.15s;
+  -webkit-transition: opacity 0.15s;
+  -moz-transition: opacity 0.15s;
+  -ms-transition: opacity 0.15s;
+  -o-transition: opacity 0.15s;
   user-select: none;
   list-style-type: none;
 }
@@ -213,11 +213,11 @@ body .game-board .menu .saved-game-alert {
 
 body .game-board .menu .saved-game-alert span {
   cursor: pointer;
-  transition: all 0.15s;
-  -webkit-transition: all 0.15s;
-  -moz-transition: all 0.15s;
-  -ms-transition: all 0.15s;
-  -o-transition: all 0.15s;
+  transition: opacity 0.15s;
+  -webkit-transition: opacity 0.15s;
+  -moz-transition: opacity 0.15s;
+  -ms-transition: opacity 0.15s;
+  -o-transition: opacity 0.15s;
   user-select: none;
   font-weight: bold;
 }
@@ -267,11 +267,11 @@ body .game-board .menu .solution::-webkit-scrollbar-thumb {
 
 body .game-board .menu .btn-play {
   cursor: pointer;
-  transition: all 0.15s;
-  -webkit-transition: all 0.15s;
-  -moz-transition: all 0.15s;
-  -ms-transition: all 0.15s;
-  -o-transition: all 0.15s;
+  transition: opacity 0.15s;
+  -webkit-transition: opacity 0.15s;
+  -moz-transition: opacity 0.15s;
+  -ms-transition: opacity 0.15s;
+  -o-transition: opacity 0.15s;
   user-select: none;
   margin-top: 2rem;
 }
@@ -286,11 +286,11 @@ body .game-board .menu .btn-play:active {
 
 body .game-board .menu .btn-goBack {
   cursor: pointer;
-  transition: all 0.15s;
-  -webkit-transition: all 0.15s;
-  -moz-transition: all 0.15s;
-  -ms-transition: all 0.15s;
-  -o-transition: all 0.15s;
+  transition: opacity 0.15s;
+  -webkit-transition: opacity 0.15s;
+  -moz-transition: opacity 0.15s;
+  -ms-transition: opacity 0.15s;
+  -o-transition: opacity 0.15s;
   user-select: none;
   margin-top: 2rem;
   background-image: url(../assets/img/back.png);
@@ -309,11 +309,11 @@ body .game-board .menu .btn-goBack:active {
 }
 
 body .game-board .menu > * {
-  transition: all 0.25s;
-  -webkit-transition: all 0.25s;
-  -moz-transition: all 0.25s;
-  -ms-transition: all 0.25s;
-  -o-transition: all 0.25s;
+  transition: opacity 0.25s, visibility 0.25s;
+  -webkit-transition: opacity 0.25s, visibility 0.25s;
+  -moz-transition: opacity 0.25s, visibility 0.25s;
+  -ms-transition: opacity 0.25s, visibility 0.25s;
+  -o-transition: opacity 0.25s, visibility 0.25s;
 }
 
 body .game-board .menu .rows,
@@ -405,6 +405,15 @@ footer {
   padding: 0 2px;
 }
 
+footer div,
+footer span {
+  transition: opacity 0.25s, color 0.25s;
+  -webkit-transition: opacity 0.25s, color 0.25s;
+  -moz-transition: opacity 0.25s, color 0.25s;
+  -ms-transition: opacity 0.25s, color 0.25s;
+  -o-transition: opacity 0.25s, color 0.25s;
+}
+
 footer .hint {
   margin-left: 1rem;
   text-shadow: 0px 0px 1px rgba(100, 74, 96, 0.25);
@@ -469,11 +478,15 @@ input[type="checkbox"]:focus {
   position: relative;
   margin: 0;
   border: 2px solid #474755;
-  transition: all 0.2s ease;
+  transition: transform 0.2s ease;
   -webkit-border-radius: 1rem;
   -moz-border-radius: 1rem;
   -ms-border-radius: 1rem;
   -o-border-radius: 1rem;
+  -webkit-transition: transform 0.2s ease, border 0.6s;
+  -moz-transition: transform 0.2s ease;
+  -ms-transition: transform 0.2s ease;
+  -o-transition: transform 0.2s ease;
 }
 
 .toggle:after {
@@ -486,7 +499,11 @@ input[type="checkbox"]:focus {
   border-radius: 50%;
   background: #f4e1d2;
   box-shadow: 0 1px 2px rgba(44, 44, 44, 0.2);
-  transition: all 0.2s cubic-bezier(0.5, 0.1, 0.75, 1.35);
+  transition: transform 0.2s cubic-bezier(0.5, 0.1, 0.75, 1.35);
+  -webkit-transition: transform 0.2s cubic-bezier(0.5, 0.1, 0.75, 1.35);
+  -moz-transition: transform 0.2s cubic-bezier(0.5, 0.1, 0.75, 1.35);
+  -ms-transition: transform 0.2s cubic-bezier(0.5, 0.1, 0.75, 1.35);
+  -o-transition: transform 0.2s cubic-bezier(0.5, 0.1, 0.75, 1.35);
 }
 
 .toggle:checked {

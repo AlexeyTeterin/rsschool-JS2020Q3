@@ -363,28 +363,33 @@ export default class Game {
   showSolution() {
     const solution = this.solve();
 
-    if (!solution) {
-      this.menu.innerHTML = null;
-      this.createMenuHeader('This game has NO solution');
-      this.menu.append(this.createGoBackBtn());
-    } else {
-      while (Game.hasDupsInside(solution) >= 0) solution.splice(Game.hasDupsInside(solution), 2);
-      const steps = [];
-      solution.forEach((step) => {
-        steps.push(step.number);
-      });
+    this.menu.classList.add('hidden-content');
+    setTimeout(() => {
+      if (!solution) {
+        this.menu.innerHTML = null;
+        this.createMenuHeader('This game has NO solution');
+        this.menu.append(this.createGoBackBtn());
+      } else {
+        while (Game.hasDupsInside(solution) >= 0) solution.splice(Game.hasDupsInside(solution), 2);
+        const steps = [];
+        solution.forEach((step) => {
+          steps.push(step.number);
+        });
 
-      this.menu.innerHTML = null;
-      this.createMenuHeader(`Found solution in ${steps.length} steps: `);
-      const p = document.createElement('p');
-      p.classList.add('solution');
-      p.textContent = `${steps.join('-')}`;
-      const play = document.createElement('div');
-      play.classList.add('btn-play');
-      play.textContent = 'Autoplay this solution';
-      play.addEventListener('click', () => this.autoPlay(steps));
-      this.menu.append(p, play, this.createGoBackBtn());
-    }
+        this.menu.innerHTML = null;
+        this.createMenuHeader(`Found solution in ${steps.length} steps: `);
+        const p = document.createElement('p');
+        p.classList.add('solution');
+        p.textContent = `${steps.join('-')}`;
+        const play = document.createElement('div');
+        play.classList.add('btn-play');
+        play.textContent = 'Autoplay this solution';
+        play.addEventListener('click', () => this.autoPlay(steps));
+        this.menu.append(p, play, this.createGoBackBtn());
+
+        this.menu.classList.remove('hidden-content');
+      }
+    }, 250);
   }
 
   autoPlay(steps) {
