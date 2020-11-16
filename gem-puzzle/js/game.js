@@ -386,9 +386,9 @@ export default class Game {
         play.textContent = 'Autoplay this solution';
         play.addEventListener('click', () => this.autoPlay(steps));
         this.menu.append(p, play, this.createGoBackBtn());
-
-        this.menu.classList.remove('hidden-content');
       }
+
+      this.menu.classList.remove('hidden-content');
     }, 250);
   }
 
