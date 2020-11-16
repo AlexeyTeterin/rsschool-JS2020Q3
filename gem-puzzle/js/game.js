@@ -397,14 +397,16 @@ export default class Game {
     const isIos = /iPad|iPod|iPhone/i
       .test(navigator.platform);
     let timeout = 200;
+    const sleep = (ms) => new Promise((resolve) => setTimeout(() => resolve(), ms));
     this.hideMenu();
     this.setTimer('on');
     steps.forEach((step, index) => {
-      timeout += 300;
       if (isIos) timeout += 200;
       const remainingMoves = steps.length - index - 1;
-      setTimeout(() => {
+      // increasing timeout for next move
+      sleep(timeout += 300).then(() => {
         if (this.properties.win) return;
+        const chip = this.chips.filter((el) => el.textContent === step.toString())[0];
         // clear timers on menu call
         if (!this.properties.playing) {
           let maxId = setTimeout(() => {});
@@ -412,11 +414,12 @@ export default class Game {
             clearTimeout(maxId);
             maxId -= 1;
           }
+          // add 'continue autoplay' link to footer
           this.hint.innerHTML = 'Autoplay stopped, <span id="autoplay" class="hint-link">continue</span>?';
           document.querySelector('#autoplay').addEventListener('click', () => this.autoPlay(steps.slice(steps.length - remainingMoves - 1)));
           return;
         }
-        const chip = this.chips.filter((el) => el.textContent === step.toString())[0];
+        // move chip and show progress in footer
         try {
           this.moveChips(chip);
           this.hint.textContent = `Autoplay in progress, ${remainingMoves} moves remaining...`;
@@ -424,7 +427,7 @@ export default class Game {
         } catch (error) {
           this.hint.textContent = 'Autoplay stopped';
         }
-      }, timeout);
+      });
     });
   }
 
