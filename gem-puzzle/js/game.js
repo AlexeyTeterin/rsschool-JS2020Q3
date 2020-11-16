@@ -381,13 +381,13 @@ export default class Game {
       p.textContent = `${steps.join('-')}`;
       const play = document.createElement('div');
       play.classList.add('btn-play');
-      play.textContent = 'Autoplay solution';
-      play.addEventListener('click', () => this.playSolution(steps));
+      play.textContent = 'Autoplay this solution';
+      play.addEventListener('click', () => this.autoPlay(steps));
       this.menu.append(p, play, this.createGoBackBtn());
     }
   }
 
-  playSolution(steps) {
+  autoPlay(steps) {
     if (!steps) return;
     const isIos = /iPad|iPod|iPhone/i
       .test(navigator.platform);
@@ -408,7 +408,7 @@ export default class Game {
             maxId -= 1;
           }
           this.hint.innerHTML = 'Autoplay stopped, <span id="autoplay" class="hint-link">continue</span>?';
-          document.querySelector('#autoplay').addEventListener('click', () => this.playSolution(steps.slice(steps.length - remainingMoves - 1)));
+          document.querySelector('#autoplay').addEventListener('click', () => this.autoPlay(steps.slice(steps.length - remainingMoves - 1)));
           return;
         }
         const chip = this.chips.filter((el) => el.textContent === step.toString())[0];
