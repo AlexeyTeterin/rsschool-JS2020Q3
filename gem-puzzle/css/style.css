@@ -433,16 +433,16 @@ footer .sound-icon {
   background-size: contain;
   width: 1rem;
   height: 1rem;
-  opacity: 0.7;
+  opacity: 0.45;
   cursor: pointer;
 }
 
 footer .sound-icon:hover {
-  opacity: 0.5;
+  opacity: 0.7;
 }
 
 footer .sound-icon:active {
-  opacity: 0.3;
+  opacity: 0.5;
 }
 
 footer .sound-icon-off {

@@ -216,6 +216,8 @@ export default class Game {
           // clear header
           this.header.pauseBtn.classList.add('hidden');
           this.updateHeader(0, 0);
+          // update hint
+          this.hint.textContent = 'Start new game or load saved one';
           // selection styling
           document.querySelector('.selected').classList.remove('selected');
           option.classList.add('selected');
@@ -405,7 +407,8 @@ export default class Game {
             clearTimeout(maxId);
             maxId -= 1;
           }
-          this.hint.textContent = 'Autoplay stopped';
+          this.hint.innerHTML = 'Autoplay stopped, <span id="autoplay" class="hint-link">continue</span>?';
+          document.querySelector('#autoplay').addEventListener('click', () => this.playSolution(steps.slice(steps.length - remainingMoves - 1)));
           return;
         }
         const chip = this.chips.filter((el) => el.textContent === step.toString())[0];
