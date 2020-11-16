@@ -632,6 +632,7 @@ export default class Game {
       this.hideMenu();
       this.properties.win = false;
       window.timer = window.setInterval(tick, 1000);
+      this.updateHint();
     } else if (switcher === 'off') {
       this.properties.playing = false;
       this.header.pauseBtn.classList.add('pulsate');
