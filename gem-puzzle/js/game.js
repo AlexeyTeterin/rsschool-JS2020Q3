@@ -708,21 +708,4 @@ export default class Game {
     } = event.target.dataset;
     if (action) this[action]();
   }
-
-  static allowDrop(event) {
-    event.preventDefault();
-  }
-
-  static drag(event) {
-    event.target.classList.add('dragging');
-    // event.dataTransfer.setData("text", event.target.id);
-  }
-
-  static drop(event) {
-    event.preventDefault();
-    this.move(event.target);
-    event.target.classList.remove('dragging');
-    // var data = event.dataTransfer.getData("text");
-    // event.target.appendChild(document.getElementById(data));
-  }
 }
