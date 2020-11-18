@@ -103,22 +103,21 @@ export default class Game {
 
   newGame() {
     this.setTimer('off');
-    // generate random chips
+
+    // generate new chips layout
     this.chipsNumbers = this.randomizeChips();
-    // create chips boxes
     this.createChips();
-    // fill chips with numbers
     this.fillChips(this.chipsNumbers);
-    // save chips to game state
     this.getChips();
-    // clear timer & moves
+
+    // check solution and recursive call if no solution found
+    if (!this.solve()) this.newGame();
+
+    // start game
     this.updateHeader(0, 0);
-    // check if puzzle solved on start
     this.checkResult();
     this.hideMenu();
-    // start timer
     this.setTimer('on');
-    // hint if game can be solved ot not
     this.updateHint();
   }
 
