@@ -116,9 +116,9 @@ export default class Game {
     // start game
     this.updateHeader(0, 0);
     this.checkResult();
-    this.hideMenu();
     this.setTimer('on');
-    this.updateHint();
+    this.clearHint();
+    this.hideMenu();
   }
 
   saveGame(src) {
@@ -150,7 +150,7 @@ export default class Game {
     }
     this.soundIcon.classList.toggle('sound-icon-off', !this.properties.sound);
     this.setTimer('on');
-    this.updateHint();
+    this.clearHint();
     this.hideMenu();
   }
 
@@ -637,7 +637,7 @@ export default class Game {
       this.hideMenu();
       this.properties.win = false;
       window.timer = window.setInterval(tick, 1000);
-      this.updateHint();
+      this.clearHint();
     } else if (switcher === 'off') {
       this.properties.playing = false;
       this.header.pauseBtn.classList.add('pulsate');
@@ -679,12 +679,8 @@ export default class Game {
     document.querySelector('.moves').innerHTML = `Moves: ${this.properties.movesCounter}`;
   }
 
-  updateHint() {
-    setTimeout(() => {
-      const solution = this.solve();
-      if (!solution) this.hint.innerHTML = 'This game has NO solution! Try to start a&nbsp<span data-action="newGame" class="hint-link">new one</span>';
-      else this.hint.innerHTML = 'This game can be solved, good luck!';
-    }, 0);
+  clearHint() {
+    this.hint.innerHTML = '';
   }
 
   stringifySavedGame(game, index) {
