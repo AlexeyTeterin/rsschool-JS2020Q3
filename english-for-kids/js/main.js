@@ -9,8 +9,7 @@ const CATEGORIES = [
   'space',
 ];
 
-const CARDS = [
-  {
+const CARDS = [{
     category: 'animals',
     word: 'chicken',
     translation: 'цыпленок',
@@ -39,22 +38,33 @@ const CARDS = [
 class Game {
   gameField = document.querySelector('.game-field');
 
-  loadCategories() {
-    CATEGORIES.forEach((cat) => {
-      const categoryCard = document.createElement('div');
-      const cardImage = document.createElement('div');
-      const cardTitle = document.createElement('div');
-      categoryCard.classList.add('category-card');
-      categoryCard.dataset.category = cat;
-      cardImage.classList.add('card__image');
-      cardImage.style.setProperty('background-image', `url("./assets/img/_${cat}.svg")`);
-      cardTitle.classList.add('card__title');
-      cardTitle.textContent = cat;
-      categoryCard.append(cardImage, cardTitle);
-      this.gameField.append(categoryCard);
-    });
+  clearGameField() {
+    this.gameField.innerHTML = null;
   }
-  
+
+  loadCategories() {
+    this.gameField.classList.add('hidden');
+    this.sleep(500).then(() => {
+      this.clearGameField();
+      CATEGORIES.forEach((cat) => {
+        const categoryCard = document.createElement('div');
+        const cardImage = document.createElement('div');
+        const cardTitle = document.createElement('div');
+        categoryCard.classList.add('category-card');
+        categoryCard.dataset.category = cat;
+        cardImage.classList.add('card__image');
+        cardImage.style.setProperty('background-image', `url("./assets/img/_${cat}.svg")`);
+        cardTitle.classList.add('card__title');
+        cardTitle.textContent = cat;
+        categoryCard.append(cardImage, cardTitle);
+        this.gameField.append(categoryCard);
+      });
+    }).then(() => {
+      this.gameField.classList.remove('hidden');
+    });
+
+  }
+
   addCategoryListeners() {
     this.gameField.addEventListener('click', (event) => {
       const card = event.target.parentNode;
@@ -63,21 +73,39 @@ class Game {
       this.loadCardsOf(category);
     })
   }
-  
-  delay(ms) {
-    
+
+  addLogoListener() {
+    document.querySelector('.logo').addEventListener('click', () => this.loadCategories());
   }
-  
+
+  sleep = (ms) => new Promise((resolve) => setTimeout(() => resolve(), ms));
+
   loadCardsOf(category) {
     this.gameField.classList.add('hidden');
-    
-    this.gameField.innerHTML = null;
-    const words = CARDS.filter((card) => card.category === category);
-    console.log(words);
-    
-  }  
+    this.sleep(500).then(() => {
+      this.clearGameField();
+      const cards = CARDS.filter((card) => card.category === category);
+      console.log(cards);
+      cards.forEach((card) => {
+        const cardElement = document.createElement('div');
+        cardElement.classList.add('card');
+        const cardImage = document.createElement('div');
+        cardImage.classList.add('card__image');
+        cardImage.style.setProperty('background-image', `url("./assets/img/${card.word}.svg")`);
+        const cardTitle = document.createElement('div');
+        cardTitle.classList.add('card__title');
+        cardTitle.textContent = card.word;
+        cardElement.append(cardImage, cardTitle);
+        this.gameField.append(cardElement);
+      })
+    }).then(() => {
+      this.gameField.classList.remove('hidden');
+    })
+
+  }
 }
 
 const game = new Game();
 game.loadCategories();
 game.addCategoryListeners();
+game.addLogoListener();

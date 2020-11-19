@@ -1,6 +1,11 @@
 @mixin card {
   user-select: none;
   box-shadow: 0px 0px 1rem 0px rgba(0, 0, 0, 0.34);
+  margin: 1rem;
+  width: 16rem;
+  height: 19rem;
+  background-color: white;
+  color: black;
   border-radius: 0.75rem;
   -webkit-border-radius: 0.75rem;
   -moz-border-radius: 0.75rem;
@@ -27,11 +32,13 @@ body {
   background: #0092b3;
   color: white;
   box-sizing: border-box;
+  font-family: 'Roboto',
+    sans-serif;
 
   .wrapper {
     padding: 0 2rem;
   }
-  
+
   .hidden {
     opacity: 0;
     visibility: hidden;
@@ -78,6 +85,10 @@ body {
       width: 60%;
       margin: 0;
       text-align: center;
+      user-select: none;
+      cursor: pointer;
+      font-family: 'Architects Daughter',
+        cursive;
     }
 
     .toggle {
@@ -94,32 +105,38 @@ body {
       display: flex;
       flex-wrap: wrap;
       justify-content: space-around;
+      transition: opacity 0.5s,
+        visibility 0.5s;
+      -webkit-transition: opacity 0.5s,
+        visibility 0.5s;
+      -moz-transition: opacity 0.5s,
+        visibility 0.5s;
+      -ms-transition: opacity 0.5s,
+        visibility 0.5s;
+      -o-transition: opacity 0.5s,
+        visibility 0.5s;
 
-      .card {}
+      .card {
+        @include card();
+      }
 
       .category-card {
         @include card();
-        margin: 1rem;
-        width: 16rem;
-        height: 18rem;
-        background-color: white;
-        color: black;
       }
 
       .card__image {
         width: 16rem;
         height: 16rem;
-        background-size: contain;
+        background-size: 80%;
+        background-repeat: no-repeat;
+        background-position: center;
       }
 
       .card__title {
-        line-height: 2rem;
+        line-height: 3rem;
         text-align: center;
         font-size: 1.75rem;
-
-        &::first-letter {
-          text-transform: capitalize;
-        }
+        text-transform: uppercase;
       }
     }
   }

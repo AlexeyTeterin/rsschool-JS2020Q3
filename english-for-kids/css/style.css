@@ -3,6 +3,7 @@ body {
   background: #0092b3;
   color: white;
   box-sizing: border-box;
+  font-family: 'Roboto', sans-serif;
 }
 
 body .wrapper {
@@ -54,6 +55,9 @@ body header h1.logo {
   width: 60%;
   margin: 0;
   text-align: center;
+  user-select: none;
+  cursor: pointer;
+  font-family: 'Architects Daughter', cursive;
 }
 
 body header .toggle {
@@ -68,11 +72,21 @@ body main .game-field {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
+  transition: opacity 0.5s, visibility 0.5s;
+  -webkit-transition: opacity 0.5s, visibility 0.5s;
+  -moz-transition: opacity 0.5s, visibility 0.5s;
+  -ms-transition: opacity 0.5s, visibility 0.5s;
+  -o-transition: opacity 0.5s, visibility 0.5s;
 }
 
-body main .game-field .category-card {
+body main .game-field .card {
   user-select: none;
   box-shadow: 0px 0px 1rem 0px rgba(0, 0, 0, 0.34);
+  margin: 1rem;
+  width: 16rem;
+  height: 19rem;
+  background-color: white;
+  color: black;
   border-radius: 0.75rem;
   -webkit-border-radius: 0.75rem;
   -moz-border-radius: 0.75rem;
@@ -83,11 +97,35 @@ body main .game-field .category-card {
   -moz-transition: transform 0.25s, box-shadow 0.5s;
   -ms-transition: transform 0.25s, box-shadow 0.5s;
   -o-transition: transform 0.25s, box-shadow 0.5s;
+}
+
+body main .game-field .card:hover {
+  box-shadow: 0px 0px 1.5rem 0px rgba(0, 0, 0, 0.64);
+  transform: scale(1.05);
+  -webkit-transform: scale(1.05);
+  -moz-transform: scale(1.05);
+  -ms-transform: scale(1.05);
+  -o-transform: scale(1.05);
+}
+
+body main .game-field .category-card {
+  user-select: none;
+  box-shadow: 0px 0px 1rem 0px rgba(0, 0, 0, 0.34);
   margin: 1rem;
   width: 16rem;
-  height: 18rem;
+  height: 19rem;
   background-color: white;
   color: black;
+  border-radius: 0.75rem;
+  -webkit-border-radius: 0.75rem;
+  -moz-border-radius: 0.75rem;
+  -ms-border-radius: 0.75rem;
+  -o-border-radius: 0.75rem;
+  transition: transform 0.25s, box-shadow 0.5s;
+  -webkit-transition: transform 0.25s, box-shadow 0.5s;
+  -moz-transition: transform 0.25s, box-shadow 0.5s;
+  -ms-transition: transform 0.25s, box-shadow 0.5s;
+  -o-transition: transform 0.25s, box-shadow 0.5s;
 }
 
 body main .game-field .category-card:hover {
@@ -102,15 +140,14 @@ body main .game-field .category-card:hover {
 body main .game-field .card__image {
   width: 16rem;
   height: 16rem;
-  background-size: contain;
+  background-size: 80%;
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
 body main .game-field .card__title {
-  line-height: 2rem;
+  line-height: 3rem;
   text-align: center;
   font-size: 1.75rem;
-}
-
-body main .game-field .card__title::first-letter {
-  text-transform: capitalize;
+  text-transform: uppercase;
 }
