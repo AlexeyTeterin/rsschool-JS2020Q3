@@ -1,12 +1,13 @@
 @mixin card {
-  //user-select: none;
-  box-shadow: 0px 0px 1rem 0px rgba(0, 0, 0, 0.34);
   margin: 1rem;
   width: 16rem;
   height: 19rem;
+  border-radius: 1rem;
+  box-shadow: 0px 0px 1rem 0px rgba(0, 0, 0, 0.34);
+  cursor: pointer;
+  user-select: none;
   background-color: white;
   color: black;
-  border-radius: 1rem;
   transition: transform 0.25s, box-shadow 0.5s;
 }
 
@@ -126,7 +127,6 @@ body {
 
         .card__back {
           transform: rotateY(180deg);
-          // transform: scale(1.05);
           background: rgba(0, 0, 0, 0.15);
           color: black;
         }
