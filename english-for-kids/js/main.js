@@ -65,6 +65,23 @@ class Game {
 
   }
 
+  addFlipCardsListener() {
+    console.log('flip listener started...')
+    document.body.addEventListener('click', (event) => {
+      const target = event.target.parentElement;
+      if (target.classList.contains('card__front')) {
+        target.parentElement.classList.add('rotate');
+      }
+    })
+
+    document.querySelectorAll('.flip-card').forEach((card) => {
+      card.addEventListener('mouseleave', (event) => {
+        const target = event.target.children[0];
+        target.classList.remove('rotate');
+      });
+    })
+  }
+
   addCategoryListeners() {
     this.gameField.addEventListener('click', (event) => {
       const card = event.target.parentNode;
@@ -80,6 +97,40 @@ class Game {
 
   sleep = (ms) => new Promise((resolve) => setTimeout(() => resolve(), ms));
 
+  createCardImage(card) {
+    const cardImage = document.createElement('div');
+    cardImage.classList.add('card__image');
+    cardImage.style.setProperty('background-image', `url("./assets/img/${card.word}.svg")`);
+    return cardImage;
+  }
+
+  createFlipping(card) {
+    const flipCard = document.createElement('div');
+    flipCard.classList.add('flip-card');
+
+    const cardElement = document.createElement('div');
+    cardElement.classList.add('card');
+
+    const front = document.createElement('div');
+    front.classList.add('card__front');
+    const back = document.createElement('div');
+    back.classList.add('card__back');
+
+    const cardTitle = document.createElement('div');
+    cardTitle.classList.add('card__title');
+    cardTitle.textContent = card.word;
+    const cardTranslation = document.createElement('div');
+    cardTranslation.classList.add('card__title');
+    cardTranslation.textContent = card.translation;
+
+    front.append(this.createCardImage(card), cardTitle);
+    back.append(this.createCardImage(card), cardTranslation);
+    cardElement.append(front, back);
+    flipCard.append(cardElement);
+
+    return flipCard;
+  }
+
   loadCardsOf(category) {
     this.gameField.classList.add('hidden');
     this.sleep(500).then(() => {
@@ -87,21 +138,12 @@ class Game {
       const cards = CARDS.filter((card) => card.category === category);
       console.log(cards);
       cards.forEach((card) => {
-        const cardElement = document.createElement('div');
-        cardElement.classList.add('card');
-        const cardImage = document.createElement('div');
-        cardImage.classList.add('card__image');
-        cardImage.style.setProperty('background-image', `url("./assets/img/${card.word}.svg")`);
-        const cardTitle = document.createElement('div');
-        cardTitle.classList.add('card__title');
-        cardTitle.textContent = card.word;
-        cardElement.append(cardImage, cardTitle);
-        this.gameField.append(cardElement);
+        this.gameField.append(this.createFlipping(card));
       })
     }).then(() => {
       this.gameField.classList.remove('hidden');
+      this.addFlipCardsListener();
     })
-
   }
 }
 
