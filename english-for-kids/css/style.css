@@ -126,6 +126,25 @@ body main .game-field .card .card__front {
   color: black;
 }
 
+body main .game-field .card .card__front .card__rotate-btn {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  width: 3rem;
+  height: 3rem;
+  background: url("../assets/img/_rotate.svg");
+  background-size: contain;
+  transition: transform 0.25s;
+}
+
+body main .game-field .card .card__front .card__rotate-btn:hover {
+  transform: rotate(140deg) scale(1.1);
+}
+
+body main .game-field .card .card__front .card__rotate-btn:active {
+  transform: rotate(140deg) scale(1);
+}
+
 body main .game-field .card .card__back {
   transform: rotateY(180deg);
   background: rgba(0, 0, 0, 0.15);

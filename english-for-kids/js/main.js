@@ -66,11 +66,10 @@ class Game {
   }
 
   addFlipCardsListener() {
-    console.log('flip listener started...')
     document.body.addEventListener('click', (event) => {
-      const target = event.target.parentElement;
-      if (target.classList.contains('card__front')) {
-        target.parentElement.classList.add('rotate');
+      const target = event.target;
+      if (target.classList.contains('card__rotate-btn')) {
+        target.parentElement.parentElement.classList.add('rotate');
       }
     })
 
@@ -122,8 +121,10 @@ class Game {
     const cardTranslation = document.createElement('div');
     cardTranslation.classList.add('card__title');
     cardTranslation.textContent = card.translation;
+    const rotateBtn = document.createElement('div');
+    rotateBtn.classList.add('card__rotate-btn');
 
-    front.append(this.createCardImage(card), cardTitle);
+    front.append(this.createCardImage(card), cardTitle, rotateBtn);
     back.append(this.createCardImage(card), cardTranslation);
     cardElement.append(front, back);
     flipCard.append(cardElement);

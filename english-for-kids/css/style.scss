@@ -136,6 +136,25 @@ body {
 
         .card__front {
           color: black;
+
+          .card__rotate-btn {
+            position: fixed;
+            bottom: 0;
+            right: 0;
+            width: 3rem;
+            height: 3rem;
+            background: url('../assets/img/_rotate.svg');
+            background-size: contain;
+            transition: transform 0.25s;
+            
+            &:hover {
+              transform: rotate(140deg) scale(1.1);
+            }
+            
+            &:active {
+              transform: rotate(140deg) scale(1);
+            }
+          }
         }
 
         .card__back {
