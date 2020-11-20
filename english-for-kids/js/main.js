@@ -13,61 +13,90 @@ const CARDS = [{
     category: 'animals',
     word: 'chicken',
     translation: 'цыпленок',
-    sound: '../assets/audio/animals_chicken.mp3',
   },
   {
     category: 'animals',
     word: 'dog',
     translation: 'собака',
-    sound: '../assets/audio/animals_dog.mp3',
   },
   {
     category: 'animals',
     word: 'pig',
     translation: 'свинья',
-    sound: '../assets/audio/animals_pig.mp3',
   },
   {
     category: 'animals',
     word: 'horse',
     translation: 'лошадь',
-    sound: '../assets/audio/animals_horse.mp3',
   },
   {
     category: 'animals',
     word: 'frog',
     translation: 'лягушка',
-    sound: '../assets/audio/animals_frog.mp3',
   },
   {
     category: 'animals',
     word: 'tiger',
     translation: 'тигр',
-    sound: '../assets/audio/animals_tiger.mp3',
   },
   {
     category: 'animals',
     word: 'fish',
     translation: 'рыба',
-    sound: '../assets/audio/animals_fish.mp3',
   },
   {
     category: 'animals',
     word: 'duck',
     translation: 'утка',
-    sound: '../assets/audio/animals_duck.mp3',
   },
   {
     category: 'insects',
     word: 'butterfly',
     translation: 'бабочка',
-    sound: '',
+  },
+  {
+    category: 'food',
+    word: 'pizza',
+    translation: 'пицца',
+  },
+  {
+    category: 'food',
+    word: 'banana',
+    translation: 'банан',
+  },
+  {
+    category: 'food',
+    word: 'apple',
+    translation: 'яблоко',
+  },
+  {
+    category: 'food',
+    word: 'carrot',
+    translation: 'морковь',
+  },
+  {
+    category: 'food',
+    word: 'cheese',
+    translation: 'сыр',
+  },
+  {
+    category: 'food',
+    word: 'icecream',
+    translation: 'мороженое',
+  }, {
+    category: 'food',
+    word: 'mushroom',
+    translation: 'гриб',
+  }, {
+    category: 'food',
+    word: 'tomato',
+    translation: 'помидор',
   },
 ]
 
 class Game {
   gameField = document.querySelector('.game-field');
-
+  
   clearGameField() {
     this.gameField.innerHTML = null;
   }
@@ -192,6 +221,10 @@ class Game {
     })
   }
 }
+
+CARDS.forEach((card) => {
+  card.sound = `../assets/audio/${card.category}_${card.word}.mp3`;
+})
 
 const game = new Game();
 game.loadCategories();
