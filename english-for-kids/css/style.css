@@ -152,7 +152,7 @@ body main .game-field .card .card__back {
 }
 
 body main .game-field .rotate {
-  transform: rotateY(180deg) scale(1.1);
+  transform: rotateY(180deg);
 }
 
 body main .game-field .category-card {

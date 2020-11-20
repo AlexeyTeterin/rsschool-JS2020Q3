@@ -13,24 +13,54 @@ const CARDS = [{
     category: 'animals',
     word: 'chicken',
     translation: 'цыпленок',
-    sound: '',
+    sound: '../assets/audio/animals_chicken.mp3',
   },
   {
     category: 'animals',
     word: 'dog',
     translation: 'собака',
-    sound: '',
+    sound: '../assets/audio/animals_dog.mp3',
   },
   {
     category: 'animals',
     word: 'pig',
     translation: 'свинья',
-    sound: '',
+    sound: '../assets/audio/animals_pig.mp3',
   },
   {
     category: 'animals',
     word: 'horse',
     translation: 'лошадь',
+    sound: '../assets/audio/animals_horse.mp3',
+  },
+  {
+    category: 'animals',
+    word: 'frog',
+    translation: 'лягушка',
+    sound: '../assets/audio/animals_frog.mp3',
+  },
+  {
+    category: 'animals',
+    word: 'tiger',
+    translation: 'тигр',
+    sound: '../assets/audio/animals_tiger.mp3',
+  },
+  {
+    category: 'animals',
+    word: 'fish',
+    translation: 'рыба',
+    sound: '../assets/audio/animals_fish.mp3',
+  },
+  {
+    category: 'animals',
+    word: 'duck',
+    translation: 'утка',
+    sound: '../assets/audio/animals_duck.mp3',
+  },
+  {
+    category: 'insects',
+    word: 'butterfly',
+    translation: 'бабочка',
     sound: '',
   },
 ]
@@ -65,12 +95,24 @@ class Game {
 
   }
 
+  playSound(src) {
+    const audio = new Audio();
+    audio.src = src;
+    audio.play();
+  }
+
   addFlipCardsListener() {
-    document.body.addEventListener('click', (event) => {
+    this.gameField.addEventListener('click', (event) => {
       const target = event.target;
-      if (target.classList.contains('card__rotate-btn')) {
-        target.parentElement.parentElement.classList.add('rotate');
+      if (target.parentElement.classList.contains('card__front')) {
+        if (target.classList.contains('card__rotate-btn')) {
+          target.parentElement.parentElement.classList.add('rotate');
+          return;
+        }
+        const flipCard = target.parentElement.parentElement.parentElement;
+        this.playSound(flipCard.dataset.sound);
       }
+
     })
 
     document.querySelectorAll('.flip-card').forEach((card) => {
@@ -99,13 +141,16 @@ class Game {
   createCardImage(card) {
     const cardImage = document.createElement('div');
     cardImage.classList.add('card__image');
-    cardImage.style.setProperty('background-image', `url("./assets/img/${card.word}.svg")`);
+    cardImage.style.setProperty('background-image', `url("./assets/img/${card.category}_${card.word}.svg")`);
     return cardImage;
   }
 
   createFlipping(card) {
     const flipCard = document.createElement('div');
     flipCard.classList.add('flip-card');
+    // flipCard.dataset.category = card.category;
+    flipCard.dataset.word = card.word;
+    flipCard.dataset.sound = card.sound;
 
     const cardElement = document.createElement('div');
     cardElement.classList.add('card');
