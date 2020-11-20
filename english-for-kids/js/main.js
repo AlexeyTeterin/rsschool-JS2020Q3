@@ -1,9 +1,16 @@
-import {CATEGORIES} from './categories.js';
-import {CARDS} from './cards.js';
+import {
+  CATEGORIES
+} from './categories.js';
+import {
+  CARDS
+} from './cards.js';
 
 class Game {
   gameField = document.querySelector('.game-field');
-  
+  menu = document.querySelector('.menu');
+  menuBtn = document.querySelector('.menu-btn');
+  overlay = document.querySelector('.overlay');
+
   clearGameField() {
     this.gameField.innerHTML = null;
   }
@@ -28,51 +35,22 @@ class Game {
     }).then(() => {
       this.gameField.classList.remove('hidden');
     });
-
   }
 
-  playSound(src) {
-    const audio = new Audio();
-    audio.src = src;
-    audio.play();
-  }
-
-  addFlipCardsListener() {
-    this.gameField.addEventListener('click', (event) => {
-      const target = event.target;
-      if (target.parentElement.classList.contains('card__front')) {
-        if (target.classList.contains('card__rotate-btn')) {
-          target.parentElement.parentElement.classList.add('rotate');
-          return;
-        }
-        const flipCard = target.parentElement.parentElement.parentElement;
-        this.playSound(flipCard.dataset.sound);
-      }
-
-    })
-
-    document.querySelectorAll('.flip-card').forEach((card) => {
-      card.addEventListener('mouseleave', (event) => {
-        const target = event.target.children[0];
-        target.classList.remove('rotate');
-      });
+  loadCardsOf(category) {
+    this.gameField.classList.add('hidden');
+    this.sleep(500).then(() => {
+      this.clearGameField();
+      const cards = CARDS.filter((card) => card.category === category);
+      console.log(cards);
+      cards.forEach((card) => {
+        this.gameField.append(this.createFlipping(card));
+      })
+    }).then(() => {
+      this.gameField.classList.remove('hidden');
+      this.addFlipCardsListener();
     })
   }
-
-  addCategoryListeners() {
-    this.gameField.addEventListener('click', (event) => {
-      const card = event.target.parentNode;
-      if (!card.classList.contains('category-card')) return;
-      const category = card.dataset.category;
-      this.loadCardsOf(category);
-    })
-  }
-
-  addLogoListener() {
-    document.querySelector('.logo').addEventListener('click', () => this.loadCategories());
-  }
-
-  sleep = (ms) => new Promise((resolve) => setTimeout(() => resolve(), ms));
 
   createCardImage(card) {
     const cardImage = document.createElement('div');
@@ -113,23 +91,63 @@ class Game {
     return flipCard;
   }
 
-  loadCardsOf(category) {
-    this.gameField.classList.add('hidden');
-    this.sleep(500).then(() => {
-      this.clearGameField();
-      const cards = CARDS.filter((card) => card.category === category);
-      console.log(cards);
-      cards.forEach((card) => {
-        this.gameField.append(this.createFlipping(card));
-      })
-    }).then(() => {
-      this.gameField.classList.remove('hidden');
-      this.addFlipCardsListener();
+  addFlipCardsListener() {
+    this.gameField.addEventListener('click', (event) => {
+      const target = event.target;
+      if (target.parentElement.classList.contains('card__front')) {
+        if (target.classList.contains('card__rotate-btn')) {
+          target.parentElement.parentElement.classList.add('rotate');
+          return;
+        }
+        const flipCard = target.parentElement.parentElement.parentElement;
+        this.playSound(flipCard.dataset.sound);
+      }
+
+    })
+
+    document.querySelectorAll('.flip-card').forEach((card) => {
+      card.addEventListener('mouseleave', (event) => {
+        const target = event.target.children[0];
+        target.classList.remove('rotate');
+      });
     })
   }
+
+  addCategoryListeners() {
+    this.gameField.addEventListener('click', (event) => {
+      const card = event.target.parentNode;
+      if (!card.classList.contains('category-card')) return;
+      const category = card.dataset.category;
+      this.loadCardsOf(category);
+    })
+  }
+
+  addLogoListener() {
+    document.querySelector('.logo').addEventListener('click', () => this.loadCategories());
+  }
+
+  addMenuBtnListener() {
+    this.menuBtn.addEventListener('click', () => this.toggleMenu());
+    this.overlay.addEventListener('click', () => this.toggleMenu());
+  }
+
+  toggleMenu() {
+    this.menu.classList.toggle('show');
+    this.menuBtn.classList.toggle('jump-to-menu');
+    this.overlay.classList.toggle('hidden');
+  }
+
+  playSound(src) {
+    const audio = new Audio();
+    audio.src = src;
+    audio.play();
+  }
+
+  sleep = (ms) => new Promise((resolve) => setTimeout(() => resolve(), ms));
 }
 
 const game = new Game();
 game.loadCategories();
 game.addCategoryListeners();
 game.addLogoListener();
+game.addMenuBtnListener();
