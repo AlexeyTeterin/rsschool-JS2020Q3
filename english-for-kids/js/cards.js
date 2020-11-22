@@ -1,4 +1,6 @@
-export const CARDS = [{
+export const CARDS = [
+  // animals
+  {
     category: 'animals',
     word: 'chicken',
     translation: 'цыпленок',
@@ -38,11 +40,13 @@ export const CARDS = [{
     word: 'duck',
     translation: 'утка',
   },
+  // insects
   {
     category: 'insects',
     word: 'butterfly',
     translation: 'бабочка',
   },
+  // food
   {
     category: 'food',
     word: 'pizza',
@@ -80,6 +84,78 @@ export const CARDS = [{
     category: 'food',
     word: 'tomato',
     translation: 'помидор',
+  },
+  // nature
+  {
+    category: 'nature',
+    word: 'cloud',
+    translation: 'облако',
+  }, {
+    category: 'nature',
+    word: 'flower',
+    translation: 'цветок',
+  }, {
+    category: 'nature',
+    word: 'grass',
+    translation: 'трава',
+  }, {
+    category: 'nature',
+    word: 'mountain',
+    translation: 'гора',
+  }, {
+    category: 'nature',
+    word: 'rain',
+    translation: 'дождь',
+  }, {
+    category: 'nature',
+    word: 'rainbow',
+    translation: 'радуга',
+  }, {
+    category: 'nature',
+    word: 'sun',
+    translation: 'солнце',
+  }, {
+    category: 'nature',
+    word: 'tree',
+    translation: 'дерево',
+  },
+  // human
+  {
+    category: 'human',
+    word: 'ear',
+    translation: 'ухо',
+  }, {
+    category: 'human',
+    word: 'eye',
+    translation: 'глаз',
+  }, {
+    category: 'human',
+    word: 'face',
+    translation: 'лицо',
+  }, {
+    category: 'human',
+    word: 'finger',
+    translation: 'палец',
+  }, {
+    category: 'human',
+    word: 'foot',
+    translation: 'стопа',
+  }, {
+    category: 'human',
+    word: 'hand',
+    translation: 'рука',
+  }, {
+    category: 'human',
+    word: 'head',
+    translation: 'голова',
+  }, {
+    category: 'human',
+    word: 'leg',
+    translation: 'нога',
+  }, {
+    category: 'human',
+    word: 'nose',
+    translation: 'нос',
   },
 ];
 

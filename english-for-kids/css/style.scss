@@ -117,6 +117,7 @@ body {
 
     .overlay {
       position: fixed;
+      z-index: 7;
       top: 0;
       left: 0;
       width: 100%;
@@ -143,7 +144,6 @@ body {
         visibility 0.5s;
 
       .flip-card {
-        z-index: -1;
         margin: 1rem;
         width: 16rem;
         height: 19rem;
