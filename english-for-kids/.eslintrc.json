@@ -11,5 +11,7 @@
         "ecmaVersion": 12,
         "sourceType": "module"
     },
-    "rules": {}
+    "rules": {
+        "linebreak-style": ["error", "unix"] // changes the file to LF
+    }
 }

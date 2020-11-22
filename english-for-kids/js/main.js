@@ -1,14 +1,14 @@
-import {
-  CATEGORIES
-} from './categories.js';
-import {
-  CARDS
-} from './cards.js';
+/* eslint-disable import/extensions */
+import CATEGORIES from './categories.js';
+import CARDS from './cards.js';
 
 class Game {
   gameField = document.querySelector('.game-field');
+
   menu = document.querySelector('.menu');
+
   menuBtn = document.querySelector('.menu-btn');
+
   overlay = document.querySelector('.overlay');
 
   clearGameField() {
@@ -42,24 +42,24 @@ class Game {
     this.sleep(500).then(() => {
       this.clearGameField();
       const cards = CARDS.filter((card) => card.category === category);
-      console.log(cards);
+      // console.log(cards);
       cards.forEach((card) => {
-        this.gameField.append(this.createFlipping(card));
-      })
+        this.createFlipping(card);
+      });
     }).then(() => {
       this.gameField.classList.remove('hidden');
       this.addFlipCardsListener();
-    })
-  }
-
-  createCardImage(card) {
-    const cardImage = document.createElement('div');
-    cardImage.classList.add('card__image');
-    cardImage.style.setProperty('background-image', `url("./assets/img/${card.category}_${card.word}.svg")`);
-    return cardImage;
+    });
   }
 
   createFlipping(card) {
+    const createCardImage = () => {
+      const cardImage = document.createElement('div');
+      cardImage.classList.add('card__image');
+      cardImage.style.setProperty('background-image', `url("./assets/img/${card.category}_${card.word}.svg")`);
+      return cardImage;
+    };
+
     const flipCard = document.createElement('div');
     flipCard.classList.add('flip-card');
     // flipCard.dataset.category = card.category;
@@ -83,43 +83,48 @@ class Game {
     const rotateBtn = document.createElement('div');
     rotateBtn.classList.add('card__rotate-btn');
 
-    front.append(this.createCardImage(card), cardTitle, rotateBtn);
-    back.append(this.createCardImage(card), cardTranslation);
+    front.append(createCardImage(card), cardTitle, rotateBtn);
+    back.append(createCardImage(card), cardTranslation);
     cardElement.append(front, back);
     flipCard.append(cardElement);
 
-    return flipCard;
+    this.gameField.append(flipCard);
   }
 
   addFlipCardsListener() {
+    const playSound = (src) => new Audio(src).play();
+
     this.gameField.addEventListener('click', (event) => {
-      const target = event.target;
+      const {
+        target,
+      } = event;
       if (target.parentElement.classList.contains('card__front')) {
         if (target.classList.contains('card__rotate-btn')) {
           target.parentElement.parentElement.classList.add('rotate');
           return;
         }
         const flipCard = target.parentElement.parentElement.parentElement;
-        this.playSound(flipCard.dataset.sound);
+        playSound(flipCard.dataset.sound);
       }
-
-    })
+    });
 
     document.querySelectorAll('.flip-card').forEach((card) => {
       card.addEventListener('mouseleave', (event) => {
         const target = event.target.children[0];
         target.classList.remove('rotate');
       });
-    })
+    });
   }
 
   addCategoryListeners() {
     this.gameField.addEventListener('click', (event) => {
       const card = event.target.parentNode;
       if (!card.classList.contains('category-card')) return;
-      const category = card.dataset.category;
+      const {
+        category,
+      } = card.dataset;
       this.loadCardsOf(category);
-    })
+    });
   }
 
   addLogoListener() {
@@ -135,12 +140,6 @@ class Game {
     this.menu.classList.toggle('show');
     this.menuBtn.classList.toggle('jump-to-menu');
     this.overlay.classList.toggle('hidden');
-  }
-
-  playSound(src) {
-    const audio = new Audio();
-    audio.src = src;
-    audio.play();
   }
 
   sleep = (ms) => new Promise((resolve) => setTimeout(() => resolve(), ms));

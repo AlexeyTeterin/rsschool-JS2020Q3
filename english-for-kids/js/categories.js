@@ -1,4 +1,4 @@
-export const CATEGORIES = [
+const CATEGORIES = [
   'animals',
   'food',
   'nature',
@@ -7,5 +7,7 @@ export const CATEGORIES = [
   'clothes',
   'emotions',
   'space',
-  'insects'
+  'insects',
 ];
+
+export default CATEGORIES;

@@ -1,4 +1,4 @@
-export const CARDS = [
+const CARDS = [
   // animals
   {
     category: 'animals',
@@ -159,6 +159,10 @@ export const CARDS = [
   },
 ];
 
-CARDS.forEach((card) => {
+CARDS.map((el) => {
+  const card = el;
   card.sound = `../assets/audio/${card.category}_${card.word}.mp3`;
-})
+  return card;
+});
+
+export default CARDS;
