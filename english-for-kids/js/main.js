@@ -52,6 +52,15 @@ class Game {
     });
   }
 
+  createMenu() {
+    CATEGORIES.forEach((cat) => {
+      const menuLi = document.createElement('li');
+      menuLi.dataset.category = cat;
+      menuLi.textContent = cat;
+      this.menu.append(menuLi);
+    });
+  }
+
   createFlipping(card) {
     const createCardImage = () => {
       const cardImage = document.createElement('div');
@@ -146,6 +155,7 @@ class Game {
 }
 
 const game = new Game();
+game.createMenu();
 game.loadCategories();
 game.addCategoryListeners();
 game.addLogoListener();
