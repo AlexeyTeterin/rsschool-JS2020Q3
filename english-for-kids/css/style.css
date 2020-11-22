@@ -96,6 +96,7 @@ body header nav .menu.show {
 body header nav .menu li {
   list-style-type: none;
   height: 4rem;
+  line-height: 4rem;
   font-size: 2rem;
   width: 70%;
 }

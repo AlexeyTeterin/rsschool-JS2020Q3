@@ -4,9 +4,9 @@ const CATEGORIES = [
   'nature',
   'human',
   'numbers',
-  // 'transport',
-  // 'clothes',
-  // 'emotions',
+  'transport',
+  'clothes',
+  'emotions',
   // 'space',
   // 'insects',
 ];
