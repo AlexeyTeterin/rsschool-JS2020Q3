@@ -157,6 +157,52 @@ const CARDS = [
     word: 'nose',
     translation: 'нос',
   },
+  // numbers
+  {
+    category: 'numbers',
+    word: 'one',
+    translation: 'один',
+  }, {
+    category: 'numbers',
+    word: 'two',
+    translation: 'два',
+  }, {
+    category: 'numbers',
+    word: 'three',
+    translation: 'три',
+  }, {
+    category: 'numbers',
+    word: 'four',
+    translation: 'четыре',
+  }, {
+    category: 'numbers',
+    word: 'five',
+    translation: 'пять',
+  }, {
+    category: 'numbers',
+    word: 'six',
+    translation: 'шесть',
+  }, {
+    category: 'numbers',
+    word: 'seven',
+    translation: 'семь',
+  }, {
+    category: 'numbers',
+    word: 'eight',
+    translation: 'восемь',
+  }, {
+    category: 'numbers',
+    word: 'nine',
+    translation: 'девять',
+  }, {
+    category: 'numbers',
+    word: 'ten',
+    translation: 'десять',
+  }, {
+    category: 'numbers',
+    word: 'zero',
+    translation: 'ноль',
+  },
 ];
 
 CARDS.map((el) => {

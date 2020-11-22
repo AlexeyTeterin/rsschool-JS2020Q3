@@ -3,11 +3,12 @@ const CATEGORIES = [
   'food',
   'nature',
   'human',
-  'transport',
-  'clothes',
-  'emotions',
-  'space',
-  'insects',
+  'numbers',
+  // 'transport',
+  // 'clothes',
+  // 'emotions',
+  // 'space',
+  // 'insects',
 ];
 
 export default CATEGORIES;
