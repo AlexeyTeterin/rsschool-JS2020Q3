@@ -103,31 +103,14 @@ class Game {
     this.gameField.append(flipCard);
   }
 
-  addFlipCardsListener() {
-    const playSound = (src) => new Audio(src).play();
-
-    this.gameField.addEventListener('click', (event) => {
-      const {
-        target,
-      } = event;
-      if (target.parentElement.classList.contains('card__front')) {
-        if (target.classList.contains('card__rotate-btn')) {
-          target.parentElement.parentElement.classList.add('rotate');
-          return;
-        }
-        const flipCard = target.parentElement.parentElement.parentElement;
-        playSound(flipCard.dataset.sound);
-      }
-    });
-
-    this.gameField.addEventListener('mouseout', (event) => {
-      const rotatedCard = event.target.parentElement.parentElement;
-      const relatedTarget = event.relatedTarget;
-      const relatedTargetIsGameField = relatedTarget.classList.contains('game-field');
-      const relatedTargetIsFlipCard = relatedTarget.classList.contains('flip-card');
-      if (!relatedTargetIsGameField && !relatedTargetIsFlipCard) return;
-      rotatedCard.classList.remove('rotate');
-    })
+  toggleFlipCardsListener() {
+    if (!this.playMode) {
+      this.gameField.addEventListener('click', this.flipCardsHandler);
+      this.gameField.addEventListener('mouseout', this.backFlipCardsHandler);
+    } else {
+      this.gameField.removeEventListener('click', this.flipCardsHandler);
+      this.gameField.removeEventListener('mouseout', this.backFlipCardsHandler);
+    }
 
     // this.gameField.addEventListener('mouseover', (e) => {
     //   e.stopPropagation();
@@ -137,6 +120,30 @@ class Game {
     //     rotatedCard.classList.remove('rotate');
     //   }
     // })
+  }
+
+  flipCardsHandler(event) {
+    const playSound = (src) => new Audio(src).play();
+    const {
+      target,
+    } = event;
+    if (target.parentElement.classList.contains('card__front')) {
+      if (target.classList.contains('card__rotate-btn')) {
+        target.parentElement.parentElement.classList.add('rotate');
+        return;
+      }
+      const flipCard = target.parentElement.parentElement.parentElement;
+      playSound(flipCard.dataset.sound);
+    }
+  }
+
+  backFlipCardsHandler(event) {
+    const rotatedCard = event.target.parentElement.parentElement;
+    const relatedTarget = event.relatedTarget;
+    const relatedTargetIsGameField = relatedTarget.classList.contains('game-field');
+    const relatedTargetIsFlipCard = relatedTarget.classList.contains('flip-card');
+    if (!relatedTargetIsGameField && !relatedTargetIsFlipCard) return;
+    rotatedCard.classList.remove('rotate');
   }
 
   addCategoryListeners() {
@@ -168,6 +175,7 @@ class Game {
     document.querySelector('#toggle-mode').addEventListener('click', () => {
       this.playMode = !this.playMode;
       toggleBodyClass();
+      this.toggleFlipCardsListener();
     })
   }
 
@@ -184,7 +192,7 @@ const game = new Game();
 game.createMenu();
 game.loadCategories();
 game.addCategoryListeners();
-game.addFlipCardsListener();
+game.toggleFlipCardsListener();
 game.addLogoListener();
 game.addMenuBtnListener();
 game.addToggleModeListener();

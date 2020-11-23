@@ -21,6 +21,7 @@
 
 $col-bg-train: #0092b3;
 $col-bg-play: #6b4e91;
+$col-menu: rgb(228, 173, 72);
 
 body {
   margin: 0;
@@ -117,7 +118,7 @@ body {
         align-items: center;
         justify-content: space-around;
         height: 100%;
-        background: orange;
+        background: $col-menu;
         transition: transform 0.5s;
         transform: translateX(-320px);
 
