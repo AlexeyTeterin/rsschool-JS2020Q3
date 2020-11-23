@@ -48,7 +48,7 @@ class Game {
       });
     }).then(() => {
       this.gameField.classList.remove('hidden');
-      this.addFlipCardsListener();
+      // this.addFlipCardsListener();
     });
   }
 
@@ -117,12 +117,13 @@ class Game {
       }
     });
 
-    document.querySelectorAll('.flip-card').forEach((card) => {
-      card.addEventListener('mouseleave', (event) => {
-        const target = event.target.children[0];
-        target.classList.remove('rotate');
-      });
-    });
+    this.gameField.addEventListener('mouseout', (event) => {
+      const target = event.target.parentElement;
+      const targetIsCardFront = target.classList.contains('card__front');
+      const targetIsCardBack = target.classList.contains('card__back');
+      if (!targetIsCardBack && !targetIsCardFront) return;
+      target.parentElement.classList.remove('rotate');
+    })
   }
 
   addCategoryListeners() {
@@ -135,7 +136,7 @@ class Game {
       const menuLi = event.target;
       if (!menuLi.dataset.category) return;
       this.loadCardsOf(menuLi.dataset.category);
-      this.toggleMenu();    
+      this.toggleMenu();
     })
   }
 
@@ -161,5 +162,6 @@ const game = new Game();
 game.createMenu();
 game.loadCategories();
 game.addCategoryListeners();
+game.addFlipCardsListener();
 game.addLogoListener();
 game.addMenuBtnListener();
