@@ -20,7 +20,7 @@
 }
 
 $col-bg-train: #0092b3;
-$col-bg-play: #5400b3;
+$col-bg-play: #6b4e91;
 
 body {
   margin: 0;
@@ -29,6 +29,7 @@ body {
   box-sizing: border-box;
   font-family: 'Roboto',
     sans-serif;
+  transition: background 1s ease;
 
   .wrapper {
     padding: 0 2rem;

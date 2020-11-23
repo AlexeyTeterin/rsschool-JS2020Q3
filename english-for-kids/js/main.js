@@ -10,6 +10,8 @@ class Game {
   menuBtn = document.querySelector('.menu-btn');
 
   overlay = document.querySelector('.overlay');
+  
+  toggleMode = document.querySelector('#toggle-mode');
 
   clearGameField() {
     this.gameField.innerHTML = null;
@@ -159,6 +161,19 @@ class Game {
     this.menuBtn.addEventListener('click', () => this.toggleMenu());
     this.overlay.addEventListener('click', () => this.toggleMenu());
   }
+  
+  addToggleModeListener() {
+    const color1 = '#0092b3';
+    const color2 = '#6b4e91';
+    const toggleBodyBgColor = () => {
+      if (document.querySelector('#checkbox').checked) document.body.style.setProperty('background', color1);
+      else document.body.style.setProperty('background', color2);
+    }
+    
+    this.toggleMode.addEventListener('click', () => {
+      toggleBodyBgColor();
+    })
+  }
 
   toggleMenu() {
     this.menu.classList.toggle('show');
@@ -176,3 +191,4 @@ game.addCategoryListeners();
 game.addFlipCardsListener();
 game.addLogoListener();
 game.addMenuBtnListener();
+game.addToggleModeListener();
