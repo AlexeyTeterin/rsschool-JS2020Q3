@@ -126,6 +126,15 @@ class Game {
       if (!relatedTargetIsGameField && !relatedTargetIsFlipCard) return;
       rotatedCard.classList.remove('rotate');
     })
+    
+    // this.gameField.addEventListener('mouseover', (e) => {
+    //   e.stopPropagation();
+    //   console.log(e.target)
+    //   const rotatedCard = document.querySelector('.rotate');
+    //   if (e.target.classList.contains('game-field') && rotatedCard) {
+    //     rotatedCard.classList.remove('rotate');
+    //   }
+    // })
   }
 
   addCategoryListeners() {

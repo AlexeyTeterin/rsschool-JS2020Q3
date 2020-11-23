@@ -46,7 +46,7 @@ body header nav .menu-btn {
   justify-content: space-around;
   transition: transform 0.5s, opacity 0.1s;
   cursor: pointer;
-  filter: drop-shadow(0 0 3px rgba(0, 0, 0, 0.5));
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5));
 }
 
 body header nav .menu-btn span.bar {
@@ -115,7 +115,7 @@ body header nav .menu li {
   background-size: 2rem;
   background-position: 0 0;
   text-transform: capitalize;
-  filter: drop-shadow(0 0 3px rgba(0, 0, 0, 0.5));
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5));
 }
 
 body header nav .menu li:hover {
@@ -136,7 +136,7 @@ body header .logo h1 {
   user-select: none;
   cursor: pointer;
   transition: font 0.25s;
-  filter: drop-shadow(0 0 3px rgba(0, 0, 0, 0.5));
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5));
 }
 
 body header .logo h1:hover {
