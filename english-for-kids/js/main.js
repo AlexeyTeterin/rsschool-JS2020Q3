@@ -57,6 +57,7 @@ class Game {
       const menuLi = document.createElement('li');
       menuLi.dataset.category = cat;
       menuLi.textContent = cat;
+      menuLi.style.setProperty('background-image', `url(./assets/img/_${cat}.svg)`)
       this.menu.append(menuLi);
     });
   }
@@ -118,11 +119,13 @@ class Game {
     });
 
     this.gameField.addEventListener('mouseout', (event) => {
-      const target = event.target.parentElement;
-      const targetIsCardFront = target.classList.contains('card__front');
-      const targetIsCardBack = target.classList.contains('card__back');
-      if (!targetIsCardBack && !targetIsCardFront) return;
-      target.parentElement.classList.remove('rotate');
+      const rotatedCard = event.target.parentElement.parentElement;
+      const relatedTarget = event.relatedTarget;
+      const relatedTargetIsGameField = relatedTarget.classList.contains('game-field');
+      const relatedTargetIsFlipCard = relatedTarget.classList.contains('flip-card');
+      if (!rotatedCard.parentElement.classList.contains('flip-card')) return;
+      if (!relatedTargetIsGameField && !relatedTargetIsFlipCard) return;
+      rotatedCard.classList.remove('rotate');
     })
   }
 
