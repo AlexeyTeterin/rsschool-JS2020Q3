@@ -49,6 +49,7 @@ class Game {
         this.createFlipping(card);
       });
     }).then(() => {
+      this.toggleFlipCardsTitles();
       this.gameField.classList.remove('hidden');
       // this.addFlipCardsListener();
     });
@@ -59,7 +60,7 @@ class Game {
       const menuLi = document.createElement('li');
       menuLi.dataset.category = cat;
       menuLi.textContent = cat;
-      menuLi.style.setProperty('background-image', `url(./assets/img/_${cat}.svg)`)
+      menuLi.style.setProperty('background-image', `url(./assets/img/_${cat}.svg)`);
       this.menu.append(menuLi);
     });
   }
@@ -103,6 +104,17 @@ class Game {
     this.gameField.append(flipCard);
   }
 
+  toggleFlipCardsTitles() {
+    document.querySelectorAll('.card__title').forEach((el) => {
+      if (!el.parentElement.classList.contains('card__front') && !el.parentElement.classList.contains('card__back')) return;
+      el.classList.toggle('display-none', this.playMode);
+    });
+    document.querySelectorAll('.card__rotate-btn').forEach((el) => {
+      if (!el.parentElement.classList.contains('card__front') && !el.parentElement.classList.contains('card__back')) return;
+      el.classList.toggle('display-none', this.playMode);
+    });
+  }
+
   toggleFlipCardsListener() {
     if (!this.playMode) {
       this.gameField.addEventListener('click', this.flipCardsHandler);
@@ -111,6 +123,7 @@ class Game {
       this.gameField.removeEventListener('click', this.flipCardsHandler);
       this.gameField.removeEventListener('mouseout', this.backFlipCardsHandler);
     }
+    this.toggleFlipCardsTitles();
 
     // this.gameField.addEventListener('mouseover', (e) => {
     //   e.stopPropagation();
@@ -176,7 +189,7 @@ class Game {
       this.playMode = !this.playMode;
       toggleBodyClass();
       this.toggleFlipCardsListener();
-    })
+    });
   }
 
   toggleMenu() {

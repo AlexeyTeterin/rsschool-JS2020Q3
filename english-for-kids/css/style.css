@@ -24,6 +24,10 @@ body .hidden {
   visibility: hidden;
 }
 
+body .display-none {
+  display: none;
+}
+
 body h1 {
   display: inline;
   margin: 0;
@@ -49,7 +53,7 @@ body header nav .menu-btn {
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-  transition: transform 0.5s, opacity 0.1s;
+  transition: transform 0.6s, opacity 0.1s;
   cursor: pointer;
   filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5));
 }
@@ -100,7 +104,7 @@ body header nav .menu {
   justify-content: space-around;
   height: 100%;
   background: #e4ad48;
-  transition: transform 0.5s;
+  transition: transform 0.4s;
   transform: translateX(-320px);
 }
 
@@ -295,6 +299,9 @@ body main .game-field .card .card__back {
   position: absolute;
   width: 100%;
   height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
   border-radius: 1rem;
