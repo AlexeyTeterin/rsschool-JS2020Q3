@@ -10,8 +10,8 @@ class Game {
   menuBtn = document.querySelector('.menu-btn');
 
   overlay = document.querySelector('.overlay');
-  
-  toggleMode = document.querySelector('#toggle-mode');
+
+  playMode = false;
 
   clearGameField() {
     this.gameField.innerHTML = null;
@@ -128,7 +128,7 @@ class Game {
       if (!relatedTargetIsGameField && !relatedTargetIsFlipCard) return;
       rotatedCard.classList.remove('rotate');
     })
-    
+
     // this.gameField.addEventListener('mouseover', (e) => {
     //   e.stopPropagation();
     //   console.log(e.target)
@@ -161,17 +161,13 @@ class Game {
     this.menuBtn.addEventListener('click', () => this.toggleMenu());
     this.overlay.addEventListener('click', () => this.toggleMenu());
   }
-  
+
   addToggleModeListener() {
-    const color1 = '#0092b3';
-    const color2 = '#6b4e91';
-    const toggleBodyBgColor = () => {
-      if (document.querySelector('#checkbox').checked) document.body.style.setProperty('background', color1);
-      else document.body.style.setProperty('background', color2);
-    }
-    
-    this.toggleMode.addEventListener('click', () => {
-      toggleBodyBgColor();
+    const toggleBodyClass = () => document.body.classList.toggle('play-mode', this.playMode);
+
+    document.querySelector('#toggle-mode').addEventListener('click', () => {
+      this.playMode = !this.playMode;
+      toggleBodyClass();
     })
   }
 

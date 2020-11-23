@@ -24,12 +24,16 @@ $col-bg-play: #6b4e91;
 
 body {
   margin: 0;
-  background: #0092b3;
+  background: $col-bg-train;
   color: white;
   box-sizing: border-box;
   font-family: 'Roboto',
     sans-serif;
   transition: background 1s ease;
+
+  &.play-mode {
+    background-color: $col-bg-play;
+  }
 
   .wrapper {
     padding: 0 2rem;

@@ -11,6 +11,10 @@ body {
   transition: background 1s ease;
 }
 
+body.play-mode {
+  background-color: #6b4e91;
+}
+
 body .wrapper {
   padding: 0 2rem;
 }
