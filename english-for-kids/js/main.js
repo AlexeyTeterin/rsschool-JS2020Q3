@@ -129,11 +129,14 @@ class Game {
     this.gameField.addEventListener('click', (event) => {
       const card = event.target.parentNode;
       if (!card.classList.contains('category-card')) return;
-      const {
-        category,
-      } = card.dataset;
-      this.loadCardsOf(category);
+      this.loadCardsOf(card.dataset.category);
     });
+    this.menu.addEventListener('click', (event) => {
+      const menuLi = event.target;
+      if (!menuLi.dataset.category) return;
+      this.loadCardsOf(menuLi.dataset.category);
+      this.toggleMenu();    
+    })
   }
 
   addLogoListener() {

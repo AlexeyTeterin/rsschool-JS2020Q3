@@ -44,7 +44,8 @@ body header nav .menu-btn {
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-  transition: transform 1s;
+  transition: transform 0.5s, opacity 0.1s;
+  cursor: pointer;
 }
 
 body header nav .menu-btn span.bar {
@@ -72,6 +73,14 @@ body header nav .menu-btn.jump-to-menu span.bar:nth-child(3) {
   transform: translateY(-0.7rem) translateX(0) rotate(-45deg);
 }
 
+body header nav .menu-btn:hover {
+  opacity: 0.75;
+}
+
+body header nav .menu-btn:active {
+  opacity: 0.45;
+}
+
 body header nav .menu {
   position: fixed;
   z-index: 8;
@@ -82,6 +91,7 @@ body header nav .menu {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: space-around;
   height: 100%;
   background: orange;
   transition: transform 0.5s;
@@ -95,10 +105,18 @@ body header nav .menu.show {
 
 body header nav .menu li {
   list-style-type: none;
-  height: 4rem;
-  line-height: 4rem;
+  line-height: 2rem;
   font-size: 2rem;
-  width: 70%;
+  cursor: pointer;
+  transition: transform 0.25s;
+}
+
+body header nav .menu li:hover {
+  transform: scale(1.25);
+}
+
+body header nav .menu li:active {
+  transform: scale(1.15);
 }
 
 body header .logo {
