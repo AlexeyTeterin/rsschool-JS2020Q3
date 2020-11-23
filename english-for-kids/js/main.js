@@ -123,7 +123,6 @@ class Game {
       const relatedTarget = event.relatedTarget;
       const relatedTargetIsGameField = relatedTarget.classList.contains('game-field');
       const relatedTargetIsFlipCard = relatedTarget.classList.contains('flip-card');
-      if (!rotatedCard.parentElement.classList.contains('flip-card')) return;
       if (!relatedTargetIsGameField && !relatedTargetIsFlipCard) return;
       rotatedCard.classList.remove('rotate');
     })
