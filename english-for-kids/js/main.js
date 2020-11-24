@@ -107,11 +107,13 @@ class Game {
   toggleFlipCardsTitles() {
     document.querySelectorAll('.card__title').forEach((el) => {
       if (!el.parentElement.classList.contains('card__front') && !el.parentElement.classList.contains('card__back')) return;
-      el.classList.toggle('display-none', this.playMode);
+      el.classList.toggle('hidden', this.playMode);
+      // this.sleep(250).then(el.classList.toggle('display-none', this.playMode));
     });
     document.querySelectorAll('.card__rotate-btn').forEach((el) => {
       if (!el.parentElement.classList.contains('card__front') && !el.parentElement.classList.contains('card__back')) return;
-      el.classList.toggle('display-none', this.playMode);
+      el.classList.toggle('hidden', this.playMode);
+      // this.sleep(250).then(el.classList.toggle('display-none', this.playMode));
     });
   }
 

@@ -28,6 +28,10 @@ body .display-none {
   display: none;
 }
 
+body .goDown {
+  transform: translateY(3rem);
+}
+
 body h1 {
   display: inline;
   margin: 0 0 0 1rem;
@@ -266,7 +270,7 @@ body main .game-field {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
-  transition: opacity 0.5s, visibility 0.5s;
+  transition: opacity 0.5s, visibility 0.5s, transform 0.25s;
 }
 
 body main .game-field .flip-card {
@@ -319,17 +323,18 @@ body main .game-field .card .card__back {
 
 body main .game-field .card .card__front {
   color: black;
+  overflow: hidden;
 }
 
 body main .game-field .card .card__front .card__rotate-btn {
-  position: fixed;
+  position: absolute;
   bottom: 0;
   right: 0;
   width: 3rem;
   height: 3rem;
   background: url("../assets/img/_rotate.svg");
   background-size: contain;
-  transition: transform 0.25s;
+  transition: transform 0.25s, opacity 0.25s, visibility 0.25s;
 }
 
 body main .game-field .card .card__front .card__rotate-btn:hover {
@@ -379,6 +384,7 @@ body main .game-field .card__image {
   background-size: 80%;
   background-repeat: no-repeat;
   background-position: center;
+  transition: opacity 0.25s, visibility 0.25s;
 }
 
 body main .game-field .card__title {
@@ -386,4 +392,5 @@ body main .game-field .card__title {
   text-align: center;
   font-size: 1.75rem;
   text-transform: uppercase;
+  transition: opacity 0.25s, visibility 0.25s;
 }
