@@ -108,7 +108,8 @@ body header nav .menu {
   align-items: center;
   justify-content: space-around;
   height: 100%;
-  background: #f7b63f;
+  background-color: #f7b63f;
+  background: linear-gradient(120deg, #f7b63f 0%, #b45600 100%);
   transition: transform 0.4s;
   transform: translateX(-320px);
   box-shadow: 0 0 3rem rgba(0, 0, 0, 0.75);
