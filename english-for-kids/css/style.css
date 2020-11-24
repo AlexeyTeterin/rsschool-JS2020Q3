@@ -269,6 +269,21 @@ body header .overlay {
   backdrop-filter: blur(2px);
 }
 
+body main .game-panel {
+  margin: 0 auto 1rem;
+  width: 80%;
+  min-width: 300px;
+  height: 4em;
+  border-radius: 1rem;
+  background-color: rgba(0, 0, 0, 0.3);
+  transition: height 0.5s, opacity 0.5s, visibility 0.5s, margin 0.5s;
+}
+
+body main .game-panel.hidden {
+  margin: 0 auto;
+  height: 0;
+}
+
 body main .game-field {
   display: flex;
   flex-wrap: wrap;

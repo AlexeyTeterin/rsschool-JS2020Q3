@@ -195,7 +195,12 @@ class Game {
       this.playMode = !this.playMode;
       toggleBodyClass();
       this.toggleFlipCardsListener();
+      this.toggleGamePanel();
     });
+  }
+  
+  toggleGamePanel() {
+    document.querySelector('.game-panel').classList.toggle('hidden', !this.playMode);
   }
 
   toggleMenu() {
