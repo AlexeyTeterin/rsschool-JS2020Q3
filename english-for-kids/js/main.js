@@ -1,3 +1,4 @@
+/* eslint-disable class-methods-use-this */
 /* eslint-disable import/extensions */
 import CATEGORIES from './categories.js';
 import CARDS from './cards.js';
@@ -14,6 +15,10 @@ class Game {
   overlay = document.querySelector('.overlay');
 
   playMode = false;
+
+  currentCategory = null;
+
+  currentCard = null;
 
   clearGameField() {
     this.gameField.innerHTML = null;
@@ -42,6 +47,7 @@ class Game {
   }
 
   loadCardsOf(category) {
+    this.currentCategory = category;
     this.gameField.classList.add('hidden');
     this.sleep(500).then(() => {
       this.clearGameField();
@@ -133,15 +139,6 @@ class Game {
       this.gameField.removeEventListener('mouseout', this.handleCardBackFlip);
     }
     this.toggleFlipCardsTitles();
-
-    // this.gameField.addEventListener('mouseover', (e) => {
-    //   e.stopPropagation();
-    //   console.log(e.target)
-    //   const rotatedCard = document.querySelector('.rotate');
-    //   if (e.target.classList.contains('game-field') && rotatedCard) {
-    //     rotatedCard.classList.remove('rotate');
-    //   }
-    // })
   }
 
   handleCardFlip(event) {
@@ -160,11 +157,13 @@ class Game {
   }
 
   handleCardBackFlip(event) {
-    const { relatedTarget } = event;
-    console.log(relatedTarget);
+    const rotatedCard = document.querySelector('.rotate');
+    const {
+      relatedTarget,
+    } = event;
     const relatedTargetIsGameField = relatedTarget.classList.contains('game-field');
     if (!relatedTargetIsGameField) return;
-    document.querySelector('.rotate').classList.remove('rotate');
+    if (rotatedCard) rotatedCard.classList.remove('rotate');
   }
 
   addCategoryListeners() {
@@ -201,13 +200,61 @@ class Game {
     });
   }
 
-  startGame() {
-    if (!document.querySelector('.replay-btn')) this.createReplayBtn();
-    this.createStars();
+  addPlayModeCardsListener() {
+    this.gameField.addEventListener('click', (event) => {
+      if (!this.playMode) return;
+      const target = event.target.parentElement.parentElement.parentElement;
+      const clickedCard = target.dataset;
+      const currentCard = JSON.parse(sessionStorage.getItem('currentCard'));
+      if (clickedCard.word === currentCard.word) {
+        console.log('correct!');
+        // show result in stars
+        // goto next sound
+      } else {
+        console.log('false');
+        // show result in stars
+        // goto next sound
+      }
+    });
   }
 
   stopGame() {
     this.removeStars();
+  }
+
+  startGame() {
+    if (!document.querySelector('.replay-btn')) this.createReplayBtn();
+    this.createStars();
+
+    const cards = [];
+    this.gameField.querySelectorAll('.flip-card').forEach((card) => {
+      cards.push(card.dataset);
+    });
+    const shuffledCards = this.shuffle(cards);
+    console.log(shuffledCards);
+    sessionStorage.setItem('currentCard', JSON.stringify(shuffledCards[0]));
+    this.playCard(shuffledCards[0]);
+  }
+
+  async playCard(card) {
+    const playSound = (src) => new Audio(src).play();
+    this.sleep(1000).then(() => playSound(card.sound));
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  shuffle(array) {
+    const len = array.length < 8 ? array.length : 8;
+    const random = () => Math.floor(Math.random() * len);
+    const indexes = [];
+    const result = [];
+    let index = random();
+    indexes.push(random());
+    for (let i = len; i > 1; i -= 1) {
+      while (indexes.includes(index)) index = random();
+      indexes.push(index);
+      result.push(array[index]);
+    }
+    return result;
   }
 
   createStars() {
@@ -253,3 +300,4 @@ game.toggleFlipCardsListener();
 game.addLogoListener();
 game.addMenuBtnListener();
 game.addToggleModeListener();
+game.addPlayModeCardsListener();
