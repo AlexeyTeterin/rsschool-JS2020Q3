@@ -124,11 +124,11 @@ class Game {
 
   toggleFlipCardsListener() {
     if (!this.playMode) {
-      this.gameField.addEventListener('click', this.flipCardsHandler);
-      this.gameField.addEventListener('mouseout', this.backFlipCardsHandler);
+      this.gameField.addEventListener('click', this.handleCardFlip);
+      this.gameField.addEventListener('mouseout', this.handleCardBackFlip);
     } else {
-      this.gameField.removeEventListener('click', this.flipCardsHandler);
-      this.gameField.removeEventListener('mouseout', this.backFlipCardsHandler);
+      this.gameField.removeEventListener('click', this.handleCardFlip);
+      this.gameField.removeEventListener('mouseout', this.handleCardBackFlip);
     }
     this.toggleFlipCardsTitles();
 
@@ -142,7 +142,7 @@ class Game {
     // })
   }
 
-  flipCardsHandler(event) {
+  handleCardFlip(event) {
     const playSound = (src) => new Audio(src).play();
     const {
       target,
@@ -157,7 +157,7 @@ class Game {
     }
   }
 
-  backFlipCardsHandler(event) {
+  handleCardBackFlip(event) {
     const relatedTarget = event.relatedTarget;
     console.log(relatedTarget);
     const relatedTargetIsGameField = relatedTarget.classList.contains('game-field');
