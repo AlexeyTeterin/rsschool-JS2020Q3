@@ -166,7 +166,7 @@ class Game {
     if (rotatedCard) rotatedCard.classList.remove('rotate');
   }
 
-  addCategoryListeners() {
+  runCategoryListeners() {
     this.gameField.addEventListener('click', (event) => {
       const card = event.target.parentNode;
       if (!card.classList.contains('category-card')) return;
@@ -180,16 +180,16 @@ class Game {
     });
   }
 
-  addLogoListener() {
+  runLogoListener() {
     document.querySelector('.logo').addEventListener('click', () => this.loadCategories());
   }
 
-  addMenuBtnListener() {
+  runMenuBtnListener() {
     this.menuBtn.addEventListener('click', () => this.toggleMenu());
     this.overlay.addEventListener('click', () => this.toggleMenu());
   }
 
-  addToggleModeListener() {
+  runToggleModeListener() {
     const toggleBodyClass = () => document.body.classList.toggle('play-mode', this.playMode);
 
     document.querySelector('#toggle-mode').addEventListener('click', () => {
@@ -200,7 +200,7 @@ class Game {
     });
   }
 
-  addPlayModeCardsListener() {
+  runPlayModeCardsListener() {
     this.gameField.addEventListener('click', (event) => {
       if (!this.playMode) return;
       const target = event.target.parentElement.parentElement.parentElement;
@@ -295,9 +295,9 @@ class Game {
 const game = new Game();
 game.createMenu();
 game.loadCategories();
-game.addCategoryListeners();
+game.runCategoryListeners();
 game.toggleFlipCardsListener();
-game.addLogoListener();
-game.addMenuBtnListener();
-game.addToggleModeListener();
-game.addPlayModeCardsListener();
+game.runLogoListener();
+game.runMenuBtnListener();
+game.runToggleModeListener();
+game.runPlayModeCardsListener();
