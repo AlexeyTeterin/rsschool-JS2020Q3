@@ -108,7 +108,7 @@ body header nav .menu {
   align-items: center;
   justify-content: space-around;
   height: 100%;
-  background: #e4ad48;
+  background: #f7b63f;
   transition: transform 0.4s;
   transform: translateX(-320px);
 }
