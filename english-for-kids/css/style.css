@@ -308,6 +308,7 @@ body main .game-panel .replay-btn {
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;
+  transform: rotateY(180deg) rotate(-60deg);
 }
 
 body main .game-field {
