@@ -4,7 +4,7 @@ import CARDS from './cards.js';
 
 class Game {
   gamePanel = document.querySelector('.game-panel');
-  
+
   gameField = document.querySelector('.game-field');
 
   menu = document.querySelector('.menu');
@@ -160,7 +160,7 @@ class Game {
   }
 
   handleCardBackFlip(event) {
-    const relatedTarget = event.relatedTarget;
+    const { relatedTarget } = event;
     console.log(relatedTarget);
     const relatedTargetIsGameField = relatedTarget.classList.contains('game-field');
     if (!relatedTargetIsGameField) return;
@@ -178,7 +178,7 @@ class Game {
       if (!menuLi.dataset.category) return;
       this.loadCardsOf(menuLi.dataset.category);
       this.toggleMenu();
-    })
+    });
   }
 
   addLogoListener() {
@@ -200,15 +200,16 @@ class Game {
       this.toggleGamePanel();
     });
   }
-  
+
   startGame() {
+    if (!document.querySelector('.replay-btn')) this.createReplayBtn();
     this.createStars();
   }
-  
+
   stopGame() {
     this.removeStars();
   }
-  
+
   createStars() {
     let counter = 8;
     while (counter > 0) {
@@ -218,11 +219,17 @@ class Game {
       counter -= 1;
     }
   }
-  
-  removeStars() {
-    document.querySelectorAll('.star').forEach((star) => star.remove());
+
+  createReplayBtn() {
+    const replayBtn = document.createElement('div');
+    replayBtn.classList.add('replay-btn');
+    this.gamePanel.append(replayBtn);
   }
-  
+
+  removeStars() {
+    this.gamePanel.querySelectorAll('.star').forEach((star) => star.remove());
+  }
+
   toggleGamePanel() {
     document.querySelector('.game-panel').classList.toggle('hidden', !this.playMode);
     if (this.playMode) this.startGame();
