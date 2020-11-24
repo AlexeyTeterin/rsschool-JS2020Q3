@@ -3,6 +3,8 @@ import CATEGORIES from './categories.js';
 import CARDS from './cards.js';
 
 class Game {
+  gamePanel = document.querySelector('.game-panel');
+  
   gameField = document.querySelector('.game-field');
 
   menu = document.querySelector('.menu');
@@ -199,8 +201,32 @@ class Game {
     });
   }
   
+  startGame() {
+    this.createStars();
+  }
+  
+  stopGame() {
+    this.removeStars();
+  }
+  
+  createStars() {
+    let counter = 8;
+    while (counter > 0) {
+      const star = document.createElement('div');
+      star.classList.add('star', 'star-empty');
+      this.gamePanel.append(star);
+      counter -= 1;
+    }
+  }
+  
+  removeStars() {
+    document.querySelectorAll('.star').forEach((star) => star.remove());
+  }
+  
   toggleGamePanel() {
     document.querySelector('.game-panel').classList.toggle('hidden', !this.playMode);
+    if (this.playMode) this.startGame();
+    else this.stopGame();
   }
 
   toggleMenu() {
