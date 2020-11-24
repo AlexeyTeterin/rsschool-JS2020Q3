@@ -115,6 +115,11 @@ class Game {
       el.classList.toggle('hidden', this.playMode);
       // this.sleep(250).then(el.classList.toggle('display-none', this.playMode));
     });
+    document.querySelectorAll('.card__image').forEach((el) => {
+      if (!el.parentElement.classList.contains('card__front') && !el.parentElement.classList.contains('card__back')) return;
+      // el.classList.toggle('goDownImg', this.playMode);
+      // el.classList.toggle('display-none', this.playMode);
+    });
   }
 
   toggleFlipCardsListener() {
@@ -153,12 +158,11 @@ class Game {
   }
 
   backFlipCardsHandler(event) {
-    const rotatedCard = event.target.parentElement.parentElement;
     const relatedTarget = event.relatedTarget;
+    console.log(relatedTarget);
     const relatedTargetIsGameField = relatedTarget.classList.contains('game-field');
-    const relatedTargetIsFlipCard = relatedTarget.classList.contains('flip-card');
-    if (!relatedTargetIsGameField && !relatedTargetIsFlipCard) return;
-    rotatedCard.classList.remove('rotate');
+    if (!relatedTargetIsGameField) return;
+    document.querySelector('.rotate').classList.remove('rotate');
   }
 
   addCategoryListeners() {
