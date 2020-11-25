@@ -14,11 +14,35 @@ class Game {
 
   overlay = document.querySelector('.overlay');
 
-  playMode = false;
-
-  currentCategory = null;
-
-  currentCard = null;
+  playMode = {
+    isActive: false,
+    category: null,
+    cards: null,
+    currentCard: null,
+    currentIndex: 0,
+    results: [],
+    setCorrectAnswer: () => {
+      const {
+        results,
+        currentIndex
+      } = this.playMode;
+      if (results[currentIndex] !== false) results[currentIndex] = true;
+    },
+    setWrongAnswer: () => {
+      const {
+        results,
+        currentIndex
+      } = this.playMode;
+      if (!results[currentIndex]) results[currentIndex] = false;
+    },
+    hasNextCard: () => this.playMode.cards[this.playMode.currentIndex + 1],
+    setNextCard: () => this.playMode.currentCard = this.playMode.cards[++this.playMode.currentIndex],
+    reset: () => {
+      this.playMode.results = [];
+      this.playMode.cards = [];
+      this.playMode.currentIndex = 0;
+    },
+  };
 
   clearGameField() {
     this.gameField.innerHTML = null;
@@ -47,7 +71,7 @@ class Game {
   }
 
   loadCardsOf(category) {
-    this.currentCategory = category;
+    this.playMode.category = category;
     this.gameField.classList.add('hidden');
     this.sleep(500).then(() => {
       this.clearGameField();
@@ -59,6 +83,7 @@ class Game {
     }).then(() => {
       this.toggleFlipCardsTitles();
       this.gameField.classList.remove('hidden');
+      if (this.playMode.isActive) this.startGame();
       // this.addFlipCardsListener();
     });
   }
@@ -115,12 +140,12 @@ class Game {
   toggleFlipCardsTitles() {
     document.querySelectorAll('.card__title').forEach((el) => {
       if (!el.parentElement.classList.contains('card__front') && !el.parentElement.classList.contains('card__back')) return;
-      el.classList.toggle('hidden', this.playMode);
+      el.classList.toggle('hidden', this.playMode.isActive);
       // this.sleep(250).then(el.classList.toggle('display-none', this.playMode));
     });
     document.querySelectorAll('.card__rotate-btn').forEach((el) => {
       if (!el.parentElement.classList.contains('card__front') && !el.parentElement.classList.contains('card__back')) return;
-      el.classList.toggle('hidden', this.playMode);
+      el.classList.toggle('hidden', this.playMode.isActive);
       // this.sleep(250).then(el.classList.toggle('display-none', this.playMode));
     });
     document.querySelectorAll('.card__image').forEach((el) => {
@@ -131,7 +156,7 @@ class Game {
   }
 
   toggleFlipCardsListener() {
-    if (!this.playMode) {
+    if (!this.playMode.isActive) {
       this.gameField.addEventListener('click', this.handleCardFlip);
       this.gameField.addEventListener('mouseout', this.handleCardBackFlip);
     } else {
@@ -142,7 +167,6 @@ class Game {
   }
 
   handleCardFlip(event) {
-    const playSound = (src) => new Audio(src).play();
     const {
       target,
     } = event;
@@ -152,7 +176,7 @@ class Game {
         return;
       }
       const flipCard = target.parentElement.parentElement.parentElement;
-      playSound(flipCard.dataset.sound);
+      new Audio(flipCard.dataset.sound).play();
     }
   }
 
@@ -181,7 +205,11 @@ class Game {
   }
 
   runLogoListener() {
-    document.querySelector('.logo').addEventListener('click', () => this.loadCategories());
+    document.querySelector('.logo').addEventListener('click', () => {
+      if (this.playMode.isActive) this.togglePlayMode();
+      document.querySelector('#checkbox').checked = false;
+      this.loadCategories();
+    });
   }
 
   runMenuBtnListener() {
@@ -190,66 +218,96 @@ class Game {
   }
 
   runToggleModeListener() {
-    const toggleBodyClass = () => document.body.classList.toggle('play-mode', this.playMode);
+    document.querySelector('#toggle-mode').addEventListener('click', () => this.togglePlayMode());
+  }
 
-    document.querySelector('#toggle-mode').addEventListener('click', () => {
-      this.playMode = !this.playMode;
-      toggleBodyClass();
-      this.toggleFlipCardsListener();
-      this.toggleGamePanel();
-    });
+  togglePlayMode() {
+    const toggleBodyClass = () => document.body.classList.toggle('play-mode', this.playMode.isActive);
+
+    this.playMode.isActive = !this.playMode.isActive;
+    toggleBodyClass();
+    this.toggleFlipCardsListener();
+    this.toggleGamePanel();
+
+    if (!this.playMode.isActive) this.enableAllCards();
+  }
+
+  enableAllCards() {
+    document.querySelectorAll('.disabled').forEach((card) => card.classList.remove('disabled'))
   }
 
   runPlayModeCardsListener() {
     this.gameField.addEventListener('click', (event) => {
-      if (!this.playMode) return;
-      const target = event.target.parentElement.parentElement.parentElement;
-      const clickedCard = target.dataset;
-      const currentCard = JSON.parse(sessionStorage.getItem('currentCard'));
-      if (clickedCard.word === currentCard.word) {
-        console.log('correct!');
+      const {
+        isActive,
+        setCorrectAnswer,
+        setWrongAnswer,
+        results,
+        hasNextCard,
+        setNextCard
+      } = this.playMode;
+      const clickedCard = event.target.parentElement.parentElement.parentElement;
+      console.log(clickedCard);
+      const clickOutsideCard = !clickedCard.classList.contains('flip-card');
+      const cardDisabled = clickedCard.classList.contains('disabled');
+      if (!isActive || cardDisabled || clickOutsideCard || !this.playMode.currentCard) return;
+
+      const answerIsCorrect = clickedCard.dataset.word === this.playMode.currentCard.word;
+      if (answerIsCorrect) {
+        setCorrectAnswer();
+        clickedCard.classList.add('disabled');
+        this.playSound('./assets/audio/answerIsCorrect.wav');
+        if (hasNextCard()) {
+          setNextCard();
+          this.playCard(this.playMode.currentCard);
+        }
         // show result in stars
-        // goto next sound
-      } else {
-        console.log('false');
-        // show result in stars
-        // goto next sound
       }
+      if (!answerIsCorrect) {
+        setWrongAnswer();
+        this.playSound('./assets/audio/answerIsWrong.wav')
+        // show result in stars
+      }
+      console.log(results.join('-'));
     });
   }
 
-  stopGame() {
-    this.removeStars();
+  playSound(src) {
+    const sound = new Audio(src);
+    sound.play();
   }
 
   startGame() {
     if (!document.querySelector('.replay-btn')) this.createReplayBtn();
-    this.createStars();
 
     const cards = [];
     this.gameField.querySelectorAll('.flip-card').forEach((card) => {
       cards.push(card.dataset);
     });
-    const shuffledCards = this.shuffle(cards);
-    console.log(shuffledCards);
-    sessionStorage.setItem('currentCard', JSON.stringify(shuffledCards[0]));
-    this.playCard(shuffledCards[0]);
+    this.playMode.cards = this.shuffle(cards);
+    this.playMode.currentCard = this.playMode.cards[0];
+    console.log(this.playMode.cards);
+    this.createStars();
   }
 
-  async playCard(card) {
+  stopGame() {
+    this.gamePanel.innerHTML = null;
+    this.playMode.reset();
+  }
+
+  playCard(card) {
     const playSound = (src) => new Audio(src).play();
     this.sleep(1000).then(() => playSound(card.sound));
   }
 
   // eslint-disable-next-line class-methods-use-this
   shuffle(array) {
-    const len = array.length < 8 ? array.length : 8;
+    const len = document.querySelectorAll('.flip-card').length;
     const random = () => Math.floor(Math.random() * len);
     const indexes = [];
     const result = [];
     let index = random();
-    indexes.push(random());
-    for (let i = len; i > 1; i -= 1) {
+    for (let i = len; i > 0; i -= 1) {
       while (indexes.includes(index)) index = random();
       indexes.push(index);
       result.push(array[index]);
@@ -258,7 +316,8 @@ class Game {
   }
 
   createStars() {
-    let counter = 8;
+    let counter = this.playMode.cards.length;
+    if (counter) document.querySelector('.replay-btn').classList.remove('hidden');
     while (counter > 0) {
       const star = document.createElement('div');
       star.classList.add('star', 'star-empty');
@@ -269,17 +328,18 @@ class Game {
 
   createReplayBtn() {
     const replayBtn = document.createElement('div');
-    replayBtn.classList.add('replay-btn');
+    replayBtn.classList.add('replay-btn', 'play-btn', 'hidden');
     this.gamePanel.append(replayBtn);
-  }
-
-  removeStars() {
-    this.gamePanel.querySelectorAll('.star').forEach((star) => star.remove());
+    
+    replayBtn.addEventListener('click', () => {
+      replayBtn.classList.remove('play-btn');
+      this.playCard(this.playMode.currentCard);
+    })
   }
 
   toggleGamePanel() {
-    document.querySelector('.game-panel').classList.toggle('hidden', !this.playMode);
-    if (this.playMode) this.startGame();
+    document.querySelector('.game-panel').classList.toggle('hidden', !this.playMode.isActive);
+    if (this.playMode.isActive) this.startGame();
     else this.stopGame();
   }
 
