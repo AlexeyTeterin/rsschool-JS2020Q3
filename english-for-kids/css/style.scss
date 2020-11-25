@@ -338,7 +338,7 @@ body {
         background-size: contain;
         cursor: pointer;
         border-radius: 50%;
-        transition: box-shadow 0.2s, background 0.5s, transform 0.1s;
+        transition: box-shadow 0.2s, background 0.5s, transform 0.1s, visibility 0.2s, opacity 0.2s;
         @include dropShadow();
 
         &.play-btn {
@@ -350,7 +350,7 @@ body {
         }
         
         &:active {
-          transform: scale(0.95);
+          transform: scale(0.9);
         }
       }
     }

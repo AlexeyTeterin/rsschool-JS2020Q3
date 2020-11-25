@@ -16,6 +16,7 @@ class Game {
 
   playMode = {
     isActive: false,
+    gameStarted: false,
     category: null,
     cards: null,
     currentCard: null,
@@ -239,7 +240,7 @@ class Game {
   runPlayModeCardsListener() {
     this.gameField.addEventListener('click', (event) => {
       const {
-        isActive,
+        gameStarted,
         setCorrectAnswer,
         setWrongAnswer,
         results,
@@ -250,7 +251,7 @@ class Game {
       console.log(clickedCard);
       const clickOutsideCard = !clickedCard.classList.contains('flip-card');
       const cardDisabled = clickedCard.classList.contains('disabled');
-      if (!isActive || cardDisabled || clickOutsideCard || !this.playMode.currentCard) return;
+      if (!gameStarted || cardDisabled || clickOutsideCard || !this.playMode.currentCard) return;
 
       const answerIsCorrect = clickedCard.dataset.word === this.playMode.currentCard.word;
       if (answerIsCorrect) {
@@ -332,12 +333,17 @@ class Game {
     this.gamePanel.append(replayBtn);
     
     replayBtn.addEventListener('click', () => {
-      replayBtn.classList.remove('play-btn');
+      if (replayBtn.classList.contains('play-btn')) {
+        this.playMode.gameStarted = true;
+        replayBtn.classList.add('hidden');
+        this.sleep(200).then(() => replayBtn.classList.remove('play-btn'));
+        this.sleep(1000).then(() => replayBtn.classList.remove('hidden'));
+      };
       this.playCard(this.playMode.currentCard);
     })
   }
 
-  toggleGamePanel() {
+  toggleGamePanel() { 
     document.querySelector('.game-panel').classList.toggle('hidden', !this.playMode.isActive);
     if (this.playMode.isActive) this.startGame();
     else this.stopGame();

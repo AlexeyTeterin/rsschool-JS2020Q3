@@ -310,7 +310,7 @@ body main .game-panel .replay-btn {
   background-size: contain;
   cursor: pointer;
   border-radius: 50%;
-  transition: box-shadow 0.2s, background 0.5s, transform 0.1s;
+  transition: box-shadow 0.2s, background 0.5s, transform 0.1s, visibility 0.2s, opacity 0.2s;
   filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5));
 }
 
@@ -323,7 +323,7 @@ body main .game-panel .replay-btn:hover {
 }
 
 body main .game-panel .replay-btn:active {
-  transform: scale(0.95);
+  transform: scale(0.9);
 }
 
 body main .game-field {
