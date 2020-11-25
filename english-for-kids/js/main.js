@@ -42,6 +42,7 @@ class Game {
       this.playMode.results = [];
       this.playMode.cards = [];
       this.playMode.currentIndex = 0;
+      this.playMode.gameStarted = false;
     },
   };
 
@@ -273,6 +274,40 @@ class Game {
     });
   }
 
+  handleCardsInPlayMode(event) {
+    const {
+      gameStarted,
+      setCorrectAnswer,
+      setWrongAnswer,
+      results,
+      hasNextCard,
+      setNextCard
+    } = this.playMode;
+    const clickedCard = event.target.parentElement.parentElement.parentElement;
+    console.log(clickedCard);
+    const clickOutsideCard = !clickedCard.classList.contains('flip-card');
+    const cardDisabled = clickedCard.classList.contains('disabled');
+    if (!gameStarted || cardDisabled || clickOutsideCard || !this.playMode.currentCard) return;
+
+    const answerIsCorrect = clickedCard.dataset.word === this.playMode.currentCard.word;
+    if (answerIsCorrect) {
+      setCorrectAnswer();
+      clickedCard.classList.add('disabled');
+      this.playSound('./assets/audio/answerIsCorrect.wav');
+      if (hasNextCard()) {
+        setNextCard();
+        this.playCard(this.playMode.currentCard);
+      }
+      // show result in stars
+    }
+    if (!answerIsCorrect) {
+      setWrongAnswer();
+      this.playSound('./assets/audio/answerIsWrong.wav')
+      // show result in stars
+    }
+    console.log(results.join('-'));
+  }
+
   playSound(src) {
     const sound = new Audio(src);
     sound.play();
@@ -331,7 +366,7 @@ class Game {
     const replayBtn = document.createElement('div');
     replayBtn.classList.add('replay-btn', 'play-btn', 'hidden');
     this.gamePanel.append(replayBtn);
-    
+
     replayBtn.addEventListener('click', () => {
       if (replayBtn.classList.contains('play-btn')) {
         this.playMode.gameStarted = true;
@@ -343,7 +378,7 @@ class Game {
     })
   }
 
-  toggleGamePanel() { 
+  toggleGamePanel() {
     document.querySelector('.game-panel').classList.toggle('hidden', !this.playMode.isActive);
     if (this.playMode.isActive) this.startGame();
     else this.stopGame();
