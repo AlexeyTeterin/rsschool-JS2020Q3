@@ -17,6 +17,7 @@ class Game {
   playMode = {
     isActive: false,
     gameStarted: false,
+    gameFinished: false,
     category: null,
     cards: null,
     currentCard: null,
@@ -25,19 +26,26 @@ class Game {
     setCorrectAnswer: () => {
       const {
         results,
-        currentIndex
+        currentIndex,
       } = this.playMode;
       if (results[currentIndex] !== false) results[currentIndex] = true;
     },
     setWrongAnswer: () => {
       const {
         results,
-        currentIndex
+        currentIndex,
       } = this.playMode;
       if (!results[currentIndex]) results[currentIndex] = false;
     },
     hasNextCard: () => this.playMode.cards[this.playMode.currentIndex + 1],
-    setNextCard: () => this.playMode.currentCard = this.playMode.cards[++this.playMode.currentIndex],
+    setNextCard: () => {
+      this.playMode.currentIndex += 1;
+      const {
+        cards,
+        currentIndex,
+      } = this.playMode;
+      this.playMode.currentCard = cards[currentIndex];
+    },
     reset: () => {
       this.playMode.results = [];
       this.playMode.cards = [];
@@ -77,6 +85,8 @@ class Game {
     this.gameField.classList.add('hidden');
     this.sleep(500).then(() => {
       this.clearGameField();
+      this.clearGamePanel();
+      this.playMode.reset();
       const cards = CARDS.filter((card) => card.category === category);
       // console.log(cards);
       cards.forEach((card) => {
@@ -143,17 +153,10 @@ class Game {
     document.querySelectorAll('.card__title').forEach((el) => {
       if (!el.parentElement.classList.contains('card__front') && !el.parentElement.classList.contains('card__back')) return;
       el.classList.toggle('hidden', this.playMode.isActive);
-      // this.sleep(250).then(el.classList.toggle('display-none', this.playMode));
     });
     document.querySelectorAll('.card__rotate-btn').forEach((el) => {
       if (!el.parentElement.classList.contains('card__front') && !el.parentElement.classList.contains('card__back')) return;
       el.classList.toggle('hidden', this.playMode.isActive);
-      // this.sleep(250).then(el.classList.toggle('display-none', this.playMode));
-    });
-    document.querySelectorAll('.card__image').forEach((el) => {
-      if (!el.parentElement.classList.contains('card__front') && !el.parentElement.classList.contains('card__back')) return;
-      // el.classList.toggle('goDownImg', this.playMode);
-      // el.classList.toggle('display-none', this.playMode);
     });
   }
 
@@ -235,21 +238,19 @@ class Game {
   }
 
   enableAllCards() {
-    document.querySelectorAll('.disabled').forEach((card) => card.classList.remove('disabled'))
+    document.querySelectorAll('.disabled').forEach((card) => card.classList.remove('disabled'));
   }
 
-  runPlayModeCardsListener() {
+  runPlayModeHandler() {
     this.gameField.addEventListener('click', (event) => {
       const {
         gameStarted,
         setCorrectAnswer,
         setWrongAnswer,
-        results,
         hasNextCard,
-        setNextCard
+        setNextCard,
       } = this.playMode;
       const clickedCard = event.target.parentElement.parentElement.parentElement;
-      console.log(clickedCard);
       const clickOutsideCard = !clickedCard.classList.contains('flip-card');
       const cardDisabled = clickedCard.classList.contains('disabled');
       if (!gameStarted || cardDisabled || clickOutsideCard || !this.playMode.currentCard) return;
@@ -259,70 +260,38 @@ class Game {
         setCorrectAnswer();
         clickedCard.classList.add('disabled');
         this.playSound('./assets/audio/answerIsCorrect.wav');
+        this.showResultInStars();
         if (hasNextCard()) {
           setNextCard();
           this.playCard(this.playMode.currentCard);
+        } else { // game finished
+          console.log('game finished!');
         }
-        // show result in stars
       }
       if (!answerIsCorrect) {
         setWrongAnswer();
-        this.playSound('./assets/audio/answerIsWrong.wav')
-        // show result in stars
+        this.playSound('./assets/audio/answerIsWrong.wav');
+        this.showResultInStars();
       }
-      console.log(results.join('-'));
     });
   }
 
-  handleCardsInPlayMode(event) {
+  showResultInStars() {
     const {
-      gameStarted,
-      setCorrectAnswer,
-      setWrongAnswer,
-      results,
-      hasNextCard,
-      setNextCard
+      currentIndex,
     } = this.playMode;
-    const clickedCard = event.target.parentElement.parentElement.parentElement;
-    console.log(clickedCard);
-    const clickOutsideCard = !clickedCard.classList.contains('flip-card');
-    const cardDisabled = clickedCard.classList.contains('disabled');
-    if (!gameStarted || cardDisabled || clickOutsideCard || !this.playMode.currentCard) return;
-
-    const answerIsCorrect = clickedCard.dataset.word === this.playMode.currentCard.word;
-    if (answerIsCorrect) {
-      setCorrectAnswer();
-      clickedCard.classList.add('disabled');
-      this.playSound('./assets/audio/answerIsCorrect.wav');
-      if (hasNextCard()) {
-        setNextCard();
-        this.playCard(this.playMode.currentCard);
-      }
-      // show result in stars
-    }
-    if (!answerIsCorrect) {
-      setWrongAnswer();
-      this.playSound('./assets/audio/answerIsWrong.wav')
-      // show result in stars
-    }
-    console.log(results.join('-'));
-  }
-
-  playSound(src) {
-    const sound = new Audio(src);
-    sound.play();
+    const star = document.querySelectorAll('.star')[currentIndex];
+    const answer = this.playMode.results[currentIndex];
+    star.classList.remove('star-empty');
+    star.classList.toggle('star-true', answer);
   }
 
   startGame() {
     if (!document.querySelector('.replay-btn')) this.createReplayBtn();
+    const cards = Array.from(this.gameField.querySelectorAll('.flip-card')).map((card) => card.dataset);
 
-    const cards = [];
-    this.gameField.querySelectorAll('.flip-card').forEach((card) => {
-      cards.push(card.dataset);
-    });
     this.playMode.cards = this.shuffle(cards);
-    this.playMode.currentCard = this.playMode.cards[0];
-    console.log(this.playMode.cards);
+    [this.playMode.currentCard] = this.playMode.cards;
     this.createStars();
   }
 
@@ -334,21 +303,6 @@ class Game {
   playCard(card) {
     const playSound = (src) => new Audio(src).play();
     this.sleep(1000).then(() => playSound(card.sound));
-  }
-
-  // eslint-disable-next-line class-methods-use-this
-  shuffle(array) {
-    const len = document.querySelectorAll('.flip-card').length;
-    const random = () => Math.floor(Math.random() * len);
-    const indexes = [];
-    const result = [];
-    let index = random();
-    for (let i = len; i > 0; i -= 1) {
-      while (indexes.includes(index)) index = random();
-      indexes.push(index);
-      result.push(array[index]);
-    }
-    return result;
   }
 
   createStars() {
@@ -373,9 +327,9 @@ class Game {
         replayBtn.classList.add('hidden');
         this.sleep(200).then(() => replayBtn.classList.remove('play-btn'));
         this.sleep(1000).then(() => replayBtn.classList.remove('hidden'));
-      };
+      }
       this.playCard(this.playMode.currentCard);
-    })
+    });
   }
 
   toggleGamePanel() {
@@ -384,10 +338,36 @@ class Game {
     else this.stopGame();
   }
 
+  clearGamePanel() {
+    const replayBtn = this.gamePanel.querySelector('.replay-btn');
+    const stars = this.gamePanel.querySelectorAll('.star');
+    if (replayBtn) replayBtn.remove();
+    if (stars) stars.forEach((star) => star.remove());
+  }
+
   toggleMenu() {
     this.menu.classList.toggle('show');
     this.menuBtn.classList.toggle('jump-to-menu');
     this.overlay.classList.toggle('hidden');
+  }
+
+  playSound(src) {
+    const sound = new Audio(src);
+    sound.play();
+  }
+
+  shuffle(array) {
+    const len = document.querySelectorAll('.flip-card').length;
+    const random = () => Math.floor(Math.random() * len);
+    const indexes = [];
+    const result = [];
+    let index = random();
+    for (let i = len; i > 0; i -= 1) {
+      while (indexes.includes(index)) index = random();
+      indexes.push(index);
+      result.push(array[index]);
+    }
+    return result;
   }
 
   sleep = (ms) => new Promise((resolve) => setTimeout(() => resolve(), ms));
@@ -401,4 +381,4 @@ game.toggleFlipCardsListener();
 game.runLogoListener();
 game.runMenuBtnListener();
 game.runToggleModeListener();
-game.runPlayModeCardsListener();
+game.runPlayModeHandler();
