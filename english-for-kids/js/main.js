@@ -54,6 +54,41 @@ class Game {
     },
   };
 
+  scores = null;
+
+  init() {
+    this.createMenu();
+    this.loadCategories();
+    this.runCategoryListeners();
+    this.toggleFlipCardsListener();
+    this.runLogoListener();
+    this.runMenuBtnListener();
+    this.runToggleModeListener();
+    this.runPlayModeHandler();
+    this.runTrainingClicksCounter();
+    this.loadScores();
+  }
+
+  loadScores() {
+    this.scores = JSON.parse(localStorage.getItem('englishForKidsScores'));
+
+    if (!this.scores) {
+      const scores = {};
+      CARDS.forEach((card) => {
+        scores[card.word] = {
+          answeredCorrect: 0,
+          answeredWrong: 0,
+          category: card.category,
+          trainingClicks: 0,
+          translation: card.translation,
+        };
+      });
+      this.scores = scores;
+    }
+
+    console.log(this.scores);
+  }
+
   clearGameField() {
     this.gameField.innerHTML = null;
   }
@@ -171,6 +206,20 @@ class Game {
     this.toggleFlipCardsTitles();
   }
 
+  runTrainingClicksCounter() {
+    this.gameField.addEventListener('click', (event) => {
+      if (this.playMode.isActive) return;
+      const flipCard = event.target.parentElement.parentElement.parentElement;
+      const {
+        word,
+      } = flipCard.dataset;
+      if (flipCard.classList.contains('flip-card')) {
+        this.scores[word].trainingClicks += 1;
+        this.saveScores();
+      }
+    });
+  }
+
   handleCardFlip(event) {
     const {
       target,
@@ -183,6 +232,7 @@ class Game {
       const flipCard = target.parentElement.parentElement.parentElement;
       new Audio(flipCard.dataset.sound).play();
     }
+    console.log(this);
   }
 
   handleCardBackFlip(event) {
@@ -262,6 +312,7 @@ class Game {
         clickedCard.classList.add('disabled');
         this.playSound('./assets/audio/answerIsCorrect.wav');
         this.showResultInStars();
+        this.saveScores('correct');
         if (hasNextCard()) {
           setNextCard();
           this.playCard(this.playMode.currentCard);
@@ -274,8 +325,17 @@ class Game {
         setWrongAnswer();
         this.playSound('./assets/audio/answerIsWrong.wav');
         this.showResultInStars();
+        this.saveScores('wrong');
       }
     });
+  }
+
+  saveScores(answer) {
+    if (answer === 'correct') this.scores[this.playMode.currentCard.word].answeredCorrect += 1;
+    if (answer === 'wrong') this.scores[this.playMode.currentCard.word].answeredWrong += 1;
+
+    localStorage.setItem('englishForKidsScores', JSON.stringify(this.scores));
+    console.log(JSON.stringify(this.scores));
   }
 
   showResultInStars() {
@@ -376,11 +436,4 @@ class Game {
 }
 
 const game = new Game();
-game.createMenu();
-game.loadCategories();
-game.runCategoryListeners();
-game.toggleFlipCardsListener();
-game.runLogoListener();
-game.runMenuBtnListener();
-game.runToggleModeListener();
-game.runPlayModeHandler();
+game.init();
