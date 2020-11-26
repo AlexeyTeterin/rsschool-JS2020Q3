@@ -1,4 +1,5 @@
 const CARDS = [
+
   // animals
   {
     category: 'animals',
@@ -40,12 +41,14 @@ const CARDS = [
     word: 'duck',
     translation: 'утка',
   },
+
   // insects
   {
     category: 'insects',
     word: 'butterfly',
     translation: 'бабочка',
   },
+
   // food
   {
     category: 'food',
@@ -85,6 +88,7 @@ const CARDS = [
     word: 'tomato',
     translation: 'помидор',
   },
+
   // nature
   {
     category: 'nature',
@@ -118,7 +122,12 @@ const CARDS = [
     category: 'nature',
     word: 'tree',
     translation: 'дерево',
+  }, {
+    category: 'nature',
+    word: 'fire',
+    translation: 'огонь',
   },
+
   // human
   {
     category: 'human',
@@ -157,6 +166,7 @@ const CARDS = [
     word: 'nose',
     translation: 'нос',
   },
+
   // numbers
   {
     category: 'numbers',
@@ -202,6 +212,45 @@ const CARDS = [
     category: 'numbers',
     word: 'zero',
     translation: 'ноль',
+  },
+
+  // transport
+  {
+    category: 'transport',
+    word: 'plane',
+    translation: 'самолёт',
+  }, {
+    category: 'transport',
+    word: 'bus',
+    translation: 'автобус',
+  }, {
+    category: 'transport',
+    word: 'train',
+    translation: 'поезд',
+  }, {
+    category: 'transport',
+    word: 'car',
+    translation: 'автомобиль',
+  }, {
+    category: 'transport',
+    word: 'ship',
+    translation: 'корабль',
+  }, {
+    category: 'transport',
+    word: 'bicycle',
+    translation: 'велосипед',
+  }, {
+    category: 'transport',
+    word: 'submarine',
+    translation: 'подлодка',
+  }, {
+    category: 'transport',
+    word: 'truck',
+    translation: 'грузовик',
+  }, {
+    category: 'transport',
+    word: 'tram',
+    translation: 'трамвай',
   },
 ];
 

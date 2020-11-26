@@ -256,6 +256,7 @@ class Game {
       if (!gameStarted || cardDisabled || clickOutsideCard || !this.playMode.currentCard) return;
 
       const answerIsCorrect = clickedCard.dataset.word === this.playMode.currentCard.word;
+
       if (answerIsCorrect) {
         setCorrectAnswer();
         clickedCard.classList.add('disabled');
@@ -268,6 +269,7 @@ class Game {
           console.log('game finished!');
         }
       }
+
       if (!answerIsCorrect) {
         setWrongAnswer();
         this.playSound('./assets/audio/answerIsWrong.wav');
