@@ -95,33 +95,36 @@ class Game {
 
   loadCategories() {
     this.gameField.classList.add('hidden');
-    this.sleep(500).then(() => {
-      this.clearGameField();
-      CATEGORIES.forEach((cat) => {
-        const categoryCard = document.createElement('div');
-        const cardImage = document.createElement('div');
-        const cardTitle = document.createElement('div');
-        categoryCard.classList.add('category-card');
-        categoryCard.dataset.category = cat;
-        cardImage.classList.add('card__image');
-        cardImage.style.setProperty('background-image', `url("./assets/img/_${cat}.svg")`);
-        cardTitle.classList.add('card__title');
-        cardTitle.textContent = cat;
-        categoryCard.append(cardImage, cardTitle);
-        this.gameField.append(categoryCard);
+    this.clearGamePanel();
+    this.sleep(500)
+      .then(() => {
+        this.clearGameField();
+        CATEGORIES.forEach((cat) => {
+          const categoryCard = document.createElement('div');
+          const cardImage = document.createElement('div');
+          const cardTitle = document.createElement('div');
+          categoryCard.classList.add('category-card');
+          categoryCard.dataset.category = cat;
+          cardImage.classList.add('card__image');
+          cardImage.style.setProperty('background-image', `url("./assets/img/_${cat}.svg")`);
+          cardTitle.classList.add('card__title');
+          cardTitle.textContent = cat;
+          categoryCard.append(cardImage, cardTitle);
+          this.gameField.append(categoryCard);
+        });
+      })
+      .then(() => {
+        this.gameField.classList.remove('hidden');
+        this.highlightMenuItem();
       });
-    }).then(() => {
-      this.gameField.classList.remove('hidden');
-      this.highlightMenuItem();
-    });
   }
 
   loadCardsOf(category) {
     this.playMode.category = category;
     this.gameField.classList.add('hidden');
+    this.clearGamePanel();
     this.sleep(500).then(() => {
       this.clearGameField();
-      this.clearGamePanel();
       this.playMode.reset();
       const cards = CARDS.filter((card) => card.category === category);
       cards.forEach((card) => {
@@ -260,7 +263,7 @@ class Game {
 
   runLogoListener() {
     document.querySelector('.logo').addEventListener('click', () => {
-      if (this.playMode.isActive) this.clearGamePanel();
+      // if (this.playMode.isActive) this.clearGamePanel();
       this.loadCategories();
     });
   }
@@ -315,6 +318,7 @@ class Game {
           setNextCard();
           this.playCard(this.playMode.currentCard);
         } else { // game finished
+          this.finishGame();
           console.log('game finished!');
         }
       }
@@ -360,6 +364,34 @@ class Game {
     this.playMode.reset();
   }
 
+  finishGame() {
+    const win = !this.playMode.results.includes(false);
+    const playFinalSound = () => {
+      if (win) this.playSound('/assets/audio/finish_true.ogg');
+      else this.playSound('/assets/audio/finish_false.ogg');
+    };
+    const createFinalMessage = () => {
+      const mistakes = this.playMode.results.filter((el) => el === false).length;
+      const message = document.createElement('div');
+      message.classList.add('message');
+      message.innerText = win ? 'You win!' : `${mistakes} mistake`;
+      if (mistakes > 1) message.innerText += 's';
+      return message;
+    };
+
+    this.gameField.classList.add('hidden');
+    this.sleep(500)
+      .then(() => {
+        playFinalSound();
+        this.clearGameField();
+        this.gameField.append(createFinalMessage());
+
+        this.gameField.classList.remove('hidden');
+      })
+      .then(() => this.sleep(5000))
+      .then(() => this.loadCategories());
+  }
+
   playCard(card) {
     const playSound = (src) => new Audio(src).play();
     this.sleep(1000).then(() => playSound(card.sound));
@@ -402,8 +434,14 @@ class Game {
   clearGamePanel() {
     const replayBtn = this.gamePanel.querySelector('.replay-btn');
     const stars = this.gamePanel.querySelectorAll('.star');
-    if (replayBtn) replayBtn.remove();
-    if (stars) stars.forEach((star) => star.remove());
+
+    this.gamePanel.classList.add('hidden-content');
+    this.sleep(500)
+      .then(() => {
+        if (replayBtn) replayBtn.remove();
+        if (stars) stars.forEach((star) => star.remove());
+      })
+      .then(() => this.gamePanel.classList.remove('hidden-content'));
   }
 
   toggleMenu() {

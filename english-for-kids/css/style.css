@@ -318,6 +318,14 @@ body main .game-panel.hidden {
   right: -100%;
 }
 
+body main .game-panel div {
+  transform: opacity 0.5s;
+}
+
+body main .game-panel.hidden-content > div {
+  opacity: 0;
+}
+
 body main .game-panel .star {
   width: 1.5rem;
   height: 1.5rem;
@@ -371,6 +379,14 @@ body main .game-field {
 
 body main .game-field.narrow {
   padding-right: 4rem;
+}
+
+body main .game-field .message {
+  display: flex;
+  align-items: center;
+  font-size: 5rem;
+  height: 50vh;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5));
 }
 
 body main .game-field .flip-card {

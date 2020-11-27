@@ -321,7 +321,7 @@ body {
   }
 
   main {
-    
+
     &.wrapper {
       padding: 8rem 0;
     }
@@ -345,6 +345,14 @@ body {
 
       &.hidden {
         right: -100%;
+      }
+      
+      div {
+        transform: opacity 0.5s;
+      }
+
+      &.hidden-content >div {
+          opacity: 0;
       }
 
       .star {
@@ -398,10 +406,18 @@ body {
       justify-content: space-around;
       transition: opacity 0.5s,
         visibility 0.5s, padding 0.5s;
-        
-        &.narrow {
-          padding-right: 4rem;
-        }
+
+      &.narrow {
+        padding-right: 4rem;
+      }
+
+      .message {
+        display: flex;
+        align-items: center;
+        font-size: 5rem;
+        height: 50vh;
+        @include dropShadow();
+      }
 
       .flip-card {
         margin: 1rem;
