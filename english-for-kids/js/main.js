@@ -112,6 +112,7 @@ class Game {
       });
     }).then(() => {
       this.gameField.classList.remove('hidden');
+      this.highlightMenuItem();
     });
   }
 
@@ -123,16 +124,24 @@ class Game {
       this.clearGamePanel();
       this.playMode.reset();
       const cards = CARDS.filter((card) => card.category === category);
-      // console.log(cards);
       cards.forEach((card) => {
         this.createFlipping(card);
       });
     }).then(() => {
       this.toggleFlipCardsTitles();
+      this.highlightMenuItem(category);
       this.gameField.classList.remove('hidden');
       if (this.playMode.isActive) this.startGame();
-      // this.addFlipCardsListener();
     });
+  }
+
+  highlightMenuItem(category) {
+    const menuItems = Array.from(this.menu.getElementsByTagName('li'));
+    menuItems.forEach((li) => li.classList.remove('active'));
+    if (category) {
+      const selectedMenuItem = menuItems.filter((li) => li.dataset.category === category)[0];
+      selectedMenuItem.classList.add('active');
+    }
   }
 
   createMenu() {

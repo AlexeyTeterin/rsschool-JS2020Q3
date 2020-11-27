@@ -142,6 +142,11 @@ body header nav .menu li:active {
   transform: scale(1.15);
 }
 
+body header nav .menu li.active {
+  transform: scale(1.25);
+  text-decoration: underline;
+}
+
 body header .logo {
   display: flex;
   align-items: center;
