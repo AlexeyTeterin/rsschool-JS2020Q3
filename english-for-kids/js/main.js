@@ -135,15 +135,6 @@ class Game {
     });
   }
 
-  highlightMenuItem(category) {
-    const menuItems = Array.from(this.menu.getElementsByTagName('li'));
-    menuItems.forEach((li) => li.classList.remove('active'));
-    if (category) {
-      const selectedMenuItem = menuItems.filter((li) => li.dataset.category === category)[0];
-      selectedMenuItem.classList.add('active');
-    }
-  }
-
   createMenu() {
     CATEGORIES.forEach((cat) => {
       const menuLi = document.createElement('li');
@@ -270,8 +261,7 @@ class Game {
 
   runLogoListener() {
     document.querySelector('.logo').addEventListener('click', () => {
-      if (this.playMode.isActive) this.togglePlayMode();
-      document.querySelector('#checkbox').checked = false;
+      if (this.playMode.isActive) this.clearGamePanel();
       this.loadCategories();
     });
   }
@@ -420,6 +410,15 @@ class Game {
     this.menu.classList.toggle('show');
     this.menuBtn.classList.toggle('jump-to-menu');
     this.overlay.classList.toggle('hidden');
+  }
+
+  highlightMenuItem(category) {
+    const menuItems = Array.from(this.menu.getElementsByTagName('li'));
+    menuItems.forEach((li) => li.classList.remove('active'));
+    if (category) {
+      const selectedMenuItem = menuItems.filter((li) => li.dataset.category === category)[0];
+      selectedMenuItem.classList.add('active');
+    }
   }
 
   playSound(src) {
