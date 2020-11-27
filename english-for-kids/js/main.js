@@ -240,8 +240,7 @@ class Game {
     const {
       relatedTarget,
     } = event;
-    const relatedTargetIsGameField = relatedTarget.classList.contains('game-field');
-    if (!relatedTargetIsGameField) return;
+    if (!relatedTarget.classList.contains('game-field')) return;
     if (rotatedCard) rotatedCard.classList.remove('rotate');
   }
 
@@ -410,6 +409,22 @@ class Game {
     this.menu.classList.toggle('show');
     this.menuBtn.classList.toggle('jump-to-menu');
     this.overlay.classList.toggle('hidden');
+
+    this.toggleScroll();
+  }
+
+  toggleScroll() {
+    const stopScroll = () => {
+      const x = window.scrollX;
+      const y = window.scrollY;
+      window.onscroll = () => window.scrollTo(x, y);
+    };
+
+    if (this.menu.classList.contains('show')) {
+      stopScroll();
+    } else {
+      window.onscroll = () => {};
+    }
   }
 
   highlightMenuItem(category) {
