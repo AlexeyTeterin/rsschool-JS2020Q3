@@ -54,10 +54,14 @@ body h1 {
 }
 
 body header {
+  position: fixed;
+  z-index: 1;
+  width: 100%;
   height: 8rem;
   line-height: 8rem;
   display: flex;
   justify-content: space-around;
+  background-color: inherit;
 }
 
 body header nav {
@@ -289,7 +293,7 @@ body header .overlay {
 }
 
 body main.wrapper {
-  padding-bottom: 8rem;
+  padding: 8rem 0;
 }
 
 body main .game-panel {
@@ -355,6 +359,7 @@ body main .game-panel .replay-btn:active {
 }
 
 body main .game-field {
+  padding-top: 1rem;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
