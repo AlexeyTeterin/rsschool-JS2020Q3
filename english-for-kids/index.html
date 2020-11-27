@@ -15,7 +15,7 @@
   <title>English for kids</title>
 </head>
 
-<body>
+<body class="wrapper">
   <header class="wrapper">
     <nav>
       <div class="menu-btn">
@@ -28,7 +28,6 @@
     <div class="logo">
       <h1>English for kids</h1>
     </div>
-
     <input type="checkbox" id="checkbox">
     <label id="toggle-mode" for="checkbox">
       <div id="knob"></div>
@@ -36,16 +35,20 @@
       <div id="train">Train</div>
     </label>
     <button class="stats-btn">Stats</button>
-    
     <div class="overlay hidden"></div>
   </header>
+  
   <main class="wrapper">
     <div class="game-panel hidden"></div>
     <div class="game-field">
     </div>
   </main>
 
-  <footer></footer>
+  <footer>
+    <span>&copy; 2020 Alexey Teterin <a href="https://github.com/AlexeyTeterin" target="blank"><img src="/assets/img/GitHub-Mark-32px.png" alt="github" width="16" class="github-logo"></a></span>
+    <a href="https://rs.school/js/" class="rsschool-logo" target="blank"><img src="/assets/img/rs_school_js.svg" alt="rsschool" width="76"></a>
+  </footer>
+  
   <script src="js/main.js" type="module"></script>
 </body>
 
