@@ -297,22 +297,25 @@ body main.wrapper {
 }
 
 body main .game-panel {
-  position: relative;
+  position: fixed;
+  right: 0;
   margin: 0 auto 1rem;
-  width: 80%;
-  min-width: 300px;
-  height: 4em;
+  padding-top: 2rem;
+  width: 4rem;
+  height: 24rem;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   border-radius: 1rem;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
   background-color: rgba(0, 0, 0, 0.3);
-  transition: height 0.5s, opacity 0.5s, visibility 0.5s, margin 0.5s;
+  transition: right 0.5s, opacity 0.5s, visibility 0.5s, margin 0.5s;
 }
 
 body main .game-panel.hidden {
-  margin: 0 auto;
-  height: 0;
+  right: -100%;
 }
 
 body main .game-panel .star {
@@ -333,7 +336,7 @@ body main .game-panel .star-true {
 
 body main .game-panel .replay-btn {
   position: absolute;
-  right: 1rem;
+  top: 1rem;
   width: 2.5rem;
   height: 2.5rem;
   background-image: url(/assets/img/play-again.svg);
@@ -363,7 +366,11 @@ body main .game-field {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
-  transition: opacity 0.5s, visibility 0.5s;
+  transition: opacity 0.5s, visibility 0.5s, padding 0.5s;
+}
+
+body main .game-field.narrow {
+  padding-right: 4rem;
 }
 
 body main .game-field .flip-card {

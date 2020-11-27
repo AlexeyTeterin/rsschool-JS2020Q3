@@ -394,6 +394,7 @@ class Game {
 
   toggleGamePanel() {
     document.querySelector('.game-panel').classList.toggle('hidden', !this.playMode.isActive);
+    this.gameField.classList.toggle('narrow', this.playMode.isActive);
     if (this.playMode.isActive) this.startGame();
     else this.stopGame();
   }
