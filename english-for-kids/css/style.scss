@@ -346,13 +346,13 @@ body {
       &.hidden {
         right: -100%;
       }
-      
+
       div {
         transform: opacity 0.5s;
       }
 
-      &.hidden-content >div {
-          opacity: 0;
+      &.hidden-content>div {
+        opacity: 0;
       }
 
       .star {
@@ -411,11 +411,16 @@ body {
         padding-right: 4rem;
       }
 
-      .message {
+      .finish-message {
         display: flex;
-        align-items: center;
-        font-size: 5rem;
-        height: 50vh;
+        justify-content: center;
+        align-items: flex-end;
+        font-size: 5vh;
+        height: 40vh;
+        width: 30vh;
+        background-size: 30vh 30vh;
+        background-repeat: no-repeat;
+        background-position-y: top;
         @include dropShadow();
       }
 

@@ -381,11 +381,16 @@ body main .game-field.narrow {
   padding-right: 4rem;
 }
 
-body main .game-field .message {
+body main .game-field .finish-message {
   display: flex;
-  align-items: center;
-  font-size: 5rem;
-  height: 50vh;
+  justify-content: center;
+  align-items: flex-end;
+  font-size: 5vh;
+  height: 40vh;
+  width: 30vh;
+  background-size: 30vh 30vh;
+  background-repeat: no-repeat;
+  background-position-y: top;
   filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5));
 }
 
@@ -403,7 +408,7 @@ body main .game-field .flip-card:hover {
 }
 
 body main .game-field .flip-card.disabled {
-  opacity: 0.6;
+  opacity: 0.4;
   cursor: default;
   transform: translateY(-0.4rem);
 }

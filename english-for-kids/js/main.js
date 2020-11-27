@@ -371,9 +371,11 @@ class Game {
       else this.playSound('/assets/audio/finish_false.ogg');
     };
     const createFinalMessage = () => {
+      const src = win ? '/assets/img/finish_win.png' : '/assets/img/finish_loose.png';
       const mistakes = this.playMode.results.filter((el) => el === false).length;
       const message = document.createElement('div');
-      message.classList.add('message');
+      message.classList.add('finish-message');
+      message.style.setProperty('background-image', `url(${src})`);
       message.innerText = win ? 'You win!' : `${mistakes} mistake`;
       if (mistakes > 1) message.innerText += 's';
       return message;
@@ -385,7 +387,6 @@ class Game {
         playFinalSound();
         this.clearGameField();
         this.gameField.append(createFinalMessage());
-
         this.gameField.classList.remove('hidden');
       })
       .then(() => this.sleep(5000))
