@@ -11,7 +11,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap"
     rel="stylesheet">
-    <link rel="shortcut icon" href="/assets/img/favicon.png" type="image/png">
+  <link rel="shortcut icon" href="/assets/img/favicon.png" type="image/png">
   <title>English for kids</title>
 </head>
 
@@ -28,16 +28,20 @@
     <div class="logo">
       <h1>English for kids</h1>
     </div>
-    <input type="checkbox" id="checkbox">
-    <label id="toggle-mode" for="checkbox">
-      <div id="knob"></div>
-      <div id="play">Play</div>
-      <div id="train">Train</div>
-    </label>
-    <button class="stats-btn">Stats</button>
+
+    <div class="controls">
+      <input type="checkbox" id="checkbox">
+      <label id="toggle-mode" for="checkbox">
+        <div id="knob"></div>
+        <div id="play">Play</div>
+        <div id="train">Train</div>
+      </label>
+      <button class="stats-btn">Stats</button>
+    </div>
+
     <div class="overlay hidden"></div>
   </header>
-  
+
   <main class="wrapper">
     <div class="game-panel hidden"></div>
     <div class="game-field">
@@ -45,10 +49,13 @@
   </main>
 
   <footer>
-    <span>&copy; 2020 Alexey Teterin <a href="https://github.com/AlexeyTeterin" target="blank"><img src="/assets/img/GitHub-Mark-32px.png" alt="github" width="16" class="github-logo"></a></span>
-    <a href="https://rs.school/js/" class="rsschool-logo" target="blank"><img src="/assets/img/rs_school_js.svg" alt="rsschool" width="76"></a>
+    <span>&copy; 2020 Alexey Teterin <a href="https://github.com/AlexeyTeterin"
+        target="blank"><img src="/assets/img/GitHub-Mark-32px.png" alt="github" width="16"
+          class="github-logo"></a></span>
+    <a href="https://rs.school/js/" class="rsschool-logo" target="blank"><img
+        src="/assets/img/rs_school_js.svg" alt="rsschool" width="76"></a>
   </footer>
-  
+
   <script src="js/main.js" type="module"></script>
 </body>
 

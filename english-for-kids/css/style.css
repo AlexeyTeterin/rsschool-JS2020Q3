@@ -33,6 +33,12 @@ body .wrapper {
   padding: 0 2rem;
 }
 
+@media (max-width: 620px) {
+  body .wrapper {
+    padding: 0 0.5rem;
+  }
+}
+
 body .hidden {
   opacity: 0;
   visibility: hidden;
@@ -177,23 +183,42 @@ body header .logo {
 body header .logo h1 {
   user-select: none;
   cursor: pointer;
-  transition: font 0.25s;
+  transition: text-shadow 0.2s, opacity 0.2s, font 0.2s;
   filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5));
 }
 
+@media (max-width: 620px) {
+  body header .logo h1 {
+    font-size: 2rem;
+  }
+}
+
 body header .logo h1:hover {
-  font-size: 2.5rem;
+  text-shadow: 0 0 1rem rgba(255, 255, 255, 0.85);
 }
 
 body header .logo h1:active {
-  font-size: 2.4rem;
+  opacity: 0.75;
 }
 
-body header input[type="checkbox"] {
+body header .controls {
+  height: auto;
+  display: flex;
+  justify-content: space-between;
+}
+
+@media (max-width: 620px) {
+  body header .controls {
+    justify-content: center;
+    flex-direction: column-reverse;
+  }
+}
+
+body header .controls input[type="checkbox"] {
   display: none;
 }
 
-body header #toggle-mode {
+body header .controls #toggle-mode {
   position: relative;
   display: block;
   min-width: 6.25rem;
@@ -205,14 +230,13 @@ body header #toggle-mode {
   cursor: pointer;
   margin: auto 1rem;
   overflow: hidden;
-  transition: box-shadow 0.2s;
 }
 
-body header #toggle-mode:hover {
+body header .controls #toggle-mode:hover {
   box-shadow: 0 0 10px white;
 }
 
-body header #knob {
+body header .controls #knob {
   width: 2rem;
   height: 2rem;
   background-color: white;
@@ -224,8 +248,8 @@ body header #knob {
   transition: 0.4s ease left, 0.4s ease background-position;
 }
 
-body header #play,
-body header #train {
+body header .controls #play,
+body header .controls #train {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
@@ -236,25 +260,25 @@ body header #train {
   user-select: none;
 }
 
-body header #train {
+body header .controls #train {
   margin-left: 2.5rem;
 }
 
-body header #checkbox:checked + #toggle-mode #knob {
+body header .controls #checkbox:checked + #toggle-mode #knob {
   left: 4rem;
 }
 
-body header #checkbox:checked + #toggle-mode #train {
+body header .controls #checkbox:checked + #toggle-mode #train {
   transform: translateX(4rem) translateY(-50%);
   opacity: 0;
 }
 
-body header #checkbox:not(:checked) + #toggle-mode #play {
+body header .controls #checkbox:not(:checked) + #toggle-mode #play {
   transform: translateX(-4rem) translateY(-50%);
   opacity: 0;
 }
 
-body header .stats-btn {
+body header .controls .stats-btn {
   margin: auto;
   padding: 0;
   min-width: 6.25rem;
@@ -268,16 +292,34 @@ body header .stats-btn {
   font-size: 1.5rem;
   color: white;
   outline: none;
-  transition: box-shadow 0.2s, transform 0.1s;
   filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5));
 }
 
-body header .stats-btn:hover {
+body header .controls .stats-btn:hover {
   box-shadow: 0 0 10px white;
 }
 
-body header .stats-btn:active {
+body header .controls .stats-btn:active {
   transform: scale(0.95);
+}
+
+@media (max-width: 620px) {
+  body header .controls .stats-btn:active {
+    transform: scale(0.8);
+  }
+}
+
+body header .controls #toggle-mode,
+body header .controls .stats-btn {
+  transition: transform 0.1s, box-shadow 0.2s;
+}
+
+@media (max-width: 620px) {
+  body header .controls #toggle-mode,
+body header .controls .stats-btn {
+    transform: scale(0.85);
+    margin: 0;
+  }
 }
 
 body header .overlay {
@@ -299,10 +341,11 @@ body main.wrapper {
 body main .game-panel {
   position: fixed;
   right: 0;
-  margin: 0 auto 1rem;
-  padding-top: 2rem;
+  margin: 0 auto;
+  padding-top: 3rem;
   width: 4rem;
-  height: 24rem;
+  min-height: 22rem;
+  height: auto;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -311,11 +354,12 @@ body main .game-panel {
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
   background-color: rgba(0, 0, 0, 0.3);
-  transition: right 0.5s, opacity 0.5s, visibility 0.5s, margin 0.5s;
+  transition: right 0.5s, opacity 0.5s, visibility 0.5s, margin 0.5s, height 1s;
 }
 
 body main .game-panel.hidden {
   right: -100%;
+  height: 0;
 }
 
 body main .game-panel div {
@@ -441,6 +485,13 @@ body main .game-field .card:hover {
   transition: transform 0.25s, box-shadow 0.5s;
 }
 
+@media (max-width: 620px) {
+  body main .game-field .card {
+    transform: scale(0.85);
+    margin: 0;
+  }
+}
+
 body main .game-field .card .card__front,
 body main .game-field .card .card__back {
   position: absolute;
@@ -489,6 +540,12 @@ body main .game-field .rotate {
   transform: rotateY(180deg);
 }
 
+@media (max-width: 620px) {
+  body main .game-field .rotate {
+    transform: rotateY(180deg) scale(0.9);
+  }
+}
+
 body main .game-field .category-card {
   margin: 1rem;
   width: 16rem;
@@ -507,9 +564,22 @@ body main .game-field .category-card:hover {
   transition: transform 0.25s, box-shadow 0.5s;
 }
 
+@media (max-width: 620px) {
+  body main .game-field .category-card {
+    transform: scale(0.85);
+    margin: 0;
+  }
+}
+
 body main .game-field .category-card:hover {
   box-shadow: 0px 0px 1.5rem 0px rgba(0, 0, 0, 0.64);
   transform: scale(1.05);
+}
+
+@media (max-width: 620px) {
+  body main .game-field .category-card:hover {
+    transform: scale(0.9);
+  }
 }
 
 body main .game-field .card__image {
