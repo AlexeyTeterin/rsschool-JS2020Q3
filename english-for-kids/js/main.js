@@ -106,7 +106,7 @@ class Game {
           categoryCard.classList.add('category-card');
           categoryCard.dataset.category = cat;
           cardImage.classList.add('card__image');
-          cardImage.style.setProperty('background-image', `url("./assets/img/_${cat}.svg")`);
+          cardImage.style.setProperty('background-image', `url(./assets/img/_${cat}.svg)`);
           cardTitle.classList.add('card__title');
           cardTitle.textContent = cat;
           categoryCard.append(cardImage, cardTitle);
@@ -152,7 +152,7 @@ class Game {
     const createCardImage = () => {
       const cardImage = document.createElement('div');
       cardImage.classList.add('card__image');
-      cardImage.style.setProperty('background-image', `url("./assets/img/${card.category}_${card.word}.svg")`);
+      cardImage.style.setProperty('background-image', `url(./assets/img/${card.category}_${card.word}.svg)`);
       return cardImage;
     };
 
@@ -367,11 +367,11 @@ class Game {
   finishGame() {
     const win = !this.playMode.results.includes(false);
     const playFinalSound = () => {
-      if (win) this.playSound('/assets/audio/finish_true.ogg');
-      else this.playSound('/assets/audio/finish_false.ogg');
+      if (win) this.playSound('./assets/audio/finish_true.ogg');
+      else this.playSound('./assets/audio/finish_false.ogg');
     };
     const createFinalMessage = () => {
-      const src = win ? '/assets/img/finish_win.png' : '/assets/img/finish_loose.png';
+      const src = win ? './assets/img/finish_win.png' : './assets/img/finish_loose.png';
       const mistakes = this.playMode.results.filter((el) => el === false).length;
       const message = document.createElement('div');
       message.classList.add('finish-message');

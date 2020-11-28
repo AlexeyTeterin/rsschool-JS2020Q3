@@ -256,7 +256,7 @@ const CARDS = [
 
 CARDS.map((el) => {
   const card = el;
-  card.sound = `../assets/audio/${card.category}_${card.word}.mp3`;
+  card.sound = `./assets/audio/${card.category}_${card.word}.mp3`;
   return card;
 });
 

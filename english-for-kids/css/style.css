@@ -383,15 +383,15 @@ body main .game-panel .star {
   height: 1.5rem;
   background-repeat: no-repeat;
   background-position: center;
-  background-image: url(/assets/img/star_false.svg);
+  background-image: url(./assets/img/star_false.svg);
 }
 
 body main .game-panel .star-empty {
-  background-image: url(/assets/img/star_null.svg);
+  background-image: url(./assets/img/star_null.svg);
 }
 
 body main .game-panel .star-true {
-  background-image: url(/assets/img/star_true.svg);
+  background-image: url(./assets/img/star_true.svg);
 }
 
 body main .game-panel .replay-btn {
@@ -399,7 +399,7 @@ body main .game-panel .replay-btn {
   top: 1rem;
   width: 2.5rem;
   height: 2.5rem;
-  background-image: url(/assets/img/play-again.svg);
+  background-image: url(./assets/img/play-again.svg);
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;
@@ -410,7 +410,7 @@ body main .game-panel .replay-btn {
 }
 
 body main .game-panel .replay-btn.play-btn {
-  background-image: url(/assets/img/play.svg);
+  background-image: url(./assets/img/play.svg);
 }
 
 body main .game-panel .replay-btn:hover {
@@ -530,7 +530,7 @@ body main .game-field .card .card__front .card__rotate-btn {
   right: 0;
   width: 3rem;
   height: 3rem;
-  background: url("../assets/img/_rotate.svg");
+  background: url(./assets/img/_rotate.svg);
   background-size: contain;
   transition: transform 0.25s, opacity 0.25s, visibility 0.25s;
   backface-visibility: hidden;
