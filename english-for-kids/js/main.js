@@ -106,7 +106,7 @@ class Game {
           categoryCard.classList.add('category-card');
           categoryCard.dataset.category = cat;
           cardImage.classList.add('card__image');
-          cardImage.style.setProperty('background-image', `url(./assets/img/_${cat}.svg)`);
+          cardImage.style.setProperty('background-image', `url(./assets/img/${cat}.svg)`);
           cardTitle.classList.add('card__title');
           cardTitle.textContent = cat;
           categoryCard.append(cardImage, cardTitle);
@@ -143,7 +143,7 @@ class Game {
       const menuLi = document.createElement('li');
       menuLi.dataset.category = cat;
       menuLi.textContent = cat;
-      menuLi.style.setProperty('background-image', `url(./assets/img/_${cat}.svg)`);
+      menuLi.style.setProperty('background-image', `url(./assets/img/${cat}.svg)`);
       this.menu.append(menuLi);
     });
   }
