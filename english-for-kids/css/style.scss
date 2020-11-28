@@ -71,7 +71,7 @@ body {
     padding: 0 2rem;
 
     @include max_620() {
-      padding: 0 0.5rem;
+      padding: 0 10px;
     }
   }
 
@@ -131,6 +131,10 @@ body {
         &.jump-to-menu {
           transform: translateX(220px) rotate(00deg);
           z-index: 9;
+
+          @include max_620() {
+            transform: translateX(242px) rotate(00deg);
+          }
 
           span.bar:first-child {
             transform: translateY(0.7rem) translateX(0) rotate(45deg);
@@ -242,6 +246,7 @@ body {
       @include max_620() {
         justify-content: center;
         flex-direction: column-reverse;
+        margin-right: -0.5rem;
       }
 
       input[type="checkbox"] {
@@ -372,8 +377,9 @@ body {
 
     .game-panel {
       position: fixed;
+      z-index: 1;
       right: 0;
-      margin: 0 auto;
+      margin: 2rem auto 0;
       padding-top: 3rem;
       width: 4rem;
       min-height: 22rem;
@@ -449,7 +455,7 @@ body {
       padding-top: 1rem;
       display: flex;
       flex-wrap: wrap;
-      justify-content: space-around;
+      justify-content: space-evenly;
       transition: opacity 0.5s,
         visibility 0.5s, padding 0.5s;
 
@@ -479,6 +485,10 @@ body {
         perspective: 1500px;
         border-radius: 1rem;
         transition: transform 0.25s;
+
+        @include max_620() {
+          margin: 0;
+        }
 
         &:hover {
           transform: translateY(-0.5rem);

@@ -35,7 +35,7 @@ body .wrapper {
 
 @media (max-width: 620px) {
   body .wrapper {
-    padding: 0 0.5rem;
+    padding: 0 10px;
   }
 }
 
@@ -98,6 +98,12 @@ body header nav .menu-btn span.bar {
 body header nav .menu-btn.jump-to-menu {
   transform: translateX(220px) rotate(0deg);
   z-index: 9;
+}
+
+@media (max-width: 620px) {
+  body header nav .menu-btn.jump-to-menu {
+    transform: translateX(242px) rotate(0deg);
+  }
 }
 
 body header nav .menu-btn.jump-to-menu span.bar:first-child {
@@ -211,6 +217,7 @@ body header .controls {
   body header .controls {
     justify-content: center;
     flex-direction: column-reverse;
+    margin-right: -0.5rem;
   }
 }
 
@@ -340,8 +347,9 @@ body main.wrapper {
 
 body main .game-panel {
   position: fixed;
+  z-index: 1;
   right: 0;
-  margin: 0 auto;
+  margin: 2rem auto 0;
   padding-top: 3rem;
   width: 4rem;
   min-height: 22rem;
@@ -417,7 +425,7 @@ body main .game-field {
   padding-top: 1rem;
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-around;
+  justify-content: space-evenly;
   transition: opacity 0.5s, visibility 0.5s, padding 0.5s;
 }
 
@@ -447,6 +455,12 @@ body main .game-field .flip-card {
   perspective: 1500px;
   border-radius: 1rem;
   transition: transform 0.25s;
+}
+
+@media (max-width: 620px) {
+  body main .game-field .flip-card {
+    margin: 0;
+  }
 }
 
 body main .game-field .flip-card:hover {
