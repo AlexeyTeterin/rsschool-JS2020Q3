@@ -27,6 +27,12 @@
   filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5));
 }
 
+@mixin max_620 {
+  @media (max-width: 620px) {
+    @content;
+  }
+}
+
 $col-bg-train: #0092b3;
 $col-bg-play: #6b4e91;
 $col-menu: rgb(247, 182, 63);
