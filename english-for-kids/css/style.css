@@ -385,10 +385,12 @@ body main .game-field .finish-message {
   display: flex;
   justify-content: center;
   align-items: flex-end;
-  font-size: 5vh;
+  font-size: 2rem;
   height: 40vh;
   width: 30vh;
-  background-size: 30vh 30vh;
+  min-height: 240px;
+  min-width: 180px;
+  background-size: 100%;
   background-repeat: no-repeat;
   background-position-y: top;
   filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5));

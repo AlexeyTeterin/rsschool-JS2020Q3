@@ -235,7 +235,6 @@ class Game {
       const flipCard = target.parentElement.parentElement.parentElement;
       new Audio(flipCard.dataset.sound).play();
     }
-    console.log(this);
   }
 
   handleCardBackFlip(event) {
@@ -243,6 +242,7 @@ class Game {
     const {
       relatedTarget,
     } = event;
+    if (!relatedTarget) return;
     if (!relatedTarget.classList.contains('game-field')) return;
     if (rotatedCard) rotatedCard.classList.remove('rotate');
   }
@@ -479,6 +479,7 @@ class Game {
   playSound(src) {
     const sound = new Audio(src);
     sound.play();
+    console.log(src);
   }
 
   shuffle(array) {
