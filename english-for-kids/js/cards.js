@@ -252,6 +252,41 @@ const CARDS = [
     word: 'tram',
     translation: 'трамвай',
   },
+
+  // clothhes
+  {
+    category: 'clothes',
+    word: 'boots',
+    translation: 'ботинки',
+  }, {
+    category: 'clothes',
+    word: 'hat',
+    translation: 'шапка',
+  }, {
+    category: 'clothes',
+    word: 'dress',
+    translation: 'платье',
+  }, {
+    category: 'clothes',
+    word: 'mittens',
+    translation: 'варежки',
+  }, {
+    category: 'clothes',
+    word: 'pants',
+    translation: 'штаны',
+  }, {
+    category: 'clothes',
+    word: 'shorts',
+    translation: 'шорты',
+  }, {
+    category: 'clothes',
+    word: 'socks',
+    translation: 'носки',
+  }, {
+    category: 'clothes',
+    word: 't-shirt',
+    translation: 'футболка',
+  },
 ];
 
 CARDS.map((el) => {

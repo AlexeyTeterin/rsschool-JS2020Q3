@@ -5,7 +5,7 @@ const CATEGORIES = [
   'human',
   'numbers',
   'transport',
-  // 'clothes',
+  'clothes',
   // 'emotions',
   // 'space',
   // 'insects',
