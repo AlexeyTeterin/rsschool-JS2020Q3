@@ -70,23 +70,23 @@ class Game {
   }
 
   loadScores() {
-    this.scores = JSON.parse(localStorage.getItem('englishForKidsScores'));
-
-    if (!this.scores) {
-      const scores = {};
-      CARDS.forEach((card) => {
-        scores[card.word] = {
-          answeredCorrect: 0,
-          answeredWrong: 0,
-          category: card.category,
-          trainingClicks: 0,
-          translation: card.translation,
-        };
-      });
-      this.scores = scores;
+    function createScoreforCard(card) {
+      return {
+        answeredCorrect: 0,
+        answeredWrong: 0,
+        category: card.category,
+        trainingClicks: 0,
+        translation: card.translation,
+      };
     }
+    this.scores = JSON.parse(localStorage.getItem('englishForKidsScores')) || {};
 
-    console.log(this.scores);
+    CARDS.forEach((card) => {
+      if (this.scores[card.word]) return;
+      this.scores[card.word] = createScoreforCard(card);
+    });
+
+    console.table(this.scores);
   }
 
   clearGameField() {
@@ -217,6 +217,7 @@ class Game {
         word,
       } = flipCard.dataset;
       if (flipCard.classList.contains('flip-card')) {
+        if (!this.scores[word]) this.scores[word] = word.word;
         this.scores[word].trainingClicks += 1;
         this.saveScores();
       }
