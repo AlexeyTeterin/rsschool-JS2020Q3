@@ -116,6 +116,7 @@ class Game {
       .then(() => {
         this.gameField.classList.remove('hidden');
         this.highlightMenuItem();
+        this.scrollTop();
       });
   }
 
@@ -130,6 +131,7 @@ class Game {
       cards.forEach((card) => {
         this.createFlipping(card);
       });
+      this.scrollTop();
     }).then(() => {
       this.toggleFlipCardsTitles();
       this.highlightMenuItem(category);
@@ -495,6 +497,13 @@ class Game {
       result.push(array[index]);
     }
     return result;
+  }
+
+  scrollTop() {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
   }
 
   sleep = (ms) => new Promise((resolve) => setTimeout(() => resolve(), ms));

@@ -47,6 +47,38 @@ const CARDS = [
     category: 'insects',
     word: 'butterfly',
     translation: 'бабочка',
+  }, {
+    category: 'insects',
+    word: 'bee',
+    translation: 'пчела',
+  }, {
+    category: 'insects',
+    word: 'snail',
+    translation: 'улитка',
+  }, {
+    category: 'insects',
+    word: 'fly',
+    translation: 'муха',
+  }, {
+    category: 'insects',
+    word: 'dragonfly',
+    translation: 'стрекоза',
+  }, {
+    category: 'insects',
+    word: 'bug',
+    translation: 'жук',
+  }, {
+    category: 'insects',
+    word: 'ladybug',
+    translation: 'божья коровка',
+  }, {
+    category: 'insects',
+    word: 'spider',
+    translation: 'паук',
+  }, {
+    category: 'insects',
+    word: 'worm',
+    translation: 'червяк',
   },
 
   // food

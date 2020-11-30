@@ -8,7 +8,7 @@ const CATEGORIES = [
   'clothes',
   // 'emotions',
   // 'space',
-  // 'insects',
+  'insects',
 ];
 
 export default CATEGORIES;
