@@ -63,8 +63,10 @@ class Game {
     this.toggleFlipCardsListener();
     this.runLogoListener();
     this.runMenuBtnListener();
+    this.runStatsBtnListener();
     this.runToggleModeListener();
     this.runPlayModeHandler();
+    this.runSortingListener();
     this.runTrainingClicksCounter();
     this.loadScores();
   }
@@ -72,10 +74,11 @@ class Game {
   loadScores() {
     function createScoreforCard(card) {
       return {
-        answeredCorrect: 0,
-        answeredWrong: 0,
+        word: card.word,
+        correct: 0,
+        wrong: 0,
         category: card.category,
-        trainingClicks: 0,
+        trained: 0,
         translation: card.translation,
       };
     }
@@ -137,6 +140,71 @@ class Game {
       this.highlightMenuItem(category);
       this.gameField.classList.remove('hidden');
       if (this.playMode.isActive) this.startGame();
+    });
+  }
+
+  loadStats() {
+    const getData = (card) => {
+      const columns = [];
+      columns[0] = card.category;
+      columns[1] = card.word;
+      columns[2] = card.translation;
+      columns[3] = card.correct;
+      columns[4] = card.wrong;
+      columns[5] = card.trained;
+      return columns;
+    };
+
+    const statsField = document.createElement('div');
+    statsField.classList.add('stats-field');
+    this.gameField.append(statsField);
+
+    const headRow = document.createElement('div');
+    headRow.classList.add('row', 'head-row');
+    const headColumns = ['category', 'word', 'translation', 'correct', 'wrong', 'trained'];
+    headColumns.forEach((headColumn) => {
+      const div = document.createElement('div');
+      div.id = headColumn;
+      div.classList.add('sorter');
+      div.textContent = headColumn;
+      headRow.append(div);
+    });
+    statsField.append(headRow);
+
+    Object.keys(this.scores).forEach((word) => {
+      const row = document.createElement('div');
+      row.id = word;
+      row.classList.add('row');
+      const columns = getData(this.scores[word]);
+      columns.forEach((column) => {
+        const div = document.createElement('div');
+        div.textContent = column;
+        row.append(div);
+      });
+      statsField.append(row);
+    });
+  }
+
+  runSortingListener() {
+    document.addEventListener('click', this.sorter);
+  }
+
+  sorter(event) {
+    if (!event.target.parentElement.classList.contains('head-row')) return;
+
+    const headColumns = ['category', 'word', 'translation', 'correct', 'wrong', 'trained'];
+    const sorter = event.target.id;
+    const i = headColumns.indexOf(sorter);
+    const rows = document.querySelectorAll('.row');
+    const rowsSorted = Array.from(rows).slice(1).sort((a, b) => {
+      if (b.childNodes[i].textContent > a.childNodes[i].textContent) return -1;
+      if (b.childNodes[i].textContent < a.childNodes[i].textContent) return 1;
+      return 0;
+    });
+
+    rows.forEach((row) => {
+      const position = rowsSorted.indexOf(row);
+      row.style.setProperty('order', position);
     });
   }
 
@@ -220,7 +288,7 @@ class Game {
       } = flipCard.dataset;
       if (flipCard.classList.contains('flip-card')) {
         if (!this.scores[word]) this.scores[word] = word.word;
-        this.scores[word].trainingClicks += 1;
+        this.scores[word].trained += 1;
         this.saveScores();
       }
     });
@@ -274,6 +342,13 @@ class Game {
   runMenuBtnListener() {
     this.menuBtn.addEventListener('click', () => this.toggleMenu());
     this.overlay.addEventListener('click', () => this.toggleMenu());
+  }
+
+  runStatsBtnListener() {
+    document.querySelector('.stats-btn').addEventListener('click', () => {
+      this.clearGameField();
+      this.loadStats();
+    });
   }
 
   runToggleModeListener() {
@@ -336,8 +411,8 @@ class Game {
   }
 
   saveScores(answer) {
-    if (answer === 'correct') this.scores[this.playMode.currentCard.word].answeredCorrect += 1;
-    if (answer === 'wrong') this.scores[this.playMode.currentCard.word].answeredWrong += 1;
+    if (answer === 'correct') this.scores[this.playMode.currentCard.word].correct += 1;
+    if (answer === 'wrong') this.scores[this.playMode.currentCard.word].wrong += 1;
 
     localStorage.setItem('englishForKidsScores', JSON.stringify(this.scores));
     console.log(JSON.stringify(this.scores));

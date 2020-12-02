@@ -354,8 +354,6 @@ body {
       }
     }
 
-
-
     .overlay {
       position: fixed;
       z-index: 7;
@@ -366,6 +364,18 @@ body {
       background: rgba(0, 0, 0, 0.4);
       transition: opacity 0.25s, visibility 0.25s;
       backdrop-filter: blur(2px);
+    }
+    
+    .modal {
+      position: fixed;
+      width: 90%;
+      height: 85%;
+      top: 10%;
+      left: 5%;
+      z-index: 7;
+      background-color: white;
+      opacity: 0.6;
+      border-radius: 1rem;
     }
   }
 
@@ -599,6 +609,37 @@ body {
 
         &.hidden {
           visibility: visible;
+        }
+      }
+      
+      .stats-field {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        padding: 0 1rem;
+        
+        .row {
+          width: 100%;
+          display: flex;
+          line-height: 1.5rem;
+          
+          &.head-row {
+            background-color: rgba(0, 0, 0, 0.15);
+            cursor: pointer;
+          }
+          
+          div {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            text-transform: capitalize;
+            
+            @include max_620() {
+              &:nth-child(1), &:nth-child(3) {
+                display: none;
+              }
+            }
+          }
         }
       }
     }

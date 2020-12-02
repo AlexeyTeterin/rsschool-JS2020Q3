@@ -341,6 +341,18 @@ body header .overlay {
   backdrop-filter: blur(2px);
 }
 
+body header .modal {
+  position: fixed;
+  width: 90%;
+  height: 85%;
+  top: 10%;
+  left: 5%;
+  z-index: 7;
+  background-color: white;
+  opacity: 0.6;
+  border-radius: 1rem;
+}
+
 body main.wrapper {
   padding: 8rem 0;
 }
@@ -617,6 +629,37 @@ body main .game-field .card__title {
 
 body main .game-field .card__title.hidden {
   visibility: visible;
+}
+
+body main .game-field .stats-field {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 0 1rem;
+}
+
+body main .game-field .stats-field .row {
+  width: 100%;
+  display: flex;
+  line-height: 1.5rem;
+}
+
+body main .game-field .stats-field .row.head-row {
+  background-color: rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+}
+
+body main .game-field .stats-field .row div {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  text-transform: capitalize;
+}
+
+@media (max-width: 620px) {
+  body main .game-field .stats-field .row div:nth-child(1), body main .game-field .stats-field .row div:nth-child(3) {
+    display: none;
+  }
 }
 
 body footer {
