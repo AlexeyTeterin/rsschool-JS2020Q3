@@ -144,16 +144,12 @@ class Game {
   }
 
   loadStats() {
-    const getData = (card) => {
-      const columns = [];
-      columns[0] = card.category;
-      columns[1] = card.word;
-      columns[2] = card.translation;
-      columns[3] = card.correct;
-      columns[4] = card.wrong;
-      columns[5] = card.trained;
-      columns[6] = `${((card.correct / (card.correct + card.wrong)) * 100 || 0).toFixed(1)} %`;
-      return columns;
+    const getStats = (card) => {
+      const correctPercentage = `${((card.correct / (card.correct + card.wrong)) * 100 || 0).toFixed(1)} %`;
+      return [
+        card.category, card.word, card.translation,
+        card.correct, card.wrong, card.trained, correctPercentage,
+      ];
     };
     const statsField = document.createElement('div');
     statsField.classList.add('stats-field');
@@ -179,7 +175,7 @@ class Game {
           const row = document.createElement('div');
           row.id = word;
           row.classList.add('row');
-          const columns = getData(this.scores[word]);
+          const columns = getStats(this.scores[word]);
           columns.forEach((column) => {
             const div = document.createElement('div');
             div.textContent = column;
