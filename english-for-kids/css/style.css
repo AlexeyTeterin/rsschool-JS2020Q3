@@ -666,6 +666,7 @@ body main .game-field .stats-field .row.head-row div.sorted {
 }
 
 body main .game-field .stats-field .row.head-row div.sorted.down::after, body main .game-field .stats-field .row.head-row div.sorted.up::after {
+  padding-left: 2px;
   content: '↓';
 }
 
@@ -690,7 +691,7 @@ body main .game-field .stats-field .row div:nth-child(n+4) {
 }
 
 body main .game-field .stats-field .row div:last-child {
-  min-width: 80px;
+  min-width: 90px;
 }
 
 body main .game-field .stats-field .row:hover {
