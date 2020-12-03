@@ -253,7 +253,7 @@ body header .controls #knob {
   left: 0.25rem;
   border-radius: 50%;
   box-shadow: inset 0px 0px 20px 0px rgba(0, 0, 0, 0.4);
-  transition: 0.4s ease left, 0.4s ease background-position;
+  transition: 0.4s ease left, 0.4s ease background;
 }
 
 body header .controls #play,
@@ -274,6 +274,7 @@ body header .controls #train {
 
 body header .controls #checkbox:checked + #toggle-mode #knob {
   left: 4rem;
+  background-color: lime;
 }
 
 body header .controls #checkbox:checked + #toggle-mode #train {
