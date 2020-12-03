@@ -637,6 +637,7 @@ body main .game-field .stats-field {
   flex-direction: column;
   width: 100%;
   padding: 0 1rem;
+  overflow: auto;
 }
 
 body main .game-field .stats-field .row {
@@ -647,6 +648,7 @@ body main .game-field .stats-field .row {
 
 body main .game-field .stats-field .row.head-row {
   background-color: rgba(0, 0, 0, 0.2);
+  user-select: none;
   cursor: pointer;
 }
 
@@ -667,15 +669,10 @@ body main .game-field .stats-field .row.head-row div.sorted.up::after {
 
 body main .game-field .stats-field .row div {
   width: 100%;
+  min-width: 90px;
   display: flex;
   justify-content: center;
   text-transform: capitalize;
-}
-
-@media (max-width: 620px) {
-  body main .game-field .stats-field .row div:nth-child(1), body main .game-field .stats-field .row div:nth-child(3) {
-    display: none;
-  }
 }
 
 body main .game-field .stats-field .row:hover {
