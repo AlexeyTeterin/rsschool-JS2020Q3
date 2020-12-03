@@ -201,9 +201,13 @@ class Game {
     const rows = document.querySelectorAll('.row');
 
     const rowsSortedDown = Array.from(rows).slice(1).sort((a, b) => {
-      const tryGetInt = (str) => parseInt(str, 10) || str;
+      const tryGetInt = (str) => {
+        if (Number.isNaN(parseInt(str, 10))) return str;
+        return parseInt(str, 10);
+      };
       const first = tryGetInt(a.childNodes[i].textContent);
       const second = tryGetInt(b.childNodes[i].textContent);
+      console.log(first, second);
       if (second < first) return -1;
       if (second > first) return 1;
       return 0;
