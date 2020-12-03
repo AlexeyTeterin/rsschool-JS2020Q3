@@ -252,7 +252,7 @@ body header .controls #knob {
   top: 0.25rem;
   left: 0.25rem;
   border-radius: 50%;
-  box-shadow: inset 0px 0px 12px 0px rgba(0, 0, 0, 0.4);
+  box-shadow: inset 0px 0px 14px 0px rgba(0, 0, 0, 0.6);
   transition: 0.4s ease left, 0.4s ease background;
 }
 
