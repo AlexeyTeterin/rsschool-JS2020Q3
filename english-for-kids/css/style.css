@@ -1,3 +1,4 @@
+@charset "UTF-8";
 * {
   box-sizing: border-box;
   margin: 0;
@@ -645,8 +646,23 @@ body main .game-field .stats-field .row {
 }
 
 body main .game-field .stats-field .row.head-row {
-  background-color: rgba(0, 0, 0, 0.15);
+  background-color: rgba(0, 0, 0, 0.2);
   cursor: pointer;
+}
+
+body main .game-field .stats-field .row.head-row div.sorted {
+  position: relative;
+  background-color: rgba(0, 0, 0, 0.35);
+}
+
+body main .game-field .stats-field .row.head-row div.sorted.down::after, body main .game-field .stats-field .row.head-row div.sorted.up::after {
+  position: absolute;
+  right: 2px;
+  content: '↓';
+}
+
+body main .game-field .stats-field .row.head-row div.sorted.up::after {
+  content: '↑';
 }
 
 body main .game-field .stats-field .row div {
@@ -660,6 +676,10 @@ body main .game-field .stats-field .row div {
   body main .game-field .stats-field .row div:nth-child(1), body main .game-field .stats-field .row div:nth-child(3) {
     display: none;
   }
+}
+
+body main .game-field .stats-field .row:hover {
+  background-color: rgba(0, 0, 0, 0.1);
 }
 
 body footer {
