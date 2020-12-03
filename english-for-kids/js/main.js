@@ -155,35 +155,40 @@ class Game {
       columns[6] = `${((card.correct / (card.correct + card.wrong)) * 100 || 0).toFixed(1)} %`;
       return columns;
     };
-
     const statsField = document.createElement('div');
     statsField.classList.add('stats-field');
-    this.gameField.append(statsField);
-
     const headRow = document.createElement('div');
     headRow.classList.add('row', 'head-row');
     const headColumns = ['category', 'word', 'translation', 'correct', 'wrong', 'trained', '% correct'];
-    headColumns.forEach((headColumn) => {
-      const div = document.createElement('div');
-      div.id = headColumn;
-      div.classList.add('sorter');
-      div.textContent = headColumn;
-      headRow.append(div);
-    });
-    statsField.append(headRow);
 
-    Object.keys(this.scores).forEach((word) => {
-      const row = document.createElement('div');
-      row.id = word;
-      row.classList.add('row');
-      const columns = getData(this.scores[word]);
-      columns.forEach((column) => {
-        const div = document.createElement('div');
-        div.textContent = column;
-        row.append(div);
-      });
-      statsField.append(row);
-    });
+    this.gameField.classList.add('hidden');
+    this.sleep(500)
+      .then(() => {
+        this.clearGameField();
+        this.gameField.append(statsField);
+        headColumns.forEach((headColumn) => {
+          const div = document.createElement('div');
+          div.id = headColumn;
+          div.classList.add('sorter');
+          div.textContent = headColumn;
+          headRow.append(div);
+        });
+        statsField.append(headRow);
+
+        Object.keys(this.scores).forEach((word) => {
+          const row = document.createElement('div');
+          row.id = word;
+          row.classList.add('row');
+          const columns = getData(this.scores[word]);
+          columns.forEach((column) => {
+            const div = document.createElement('div');
+            div.textContent = column;
+            row.append(div);
+          });
+          statsField.append(row);
+        });
+      })
+      .then(() => this.gameField.classList.remove('hidden'));
   }
 
   runSortingListener() {
@@ -371,7 +376,6 @@ class Game {
 
   runStatsBtnListener() {
     document.querySelector('.stats-btn').addEventListener('click', () => {
-      this.clearGameField();
       this.loadStats();
     });
   }
