@@ -194,18 +194,39 @@ class Game {
 
     const headColumns = ['category', 'word', 'translation', 'correct', 'wrong', 'trained'];
     const sorter = event.target.id;
+    const wasSorted = document.querySelector('.sorted');
     const i = headColumns.indexOf(sorter);
     const rows = document.querySelectorAll('.row');
-    const rowsSorted = Array.from(rows).slice(1).sort((a, b) => {
+
+    const rowsSortedDown = Array.from(rows).slice(1).sort((a, b) => {
       if (b.childNodes[i].textContent > a.childNodes[i].textContent) return -1;
       if (b.childNodes[i].textContent < a.childNodes[i].textContent) return 1;
       return 0;
     });
+    const sort = (direction) => {
+      let order;
+      if (direction === 'down') order = rowsSortedDown;
+      if (direction === 'up') order = rowsSortedDown.reverse();
+      event.target.classList.add('sorted', direction);
+      rows.forEach((row) => row.style.setProperty('order', order.indexOf(row)));
+    };
+    const unSort = () => {
+      event.target.classList.remove('sorted', 'up', 'down');
+      rows.forEach((row) => row.style.removeProperty('order'));
+    };
+    const targetIsSorted = event.target.classList.contains('sorted');
+    const targetIsSortedDown = event.target.classList.contains('down');
 
-    rows.forEach((row) => {
-      const position = rowsSorted.indexOf(row);
-      row.style.setProperty('order', position);
-    });
+    if (!targetIsSorted) {
+      if (wasSorted) wasSorted.classList.remove('sorted', 'up', 'down');
+      sort('down');
+    }
+    if (targetIsSorted) {
+      if (targetIsSortedDown) {
+        unSort();
+        sort('up');
+      } else unSort();
+    }
   }
 
   createMenu() {
