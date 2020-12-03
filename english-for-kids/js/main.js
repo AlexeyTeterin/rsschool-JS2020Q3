@@ -152,6 +152,7 @@ class Game {
       columns[3] = card.correct;
       columns[4] = card.wrong;
       columns[5] = card.trained;
+      columns[6] = `${((card.correct / (card.correct + card.wrong)) * 100 || 0).toFixed(1)} %`;
       return columns;
     };
 
@@ -161,7 +162,7 @@ class Game {
 
     const headRow = document.createElement('div');
     headRow.classList.add('row', 'head-row');
-    const headColumns = ['category', 'word', 'translation', 'correct', 'wrong', 'trained'];
+    const headColumns = ['category', 'word', 'translation', 'correct', 'wrong', 'trained', '% correct'];
     headColumns.forEach((headColumn) => {
       const div = document.createElement('div');
       div.id = headColumn;
@@ -192,15 +193,18 @@ class Game {
   sorter(event) {
     if (!event.target.parentElement.classList.contains('head-row')) return;
 
-    const headColumns = ['category', 'word', 'translation', 'correct', 'wrong', 'trained'];
+    const headColumns = ['category', 'word', 'translation', 'correct', 'wrong', 'trained', '% correct'];
     const sorter = event.target.id;
     const wasSorted = document.querySelector('.sorted');
     const i = headColumns.indexOf(sorter);
     const rows = document.querySelectorAll('.row');
 
     const rowsSortedDown = Array.from(rows).slice(1).sort((a, b) => {
-      if (b.childNodes[i].textContent > a.childNodes[i].textContent) return -1;
-      if (b.childNodes[i].textContent < a.childNodes[i].textContent) return 1;
+      const tryGetInt = (str) => parseInt(str, 10) || str;
+      const first = tryGetInt(a.childNodes[i].textContent);
+      const second = tryGetInt(b.childNodes[i].textContent);
+      if (second < first) return -1;
+      if (second > first) return 1;
       return 0;
     });
     const sort = (direction) => {
@@ -219,12 +223,12 @@ class Game {
 
     if (!targetIsSorted) {
       if (wasSorted) wasSorted.classList.remove('sorted', 'up', 'down');
-      sort('down');
+      sort('up');
     }
     if (targetIsSorted) {
-      if (targetIsSortedDown) {
+      if (!targetIsSortedDown) {
         unSort();
-        sort('up');
+        sort('down');
       } else unSort();
     }
   }
