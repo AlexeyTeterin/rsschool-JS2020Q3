@@ -624,10 +624,13 @@ body {
           width: 100%;
           display: flex;
           line-height: 1.5rem;
+          color: rgba(255, 255, 255, 0.75);
+          cursor: default;
 
           &.head-row {
             user-select: none;
             cursor: pointer;
+            color: rgba(255, 255, 255, 1);
 
             >div {
               background-color: rgba(0, 0, 0, 0.20);
@@ -663,6 +666,7 @@ body {
 
           &:hover {
             background-color: rgba(0, 0, 0, 0.10);
+            color: rgba(255, 255, 255, 1);
           }
         }
       }

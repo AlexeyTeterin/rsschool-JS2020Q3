@@ -645,11 +645,14 @@ body main .game-field .stats-field .row {
   width: 100%;
   display: flex;
   line-height: 1.5rem;
+  color: rgba(255, 255, 255, 0.75);
+  cursor: default;
 }
 
 body main .game-field .stats-field .row.head-row {
   user-select: none;
   cursor: pointer;
+  color: white;
 }
 
 body main .game-field .stats-field .row.head-row > div {
@@ -684,6 +687,7 @@ body main .game-field .stats-field .row div {
 
 body main .game-field .stats-field .row:hover {
   background-color: rgba(0, 0, 0, 0.1);
+  color: white;
 }
 
 body footer {
