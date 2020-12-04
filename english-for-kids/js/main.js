@@ -103,15 +103,11 @@ class Game {
       .then(() => {
         this.clearGameField();
         CATEGORIES.forEach((cat) => {
-          const categoryCard = document.createElement('div');
-          const cardImage = document.createElement('div');
-          const cardTitle = document.createElement('div');
-          categoryCard.classList.add('category-card');
+          const categoryCard = this.createElement('div', 'category-card');
           categoryCard.dataset.category = cat;
-          cardImage.classList.add('card__image');
+          const cardTitle = this.createElement('div', 'card__title', cat);
+          const cardImage = this.createElement('div', 'card__image');
           cardImage.style.setProperty('background-image', `url(./assets/img/${cat}.svg)`);
-          cardTitle.classList.add('card__title');
-          cardTitle.textContent = cat;
           categoryCard.append(cardImage, cardTitle);
           this.gameField.append(categoryCard);
         });
@@ -187,7 +183,8 @@ class Game {
           statsField.append(row);
         });
       })
-      .then(() => this.gameField.classList.remove('hidden'));
+      .then(() => this.gameField.classList.remove('hidden'))
+      .then(() => this.scrollTop());
   }
 
   runSortingListener() {
