@@ -158,26 +158,21 @@ class Game {
     this.gameField.classList.add('hidden');
     this.sleep(500)
       .then(() => {
+        this.stopGame();
         this.clearGameField();
         this.gameField.append(statsField);
         statsField.append(buttons);
         headColumns.forEach((headColumn) => {
-          const div = document.createElement('div');
-          div.id = headColumn;
-          div.classList.add('sorter');
-          div.textContent = headColumn;
+          const div = this.createElement('div', 'sorter', headColumn, headColumn);
           headRow.append(div);
         });
         statsField.append(headRow);
 
         Object.keys(this.scores).forEach((word) => {
-          const row = document.createElement('div');
-          row.id = word;
-          row.classList.add('row');
+          const row = this.createElement('div', 'row', '', word);
           const columns = getStats(this.scores[word]);
           columns.forEach((column) => {
-            const div = document.createElement('div');
-            div.textContent = column;
+            const div = this.createElement('div', null, column);
             row.append(div);
           });
           statsField.append(row);
@@ -239,47 +234,33 @@ class Game {
 
   createMenu() {
     CATEGORIES.forEach((cat) => {
-      const menuLi = document.createElement('li');
+      const menuLi = this.createElement('li', null, cat);
       menuLi.dataset.category = cat;
-      menuLi.textContent = cat;
       menuLi.style.setProperty('background-image', `url(./assets/img/${cat}.svg)`);
       this.menu.append(menuLi);
     });
   }
 
   createFlipping(card) {
-    const createCardImage = () => {
-      const cardImage = document.createElement('div');
-      cardImage.classList.add('card__image');
-      cardImage.style.setProperty('background-image', `url(./assets/img/${card.category}_${card.word}.svg)`);
-      return cardImage;
-    };
+    const cardImage = this.createElement('div', 'card__image');
+    cardImage.style.setProperty('background-image', `url(./assets/img/${card.category}_${card.word}.svg)`);
 
-    const flipCard = document.createElement('div');
-    flipCard.classList.add('flip-card');
-    // flipCard.dataset.category = card.category;
+    const flipCard = this.createElement('div', 'flip-card');
     flipCard.dataset.word = card.word;
     flipCard.dataset.sound = card.sound;
+    // flipCard.dataset.category = card.category;
 
-    const cardElement = document.createElement('div');
-    cardElement.classList.add('card');
+    const cardElement = this.createElement('div', 'card');
 
-    const front = document.createElement('div');
-    front.classList.add('card__front');
-    const back = document.createElement('div');
-    back.classList.add('card__back');
+    const front = this.createElement('div', 'card__front');
+    const back = this.createElement('div', 'card__back');
 
-    const cardTitle = document.createElement('div');
-    cardTitle.classList.add('card__title');
-    cardTitle.textContent = card.word;
-    const cardTranslation = document.createElement('div');
-    cardTranslation.classList.add('card__title');
-    cardTranslation.textContent = card.translation;
-    const rotateBtn = document.createElement('div');
-    rotateBtn.classList.add('card__rotate-btn');
+    const cardTitle = this.createElement('div', 'card__title', card.word);
+    const cardTranslation = this.createElement('div', 'card__title', card.translation);
+    const rotateBtn = this.createElement('div', 'card__rotate-btn');
 
-    front.append(createCardImage(card), cardTitle, rotateBtn);
-    back.append(createCardImage(card), cardTranslation);
+    front.append(cardImage.cloneNode(), cardTitle, rotateBtn);
+    back.append(cardImage, cardTranslation);
     cardElement.append(front, back);
     flipCard.append(cardElement);
 
@@ -479,8 +460,7 @@ class Game {
     const createFinalMessage = () => {
       const src = win ? './assets/img/finish_win.png' : './assets/img/finish_loose.png';
       const mistakes = this.playMode.results.filter((el) => el === false).length;
-      const message = document.createElement('div');
-      message.classList.add('finish-message');
+      const message = this.createElement('div', 'finish-message');
       message.style.setProperty('background-image', `url(${src})`);
       message.innerText = win ? 'You win!' : `${mistakes} mistake`;
       if (mistakes > 1) message.innerText += 's';
@@ -508,16 +488,13 @@ class Game {
     let counter = this.playMode.cards.length;
     if (counter) document.querySelector('.replay-btn').classList.remove('hidden');
     while (counter > 0) {
-      const star = document.createElement('div');
-      star.classList.add('star', 'star-empty');
-      this.gamePanel.append(star);
+      this.gamePanel.append(this.createElement('div', ['star', 'star-empty']));
       counter -= 1;
     }
   }
 
   createReplayBtn() {
-    const replayBtn = document.createElement('div');
-    replayBtn.classList.add('replay-btn', 'play-btn', 'hidden');
+    const replayBtn = this.createElement('div', ['replay-btn', 'play-btn', 'hidden']);
     this.gamePanel.append(replayBtn);
 
     replayBtn.addEventListener('click', () => {
@@ -602,11 +579,12 @@ class Game {
     return result;
   }
 
-  createElement(tag, classNames, text) {
+  createElement(tag, classNames, text, id) {
     const element = document.createElement(tag);
     if (Array.isArray(classNames)) classNames.forEach((name) => element.classList.add(name));
     else element.classList.add(classNames);
     element.textContent = text;
+    element.id = id;
     return element;
   }
 
