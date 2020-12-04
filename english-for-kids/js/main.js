@@ -237,6 +237,9 @@ class Game {
   }
 
   createMenu() {
+    const homeLink = this.createElement('li', 'home-link', '', 'home-link');
+    this.elements.menu.append(homeLink);
+
     CATEGORIES.forEach((cat) => {
       const menuLi = this.createElement('li', null, cat);
       menuLi.dataset.category = cat;
@@ -348,8 +351,11 @@ class Game {
 
   runLogoListener() {
     document.querySelector('.logo').addEventListener('click', () => {
-      // if (this.playMode.isActive) this.clearGamePanel();
       this.loadCategories();
+    });
+    document.querySelector('.home-link').addEventListener('click', () => {
+      this.loadCategories();
+      this.toggleMenu();
     });
   }
 
@@ -564,7 +570,6 @@ class Game {
     this.elements.menu.classList.toggle('show');
     this.elements.menuBtn.classList.toggle('jump-to-menu');
     this.elements.overlay.classList.toggle('hidden');
-
     this.toggleScroll();
   }
 
