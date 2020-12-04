@@ -18,7 +18,6 @@ class Game {
     isActive: false,
     gameStarted: false,
     gameFinished: false,
-    category: null,
     cards: null,
     currentCard: null,
     currentIndex: 0,
@@ -118,23 +117,32 @@ class Game {
   }
 
   loadCardsOf(category) {
-    this.playMode.category = category;
+    const weakCardsRecieved = Array.isArray(category);
+    let cards;
+    if (weakCardsRecieved) {
+      cards = [];
+      category.forEach((weakCard) => {
+        cards.push(CARDS.filter((card) => card.word === weakCard.word)[0]);
+      });
+    } else {
+      cards = CARDS.filter((card) => card.category === category);
+    }
+
     this.elements.gameField.classList.add('hidden');
     this.clearGamePanel();
-    this.sleep(500).then(() => {
-      this.clearGameField();
-      this.playMode.reset();
-      const cards = CARDS.filter((card) => card.category === category);
-      cards.forEach((card) => {
-        this.createFlipping(card);
+    this.sleep(500)
+      .then(() => {
+        this.clearGameField();
+        this.playMode.reset();
+        cards.forEach((card) => this.createFlipping(card));
+        this.toggleFlipCardsTitles();
+        this.scrollTop();
+      })
+      .then(() => {
+        this.highlightMenuItem(weakCardsRecieved ? '' : category);
+        this.elements.gameField.classList.remove('hidden');
+        if (this.playMode.isActive) this.startGame();
       });
-      this.scrollTop();
-    }).then(() => {
-      this.toggleFlipCardsTitles();
-      this.highlightMenuItem(category);
-      this.elements.gameField.classList.remove('hidden');
-      if (this.playMode.isActive) this.startGame();
-    });
   }
 
   loadStats() {
@@ -356,6 +364,7 @@ class Game {
     // stats button
     document.querySelector('.stats-btn').addEventListener('click', () => {
       this.loadStats();
+      this.highlightMenuItem();
     });
 
     // reset button
@@ -367,6 +376,26 @@ class Game {
     });
 
     // repeat button
+    this.elements.gameField.addEventListener('click', (event) => {
+      if (!event.target.classList.contains('repeat-btn')) return;
+      const weakWords = [];
+      Object.keys(this.scores)
+        .forEach((el) => {
+          const card = this.scores[el];
+          if (card.wrong > 0) weakWords.push(card);
+        });
+      weakWords
+        .sort((a, b) => {
+          const percentage = (card) => card.wrong / (card.correct + card.wrong);
+          console.log(percentage(a), percentage(b));
+          if (percentage(a) < percentage(b)) return 1;
+          if (percentage(a) > percentage(b)) return -1;
+          return 0;
+        })
+        .splice(8);
+      console.table(weakWords);
+      this.loadCardsOf(weakWords);
+    });
   }
 
   runToggleModeListener() {
@@ -571,7 +600,6 @@ class Game {
   playSound(src) {
     const sound = new Audio(src);
     sound.play();
-    console.log(src);
   }
 
   shuffle(array) {
