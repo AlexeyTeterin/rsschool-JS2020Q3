@@ -85,8 +85,6 @@ class Game {
       if (this.scores[card.word]) return;
       this.scores[card.word] = createScoreforCard(card);
     });
-
-    console.table(this.scores);
   }
 
   clearGameField() {
@@ -387,13 +385,11 @@ class Game {
       weakWords
         .sort((a, b) => {
           const percentage = (card) => card.wrong / (card.correct + card.wrong);
-          console.log(percentage(a), percentage(b));
           if (percentage(a) < percentage(b)) return 1;
           if (percentage(a) > percentage(b)) return -1;
           return 0;
         })
         .splice(8);
-      console.table(weakWords);
       this.loadCardsOf(weakWords);
     });
   }
@@ -444,7 +440,6 @@ class Game {
           this.playCard(this.playMode.currentCard);
         } else { // game finished
           this.finishGame();
-          console.log('game finished!');
         }
       }
 
@@ -462,7 +457,6 @@ class Game {
     if (answer === 'wrong') this.scores[this.playMode.currentCard.word].wrong += 1;
 
     localStorage.setItem('englishForKidsScores', JSON.stringify(this.scores));
-    console.log(JSON.stringify(this.scores));
   }
 
   showResultInStars() {
