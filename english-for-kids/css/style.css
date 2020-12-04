@@ -288,10 +288,8 @@ body header .controls #checkbox:not(:checked) + #toggle-mode #play {
 }
 
 body header .controls .stats-btn {
-  margin: auto;
   padding: 0;
-  min-width: 6.25rem;
-  width: 6.25rem;
+  min-width: 4.25rem;
   height: 2.5rem;
   border: none;
   background-color: rgba(255, 255, 255, 0.25);
@@ -301,7 +299,11 @@ body header .controls .stats-btn {
   font-size: 1.5rem;
   color: white;
   outline: none;
+  transition: transform 0.05s, box-shadow 0.2s;
+  white-space: nowrap;
   filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5));
+  margin: auto;
+  width: 6.25rem;
 }
 
 body header .controls .stats-btn:hover {
@@ -634,12 +636,20 @@ body main .game-field .card__title.hidden {
 }
 
 body main .game-field .stats-field {
+  position: relative;
   display: flex;
   flex-direction: column;
-  margin: 0 1rem;
+  padding: 0 1rem;
+  padding-top: 3rem;
   overflow: auto;
   min-width: 70%;
   max-width: 100%;
+}
+
+@media (max-width: 620px) {
+  body main .game-field .stats-field {
+    font-size: 0.875rem;
+  }
 }
 
 body main .game-field .stats-field .row {
@@ -697,6 +707,52 @@ body main .game-field .stats-field .row div:last-child {
 body main .game-field .stats-field .row:hover {
   background-color: rgba(0, 0, 0, 0.1);
   color: white;
+}
+
+body main .game-field .stats-field .buttons {
+  position: absolute;
+  top: 0.5rem;
+  width: calc(100% - 2rem);
+  display: flex;
+  justify-content: space-between;
+}
+
+body main .game-field .stats-field .buttons .repeat-btn,
+body main .game-field .stats-field .buttons .reset-btn {
+  padding: 0;
+  min-width: 4.25rem;
+  height: 2.5rem;
+  border: none;
+  background-color: rgba(255, 255, 255, 0.25);
+  border-radius: 25px;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 1.5rem;
+  color: white;
+  outline: none;
+  transition: transform 0.05s, box-shadow 0.2s;
+  white-space: nowrap;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5));
+  padding: 0 10px;
+  font-size: 1rem;
+  height: 1.75rem;
+}
+
+body main .game-field .stats-field .buttons .repeat-btn:hover,
+body main .game-field .stats-field .buttons .reset-btn:hover {
+  box-shadow: 0 0 10px white;
+}
+
+body main .game-field .stats-field .buttons .repeat-btn:active,
+body main .game-field .stats-field .buttons .reset-btn:active {
+  transform: scale(0.95);
+}
+
+@media (max-width: 620px) {
+  body main .game-field .stats-field .buttons .repeat-btn:active,
+body main .game-field .stats-field .buttons .reset-btn:active {
+    transform: scale(0.8);
+  }
 }
 
 body footer {

@@ -151,17 +151,20 @@ class Game {
         card.correct, card.wrong, card.trained, correctPercentage,
       ];
     };
-    const statsField = document.createElement('div');
-    statsField.classList.add('stats-field');
-    const headRow = document.createElement('div');
-    headRow.classList.add('row', 'head-row');
     const headColumns = ['category', 'word', 'translation', 'correct', 'wrong', 'trained', '% correct'];
+    const statsField = this.createElement('div', 'stats-field');
+    const headRow = this.createElement('div', ['row', 'head-row']);
+    const resetBtn = this.createElement('button', 'reset-btn', 'Reset');
+    const repeatBtn = this.createElement('button', 'repeat-btn', 'Repeat difficult words');
+    const buttons = this.createElement('div', 'buttons');
+    buttons.append(repeatBtn, resetBtn);
 
     this.gameField.classList.add('hidden');
     this.sleep(500)
       .then(() => {
         this.clearGameField();
         this.gameField.append(statsField);
+        statsField.append(buttons);
         headColumns.forEach((headColumn) => {
           const div = document.createElement('div');
           div.id = headColumn;
@@ -207,7 +210,6 @@ class Game {
       };
       const first = tryGetInt(a.childNodes[i].textContent);
       const second = tryGetInt(b.childNodes[i].textContent);
-      console.log(first, second);
       if (second < first) return -1;
       if (second > first) return 1;
       return 0;
@@ -601,6 +603,14 @@ class Game {
       result.push(array[index]);
     }
     return result;
+  }
+
+  createElement(tag, classNames, text) {
+    const element = document.createElement(tag);
+    if (Array.isArray(classNames)) classNames.forEach((name) => element.classList.add(name));
+    else element.classList.add(classNames);
+    element.textContent = text;
+    return element;
   }
 
   scrollTop() {
