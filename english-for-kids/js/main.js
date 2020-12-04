@@ -4,15 +4,15 @@ import CATEGORIES from './categories.js';
 import CARDS from './cards.js';
 
 class Game {
-  gamePanel = document.querySelector('.game-panel');
+  scores = null;
 
-  gameField = document.querySelector('.game-field');
-
-  menu = document.querySelector('.menu');
-
-  menuBtn = document.querySelector('.menu-btn');
-
-  overlay = document.querySelector('.overlay');
+  elements = {
+    gamePanel: document.querySelector('.game-panel'),
+    gameField: document.querySelector('.game-field'),
+    menu: document.querySelector('.menu'),
+    menuBtn: document.querySelector('.menu-btn'),
+    overlay: document.querySelector('.overlay'),
+  }
 
   playMode = {
     isActive: false,
@@ -54,8 +54,6 @@ class Game {
     },
   };
 
-  scores = null;
-
   init() {
     this.createMenu();
     this.loadCategories();
@@ -63,15 +61,15 @@ class Game {
     this.toggleFlipCardsListener();
     this.runLogoListener();
     this.runMenuBtnListener();
-    this.runStatsBtnListener();
+    this.runStatsBtnsListener();
     this.runToggleModeListener();
     this.runPlayModeHandler();
     this.runSortingListener();
     this.runTrainingClicksCounter();
-    this.loadScores();
+    this.parseOrCreateScores();
   }
 
-  loadScores() {
+  parseOrCreateScores() {
     function createScoreforCard(card) {
       return {
         word: card.word,
@@ -93,11 +91,11 @@ class Game {
   }
 
   clearGameField() {
-    this.gameField.innerHTML = null;
+    this.elements.gameField.innerHTML = null;
   }
 
   loadCategories() {
-    this.gameField.classList.add('hidden');
+    this.elements.gameField.classList.add('hidden');
     this.clearGamePanel();
     this.sleep(500)
       .then(() => {
@@ -109,11 +107,11 @@ class Game {
           const cardImage = this.createElement('div', 'card__image');
           cardImage.style.setProperty('background-image', `url(./assets/img/${cat}.svg)`);
           categoryCard.append(cardImage, cardTitle);
-          this.gameField.append(categoryCard);
+          this.elements.gameField.append(categoryCard);
         });
       })
       .then(() => {
-        this.gameField.classList.remove('hidden');
+        this.elements.gameField.classList.remove('hidden');
         this.highlightMenuItem();
         this.scrollTop();
       });
@@ -121,7 +119,7 @@ class Game {
 
   loadCardsOf(category) {
     this.playMode.category = category;
-    this.gameField.classList.add('hidden');
+    this.elements.gameField.classList.add('hidden');
     this.clearGamePanel();
     this.sleep(500).then(() => {
       this.clearGameField();
@@ -134,7 +132,7 @@ class Game {
     }).then(() => {
       this.toggleFlipCardsTitles();
       this.highlightMenuItem(category);
-      this.gameField.classList.remove('hidden');
+      this.elements.gameField.classList.remove('hidden');
       if (this.playMode.isActive) this.startGame();
     });
   }
@@ -155,12 +153,12 @@ class Game {
     const buttons = this.createElement('div', 'buttons');
     buttons.append(repeatBtn, resetBtn);
 
-    this.gameField.classList.add('hidden');
+    this.elements.gameField.classList.add('hidden');
     this.sleep(500)
       .then(() => {
         this.stopGame();
         this.clearGameField();
-        this.gameField.append(statsField);
+        this.elements.gameField.append(statsField);
         statsField.append(buttons);
         headColumns.forEach((headColumn) => {
           const div = this.createElement('div', 'sorter', headColumn, headColumn);
@@ -178,7 +176,7 @@ class Game {
           statsField.append(row);
         });
       })
-      .then(() => this.gameField.classList.remove('hidden'))
+      .then(() => this.elements.gameField.classList.remove('hidden'))
       .then(() => this.scrollTop());
   }
 
@@ -237,7 +235,7 @@ class Game {
       const menuLi = this.createElement('li', null, cat);
       menuLi.dataset.category = cat;
       menuLi.style.setProperty('background-image', `url(./assets/img/${cat}.svg)`);
-      this.menu.append(menuLi);
+      this.elements.menu.append(menuLi);
     });
   }
 
@@ -264,7 +262,7 @@ class Game {
     cardElement.append(front, back);
     flipCard.append(cardElement);
 
-    this.gameField.append(flipCard);
+    this.elements.gameField.append(flipCard);
   }
 
   toggleFlipCardsTitles() {
@@ -280,17 +278,17 @@ class Game {
 
   toggleFlipCardsListener() {
     if (!this.playMode.isActive) {
-      this.gameField.addEventListener('click', this.handleCardFlip);
-      this.gameField.addEventListener('mouseout', this.handleCardBackFlip);
+      this.elements.gameField.addEventListener('click', this.handleCardFlip);
+      this.elements.gameField.addEventListener('mouseout', this.handleCardBackFlip);
     } else {
-      this.gameField.removeEventListener('click', this.handleCardFlip);
-      this.gameField.removeEventListener('mouseout', this.handleCardBackFlip);
+      this.elements.gameField.removeEventListener('click', this.handleCardFlip);
+      this.elements.gameField.removeEventListener('mouseout', this.handleCardBackFlip);
     }
     this.toggleFlipCardsTitles();
   }
 
   runTrainingClicksCounter() {
-    this.gameField.addEventListener('click', (event) => {
+    this.elements.gameField.addEventListener('click', (event) => {
       if (this.playMode.isActive) return;
       const flipCard = event.target.parentElement.parentElement.parentElement;
       const {
@@ -329,12 +327,12 @@ class Game {
   }
 
   runCategoryListeners() {
-    this.gameField.addEventListener('click', (event) => {
+    this.elements.gameField.addEventListener('click', (event) => {
       const card = event.target.parentNode;
       if (!card.classList.contains('category-card')) return;
       this.loadCardsOf(card.dataset.category);
     });
-    this.menu.addEventListener('click', (event) => {
+    this.elements.menu.addEventListener('click', (event) => {
       const menuLi = event.target;
       if (!menuLi.dataset.category) return;
       this.loadCardsOf(menuLi.dataset.category);
@@ -350,14 +348,25 @@ class Game {
   }
 
   runMenuBtnListener() {
-    this.menuBtn.addEventListener('click', () => this.toggleMenu());
-    this.overlay.addEventListener('click', () => this.toggleMenu());
+    this.elements.menuBtn.addEventListener('click', () => this.toggleMenu());
+    this.elements.overlay.addEventListener('click', () => this.toggleMenu());
   }
 
-  runStatsBtnListener() {
+  runStatsBtnsListener() {
+    // stats button
     document.querySelector('.stats-btn').addEventListener('click', () => {
       this.loadStats();
     });
+
+    // reset button
+    this.elements.gameField.addEventListener('click', (event) => {
+      if (!event.target.classList.contains('reset-btn')) return;
+      localStorage.removeItem('englishForKidsScores');
+      this.parseOrCreateScores();
+      this.loadStats();
+    });
+
+    // repeat button
   }
 
   runToggleModeListener() {
@@ -380,7 +389,7 @@ class Game {
   }
 
   runPlayModeHandler() {
-    this.gameField.addEventListener('click', (event) => {
+    this.elements.gameField.addEventListener('click', (event) => {
       const {
         gameStarted,
         setCorrectAnswer,
@@ -439,7 +448,7 @@ class Game {
 
   startGame() {
     if (!document.querySelector('.replay-btn')) this.createReplayBtn();
-    const cards = Array.from(this.gameField.querySelectorAll('.flip-card')).map((card) => card.dataset);
+    const cards = Array.from(this.elements.gameField.querySelectorAll('.flip-card')).map((card) => card.dataset);
 
     this.playMode.cards = this.shuffle(cards);
     [this.playMode.currentCard] = this.playMode.cards;
@@ -447,7 +456,7 @@ class Game {
   }
 
   stopGame() {
-    this.gamePanel.innerHTML = null;
+    this.elements.gamePanel.innerHTML = null;
     this.playMode.reset();
   }
 
@@ -467,13 +476,13 @@ class Game {
       return message;
     };
 
-    this.gameField.classList.add('hidden');
+    this.elements.gameField.classList.add('hidden');
     this.sleep(500)
       .then(() => {
         playFinalSound();
         this.clearGameField();
-        this.gameField.append(createFinalMessage());
-        this.gameField.classList.remove('hidden');
+        this.elements.gameField.append(createFinalMessage());
+        this.elements.gameField.classList.remove('hidden');
       })
       .then(() => this.sleep(5000))
       .then(() => this.loadCategories());
@@ -488,14 +497,14 @@ class Game {
     let counter = this.playMode.cards.length;
     if (counter) document.querySelector('.replay-btn').classList.remove('hidden');
     while (counter > 0) {
-      this.gamePanel.append(this.createElement('div', ['star', 'star-empty']));
+      this.elements.gamePanel.append(this.createElement('div', ['star', 'star-empty']));
       counter -= 1;
     }
   }
 
   createReplayBtn() {
     const replayBtn = this.createElement('div', ['replay-btn', 'play-btn', 'hidden']);
-    this.gamePanel.append(replayBtn);
+    this.elements.gamePanel.append(replayBtn);
 
     replayBtn.addEventListener('click', () => {
       if (replayBtn.classList.contains('play-btn')) {
@@ -510,28 +519,28 @@ class Game {
 
   toggleGamePanel() {
     document.querySelector('.game-panel').classList.toggle('hidden', !this.playMode.isActive);
-    this.gameField.classList.toggle('narrow', this.playMode.isActive);
+    this.elements.gameField.classList.toggle('narrow', this.playMode.isActive);
     if (this.playMode.isActive) this.startGame();
     else this.stopGame();
   }
 
   clearGamePanel() {
-    const replayBtn = this.gamePanel.querySelector('.replay-btn');
-    const stars = this.gamePanel.querySelectorAll('.star');
+    const replayBtn = this.elements.gamePanel.querySelector('.replay-btn');
+    const stars = this.elements.gamePanel.querySelectorAll('.star');
 
-    this.gamePanel.classList.add('hidden-content');
+    this.elements.gamePanel.classList.add('hidden-content');
     this.sleep(500)
       .then(() => {
         if (replayBtn) replayBtn.remove();
         if (stars) stars.forEach((star) => star.remove());
       })
-      .then(() => this.gamePanel.classList.remove('hidden-content'));
+      .then(() => this.elements.gamePanel.classList.remove('hidden-content'));
   }
 
   toggleMenu() {
-    this.menu.classList.toggle('show');
-    this.menuBtn.classList.toggle('jump-to-menu');
-    this.overlay.classList.toggle('hidden');
+    this.elements.menu.classList.toggle('show');
+    this.elements.menuBtn.classList.toggle('jump-to-menu');
+    this.elements.overlay.classList.toggle('hidden');
 
     this.toggleScroll();
   }
@@ -543,7 +552,7 @@ class Game {
       window.onscroll = () => window.scrollTo(x, y);
     };
 
-    if (this.menu.classList.contains('show')) {
+    if (this.elements.menu.classList.contains('show')) {
       stopScroll();
     } else {
       window.onscroll = () => {};
@@ -551,7 +560,7 @@ class Game {
   }
 
   highlightMenuItem(category) {
-    const menuItems = Array.from(this.menu.getElementsByTagName('li'));
+    const menuItems = Array.from(this.elements.menu.getElementsByTagName('li'));
     menuItems.forEach((li) => li.classList.remove('active'));
     if (category) {
       const selectedMenuItem = menuItems.filter((li) => li.dataset.category === category)[0];
