@@ -489,6 +489,10 @@ body {
         transition: height 0.2s, opacity 0.1s;
 
         &:nth-child(n+11) {
+          height: 0 !important;
+        }
+        
+        &:nth-child(n+12) {
           display: none;
         }
       }

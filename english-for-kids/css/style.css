@@ -460,6 +460,10 @@ body main .game-panel .star {
 }
 
 body main .game-panel .star:nth-child(n+11) {
+  height: 0 !important;
+}
+
+body main .game-panel .star:nth-child(n+12) {
   display: none;
 }
 
