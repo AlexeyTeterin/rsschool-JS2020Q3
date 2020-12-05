@@ -404,10 +404,11 @@ body main .game-panel.hidden-content > div {
 
 body main .game-panel .star {
   width: 1.5rem;
-  height: 1.5rem;
+  height: 0rem;
   background-repeat: no-repeat;
   background-position: center;
   background-image: url(../assets/img/star_false.svg);
+  transition: height 0.2s;
 }
 
 body main .game-panel .star:nth-child(n+11) {

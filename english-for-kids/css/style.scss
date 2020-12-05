@@ -420,7 +420,6 @@ body {
 
     .game-panel {
       position: fixed;
-      // z-index: 1;
       right: 0;
       margin: 2rem auto 0;
       padding-top: 3rem;
@@ -452,10 +451,12 @@ body {
 
       .star {
         width: 1.5rem;
-        height: 1.5rem;
+        height: 0rem;
+        // opacity: 0;
         background-repeat: no-repeat;
         background-position: center;
         background-image: url(../assets/img/star_false.svg);
+        transition: height 0.2s;
 
         &:nth-child(n+11) {
           display: none;

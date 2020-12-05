@@ -523,6 +523,8 @@ class Game {
     if (answer) star.classList.add('star-true');
     // if (!answer) star.classList.remove('star-true');
     this.elements.gamePanel.firstChild.insertAdjacentElement('beforebegin', star);
+    this.sleep(0)
+      .then(() => star.style.setProperty('height', '1.5rem'));
   }
 
   createReplayBtn() {
