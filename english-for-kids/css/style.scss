@@ -456,6 +456,10 @@ body {
         background-repeat: no-repeat;
         background-position: center;
         background-image: url(../assets/img/star_false.svg);
+
+        &:nth-child(n+11) {
+          display: none;
+        }
       }
 
       .star-empty {

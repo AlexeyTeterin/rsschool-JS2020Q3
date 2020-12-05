@@ -410,6 +410,10 @@ body main .game-panel .star {
   background-image: url(../assets/img/star_false.svg);
 }
 
+body main .game-panel .star:nth-child(n+11) {
+  display: none;
+}
+
 body main .game-panel .star-empty {
   background-image: url(../assets/img/star_null.svg);
 }

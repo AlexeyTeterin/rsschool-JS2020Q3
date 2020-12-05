@@ -21,6 +21,7 @@ class Game {
     cards: null,
     currentCard: null,
     currentIndex: 0,
+    mistakes: 0,
     results: [],
     setCorrectAnswer: () => {
       const {
@@ -49,6 +50,7 @@ class Game {
       this.playMode.results = [];
       this.playMode.cards = [];
       this.playMode.currentIndex = 0;
+      this.playMode.mistakes = 0;
       this.playMode.gameStarted = false;
     },
   };
@@ -437,9 +439,9 @@ class Game {
 
       if (answerIsCorrect) {
         setCorrectAnswer();
+        this.createStar(true);
         clickedCard.classList.add('disabled');
         this.playSound('./assets/audio/answerIsCorrect.wav');
-        this.showResultInStars();
         this.saveScores('correct');
         if (hasNextCard()) {
           setNextCard();
@@ -451,8 +453,9 @@ class Game {
 
       if (!answerIsCorrect) {
         setWrongAnswer();
+        this.playMode.mistakes += 1;
+        this.createStar(false);
         this.playSound('./assets/audio/answerIsWrong.wav');
-        this.showResultInStars();
         this.saveScores('wrong');
       }
     });
@@ -465,23 +468,14 @@ class Game {
     localStorage.setItem('englishForKidsScores', JSON.stringify(this.scores));
   }
 
-  showResultInStars() {
-    const {
-      currentIndex,
-    } = this.playMode;
-    const star = document.querySelectorAll('.star')[currentIndex];
-    const answer = this.playMode.results[currentIndex];
-    star.classList.remove('star-empty');
-    star.classList.toggle('star-true', answer);
-  }
-
   startGame() {
     if (!document.querySelector('.replay-btn')) this.createReplayBtn();
     const cards = Array.from(this.elements.gameField.querySelectorAll('.flip-card')).map((card) => card.dataset);
 
     this.playMode.cards = this.shuffle(cards);
     [this.playMode.currentCard] = this.playMode.cards;
-    this.createStars();
+    // this.createStars();
+    document.querySelector('.replay-btn').classList.remove('hidden');
   }
 
   stopGame() {
@@ -496,8 +490,10 @@ class Game {
       else this.playSound('./assets/audio/finish_false.ogg');
     };
     const createFinalMessage = () => {
+      const {
+        mistakes,
+      } = this.playMode;
       const src = win ? './assets/img/finish_win.png' : './assets/img/finish_loose.png';
-      const mistakes = this.playMode.results.filter((el) => el === false).length;
       const message = this.createElement('div', 'finish-message');
       message.style.setProperty('background-image', `url(${src})`);
       message.innerText = win ? 'You win!' : `${mistakes} mistake`;
@@ -522,13 +518,11 @@ class Game {
     this.sleep(1000).then(() => playSound(card.sound));
   }
 
-  createStars() {
-    let counter = this.playMode.cards.length;
-    if (counter) document.querySelector('.replay-btn').classList.remove('hidden');
-    while (counter > 0) {
-      this.elements.gamePanel.append(this.createElement('div', ['star', 'star-empty']));
-      counter -= 1;
-    }
+  createStar(answer) {
+    const star = this.createElement('div', 'star');
+    if (answer) star.classList.add('star-true');
+    // if (!answer) star.classList.remove('star-true');
+    this.elements.gamePanel.firstChild.insertAdjacentElement('beforebegin', star);
   }
 
   createReplayBtn() {
@@ -620,7 +614,7 @@ class Game {
     if (Array.isArray(classNames)) classNames.forEach((name) => element.classList.add(name));
     else element.classList.add(classNames);
     element.textContent = text;
-    element.id = id;
+    if (id) element.id = id;
     return element;
   }
 
