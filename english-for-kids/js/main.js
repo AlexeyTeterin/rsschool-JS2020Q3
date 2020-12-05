@@ -482,13 +482,15 @@ class Game {
   }
 
   startGame() {
+    const flipCardsLoaded = document.querySelector('.flip-card');
+
     if (!document.querySelector('.replay-btn')) this.createReplayBtn();
     const cards = Array.from(this.elements.gameField.querySelectorAll('.flip-card')).map((card) => card.dataset);
 
     this.playMode.cards = this.shuffle(cards);
     [this.playMode.currentCard] = this.playMode.cards;
-    // this.createStars();
-    document.querySelector('.replay-btn').classList.remove('hidden');
+
+    if (flipCardsLoaded) document.querySelector('.replay-btn').classList.remove('hidden');
   }
 
   stopGame() {
@@ -515,7 +517,7 @@ class Game {
     };
 
     this.elements.gameField.classList.add('hidden');
-    this.sleep(500)
+    this.sleep(1000)
       .then(() => {
         playFinalSound();
         this.clearGameField();
@@ -537,7 +539,9 @@ class Game {
     // if (!answer) star.classList.remove('star-true');
     this.elements.gamePanel.firstChild.insertAdjacentElement('beforebegin', star);
     this.sleep(0)
-      .then(() => star.style.setProperty('height', '1.5rem'));
+      .then(() => star.style.setProperty('height', '1.5rem'))
+      .then(() => this.sleep(200))
+      .then(() => star.style.setProperty('opacity', 1));
   }
 
   createReplayBtn() {

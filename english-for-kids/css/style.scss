@@ -430,6 +430,7 @@ body {
           z-index: 8;
           font-size: 1rem;
           margin: 0.5rem;
+          height: 2rem;
         }
         
         .no-btn {
@@ -474,18 +475,18 @@ body {
         transform: opacity 0.5s;
       }
 
-      &.hidden-content>div {
-        opacity: 0;
+      &.hidden-content div {
+        opacity: 0 !important;
       }
 
       .star {
         width: 1.5rem;
         height: 0rem;
-        // opacity: 0;
+        opacity: 0;
         background-repeat: no-repeat;
         background-position: center;
         background-image: url(../assets/img/star_false.svg);
-        transition: height 0.2s;
+        transition: height 0.2s, opacity 0.1s;
 
         &:nth-child(n+11) {
           display: none;

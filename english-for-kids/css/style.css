@@ -396,6 +396,7 @@ body header .modal-overlay .modal .yes-btn, body header .modal-overlay .modal .n
   z-index: 8;
   font-size: 1rem;
   margin: 0.5rem;
+  height: 2rem;
 }
 
 body header .modal-overlay .modal .yes-btn:hover, body header .modal-overlay .modal .no-btn:hover {
@@ -444,17 +445,18 @@ body main .game-panel div {
   transform: opacity 0.5s;
 }
 
-body main .game-panel.hidden-content > div {
-  opacity: 0;
+body main .game-panel.hidden-content div {
+  opacity: 0 !important;
 }
 
 body main .game-panel .star {
   width: 1.5rem;
   height: 0rem;
+  opacity: 0;
   background-repeat: no-repeat;
   background-position: center;
   background-image: url(../assets/img/star_false.svg);
-  transition: height 0.2s;
+  transition: height 0.2s, opacity 0.1s;
 }
 
 body main .game-panel .star:nth-child(n+11) {
