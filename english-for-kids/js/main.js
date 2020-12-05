@@ -525,7 +525,9 @@ class Game {
         this.elements.gameField.classList.remove('hidden');
       })
       .then(() => this.sleep(5000))
-      .then(() => this.loadCategories());
+      .then(() => {
+        if (document.querySelector('.finish-message')) this.loadCategories();
+      });
   }
 
   playCard(card) {
@@ -540,7 +542,7 @@ class Game {
     this.elements.gamePanel.firstChild.insertAdjacentElement('beforebegin', star);
     this.sleep(0)
       .then(() => star.style.setProperty('height', '1.5rem'))
-      .then(() => this.sleep(200))
+      .then(() => this.sleep(100))
       .then(() => star.style.setProperty('opacity', 1));
   }
 
