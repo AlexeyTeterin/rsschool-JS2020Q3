@@ -367,38 +367,51 @@ class Game {
   }
 
   runStatsBtnsListener() {
-    // stats button
+    const modal = document.querySelector('.modal-overlay');
+
+    // stats button in header
     document.querySelector('.stats-btn').addEventListener('click', () => {
       this.loadStats();
       this.highlightMenuItem();
     });
 
-    // reset button
+    // reset & repeat buttons on stats page
     this.elements.gameField.addEventListener('click', (event) => {
-      if (!event.target.classList.contains('reset-btn')) return;
-      localStorage.removeItem('englishForKidsScores');
-      this.parseOrCreateScores();
-      this.loadStats();
+      if (event.target.classList.contains('reset-btn')) modal.classList.remove('hidden');
+
+      if (event.target.classList.contains('repeat-btn')) {
+        const weakWords = [];
+        Object.keys(this.scores)
+          .forEach((el) => {
+            const card = this.scores[el];
+            if (card.wrong > 0) weakWords.push(card);
+          });
+        weakWords
+          .sort((a, b) => {
+            const percentage = (card) => card.wrong / (card.correct + card.wrong);
+            if (percentage(a) < percentage(b)) return 1;
+            if (percentage(a) > percentage(b)) return -1;
+            return 0;
+          })
+          .splice(8);
+        this.loadCardsOf(weakWords);
+      }
     });
 
-    // repeat button
-    this.elements.gameField.addEventListener('click', (event) => {
-      if (!event.target.classList.contains('repeat-btn')) return;
-      const weakWords = [];
-      Object.keys(this.scores)
-        .forEach((el) => {
-          const card = this.scores[el];
-          if (card.wrong > 0) weakWords.push(card);
-        });
-      weakWords
-        .sort((a, b) => {
-          const percentage = (card) => card.wrong / (card.correct + card.wrong);
-          if (percentage(a) < percentage(b)) return 1;
-          if (percentage(a) > percentage(b)) return -1;
-          return 0;
-        })
-        .splice(8);
-      this.loadCardsOf(weakWords);
+    // yes/no buttons in modal
+    document.querySelector('.modal-overlay').addEventListener('click', (event) => {
+      if (event.target.classList.contains('yes-btn')) {
+        modal.classList.add('hidden');
+        localStorage.removeItem('englishForKidsScores');
+        this.parseOrCreateScores();
+        this.loadStats();
+      }
+      if (event.target.classList.contains('no-btn')) {
+        modal.classList.add('hidden');
+      }
+      if (event.target === modal) {
+        modal.classList.add('hidden');
+      }
     });
   }
 
