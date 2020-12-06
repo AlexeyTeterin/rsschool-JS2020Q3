@@ -290,7 +290,7 @@ export default class Game {
       if (win) new Audio('./assets/audio/finish_true.ogg').play();
       else new Audio('./assets/audio/finish_false.ogg').play();
     };
-    const createFinalMessage = async () => {
+    const createFinalMessage = () => {
       const {
         mistakes,
       } = this.playMode;
@@ -298,18 +298,20 @@ export default class Game {
       const message = Game.createElement('div', 'finish-message');
       message.innerText = win ? 'You win!' : `${mistakes} mistake`;
       if (mistakes > 1) message.innerText += 's';
-      const img = Game.createElement('img');
+      const img = new Image();
       img.src = src;
 
-      img.onload = () => message.style.setProperty('background-image', `url(${src})`);
-      await img.onload();
+      img.onload = () => {
+        message.style.setProperty('background-image', `url(${src})`);
+        message.style.setProperty('opacity', 1);
+      };
       return message;
     };
     const finalMessage = await createFinalMessage();
 
     this.elements.gameField.classList.add('hidden');
     this.sleep(1000)
-      .then(async () => {
+      .then(() => {
         this.clearGameField();
         this.elements.gameField.append(finalMessage);
         this.elements.gameField.classList.remove('hidden');

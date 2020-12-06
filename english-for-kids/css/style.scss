@@ -554,10 +554,11 @@ body {
         width: 30vh;
         min-height: 240px;
         min-width: 180px;
+        opacity: 0;
         background-size: 100%;
         background-repeat: no-repeat;
         background-position-y: top;
-        transition: background 0.5s;
+        transition: opacity 0.5s, background 0.5s;
         @include dropShadow();
       }
 
