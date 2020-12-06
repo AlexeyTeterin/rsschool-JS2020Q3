@@ -526,6 +526,7 @@ body main .game-field .finish-message {
   background-size: 100%;
   background-repeat: no-repeat;
   background-position-y: top;
+  transition: background 0.5s;
   filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5));
 }
 
