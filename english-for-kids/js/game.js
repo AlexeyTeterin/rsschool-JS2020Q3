@@ -284,7 +284,7 @@ export default class Game {
     this.playMode.reset();
   }
 
-  finishGame() {
+  async finishGame() {
     const win = !this.playMode.results.includes(false);
     const playFinalSound = () => {
       if (win) new Audio('./assets/audio/finish_true.ogg').play();
@@ -305,17 +305,15 @@ export default class Game {
       await img.onload();
       return message;
     };
+    const finalMessage = await createFinalMessage();
 
     this.elements.gameField.classList.add('hidden');
     this.sleep(1000)
       .then(async () => {
         this.clearGameField();
-        const msg = await createFinalMessage();
-        this.elements.gameField.append(msg);
-      })
-      .then(() => {
-        playFinalSound();
+        this.elements.gameField.append(finalMessage);
         this.elements.gameField.classList.remove('hidden');
+        playFinalSound();
       })
       .then(() => this.sleep(5000))
       .then(() => {
