@@ -189,7 +189,7 @@ body {
           }
 
           span.bar:first-child {
-            transform: translateY(0.7rem) translateX(0) rotate(45deg);
+            transform: translateY(calc(2rem / 3)) translateX(0) rotate(45deg);
           }
 
           span.bar:nth-child(2) {
@@ -197,7 +197,7 @@ body {
           }
 
           span.bar:nth-child(3) {
-            transform: translateY(-0.7rem) translateX(0) rotate(-45deg);
+            transform: translateY(calc(-2rem / 3)) translateX(0) rotate(-45deg);
           }
         }
       }

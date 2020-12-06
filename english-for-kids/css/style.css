@@ -116,7 +116,7 @@ body header nav .menu-btn.jump-to-menu {
 }
 
 body header nav .menu-btn.jump-to-menu span.bar:first-child {
-  transform: translateY(0.7rem) translateX(0) rotate(45deg);
+  transform: translateY(calc(2rem / 3)) translateX(0) rotate(45deg);
 }
 
 body header nav .menu-btn.jump-to-menu span.bar:nth-child(2) {
@@ -124,7 +124,7 @@ body header nav .menu-btn.jump-to-menu span.bar:nth-child(2) {
 }
 
 body header nav .menu-btn.jump-to-menu span.bar:nth-child(3) {
-  transform: translateY(-0.7rem) translateX(0) rotate(-45deg);
+  transform: translateY(calc(-2rem / 3)) translateX(0) rotate(-45deg);
 }
 
 body header nav .menu {
