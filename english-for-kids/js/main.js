@@ -504,24 +504,33 @@ class Game {
       if (win) this.playSound('./assets/audio/finish_true.ogg');
       else this.playSound('./assets/audio/finish_false.ogg');
     };
-    const createFinalMessage = () => {
+    const createFinalMessage = async () => {
       const {
         mistakes,
       } = this.playMode;
       const src = win ? './assets/img/finish_win.png' : './assets/img/finish_loose.png';
       const message = this.createElement('div', 'finish-message');
-      message.style.setProperty('background-image', `url(${src})`);
-      message.innerText = win ? 'You win!' : `${mistakes} mistake`;
-      if (mistakes > 1) message.innerText += 's';
+      const img = this.createElement('img');
+      img.src = src;
+
+      img.onload = () => {
+        message.style.setProperty('background-image', `url(${src})`);
+        message.innerText = win ? 'You win!' : `${mistakes} mistake`;
+        if (mistakes > 1) message.innerText += 's';
+      };
+      await img.onload();
       return message;
     };
 
     this.elements.gameField.classList.add('hidden');
     this.sleep(1000)
+      .then(async () => {
+        this.clearGameField();
+        const msg = await createFinalMessage();
+        this.elements.gameField.append(msg);
+      })
       .then(() => {
         playFinalSound();
-        this.clearGameField();
-        this.elements.gameField.append(createFinalMessage());
         this.elements.gameField.classList.remove('hidden');
       })
       .then(() => this.sleep(5000))
