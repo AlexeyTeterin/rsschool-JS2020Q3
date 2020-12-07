@@ -385,11 +385,8 @@ export default class Game {
     document.querySelector('.logo').addEventListener('click', () => {
       this.loadCategories();
     });
-    // home-link in menu
-    document.querySelector('.home-link').addEventListener('click', () => {
-      this.loadCategories();
-      this.toggleMenu();
-    });
+    // menu
+    this.elements.menu.addEventListener('click', (event) => this.handleMenuLiClick(event));
     // menu button
     this.elements.menuBtn.addEventListener('click', () => this.toggleMenu());
     // overlay
@@ -404,80 +401,19 @@ export default class Game {
   }
 
   runGameFieldListeners() {
-    // flipCard listeners
-    this.elements.gameField.addEventListener('click', (e) => this.handleCardFlip(e));
+    this.elements.gameField.addEventListener('click', (event) => {
+      this.handleCardFlip(event);
+      this.handleTrainingClicks(event);
+      this.handleCategoryCardClick(event);
+      this.handleStatsPageButtonsClicks(event);
+      this.handleStatsSorting(event);
+    });
     this.elements.gameField.addEventListener('mouseout', (e) => this.handleCardBackFlip(e));
-    // training clicks count
-    this.elements.gameField.addEventListener('click', (event) => {
-      if (this.playMode.isActive) return;
-      const flipCard = event.target.parentElement.parentElement.parentElement;
-      const {
-        word,
-      } = flipCard.dataset;
-      if (flipCard.classList.contains('flip-card')) {
-        if (!this.scores[word]) this.scores[word] = word.word;
-        this.scores[word].trained += 1;
-        this.saveScores();
-      }
-    });
-    // category cards listener
-    this.elements.gameField.addEventListener('click', (event) => {
-      const card = event.target.parentNode;
-      if (!card.classList.contains('category-card')) return;
-      this.loadCardsOf(card.dataset.category);
-    });
-    this.elements.menu.addEventListener('click', (event) => {
-      const menuLi = event.target;
-      if (!menuLi.dataset.category) return;
-      this.loadCardsOf(menuLi.dataset.category);
-      this.toggleMenu();
-    });
   }
 
   runStatsPageListeners() {
-    const modal = document.querySelector('.modal-overlay');
-
-    // reset & repeat buttons on stats page
-    this.elements.gameField.addEventListener('click', (event) => {
-      if (event.target.classList.contains('reset-btn')) modal.classList.remove('hidden');
-
-      if (event.target.classList.contains('repeat-btn')) {
-        const weakWords = [];
-        Object.keys(this.scores)
-          .forEach((el) => {
-            const card = this.scores[el];
-            if (card.wrong > 0) weakWords.push(card);
-          });
-        weakWords
-          .sort((a, b) => {
-            const percentage = (card) => card.wrong / (card.correct + card.wrong);
-            if (percentage(a) < percentage(b)) return 1;
-            if (percentage(a) > percentage(b)) return -1;
-            return 0;
-          })
-          .splice(8);
-        this.loadCardsOf(weakWords);
-      }
-    });
-
-    // yes/no buttons in modal
-    document.querySelector('.modal-overlay').addEventListener('click', (event) => {
-      if (event.target.classList.contains('yes-btn')) {
-        modal.classList.add('hidden');
-        localStorage.removeItem('englishForKidsScores');
-        this.parseOrCreateScores();
-        this.loadStats();
-      }
-      if (event.target.classList.contains('no-btn')) {
-        modal.classList.add('hidden');
-      }
-      if (event.target === modal) {
-        modal.classList.add('hidden');
-      }
-    });
-
-    // sorting
-    this.elements.gameField.addEventListener('click', (e) => this.handleStatsSorting(e));
+    this.elements.gameField.addEventListener('click', (event) => this.handleStatsPageButtonsClicks(event));
+    document.querySelector('.modal-overlay').addEventListener('click', (event) => this.handleModalButtonsClicks(event));
   }
 
   runPlayModeHandler() {
@@ -521,6 +457,20 @@ export default class Game {
     });
   }
 
+  handleMenuLiClick(event) {
+    const menuLi = event.target;
+
+    if (menuLi.classList.contains('home-link')) {
+      this.loadCategories();
+      this.toggleMenu();
+    }
+
+    if (menuLi.dataset.category) {
+      this.loadCardsOf(menuLi.dataset.category);
+      this.toggleMenu();
+    }
+  }
+
   handleCardFlip(event) {
     const {
       target,
@@ -551,15 +501,74 @@ export default class Game {
     if (rotatedCard) rotatedCard.classList.remove('rotate');
   }
 
+  handleCategoryCardClick(event) {
+    const card = event.target.parentNode;
+    if (!card.classList.contains('category-card')) return;
+    this.loadCardsOf(card.dataset.category);
+  }
+
+  handleTrainingClicks(event) {
+    if (this.playMode.isActive) return;
+    const flipCard = event.target.parentElement.parentElement.parentElement;
+    const {
+      word,
+    } = flipCard.dataset;
+    if (flipCard.classList.contains('flip-card')) {
+      if (!this.scores[word]) this.scores[word] = word.word;
+      this.scores[word].trained += 1;
+      this.saveScores();
+    }
+  }
+
+  handleStatsPageButtonsClicks(event) {
+    const modal = document.querySelector('.modal-overlay');
+
+    if (event.target.classList.contains('reset-btn')) modal.classList.remove('hidden');
+
+    if (event.target.classList.contains('repeat-btn')) {
+      const weakWords = [];
+      Object.keys(this.scores)
+        .forEach((el) => {
+          const card = this.scores[el];
+          if (card.wrong > 0) weakWords.push(card);
+        });
+      weakWords
+        .sort((a, b) => {
+          const percentage = (card) => card.wrong / (card.correct + card.wrong);
+          if (percentage(a) < percentage(b)) return 1;
+          if (percentage(a) > percentage(b)) return -1;
+          return 0;
+        })
+        .splice(8);
+      this.loadCardsOf(weakWords);
+    }
+  }
+
+  handleModalButtonsClicks(event) {
+    const modal = document.querySelector('.modal-overlay');
+    if (event.target.classList.contains('yes-btn')) {
+      modal.classList.add('hidden');
+      localStorage.removeItem('englishForKidsScores');
+      this.parseOrCreateScores();
+      this.loadStats();
+    }
+    if (event.target.classList.contains('no-btn')) {
+      modal.classList.add('hidden');
+    }
+    if (event.target === modal) {
+      modal.classList.add('hidden');
+    }
+  }
+
   handleStatsSorting(event) {
-    if (!event.target.parentElement.classList.contains('head-row')) return;
+    const clickOnHeadRow = event.target.parentElement.classList.contains('head-row');
+    if (!clickOnHeadRow) return;
 
     const headColumns = ['category', 'word', 'translation', 'correct', 'wrong', 'trained', '% correct'];
-    const sorter = event.target.id;
+    const sorterColumn = event.target.id;
     const wasSorted = document.querySelector('.sorted');
-    const i = headColumns.indexOf(sorter);
+    const i = headColumns.indexOf(sorterColumn);
     const rows = this.elements.gameField.querySelectorAll('.row');
-
     const rowsSortedDown = Array.from(rows).slice(1).sort((a, b) => {
       const tryGetInt = (str) => {
         if (Number.isNaN(parseInt(str, 10))) return str;
@@ -571,14 +580,14 @@ export default class Game {
       if (second > first) return 1;
       return 0;
     });
-    const sort = (direction) => {
+    const sortStats = (direction) => {
       let order;
       if (direction === 'down') order = rowsSortedDown;
       if (direction === 'up') order = rowsSortedDown.reverse();
       event.target.classList.add('sorted', direction);
       rows.forEach((row) => row.style.setProperty('order', order.indexOf(row)));
     };
-    const unSort = () => {
+    const unSortStats = () => {
       event.target.classList.remove('sorted', 'up', 'down');
       rows.forEach((row) => row.style.removeProperty('order'));
     };
@@ -587,13 +596,13 @@ export default class Game {
 
     if (!targetIsSorted) {
       if (wasSorted) wasSorted.classList.remove('sorted', 'up', 'down');
-      sort('up');
+      sortStats('up');
     }
     if (targetIsSorted) {
       if (!targetIsSortedDown) {
-        unSort();
-        sort('down');
-      } else unSort();
+        unSortStats();
+        sortStats('down');
+      } else unSortStats();
     }
   }
 
