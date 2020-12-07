@@ -275,7 +275,7 @@ body {
       text-align: center;
       font-family: 'Architects Daughter', cursive;
 
-      h1 {
+      h1.logo__title {
         user-select: none;
         cursor: pointer;
         transition: filter 0.1s, opacity 0.2s, font 0.2s;

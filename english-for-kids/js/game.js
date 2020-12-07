@@ -55,6 +55,7 @@ export default class Game {
   };
 
   init() {
+    this.sound = new Audio();
     this.createMenu();
     this.loadCategories();
     this.runHeaderListeners();
@@ -287,8 +288,8 @@ export default class Game {
   async finishGame() {
     const win = !this.playMode.results.includes(false);
     const playFinalSound = () => {
-      if (win) new Audio('./assets/audio/finish_true.ogg').play();
-      else new Audio('./assets/audio/finish_false.ogg').play();
+      if (win) this.playSound('./assets/audio/finish_true.ogg');
+      else this.playSound('./assets/audio/finish_false.ogg');
     };
     const createFinalMessage = () => {
       const {
@@ -324,7 +325,7 @@ export default class Game {
   }
 
   playCard(card) {
-    this.sleep(1000).then(() => new Audio(card.sound).play());
+    this.sleep(1000).then(() => this.playSound(card.sound));
   }
 
   createStar(answer) {
@@ -382,7 +383,7 @@ export default class Game {
 
   runHeaderListeners() {
     // logo
-    document.querySelector('.logo').addEventListener('click', () => {
+    document.querySelector('.logo__title').addEventListener('click', () => {
       this.loadCategories();
     });
     // menu
@@ -398,6 +399,11 @@ export default class Game {
       this.loadStats();
       this.highlightMenuItem();
     });
+  }
+
+  playSound(src) {
+    this.sound.src = src;
+    this.sound.play();
   }
 
   runGameFieldListeners() {
@@ -435,7 +441,7 @@ export default class Game {
       const answerIsCorrect = clickedCard.dataset.word === currentCard.word;
       if (answerIsCorrect) {
         this.sleep(0)
-          .then(() => new Audio('./assets/audio/answerIsCorrect.wav').play())
+          .then(() => this.playSound('./assets/audio/answerIsCorrect.wav'))
           .then(() => {
             this.createStar(true);
             setCorrectAnswer();
@@ -452,7 +458,7 @@ export default class Game {
 
       if (!answerIsCorrect) {
         this.sleep(0)
-          .then(() => new Audio('./assets/audio/answerIsWrong.wav').play())
+          .then(() => this.playSound('./assets/audio/answerIsWrong.wav'))
           .then(() => {
             this.createStar(false);
             setWrongAnswer();
@@ -490,7 +496,7 @@ export default class Game {
         return;
       }
       const flipCard = target.parentElement.parentElement.parentElement;
-      new Audio(flipCard.dataset.sound).play();
+      this.playSound(flipCard.dataset.sound);
     }
   }
 

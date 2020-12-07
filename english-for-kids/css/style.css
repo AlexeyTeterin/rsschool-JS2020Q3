@@ -200,7 +200,7 @@ body header .logo {
   font-family: 'Architects Daughter', cursive;
 }
 
-body header .logo h1 {
+body header .logo h1.logo__title {
   user-select: none;
   cursor: pointer;
   transition: filter 0.1s, opacity 0.2s, font 0.2s;
@@ -208,16 +208,16 @@ body header .logo h1 {
 }
 
 @media (max-width: 620px) {
-  body header .logo h1 {
+  body header .logo h1.logo__title {
     font-size: 2rem;
   }
 }
 
-body header .logo h1:hover {
+body header .logo h1.logo__title:hover {
   filter: drop-shadow(0 2px 4px rgba(255, 255, 255, 0.85));
 }
 
-body header .logo h1:active {
+body header .logo h1.logo__title:active {
   opacity: 0.75;
 }
 
