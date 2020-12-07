@@ -288,8 +288,8 @@ export default class Game {
   async finishGame() {
     const win = !this.playMode.results.includes(false);
     const playFinalSound = () => {
-      if (win) this.playSound('./assets/audio/finish_true.ogg');
-      else this.playSound('./assets/audio/finish_false.ogg');
+      if (win) new Audio('./assets/audio/finish_true.ogg').play();
+      else new Audio('./assets/audio/finish_false.ogg').play();
     };
     const createFinalMessage = () => {
       const {
@@ -402,11 +402,12 @@ export default class Game {
   }
 
   playSound(src) {
-    this.sound.src = src;
+    if (src) this.sound.src = src;
     this.sound.play();
   }
 
   runGameFieldListeners() {
+    this.elements.gameField.addEventListener('click', () => this.playSound(), { once: true });
     this.elements.gameField.addEventListener('click', (event) => {
       this.handleCardFlip(event);
       this.handleTrainingClicks(event);
@@ -441,7 +442,7 @@ export default class Game {
       const answerIsCorrect = clickedCard.dataset.word === currentCard.word;
       if (answerIsCorrect) {
         this.sleep(0)
-          .then(() => this.playSound('./assets/audio/answerIsCorrect.wav'))
+          .then(() => new Audio('./assets/audio/answerIsCorrect.wav').play())
           .then(() => {
             this.createStar(true);
             setCorrectAnswer();
@@ -458,7 +459,7 @@ export default class Game {
 
       if (!answerIsCorrect) {
         this.sleep(0)
-          .then(() => this.playSound('./assets/audio/answerIsWrong.wav'))
+          .then(() => new Audio('./assets/audio/answerIsWrong.wav').play())
           .then(() => {
             this.createStar(false);
             setWrongAnswer();
