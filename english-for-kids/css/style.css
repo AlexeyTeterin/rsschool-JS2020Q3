@@ -358,7 +358,6 @@ body header .modal-overlay .modal {
   position: fixed;
   max-width: 90%;
   min-width: 260px;
-  max-height: 50%;
   top: 50%;
   left: 50%;
   z-index: 7;
@@ -366,7 +365,7 @@ body header .modal-overlay .modal {
   display: flex;
   justify-content: space-evenly;
   flex-wrap: wrap;
-  transform: translate(-50%, -80%);
+  transform: translate(-50%, -60%);
   background-color: rgba(0, 0, 0, 0.6);
   border-radius: 1rem;
 }
