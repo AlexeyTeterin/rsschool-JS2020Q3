@@ -55,6 +55,7 @@ export default class Game {
   };
 
   init() {
+    this.sound = new Audio();
     this.createMenu();
     this.loadCategories();
     this.runHeaderListeners();
@@ -320,11 +321,11 @@ export default class Game {
 
     this.elements.gameField.classList.add('hidden');
     this.sleep(1000)
+      .then(() => playFinalSound())
       .then(() => {
         this.clearGameField();
         this.elements.gameField.append(finalMessage);
         this.elements.gameField.classList.remove('hidden');
-        playFinalSound();
       })
       .then(() => this.sleep(5000))
       .then(() => {
@@ -333,7 +334,7 @@ export default class Game {
   }
 
   playCard(card) {
-    this.sleep(1000).then(() => new Audio(card.sound).play());
+    this.sleep(1000).then(() => this.playSound(card.sound));
   }
 
   createStar(answer) {
@@ -391,7 +392,7 @@ export default class Game {
 
   runHeaderListeners() {
     // logo
-    document.querySelector('.logo').addEventListener('click', () => {
+    document.querySelector('.logo__title').addEventListener('click', () => {
       this.loadCategories();
     });
     // menu
@@ -409,7 +410,13 @@ export default class Game {
     });
   }
 
+  playSound(src) {
+    if (src) this.sound.src = src;
+    this.sound.play();
+  }
+
   runGameFieldListeners() {
+    this.elements.gameField.addEventListener('click', () => this.playSound(), { once: true });
     this.elements.gameField.addEventListener('click', (event) => {
       this.handleCardFlip(event);
       this.handleTrainingClicks(event);
@@ -443,25 +450,31 @@ export default class Game {
 
       const answerIsCorrect = clickedCard.dataset.word === currentCard.word;
       if (answerIsCorrect) {
-        setCorrectAnswer();
-        this.createStar(true);
-        clickedCard.classList.add('disabled');
-        new Audio('./assets/audio/answerIsCorrect.wav').play();
-        this.saveScores('correct');
-        if (hasNextCard()) {
-          setNextCard();
-          this.playCard(this.playMode.currentCard);
-        } else { // game finished
-          this.finishGame();
-        }
+        this.sleep(0)
+          .then(() => new Audio('./assets/audio/answerIsCorrect.wav').play())
+          .then(() => {
+            this.createStar(true);
+            setCorrectAnswer();
+            clickedCard.classList.add('disabled');
+            this.saveScores('correct');
+            if (hasNextCard()) {
+              setNextCard();
+              this.playCard(this.playMode.currentCard);
+            } else {
+              this.finishGame();
+            }
+          });
       }
 
       if (!answerIsCorrect) {
-        setWrongAnswer();
-        this.playMode.mistakes += 1;
-        this.createStar(false);
-        new Audio('./assets/audio/answerIsWrong.wav').play();
-        this.saveScores('wrong');
+        this.sleep(0)
+          .then(() => new Audio('./assets/audio/answerIsWrong.wav').play())
+          .then(() => {
+            this.createStar(false);
+            setWrongAnswer();
+            this.playMode.mistakes += 1;
+            this.saveScores('wrong');
+          });
       }
     });
   }
@@ -493,7 +506,7 @@ export default class Game {
         return;
       }
       const flipCard = target.parentElement.parentElement.parentElement;
-      new Audio(flipCard.dataset.sound).play();
+      this.playSound(flipCard.dataset.sound);
     }
   }
 
