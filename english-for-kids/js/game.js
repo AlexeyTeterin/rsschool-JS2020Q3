@@ -76,6 +76,14 @@ export default class Game {
     });
   }
 
+  showCategoryName(category) {
+    const weakCardsRecieved = Array.isArray(category);
+    let categoryName = category;
+    if (weakCardsRecieved) categoryName = 'Difficult words';
+    const categoryHeader = Game.createElement('div', 'category-header', categoryName);
+    this.elements.gameField.prepend(categoryHeader);
+  }
+
   loadCategories() {
     this.elements.gameField.classList.add('hidden');
     this.clearGamePanel();
@@ -116,6 +124,7 @@ export default class Game {
     this.sleep(500)
       .then(() => {
         this.clearGameField();
+        this.showCategoryName(category);
         this.playMode.reset();
         cards.forEach((card) => this.createFlipping(card));
         this.toggleFlipCardsTitles();

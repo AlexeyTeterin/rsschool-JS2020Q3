@@ -377,7 +377,8 @@ body header .modal-overlay .modal p {
   padding: 1rem 0.5rem;
 }
 
-body header .modal-overlay .modal .yes-btn, body header .modal-overlay .modal .no-btn {
+body header .modal-overlay .modal .yes-btn,
+body header .modal-overlay .modal .no-btn {
   padding: 0;
   min-width: 4.25rem;
   height: 2.5rem;
@@ -398,16 +399,19 @@ body header .modal-overlay .modal .yes-btn, body header .modal-overlay .modal .n
   height: 2rem;
 }
 
-body header .modal-overlay .modal .yes-btn:hover, body header .modal-overlay .modal .no-btn:hover {
+body header .modal-overlay .modal .yes-btn:hover,
+body header .modal-overlay .modal .no-btn:hover {
   box-shadow: 0 0 10px white;
 }
 
-body header .modal-overlay .modal .yes-btn:active, body header .modal-overlay .modal .no-btn:active {
+body header .modal-overlay .modal .yes-btn:active,
+body header .modal-overlay .modal .no-btn:active {
   transform: scale(0.95);
 }
 
 @media (max-width: 620px) {
-  body header .modal-overlay .modal .yes-btn:active, body header .modal-overlay .modal .no-btn:active {
+  body header .modal-overlay .modal .yes-btn:active,
+body header .modal-overlay .modal .no-btn:active {
     transform: scale(0.8);
   }
 }
@@ -511,6 +515,22 @@ body main .game-field {
 
 body main .game-field.narrow {
   padding-right: 4rem;
+}
+
+body main .game-field .category-header {
+  width: 100%;
+  text-align: center;
+  padding-bottom: 0.75rem;
+  font-size: 1.75rem;
+  font-weight: normal;
+  letter-spacing: 1px;
+  color: rgba(255, 255, 255, 0.75);
+  cursor: default;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5));
+}
+
+body main .game-field .category-header::first-letter {
+  text-transform: uppercase;
 }
 
 body main .game-field .finish-message {
