@@ -56,8 +56,8 @@ body .goDown {
 body h1 {
   display: inline;
   margin: 0 0 0 1rem;
-  font-size: 2.25rem;
-  line-height: 2.25rem;
+  font-size: 2.5rem;
+  line-height: 2.5rem;
 }
 
 body header {
@@ -140,7 +140,7 @@ body header nav .menu {
   justify-content: space-around;
   height: 100%;
   background-color: #f7b63f;
-  background: linear-gradient(120deg, #f7b63f 0%, #b45600 100%);
+  background: linear-gradient(120deg, #f7b63f 0%, #e27e21 100%);
   transition: transform 0.4s;
   transform: translateX(-320px);
   box-shadow: 0 0 3rem rgba(0, 0, 0, 0.75);
@@ -179,6 +179,7 @@ body header nav .menu li:active {
 }
 
 body header nav .menu li.home-link {
+  margin-bottom: 2rem;
   background-image: url(../assets/img/home-link.svg);
   background-repeat: no-repeat;
   background-size: contain;

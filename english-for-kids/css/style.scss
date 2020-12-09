@@ -135,8 +135,8 @@ body {
   h1 {
     display: inline;
     margin: 0 0 0 1rem;
-    font-size: 2.25rem;
-    line-height: 2.25rem;
+    font-size: 2.5rem;
+    line-height: 2.5rem;
   }
 
   header {
@@ -215,7 +215,7 @@ body {
         justify-content: space-around;
         height: 100%;
         background-color: $col-menu;
-        background: linear-gradient(120deg, rgba(247, 182, 63, 1) 0%, rgba(180, 86, 0, 1) 100%);
+        background: linear-gradient(120deg, rgba(247, 182, 63, 1) 0%, rgb(226, 126, 33) 100%);
         transition: transform 0.4s;
         transform: translateX(-320px);
         box-shadow: 0 0 3rem rgba(0, 0, 0, 0.75);
@@ -252,6 +252,7 @@ body {
           }
 
           &.home-link {
+            margin-bottom: 2rem;
             background-image: url(../assets/img/home-link.svg);
             background-repeat: no-repeat;
             background-size: contain;
