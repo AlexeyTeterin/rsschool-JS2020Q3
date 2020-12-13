@@ -1,0 +1,7 @@
+{
+  "editor.defaultFormatter": "HookyQR.beautify",
+  "editor.formatOnPaste": true,
+  "editor.formatOnType": true,
+  "html.format.endWithNewline": true,
+  "files.autoSaveDelay": 500
+}
