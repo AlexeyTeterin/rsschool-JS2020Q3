@@ -1,0 +1,180 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  outline: none;
+  transition: font-size 0.25s ease-in-out;
+}
+
+body {
+  font-family: 'Quicksand', sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  width: 100%;
+  height: 100vh;
+  background-size: cover;
+  background-position: center;
+  opacity: 0;
+  background-color: black;
+  background-image: url(../img/black.png);
+  transition: background-image 0.75s, opacity 1s;
+}
+
+body .overlay {
+  display: flex;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  width: 100%;
+  height: 100vh;
+  overflow: auto;
+}
+
+body .overlay .wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: auto;
+  padding-bottom: 1vh;
+}
+
+#time {
+  font-size: 8rem;
+  line-height: 1;
+  font-family: 'Inconsolata', monospace;
+}
+
+@media (max-width: 700px) {
+  #time {
+    font-size: 5rem;
+  }
+}
+
+#date {
+  font-size: 1.2rem;
+  padding-bottom: 1em;
+}
+
+@media (max-width: 700px) {
+  #date {
+    font-size: 1rem;
+  }
+}
+
+#name {
+  text-align: right;
+}
+
+#weather {
+  margin-bottom: 0;
+}
+
+h1 {
+  margin-top: 1rem;
+  margin-bottom: 2rem;
+  display: flex;
+}
+
+@media (max-width: 700px) {
+  h1 {
+    font-size: 1.5em;
+  }
+}
+
+h2 {
+  margin-bottom: 0.5rem;
+}
+
+@media (max-width: 700px) {
+  h2 {
+    font-size: 1.2em;
+  }
+}
+
+h3 {
+  font-weight: 400;
+}
+
+@media (max-width: 700px) {
+  h3 {
+    font-size: 0.9em;
+  }
+}
+
+.weather-icon {
+  font-size: 2.5rem;
+}
+
+.bg-btn, .quote .quote-btn {
+  position: absolute;
+  bottom: 2vmin;
+  right: 2vmin;
+  width: 40px;
+  height: 40px;
+  border: 0;
+  background: url("https://www.pngarts.com/files/7/Update-Button-PNG-Image.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  filter: grayscale(1);
+  margin: 10px;
+  outline: none;
+  overflow: hidden;
+}
+
+.bg-btn:hover, .quote .quote-btn:hover {
+  cursor: pointer;
+  opacity: 0.8;
+}
+
+.bg-btn:active, .quote .quote-btn:active {
+  transform: scale(0.9);
+}
+
+.quote {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  font-size: 1.2rem;
+  margin: 5px;
+  background: rgba(255, 255, 255, 0.15);
+  padding: 0.5em;
+  border-radius: 0.5em;
+  transition: all 250ms ease-in-out;
+  text-align: left;
+  max-width: 75vw;
+  opacity: 0;
+  transition: opacity 250ms, height 500ms;
+  overflow: hidden;
+}
+
+@media (max-width: 700px) {
+  .quote {
+    font-size: 0.9rem;
+    max-width: 95vw;
+  }
+}
+
+.quote figcaption {
+  font-size: 0.9rem;
+  text-align: right;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+@media (max-width: 700px) {
+  .quote figcaption {
+    font-size: 0.8rem;
+  }
+}
+
+.quote .quote-btn {
+  justify-self: right;
+  margin: 10px 0 0 0;
+  width: 25px;
+  height: 25px;
+  position: relative;
+  align-self: flex-end;
+  right: 0;
+  bottom: 0;
+}
