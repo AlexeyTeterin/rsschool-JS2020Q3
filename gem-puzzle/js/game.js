@@ -9,6 +9,7 @@ export default class Game {
     playing: false,
     movesCounter: 0,
     sound: true,
+    image: true,
     chipIsMoving: false,
     win: false,
   }
@@ -72,6 +73,7 @@ export default class Game {
     this.chipsNumbers = this.randomizeChips();
     // create chips boxes
     this.createChips();
+    this.setBG();
 
     // create menu
     this.menu = document.createElement('div');
@@ -118,7 +120,42 @@ export default class Game {
     this.checkResult();
     this.setTimer('on');
     this.clearHint();
+    this.setBG();
+
     this.hideMenu();
+  }
+
+  setBG(e) {
+    const {
+      rows,
+    } = this.properties;
+    if (e && e.target !== this.clickedChip) return;
+
+    if (!this.properties.image) {
+      this.chips.forEach((chip) => {
+        chip.style.removeProperty('background-image');
+        chip.style.removeProperty('background-position');
+        chip.style.removeProperty('background-size');
+      });
+      return;
+    }
+
+    this.chips.forEach((chip, index) => {
+      chip.style.setProperty('background-size', `${(rows + 1) * 100}%`);
+
+      const id = +chip.textContent || index + 1;
+      const step = 100 / rows;
+
+      const posY = Math.floor((id - 1) / rows) * step;
+      const posX = ((id - 1) % rows) * step;
+
+      if (!chip.classList.contains('chip-empty')) {
+        chip.style.setProperty('background-image', 'url(./assets/img/mountain.jpg)');
+        chip.style.setProperty('background-position', `${posX}% ${posY}%`);
+      } else {
+        chip.style.removeProperty('background-image');
+      }
+    });
   }
 
   saveGame(src) {
@@ -201,7 +238,8 @@ export default class Game {
       this.createMenuHeader('Settings');
 
       // append sound switcher and goBack button
-      this.menu.append(this.createSoundSwitcher(), this.createGoBackBtn());
+      this.menu
+        .append(this.createSoundSwitcher(), this.createImageSwitcher(), this.createGoBackBtn());
       const rows = document.querySelector('.rows');
 
       // show selection on current rows number
@@ -226,6 +264,7 @@ export default class Game {
             `repeat(${this.properties.rows}, 1fr)`);
           this.chipsNumbers = this.randomizeChips();
           this.createChips();
+          this.setBG();
         });
       });
 
@@ -474,6 +513,23 @@ export default class Game {
     return soundSw;
   }
 
+  createImageSwitcher() {
+    const imageSw = document.createElement('div');
+    imageSw.classList.add('sound');
+    imageSw.innerHTML = 'Background image: &nbsp';
+    const switcher = document.createElement('input');
+    switcher.classList.add('toggle');
+    switcher.id = 'menuSoundSwitcher';
+    switcher.type = 'checkbox';
+    switcher.checked = this.properties.image;
+    switcher.addEventListener('click', () => {
+      this.properties.image = !!switcher.checked;
+      this.setBG();
+    });
+    imageSw.append(switcher);
+    return imageSw;
+  }
+
   createMenuHeader(text) {
     const menuHeader = document.createElement('h1');
     menuHeader.textContent = text;
@@ -527,6 +583,8 @@ export default class Game {
       this.gameBoard.append(chip);
       this.chips.push(chip);
     });
+
+    // this.chips.forEach((chip) => chip.addEventListener('transitionend', (e) => this.setBG(e)));
   }
 
   getChips() {
@@ -554,7 +612,9 @@ export default class Game {
       const chip = el;
       chip.textContent = this.chipsNumbers[index];
       chip.classList = 'chip';
-      if (chip.textContent === '') chip.classList.add('chip-empty');
+      if (chip.textContent === '') {
+        chip.classList.add('chip-empty');
+      }
       return chip;
     });
   }
@@ -600,17 +660,24 @@ export default class Game {
     clickedChip.style.setProperty('transform', `translate${params[positionDifference]}`);
     this.properties.chipIsMoving = true;
     clickedChip.setAttribute('draggable', 'false');
-    setTimeout(() => {
-      this.playSound('chip');
+    this.playSound('chip');
+
+    const handleTransEnd = (e) => {
+      if (e.propertyName !== 'transform') return;
       emptyChip.innerHTML = chip.innerHTML;
       emptyChip.classList.remove('chip-empty');
       clickedChip.innerHTML = temp;
-      clickedChip.classList.add('chip-empty');
       clickedChip.style.setProperty('transform', 'translate(0)');
       this.properties.chipIsMoving = false;
+      clickedChip.classList.add('chip-empty');
       this.getChips();
       this.checkResult();
-    }, 125);
+      this.setBG();
+      clickedChip.removeEventListener('transitionend', handleTransEnd);
+    };
+
+    clickedChip.addEventListener('transitionend', handleTransEnd);
+
     this.updateHeader(1);
   }
 

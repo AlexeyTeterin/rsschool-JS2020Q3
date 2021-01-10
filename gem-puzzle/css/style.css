@@ -369,7 +369,7 @@ body .game-board .chip {
   align-items: center;
   font-size: 2.25rem;
   user-select: none;
-  transition: transform .125s ease-out, opacity .05s, font 0.5s;
+  transition: transform 0.1s, opacity .1s, font 0.5s;
   cursor: pointer;
   text-shadow: 0px 0px 4px rgba(0, 0, 0, 0.5);
   border-radius: 6px;
@@ -377,10 +377,6 @@ body .game-board .chip {
   -moz-border-radius: 6px;
   -ms-border-radius: 6px;
   -o-border-radius: 6px;
-  -webkit-transition: transform .125s ease-out, opacity .05s, font 0.5s;
-  -moz-transition: transform .125s ease-out, opacity .05s, font 0.5s;
-  -ms-transition: transform .125s ease-out, opacity .05s, font 0.5s;
-  -o-transition: transform .125s ease-out, opacity .05s, font 0.5s;
 }
 
 body .game-board .chip:hover {
@@ -388,7 +384,8 @@ body .game-board .chip:hover {
 }
 
 body .game-board .chip-empty {
-  background: unset;
+  background: transparent;
+  background-size: 0;
   border: none;
   cursor: default;
 }
