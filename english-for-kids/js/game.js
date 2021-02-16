@@ -9,6 +9,7 @@ import Logo from './Logo.js';
 import Controls from './Controls.js';
 import FlipCard from './FlipCard.js';
 import Footer from './Footer.js';
+import PlayMode from './PlayMode.js';
 
 export default class Game {
   scores = null;
@@ -24,46 +25,7 @@ export default class Game {
     overlay: document.querySelector('.overlay'),
   }
 
-  playMode = {
-    isActive: false,
-    gameStarted: false,
-    gameFinished: false,
-    cards: null,
-    currentCard: null,
-    currentIndex: 0,
-    mistakes: 0,
-    results: [],
-    setCorrectAnswer: () => {
-      const {
-        results,
-        currentIndex,
-      } = this.playMode;
-      if (results[currentIndex] !== false) results[currentIndex] = true;
-    },
-    setWrongAnswer: () => {
-      const {
-        results,
-        currentIndex,
-      } = this.playMode;
-      if (!results[currentIndex]) results[currentIndex] = false;
-    },
-    hasNextCard: () => this.playMode.cards[this.playMode.currentIndex + 1],
-    setNextCard: () => {
-      this.playMode.currentIndex += 1;
-      const {
-        cards,
-        currentIndex,
-      } = this.playMode;
-      this.playMode.currentCard = cards[currentIndex];
-    },
-    reset: () => {
-      this.playMode.results = [];
-      this.playMode.cards = [];
-      this.playMode.currentIndex = 0;
-      this.playMode.mistakes = 0;
-      this.playMode.gameStarted = false;
-    },
-  };
+  playMode = new PlayMode();
 
   init() {
     this.sound = new Audio();
