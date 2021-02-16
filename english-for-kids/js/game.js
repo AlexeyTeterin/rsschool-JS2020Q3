@@ -8,6 +8,7 @@ import Burger from './Burger.js';
 import Logo from './Logo.js';
 import Controls from './Controls.js';
 import FlipCard from './FlipCard.js';
+import Footer from './Footer.js';
 
 export default class Game {
   scores = null;
@@ -16,7 +17,10 @@ export default class Game {
     gamePanel: document.querySelector('.game-panel'),
     gameField: document.querySelector('.game-field'),
     menu: new Menu(),
+    logo: new Logo('English for kids'),
+    controls: new Controls(),
     burger: new Burger(),
+    footer: new Footer(),
     overlay: document.querySelector('.overlay'),
   }
 
@@ -64,6 +68,7 @@ export default class Game {
   init() {
     this.sound = new Audio();
     this.renderHeader();
+    this.renderFooter();
     this.loadCategories();
     this.runHeaderListeners();
     this.runGameFieldListeners();
@@ -76,8 +81,12 @@ export default class Game {
     const headerEl = document.querySelector('header');
     const navEl = createElement('nav');
 
-    headerEl.prepend(navEl, new Logo('English for kids'), new Controls());
+    headerEl.prepend(navEl, this.elements.logo, this.elements.controls);
     navEl.append(this.elements.burger, this.elements.menu);
+  }
+
+  renderFooter() {
+    document.body.append(this.elements.footer);
   }
 
   showCategoryName(category) {
@@ -372,24 +381,36 @@ export default class Game {
     }
   }
 
-  runHeaderListeners() {
-    // logo
-    document.querySelector('.logo__title').addEventListener('click', () => {
-      this.loadCategories();
-    });
-    // menu
-    this.elements.menu.addEventListener('click', (event) => this.handleMenuLiClick(event));
-    // menu button
-    this.elements.burger.addEventListener('click', () => this.toggleMenu());
-    // overlay
-    this.elements.overlay.addEventListener('click', () => this.toggleMenu());
-    // toggle mode button
-    document.querySelector('#toggle-mode').addEventListener('click', () => this.togglePlayMode());
-    // stats button
-    document.querySelector('.stats-btn').addEventListener('click', () => {
+  handleLogoClick(event) {
+    const { target } = event;
+    const isTitleClick = target.classList.contains('logo__title');
+    if (isTitleClick) this.loadCategories();
+  }
+
+  handleControlsClick(event) {
+    const { target } = event;
+    const isStatsBtnClick = target.classList.contains('stats-btn');
+    const isToggleModeClick = target.id === 'checkbox';
+
+    if (isStatsBtnClick) {
       this.loadStats();
       this.highlightMenuItem();
-    });
+    }
+    if (isToggleModeClick) {
+      this.togglePlayMode();
+    }
+  }
+
+  runHeaderListeners() {
+    this.elements.logo.addEventListener('click', this.handleLogoClick.bind(this));
+
+    this.elements.menu.addEventListener('click', this.handleMenuLiClick.bind(this));
+
+    this.elements.burger.addEventListener('click', this.toggleMenu.bind(this));
+
+    this.elements.overlay.addEventListener('click', this.toggleMenu.bind(this));
+
+    this.elements.controls.addEventListener('click', this.handleControlsClick.bind(this));
   }
 
   playSound(src) {
