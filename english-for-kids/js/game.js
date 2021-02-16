@@ -3,6 +3,10 @@ import CARDS from './cards.js';
 import {
   createElement, scrollTop, shuffle, sleep,
 } from './utils.js';
+import Menu from './Menu.js';
+import Burger from './Burger.js';
+import Logo from './Logo.js';
+import Controls from './Controls.js';
 
 export default class Game {
   scores = null;
@@ -10,8 +14,8 @@ export default class Game {
   elements = {
     gamePanel: document.querySelector('.game-panel'),
     gameField: document.querySelector('.game-field'),
-    menu: document.querySelector('.menu'),
-    menuBtn: document.querySelector('.menu-btn'),
+    menu: new Menu(),
+    burger: new Burger(),
     overlay: document.querySelector('.overlay'),
   }
 
@@ -58,7 +62,7 @@ export default class Game {
 
   init() {
     this.sound = new Audio();
-    this.createMenu();
+    this.renderHeader();
     this.loadCategories();
     this.runHeaderListeners();
     this.runGameFieldListeners();
@@ -67,16 +71,12 @@ export default class Game {
     this.parseOrCreateScores();
   }
 
-  createMenu() {
-    const homeLink = createElement('li', 'home-link', '', 'home-link');
-    this.elements.menu.append(homeLink);
+  renderHeader() {
+    const headerEl = document.querySelector('header');
+    const navEl = createElement('nav');
 
-    CATEGORIES.forEach((cat) => {
-      const menuLi = createElement('li', null, cat);
-      menuLi.dataset.category = cat;
-      menuLi.style.setProperty('background-image', `url(./assets/img/${cat}.svg)`);
-      this.elements.menu.append(menuLi);
-    });
+    headerEl.prepend(navEl, new Logo('English for kids'), new Controls());
+    navEl.append(this.elements.burger, this.elements.menu);
   }
 
   showCategoryName(category) {
@@ -373,7 +373,7 @@ export default class Game {
 
   toggleMenu() {
     this.elements.menu.classList.toggle('show');
-    this.elements.menuBtn.classList.toggle('jump-to-menu');
+    this.elements.burger.classList.toggle('jump-to-menu');
     this.elements.overlay.classList.toggle('hidden');
     this.toggleScroll();
   }
@@ -400,7 +400,7 @@ export default class Game {
     // menu
     this.elements.menu.addEventListener('click', (event) => this.handleMenuLiClick(event));
     // menu button
-    this.elements.menuBtn.addEventListener('click', () => this.toggleMenu());
+    this.elements.burger.addEventListener('click', () => this.toggleMenu());
     // overlay
     this.elements.overlay.addEventListener('click', () => this.toggleMenu());
     // toggle mode button

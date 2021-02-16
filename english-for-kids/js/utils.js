@@ -1,5 +1,5 @@
 export const shuffle = (array) => {
-  const len = this.elements.gameField.querySelectorAll('.flip-card').length;
+  const len = document.querySelectorAll('.flip-card').length;
   const random = () => Math.floor(Math.random() * len);
   const indexes = [];
   const result = [];
@@ -14,12 +14,19 @@ export const shuffle = (array) => {
 
 export const sleep = (ms) => new Promise((resolve) => setTimeout(() => resolve(), ms));
 
-export const createElement = (tag, classes, textContent, id) => {
+export const createElement = (tag, className, textContent, id) => {
   const element = document.createElement(tag);
-  if (Array.isArray(classes)) classes.forEach((name) => element.classList.add(name));
-  else element.classList.add(classes);
+
+  if (Array.isArray(className)) {
+    className.forEach((name) => element.classList.add(name));
+  } else if (className) {
+    element.classList.add(className);
+  }
+
   element.textContent = textContent;
+
   if (id) element.id = id;
+
   return element;
 };
 
