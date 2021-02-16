@@ -527,8 +527,9 @@ export default class Game {
 
   handleCategoryCardClick(event) {
     const target = event.target.parentNode;
-    const isCategoryCardClicked = target.classList.contains('category-card');
-    if (!isCategoryCardClicked) return;
+    const isCategoryCardClick = target.classList.contains('category-card');
+
+    if (!isCategoryCardClick) return;
     this.loadCardsOf(target.dataset.category);
   }
 
