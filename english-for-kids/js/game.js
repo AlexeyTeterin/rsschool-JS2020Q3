@@ -526,9 +526,10 @@ export default class Game {
   }
 
   handleCategoryCardClick(event) {
-    const card = event.target.parentNode;
-    if (!card.classList.contains('category-card')) return;
-    this.loadCardsOf(card.dataset.category);
+    const target = event.target.parentNode;
+    const isCategoryCardClicked = target.classList.contains('category-card');
+    if (!isCategoryCardClicked) return;
+    this.loadCardsOf(target.dataset.category);
   }
 
   handleTrainingClicks(event) {
