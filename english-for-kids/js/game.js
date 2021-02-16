@@ -7,6 +7,7 @@ import Menu from './Menu.js';
 import Burger from './Burger.js';
 import Logo from './Logo.js';
 import Controls from './Controls.js';
+import FlipCard from './FlipCard.js';
 
 export default class Game {
   scores = null;
@@ -129,7 +130,7 @@ export default class Game {
         this.clearGameField();
         this.showCategoryName(category);
         this.playMode.reset();
-        cards.forEach((card) => this.createFlipping(card));
+        cards.forEach((card) => this.renderFlipCard(card));
         this.toggleFlipCardsTitles();
         scrollTop();
       })
@@ -226,29 +227,8 @@ export default class Game {
       .then(() => this.elements.gamePanel.classList.remove('hidden-content'));
   }
 
-  createFlipping(card) {
-    const cardImage = createElement('div', 'card__image');
-    cardImage.style.setProperty('background-image', `url(./assets/img/${card.category}_${card.word}.svg)`);
-
-    const flipCard = createElement('div', 'flip-card');
-    flipCard.dataset.word = card.word;
-    flipCard.dataset.sound = card.sound;
-
-    const cardElement = createElement('div', 'card');
-
-    const front = createElement('div', 'card__front');
-    const back = createElement('div', 'card__back');
-
-    const cardTitle = createElement('div', 'card__title', card.word);
-    const cardTranslation = createElement('div', 'card__title', card.translation);
-    const rotateBtn = createElement('div', 'card__rotate-btn');
-
-    front.append(cardImage.cloneNode(), cardTitle, rotateBtn);
-    back.append(cardImage, cardTranslation);
-    cardElement.append(front, back);
-    flipCard.append(cardElement);
-
-    this.elements.gameField.append(flipCard);
+  renderFlipCard(card) {
+    this.elements.gameField.append(new FlipCard(card));
   }
 
   toggleFlipCardsTitles() {
