@@ -1,6 +1,8 @@
-/* eslint-disable import/extensions */
 import CATEGORIES from './categories.js';
 import CARDS from './cards.js';
+import {
+  createElement, scrollTop, shuffle, sleep,
+} from './utils.js';
 
 export default class Game {
   scores = null;
@@ -66,11 +68,11 @@ export default class Game {
   }
 
   createMenu() {
-    const homeLink = Game.createElement('li', 'home-link', '', 'home-link');
+    const homeLink = createElement('li', 'home-link', '', 'home-link');
     this.elements.menu.append(homeLink);
 
     CATEGORIES.forEach((cat) => {
-      const menuLi = Game.createElement('li', null, cat);
+      const menuLi = createElement('li', null, cat);
       menuLi.dataset.category = cat;
       menuLi.style.setProperty('background-image', `url(./assets/img/${cat}.svg)`);
       this.elements.menu.append(menuLi);
@@ -81,21 +83,21 @@ export default class Game {
     const weakCardsRecieved = Array.isArray(category);
     let categoryName = category;
     if (weakCardsRecieved) categoryName = 'Difficult words';
-    const categoryHeader = Game.createElement('div', 'category-header', categoryName);
+    const categoryHeader = createElement('div', 'category-header', categoryName);
     this.elements.gameField.prepend(categoryHeader);
   }
 
   loadCategories() {
     this.elements.gameField.classList.add('hidden');
     this.clearGamePanel();
-    this.sleep(500)
+    sleep(500)
       .then(() => {
         this.clearGameField();
         CATEGORIES.forEach((cat) => {
-          const categoryCard = Game.createElement('div', 'category-card');
+          const categoryCard = createElement('div', 'category-card');
           categoryCard.dataset.category = cat;
-          const cardTitle = Game.createElement('div', 'card__title', cat);
-          const cardImage = Game.createElement('div', 'card__image');
+          const cardTitle = createElement('div', 'card__title', cat);
+          const cardImage = createElement('div', 'card__image');
           cardImage.style.setProperty('background-image', `url(./assets/img/${cat}.svg)`);
           categoryCard.append(cardImage, cardTitle);
           this.elements.gameField.append(categoryCard);
@@ -104,7 +106,7 @@ export default class Game {
       .then(() => {
         this.elements.gameField.classList.remove('hidden');
         this.highlightMenuItem();
-        Game.scrollTop();
+        scrollTop();
       });
   }
 
@@ -122,14 +124,14 @@ export default class Game {
 
     this.elements.gameField.classList.add('hidden');
     this.clearGamePanel();
-    this.sleep(500)
+    sleep(500)
       .then(() => {
         this.clearGameField();
         this.showCategoryName(category);
         this.playMode.reset();
         cards.forEach((card) => this.createFlipping(card));
         this.toggleFlipCardsTitles();
-        Game.scrollTop();
+        scrollTop();
       })
       .then(() => {
         this.highlightMenuItem(weakCardsRecieved ? '' : category);
@@ -147,38 +149,38 @@ export default class Game {
       ];
     };
     const headColumns = ['category', 'word', 'translation', 'correct', 'wrong', 'trained', '% correct'];
-    const statsField = Game.createElement('div', 'stats-field');
-    const headRow = Game.createElement('div', ['row', 'head-row']);
-    const resetBtn = Game.createElement('button', 'reset-btn', 'Reset');
-    const repeatBtn = Game.createElement('button', 'repeat-btn', 'Repeat difficult words');
-    const buttons = Game.createElement('div', 'buttons');
+    const statsField = createElement('div', 'stats-field');
+    const headRow = createElement('div', ['row', 'head-row']);
+    const resetBtn = createElement('button', 'reset-btn', 'Reset');
+    const repeatBtn = createElement('button', 'repeat-btn', 'Repeat difficult words');
+    const buttons = createElement('div', 'buttons');
     buttons.append(repeatBtn, resetBtn);
 
     this.elements.gameField.classList.add('hidden');
-    this.sleep(500)
+    sleep(500)
       .then(() => {
         this.stopGame();
         this.clearGameField();
         this.elements.gameField.append(statsField);
         statsField.append(buttons);
         headColumns.forEach((headColumn) => {
-          const div = Game.createElement('div', 'sorter', headColumn, headColumn);
+          const div = createElement('div', 'sorter', headColumn, headColumn);
           headRow.append(div);
         });
         statsField.append(headRow);
 
         Object.keys(this.scores).forEach((word) => {
-          const row = Game.createElement('div', 'row', '', word);
+          const row = createElement('div', 'row', '', word);
           const columns = getStats(this.scores[word]);
           columns.forEach((column) => {
-            const div = Game.createElement('div', null, column);
+            const div = createElement('div', null, column);
             row.append(div);
           });
           statsField.append(row);
         });
       })
       .then(() => this.elements.gameField.classList.remove('hidden'))
-      .then(() => Game.scrollTop());
+      .then(() => scrollTop());
   }
 
   parseOrCreateScores() {
@@ -216,7 +218,7 @@ export default class Game {
     const stars = this.elements.gamePanel.querySelectorAll('.star');
 
     this.elements.gamePanel.classList.add('hidden-content');
-    this.sleep(500)
+    sleep(500)
       .then(() => {
         if (replayBtn) replayBtn.remove();
         if (stars) stars.forEach((star) => star.remove());
@@ -225,21 +227,21 @@ export default class Game {
   }
 
   createFlipping(card) {
-    const cardImage = Game.createElement('div', 'card__image');
+    const cardImage = createElement('div', 'card__image');
     cardImage.style.setProperty('background-image', `url(./assets/img/${card.category}_${card.word}.svg)`);
 
-    const flipCard = Game.createElement('div', 'flip-card');
+    const flipCard = createElement('div', 'flip-card');
     flipCard.dataset.word = card.word;
     flipCard.dataset.sound = card.sound;
 
-    const cardElement = Game.createElement('div', 'card');
+    const cardElement = createElement('div', 'card');
 
-    const front = Game.createElement('div', 'card__front');
-    const back = Game.createElement('div', 'card__back');
+    const front = createElement('div', 'card__front');
+    const back = createElement('div', 'card__back');
 
-    const cardTitle = Game.createElement('div', 'card__title', card.word);
-    const cardTranslation = Game.createElement('div', 'card__title', card.translation);
-    const rotateBtn = Game.createElement('div', 'card__rotate-btn');
+    const cardTitle = createElement('div', 'card__title', card.word);
+    const cardTranslation = createElement('div', 'card__title', card.translation);
+    const rotateBtn = createElement('div', 'card__rotate-btn');
 
     front.append(cardImage.cloneNode(), cardTitle, rotateBtn);
     back.append(cardImage, cardTranslation);
@@ -283,7 +285,7 @@ export default class Game {
     if (!document.querySelector('.replay-btn')) this.createReplayBtn();
     const cards = Array.from(this.elements.gameField.querySelectorAll('.flip-card')).map((card) => card.dataset);
 
-    this.playMode.cards = this.shuffle(cards);
+    this.playMode.cards = shuffle(cards);
     [this.playMode.currentCard] = this.playMode.cards;
 
     if (flipCardsLoaded) document.querySelector('.replay-btn').classList.remove('hidden');
@@ -305,7 +307,7 @@ export default class Game {
         mistakes,
       } = this.playMode;
       const src = win ? './assets/img/finish_win.png' : './assets/img/finish_loose.png';
-      const message = Game.createElement('div', 'finish-message');
+      const message = createElement('div', 'finish-message');
       message.innerText = win ? 'You win!' : `${mistakes} mistake`;
       if (mistakes > 1) message.innerText += 's';
       const img = new Image();
@@ -320,43 +322,43 @@ export default class Game {
     const finalMessage = await createFinalMessage();
 
     this.elements.gameField.classList.add('hidden');
-    this.sleep(1000)
+    sleep(1000)
       .then(() => playFinalSound())
       .then(() => {
         this.clearGameField();
         this.elements.gameField.append(finalMessage);
         this.elements.gameField.classList.remove('hidden');
       })
-      .then(() => this.sleep(5000))
+      .then(() => sleep(5000))
       .then(() => {
         if (document.querySelector('.finish-message')) this.loadCategories();
       });
   }
 
   playCard(card) {
-    this.sleep(1000).then(() => this.playSound(card.sound));
+    sleep(1000).then(() => this.playSound(card.sound));
   }
 
   createStar(answer) {
-    const star = Game.createElement('div', 'star');
+    const star = createElement('div', 'star');
     if (answer) star.classList.add('star-true');
     this.elements.gamePanel.firstChild.insertAdjacentElement('beforebegin', star);
-    this.sleep(0)
+    sleep(0)
       .then(() => star.style.setProperty('height', '1.5rem'))
-      .then(() => this.sleep(100))
+      .then(() => sleep(100))
       .then(() => star.style.setProperty('opacity', 1));
   }
 
   createReplayBtn() {
-    const replayBtn = Game.createElement('div', ['replay-btn', 'play-btn', 'hidden']);
+    const replayBtn = createElement('div', ['replay-btn', 'play-btn', 'hidden']);
     this.elements.gamePanel.append(replayBtn);
 
     replayBtn.addEventListener('click', () => {
       if (replayBtn.classList.contains('play-btn')) {
         this.playMode.gameStarted = true;
         replayBtn.classList.add('hidden');
-        this.sleep(200).then(() => replayBtn.classList.remove('play-btn'));
-        this.sleep(1000).then(() => replayBtn.classList.remove('hidden'));
+        sleep(200).then(() => replayBtn.classList.remove('play-btn'));
+        sleep(1000).then(() => replayBtn.classList.remove('hidden'));
       }
       this.playCard(this.playMode.currentCard);
     });
@@ -450,7 +452,7 @@ export default class Game {
 
       const answerIsCorrect = clickedCard.dataset.word === currentCard.word;
       if (answerIsCorrect) {
-        this.sleep(0)
+        sleep(0)
           .then(() => new Audio('./assets/audio/answerIsCorrect.wav').play())
           .then(() => {
             this.createStar(true);
@@ -467,7 +469,7 @@ export default class Game {
       }
 
       if (!answerIsCorrect) {
-        this.sleep(0)
+        sleep(0)
           .then(() => new Audio('./assets/audio/answerIsWrong.wav').play())
           .then(() => {
             this.createStar(false);
@@ -635,37 +637,5 @@ export default class Game {
       const selectedMenuItem = menuItems.filter((li) => li.dataset.category === category)[0];
       selectedMenuItem.classList.add('active');
     }
-  }
-
-  shuffle(array) {
-    const len = this.elements.gameField.querySelectorAll('.flip-card').length;
-    const random = () => Math.floor(Math.random() * len);
-    const indexes = [];
-    const result = [];
-    let index = random();
-    for (let i = len; i > 0; i -= 1) {
-      while (indexes.includes(index)) index = random();
-      indexes.push(index);
-      result.push(array[index]);
-    }
-    return result;
-  }
-
-  sleep = (ms) => new Promise((resolve) => setTimeout(() => resolve(), ms));
-
-  static createElement(tag, classNames, text, id) {
-    const element = document.createElement(tag);
-    if (Array.isArray(classNames)) classNames.forEach((name) => element.classList.add(name));
-    else element.classList.add(classNames);
-    element.textContent = text;
-    if (id) element.id = id;
-    return element;
-  }
-
-  static scrollTop() {
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth',
-    });
   }
 }

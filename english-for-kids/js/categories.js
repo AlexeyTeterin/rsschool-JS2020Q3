@@ -6,8 +6,6 @@ const CATEGORIES = [
   'numbers',
   'transport',
   'clothes',
-  // 'emotions',
-  // 'space',
   'insects',
 ];
 
