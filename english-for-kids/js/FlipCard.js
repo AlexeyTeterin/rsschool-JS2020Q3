@@ -2,16 +2,16 @@ import { createElement } from './utils.js';
 
 export default class FlipCard {
   constructor(card) {
-    this.container = createElement('div', 'flip-card');
-    this.container.dataset.word = card.word;
-    this.container.dataset.sound = card.sound;
+    this.flipCard = createElement('div', 'flip-card');
+    this.flipCard.dataset.word = card.word;
+    this.flipCard.dataset.sound = card.sound;
     this.cardEl = createElement('div', 'card');
 
     this.renderFront(card);
     this.renderBack(card);
-    this.container.append(this.cardEl);
+    this.flipCard.append(this.cardEl);
 
-    return this.container;
+    return this.flipCard;
   }
 
   createImage(card) {
@@ -21,19 +21,19 @@ export default class FlipCard {
   }
 
   renderFront(card) {
-    this.front = createElement('div', 'card__front');
-    this.cardTitle = createElement('div', 'card__title', card.word);
-    this.rotateBtn = createElement('div', 'card__rotate-btn');
+    const front = createElement('div', 'card__front');
+    const title = createElement('div', 'card__title', card.word);
+    const rotateBtn = createElement('div', 'card__rotate-btn');
 
-    this.front.append(this.createImage(card), this.cardTitle, this.rotateBtn);
-    this.cardEl.append(this.front);
+    front.append(this.createImage(card), title, rotateBtn);
+    this.cardEl.append(front);
   }
 
   renderBack(card) {
-    this.back = createElement('div', 'card__back');
-    this.cardTranslation = createElement('div', 'card__title', card.translation);
+    const back = createElement('div', 'card__back');
+    const translation = createElement('div', 'card__title', card.translation);
 
-    this.back.append(this.createImage(card), this.cardTranslation);
-    this.cardEl.append(this.back);
+    back.append(this.createImage(card), translation);
+    this.cardEl.append(back);
   }
 }

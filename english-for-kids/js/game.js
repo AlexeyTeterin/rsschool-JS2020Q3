@@ -10,6 +10,7 @@ import Controls from './Controls.js';
 import FlipCard from './FlipCard.js';
 import Footer from './Footer.js';
 import PlayMode from './PlayMode.js';
+import CategoryCard from './CategoryCard.js';
 
 export default class Game {
   scores = null;
@@ -51,11 +52,11 @@ export default class Game {
     document.body.append(this.elements.footer);
   }
 
-  showCategoryName(category) {
-    const weakCardsRecieved = Array.isArray(category);
-    let categoryName = category;
-    if (weakCardsRecieved) categoryName = 'Difficult words';
+  renderCategoryName(category) {
+    const isDifficultWords = Array.isArray(category);
+    const categoryName = isDifficultWords ? 'Difficult words' : category;
     const categoryHeader = createElement('div', 'category-header', categoryName);
+
     this.elements.gameField.prepend(categoryHeader);
   }
 
@@ -65,15 +66,9 @@ export default class Game {
     sleep(500)
       .then(() => {
         this.clearGameField();
-        CATEGORIES.forEach((cat) => {
-          const categoryCard = createElement('div', 'category-card');
-          categoryCard.dataset.category = cat;
-          const cardTitle = createElement('div', 'card__title', cat);
-          const cardImage = createElement('div', 'card__image');
-          cardImage.style.setProperty('background-image', `url(./assets/img/${cat}.svg)`);
-          categoryCard.append(cardImage, cardTitle);
-          this.elements.gameField.append(categoryCard);
-        });
+        CATEGORIES
+          .forEach((category) => this.elements.gameField
+            .append(new CategoryCard(category)));
       })
       .then(() => {
         this.elements.gameField.classList.remove('hidden');
@@ -99,7 +94,7 @@ export default class Game {
     sleep(500)
       .then(() => {
         this.clearGameField();
-        this.showCategoryName(category);
+        this.renderCategoryName(category);
         this.playMode.reset();
         cards.forEach((card) => this.renderFlipCard(card));
         this.toggleFlipCardsTitles();
