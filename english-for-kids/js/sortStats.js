@@ -1,3 +1,5 @@
+export const COLUMNS = ['category', 'word', 'translation', 'correct', 'wrong', 'trained', '% correct'];
+
 const rows = () => document.querySelectorAll('.row');
 
 const tryParseInt = (str) => {
@@ -18,8 +20,7 @@ const sortDown = (nodes, indexOfColumn) => Array.from(nodes)
 const sortUp = (nodes, indexOfColumn) => sortDown(nodes, indexOfColumn).reverse();
 
 const setRowsOrder = (direction, columnID) => {
-  const columns = ['category', 'word', 'translation', 'correct', 'wrong', 'trained', '% correct'];
-  const columnIndex = columns.indexOf(columnID);
+  const columnIndex = COLUMNS.indexOf(columnID);
   const isUp = direction === 'up';
   const order = isUp ? sortUp(rows(), columnIndex) : sortDown(rows(), columnIndex);
 

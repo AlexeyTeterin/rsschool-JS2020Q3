@@ -1,7 +1,7 @@
 import CATEGORIES from './categories.js';
 import CARDS from './cards.js';
 import {
-  createElement, getCardStats, scrollTop, shuffle, sleep,
+  createElement, scrollTop, shuffle, sleep,
 } from './utils.js';
 import Menu from './Menu.js';
 import Burger from './Burger.js';
@@ -12,6 +12,8 @@ import Footer from './Footer.js';
 import State from './State.js';
 import CategoryCard from './CategoryCard.js';
 import Modal from './Modal.js';
+import StatsPanel from './StatsPanel.js';
+import FinalMessage from './FinalMessage.js';
 
 export default class Game {
   scores = null;
@@ -98,40 +100,18 @@ export default class Game {
       });
   }
 
-  renderStats() {
-    const headColumns = ['category', 'word', 'translation', 'correct', 'wrong', 'trained', '% correct'];
-    const statsField = createElement('div', 'stats-field');
-    const headRow = createElement('div', ['row', 'head-row']);
-    const resetBtn = createElement('button', 'reset-btn', 'Reset');
-    const repeatBtn = createElement('button', 'repeat-btn', 'Repeat difficult words');
-    const buttons = createElement('div', 'buttons');
-    buttons.append(repeatBtn, resetBtn);
+  renderStatsPanel() {
+    const { gameField } = this.elements;
 
-    this.elements.gameField.classList.add('hidden');
+    this.stopGame();
+    gameField.classList.add('hidden');
     sleep(500)
       .then(() => {
-        this.stopGame();
         this.clearGameField();
-        this.elements.gameField.append(statsField);
-        statsField.append(buttons);
-        headColumns.forEach((headColumn) => {
-          const div = createElement('div', 'sorter', headColumn, headColumn);
-          headRow.append(div);
-        });
-        statsField.append(headRow);
-
-        Object.keys(this.scores).forEach((word) => {
-          const row = createElement('div', 'row', '', word);
-          const columns = getCardStats(this.scores[word]);
-          columns.forEach((column) => {
-            const div = createElement('div', null, column);
-            row.append(div);
-          });
-          statsField.append(row);
-        });
-      })
-      .then(() => this.elements.gameField.classList.remove('hidden'))
-      .then(() => scrollTop());
+        gameField.append(new StatsPanel(this.scores));
+        gameField.classList.remove('hidden');
+        scrollTop();
+      });
   }
 
   parseOrCreateScores() {
@@ -165,16 +145,16 @@ export default class Game {
   }
 
   clearGamePanel() {
-    const replayBtn = this.elements.gamePanel.querySelector('.replay-btn');
-    const stars = this.elements.gamePanel.querySelectorAll('.star');
+    const { gamePanel } = this.elements;
+    const replayBtn = gamePanel.querySelector('.replay-btn');
+    const stars = gamePanel.querySelectorAll('.star');
 
-    this.elements.gamePanel.classList.add('hidden-content');
-    sleep(500)
-      .then(() => {
-        if (replayBtn) replayBtn.remove();
-        if (stars) stars.forEach((star) => star.remove());
-      })
-      .then(() => this.elements.gamePanel.classList.remove('hidden-content'));
+    gamePanel.classList.add('hidden-content');
+    sleep(500).then(() => {
+      if (replayBtn) replayBtn.remove();
+      if (stars) stars.forEach((star) => star.remove());
+      gamePanel.classList.remove('hidden-content');
+    });
   }
 
   toggleFlipCardsTitles() {
@@ -198,10 +178,10 @@ export default class Game {
     this.toggleFlipCardsTitles();
     this.toggleGamePanel();
 
-    if (!this.state.isPlayMode) this.enableAllCards();
+    if (!this.state.isPlayMode) this.setAllCardsActive();
   }
 
-  enableAllCards() {
+  setAllCardsActive() {
     this.elements.gameField.querySelectorAll('.disabled').forEach((card) => card.classList.remove('disabled'));
   }
 
@@ -222,42 +202,23 @@ export default class Game {
     this.state.reset();
   }
 
-  async finishGame() {
+  finishGame() {
     const win = !this.state.results.includes(false);
-    const playFinalSound = () => {
-      if (win) new Audio('./assets/audio/finish_true.ogg').play();
-      else new Audio('./assets/audio/finish_false.ogg').play();
-    };
-    const createFinalMessage = () => {
-      const {
-        mistakes,
-      } = this.state;
-      const src = win ? './assets/img/finish_win.png' : './assets/img/finish_loose.png';
-      const message = createElement('div', 'finish-message');
-      message.innerText = win ? 'You win!' : `${mistakes} mistake`;
-      if (mistakes > 1) message.innerText += 's';
-      const img = new Image();
-      img.src = src;
-
-      img.onload = () => {
-        message.style.setProperty('background-image', `url(${src})`);
-        message.style.setProperty('opacity', 1);
-      };
-      return message;
-    };
-    const finalMessage = await createFinalMessage();
+    const finalSound = win ? './assets/audio/finish_true.ogg' : './assets/audio/finish_false.ogg';
+    const finalMessage = new FinalMessage(this.state);
 
     this.elements.gameField.classList.add('hidden');
     sleep(1000)
-      .then(() => playFinalSound())
       .then(() => {
+        new Audio(finalSound).play();
         this.clearGameField();
         this.elements.gameField.append(finalMessage);
         this.elements.gameField.classList.remove('hidden');
       })
       .then(() => sleep(5000))
       .then(() => {
-        if (document.querySelector('.finish-message')) this.renderCategories();
+        const isFinalMessageActive = document.querySelector('.finish-message');
+        if (isFinalMessageActive) this.renderCategories();
       });
   }
 
@@ -330,7 +291,7 @@ export default class Game {
     const isToggleModeClick = target.id === 'checkbox';
 
     if (isStatsBtnClick) {
-      this.renderStats();
+      this.renderStatsPanel();
       this.setMenuSelection(null);
     }
     if (isToggleModeClick) {
@@ -356,14 +317,13 @@ export default class Game {
   }
 
   runGameFieldListeners() {
-    this.elements.gameField.addEventListener('click', () => this.playSound(), { once: true });
-    this.elements.gameField.addEventListener('click', (event) => {
-      this.handleCardFlip(event);
-      this.handleTrainingClicks(event);
-      this.handleCategoryCardClick(event);
-    });
+    const { gameField } = this.elements;
 
-    this.elements.gameField.addEventListener('mouseout', (e) => this.handleCardBackFlip(e));
+    gameField.addEventListener('click', () => this.playSound(), { once: true });
+    gameField.addEventListener('click', this.handleCardFlip.bind(this));
+    gameField.addEventListener('click', this.countTrainingClicks.bind(this));
+    gameField.addEventListener('click', this.handleCategoryCardClick.bind(this));
+    gameField.addEventListener('mouseout', this.handleFlipCardMouseOut.bind(this));
   }
 
   runStatsPageListeners() {
@@ -373,27 +333,23 @@ export default class Game {
   runPlayModeHandler() {
     this.elements.gameField.addEventListener('click', (event) => {
       const {
-        gameStarted,
-        currentCard,
-        setCorrectAnswer,
-        setWrongAnswer,
-        hasNextCard,
-        setNextCard,
+        gameStarted, currentCard, setCorrectAnswer,
+        setWrongAnswer, hasNextCard, setNextCard,
       } = this.state;
-      const clickedCard = event.target.parentElement.parentElement.parentElement;
-      const clickOutsideCard = !clickedCard.classList.contains('flip-card');
-      const cardDisabled = clickedCard.classList.contains('disabled');
+      const target = event.target.parentElement.parentElement.parentElement;
+      const isFlipCardClick = target.classList.contains('flip-card');
+      const isFlipCardInactive = target.classList.contains('disabled');
 
-      if (!gameStarted || cardDisabled || clickOutsideCard) return;
+      if (!gameStarted || !isFlipCardClick || isFlipCardInactive) return;
 
-      const answerIsCorrect = clickedCard.dataset.word === currentCard.word;
-      if (answerIsCorrect) {
+      const isCorrectAnswer = target.dataset.word === currentCard.word;
+      if (isCorrectAnswer) {
         sleep(0)
           .then(() => new Audio('./assets/audio/answerIsCorrect.wav').play())
           .then(() => {
             this.createStar(true);
             setCorrectAnswer();
-            clickedCard.classList.add('disabled');
+            target.classList.add('disabled');
             this.saveScores('correct');
             if (hasNextCard()) {
               setNextCard();
@@ -404,7 +360,7 @@ export default class Game {
           });
       }
 
-      if (!answerIsCorrect) {
+      if (!isCorrectAnswer) {
         sleep(0)
           .then(() => new Audio('./assets/audio/answerIsWrong.wav').play())
           .then(() => {
@@ -433,9 +389,7 @@ export default class Game {
   }
 
   handleCardFlip(event) {
-    const {
-      target,
-    } = event;
+    const { target } = event;
 
     if (this.state.isPlayMode) return;
 
@@ -449,10 +403,8 @@ export default class Game {
     }
   }
 
-  handleCardBackFlip(event) {
-    const {
-      relatedTarget,
-    } = event;
+  handleFlipCardMouseOut(event) {
+    const { relatedTarget } = event;
     const rotatedCard = this.elements.gameField.querySelector('.rotate');
 
     if (this.state.isPlayMode) return;
@@ -471,17 +423,15 @@ export default class Game {
     this.renderFlipCards();
   }
 
-  handleTrainingClicks(event) {
-    if (this.state.isPlayMode) return;
-    const flipCard = event.target.parentElement.parentElement.parentElement;
-    const {
-      word,
-    } = flipCard.dataset;
-    if (flipCard.classList.contains('flip-card')) {
-      if (!this.scores[word]) this.scores[word] = word.word;
-      this.scores[word].trained += 1;
-      this.saveScores();
-    }
+  countTrainingClicks(event) {
+    const target = event.target.parentElement.parentElement.parentElement;
+    const isFlipCardClick = target.classList.contains('flip-card');
+    const { word } = target.dataset;
+
+    if (this.state.isPlayMode || !isFlipCardClick) return;
+
+    this.scores[word].trained += 1;
+    this.saveScores();
   }
 
   renderModal() {
@@ -518,7 +468,7 @@ export default class Game {
     if (isYesBtnClick) {
       localStorage.removeItem('englishForKidsScores');
       this.parseOrCreateScores();
-      this.renderStats();
+      this.renderStatsPanel();
     }
     this.elements.modal.classList.add('hidden');
     sleep(250).then(() => this.elements.modal.remove());
@@ -529,8 +479,8 @@ export default class Game {
     menuItems.forEach((li) => li.classList.remove('active'));
 
     if (category) {
-      const selectedMenuItem = menuItems.filter((li) => li.dataset.category === category)[0];
-      selectedMenuItem.classList.add('active');
+      const selectedLi = menuItems.filter((li) => li.dataset.category === category)[0];
+      if (selectedLi) selectedLi.classList.add('active');
     }
   }
 }
