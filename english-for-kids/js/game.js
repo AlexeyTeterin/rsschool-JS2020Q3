@@ -12,6 +12,7 @@ import Footer from './Footer.js';
 import PlayMode from './PlayMode.js';
 import CategoryCard from './CategoryCard.js';
 import Modal from './Modal.js';
+import handleStatsSorting from './sorting.js';
 
 export default class Game {
   scores = null;
@@ -382,9 +383,9 @@ export default class Game {
       this.handleCardFlip(event);
       this.handleTrainingClicks(event);
       this.handleCategoryCardClick(event);
-      // this.handleStatsPageButtonsClicks(event);
-      this.handleStatsSorting(event);
     });
+    this.elements.gameField.addEventListener('click', handleStatsSorting);
+
     this.elements.gameField.addEventListener('mouseout', (e) => this.handleCardBackFlip(e));
   }
 
@@ -541,52 +542,6 @@ export default class Game {
     }
     this.elements.modal.classList.add('hidden');
     sleep(250).then(() => this.elements.modal.remove());
-  }
-
-  handleStatsSorting(event) {
-    const clickOnHeadRow = event.target.parentElement.classList.contains('head-row');
-    if (!clickOnHeadRow) return;
-
-    const headColumns = ['category', 'word', 'translation', 'correct', 'wrong', 'trained', '% correct'];
-    const sorterColumn = event.target.id;
-    const wasSorted = document.querySelector('.sorted');
-    const i = headColumns.indexOf(sorterColumn);
-    const rows = this.elements.gameField.querySelectorAll('.row');
-    const rowsSortedDown = Array.from(rows).slice(1).sort((a, b) => {
-      const tryGetInt = (str) => {
-        if (Number.isNaN(parseInt(str, 10))) return str;
-        return parseInt(str, 10);
-      };
-      const first = tryGetInt(a.childNodes[i].textContent);
-      const second = tryGetInt(b.childNodes[i].textContent);
-      if (second < first) return -1;
-      if (second > first) return 1;
-      return 0;
-    });
-    const sortStats = (direction) => {
-      let order;
-      if (direction === 'down') order = rowsSortedDown;
-      if (direction === 'up') order = rowsSortedDown.reverse();
-      event.target.classList.add('sorted', direction);
-      rows.forEach((row) => row.style.setProperty('order', order.indexOf(row)));
-    };
-    const unSortStats = () => {
-      event.target.classList.remove('sorted', 'up', 'down');
-      rows.forEach((row) => row.style.removeProperty('order'));
-    };
-    const targetIsSorted = event.target.classList.contains('sorted');
-    const targetIsSortedDown = event.target.classList.contains('down');
-
-    if (!targetIsSorted) {
-      if (wasSorted) wasSorted.classList.remove('sorted', 'up', 'down');
-      sortStats('up');
-    }
-    if (targetIsSorted) {
-      if (!targetIsSortedDown) {
-        unSortStats();
-        sortStats('down');
-      } else unSortStats();
-    }
   }
 
   highlightMenuItem(category) {
