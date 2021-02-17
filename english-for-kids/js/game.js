@@ -1,7 +1,7 @@
 import CATEGORIES from './categories.js';
 import CARDS from './cards.js';
 import {
-  createElement, scrollTop, shuffle, sleep,
+  createElement, getCardStats, scrollTop, shuffle, sleep,
 } from './utils.js';
 import Menu from './Menu.js';
 import Burger from './Burger.js';
@@ -71,7 +71,7 @@ export default class Game {
       })
       .then(() => {
         this.elements.gameField.classList.remove('hidden');
-        this.setMenuSelection();
+        this.setMenuSelection(null);
         scrollTop();
       });
   }
@@ -98,14 +98,7 @@ export default class Game {
       });
   }
 
-  loadStats() {
-    const getStats = (card) => {
-      const correctPercentage = `${((card.correct / (card.correct + card.wrong)) * 100 || 0).toFixed(1)} %`;
-      return [
-        card.category, card.word, card.translation,
-        card.correct, card.wrong, card.trained, correctPercentage,
-      ];
-    };
+  renderStats() {
     const headColumns = ['category', 'word', 'translation', 'correct', 'wrong', 'trained', '% correct'];
     const statsField = createElement('div', 'stats-field');
     const headRow = createElement('div', ['row', 'head-row']);
@@ -129,7 +122,7 @@ export default class Game {
 
         Object.keys(this.scores).forEach((word) => {
           const row = createElement('div', 'row', '', word);
-          const columns = getStats(this.scores[word]);
+          const columns = getCardStats(this.scores[word]);
           columns.forEach((column) => {
             const div = createElement('div', null, column);
             row.append(div);
@@ -337,8 +330,8 @@ export default class Game {
     const isToggleModeClick = target.id === 'checkbox';
 
     if (isStatsBtnClick) {
-      this.loadStats();
-      this.setMenuSelection();
+      this.renderStats();
+      this.setMenuSelection(null);
     }
     if (isToggleModeClick) {
       this.togglePlayMode();
@@ -525,7 +518,7 @@ export default class Game {
     if (isYesBtnClick) {
       localStorage.removeItem('englishForKidsScores');
       this.parseOrCreateScores();
-      this.loadStats();
+      this.renderStats();
     }
     this.elements.modal.classList.add('hidden');
     sleep(250).then(() => this.elements.modal.remove());

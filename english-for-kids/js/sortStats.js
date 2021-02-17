@@ -21,9 +21,9 @@ const setRowsOrder = (direction, columnID) => {
   const columns = ['category', 'word', 'translation', 'correct', 'wrong', 'trained', '% correct'];
   const columnIndex = columns.indexOf(columnID);
   const isUp = direction === 'up';
-  const order = isUp ? sortUp(rows, columnIndex) : sortDown(rows, columnIndex);
+  const order = isUp ? sortUp(rows(), columnIndex) : sortDown(rows(), columnIndex);
 
-  rows.forEach((row) => row.style.setProperty('order', order.indexOf(row)));
+  rows().forEach((row) => row.style.setProperty('order', order.indexOf(row)));
 };
 
 const clearSelection = () => {
@@ -33,7 +33,7 @@ const clearSelection = () => {
 
 const setSelection = (className, element) => element.classList.add('sorted', className);
 
-const resetRowsOrder = () => rows.forEach((row) => row.style.removeProperty('order'));
+const resetRowsOrder = () => rows().forEach((row) => row.style.removeProperty('order'));
 
 const sortStats = (column) => {
   const isTargetSorted = column.classList.contains('sorted');

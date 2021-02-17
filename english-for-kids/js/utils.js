@@ -36,3 +36,11 @@ export const scrollTop = () => {
     behavior: 'smooth',
   });
 };
+
+export const getCardStats = (card) => {
+  const correctPercentage = `${((card.correct / (card.correct + card.wrong)) * 100 || 0).toFixed(1)} %`;
+  return [
+    card.category, card.word, card.translation,
+    card.correct, card.wrong, card.trained, correctPercentage,
+  ];
+};
