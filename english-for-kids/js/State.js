@@ -1,6 +1,5 @@
-export default class PlayMode {
+export default class State {
   constructor() {
-    this.isActive = false;
     this.gameStarted = false;
     this.gameFinished = false;
     this.cards = null;

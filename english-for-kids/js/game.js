@@ -9,7 +9,7 @@ import Logo from './Logo.js';
 import Controls from './Controls.js';
 import FlipCard from './FlipCard.js';
 import Footer from './Footer.js';
-import PlayMode from './PlayMode.js';
+import State from './State.js';
 import CategoryCard from './CategoryCard.js';
 import Modal from './Modal.js';
 
@@ -27,7 +27,7 @@ export default class Game {
     overlay: document.querySelector('.overlay'),
   }
 
-  playMode = new PlayMode();
+  state = new State();
 
   init() {
     this.sound = new Audio();
@@ -96,7 +96,7 @@ export default class Game {
       .then(() => {
         this.clearGameField();
         this.renderCategoryName(category);
-        this.playMode.reset();
+        this.state.reset();
         cards.forEach((card) => this.renderFlipCard(card));
         this.toggleFlipCardsTitles();
         scrollTop();
@@ -104,7 +104,7 @@ export default class Game {
       .then(() => {
         this.highlightMenuItem(weakCardsRecieved ? '' : category);
         this.elements.gameField.classList.remove('hidden');
-        if (this.playMode.isActive) this.startGame();
+        if (this.state.isPlayMode) this.startGame();
       });
   }
 
@@ -171,8 +171,8 @@ export default class Game {
   }
 
   saveScores(answer) {
-    if (answer === 'correct') this.scores[this.playMode.currentCard.word].correct += 1;
-    if (answer === 'wrong') this.scores[this.playMode.currentCard.word].wrong += 1;
+    if (answer === 'correct') this.scores[this.state.currentCard.word].correct += 1;
+    if (answer === 'wrong') this.scores[this.state.currentCard.word].wrong += 1;
 
     localStorage.setItem('englishForKidsScores', JSON.stringify(this.scores));
   }
@@ -203,23 +203,23 @@ export default class Game {
 
     document.querySelectorAll('.card__title').forEach((el) => {
       if (notAFlipCard(el)) return;
-      el.classList.toggle('hidden', this.playMode.isActive);
+      el.classList.toggle('hidden', this.state.isPlayMode);
     });
     document.querySelectorAll('.card__rotate-btn').forEach((el) => {
       if (notAFlipCard(el)) return;
-      el.classList.toggle('hidden', this.playMode.isActive);
+      el.classList.toggle('hidden', this.state.isPlayMode);
     });
   }
 
   togglePlayMode() {
-    const toggleBodyClass = () => document.body.classList.toggle('play-mode', this.playMode.isActive);
+    const toggleBodyClass = () => document.body.classList.toggle('play-mode', this.state.isPlayMode);
 
-    this.playMode.isActive = !this.playMode.isActive;
+    this.state.isPlayMode = !this.state.isPlayMode;
     toggleBodyClass();
     this.toggleFlipCardsTitles();
     this.toggleGamePanel();
 
-    if (!this.playMode.isActive) this.enableAllCards();
+    if (!this.state.isPlayMode) this.enableAllCards();
   }
 
   enableAllCards() {
@@ -232,19 +232,19 @@ export default class Game {
     if (!document.querySelector('.replay-btn')) this.createReplayBtn();
     const cards = Array.from(this.elements.gameField.querySelectorAll('.flip-card')).map((card) => card.dataset);
 
-    this.playMode.cards = shuffle(cards);
-    [this.playMode.currentCard] = this.playMode.cards;
+    this.state.cards = shuffle(cards);
+    [this.state.currentCard] = this.state.cards;
 
     if (flipCardsLoaded) document.querySelector('.replay-btn').classList.remove('hidden');
   }
 
   stopGame() {
     this.elements.gamePanel.innerHTML = null;
-    this.playMode.reset();
+    this.state.reset();
   }
 
   async finishGame() {
-    const win = !this.playMode.results.includes(false);
+    const win = !this.state.results.includes(false);
     const playFinalSound = () => {
       if (win) new Audio('./assets/audio/finish_true.ogg').play();
       else new Audio('./assets/audio/finish_false.ogg').play();
@@ -252,7 +252,7 @@ export default class Game {
     const createFinalMessage = () => {
       const {
         mistakes,
-      } = this.playMode;
+      } = this.state;
       const src = win ? './assets/img/finish_win.png' : './assets/img/finish_loose.png';
       const message = createElement('div', 'finish-message');
       message.innerText = win ? 'You win!' : `${mistakes} mistake`;
@@ -302,19 +302,19 @@ export default class Game {
 
     replayBtn.addEventListener('click', () => {
       if (replayBtn.classList.contains('play-btn')) {
-        this.playMode.gameStarted = true;
+        this.state.gameStarted = true;
         replayBtn.classList.add('hidden');
         sleep(200).then(() => replayBtn.classList.remove('play-btn'));
         sleep(1000).then(() => replayBtn.classList.remove('hidden'));
       }
-      this.playCard(this.playMode.currentCard);
+      this.playCard(this.state.currentCard);
     });
   }
 
   toggleGamePanel() {
-    document.querySelector('.game-panel').classList.toggle('hidden', !this.playMode.isActive);
-    this.elements.gameField.classList.toggle('narrow', this.playMode.isActive);
-    if (this.playMode.isActive) this.startGame();
+    document.querySelector('.game-panel').classList.toggle('hidden', !this.state.isPlayMode);
+    this.elements.gameField.classList.toggle('narrow', this.state.isPlayMode);
+    if (this.state.isPlayMode) this.startGame();
     else this.stopGame();
   }
 
@@ -400,7 +400,7 @@ export default class Game {
         setWrongAnswer,
         hasNextCard,
         setNextCard,
-      } = this.playMode;
+      } = this.state;
       const clickedCard = event.target.parentElement.parentElement.parentElement;
       const clickOutsideCard = !clickedCard.classList.contains('flip-card');
       const cardDisabled = clickedCard.classList.contains('disabled');
@@ -418,7 +418,7 @@ export default class Game {
             this.saveScores('correct');
             if (hasNextCard()) {
               setNextCard();
-              this.playCard(this.playMode.currentCard);
+              this.playCard(this.state.currentCard);
             } else {
               this.finishGame();
             }
@@ -431,7 +431,7 @@ export default class Game {
           .then(() => {
             this.createStar(false);
             setWrongAnswer();
-            this.playMode.mistakes += 1;
+            this.state.mistakes += 1;
             this.saveScores('wrong');
           });
       }
@@ -457,7 +457,7 @@ export default class Game {
       target,
     } = event;
 
-    if (this.playMode.isActive) return;
+    if (this.state.isPlayMode) return;
 
     if (target.parentElement.classList.contains('card__front')) {
       if (target.classList.contains('card__rotate-btn')) {
@@ -475,7 +475,7 @@ export default class Game {
     } = event;
     const rotatedCard = this.elements.gameField.querySelector('.rotate');
 
-    if (this.playMode.isActive) return;
+    if (this.state.isPlayMode) return;
     if (!relatedTarget) return;
     if (!relatedTarget.classList.contains('game-field')) return;
 
@@ -491,7 +491,7 @@ export default class Game {
   }
 
   handleTrainingClicks(event) {
-    if (this.playMode.isActive) return;
+    if (this.state.isPlayMode) return;
     const flipCard = event.target.parentElement.parentElement.parentElement;
     const {
       word,
