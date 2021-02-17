@@ -4,7 +4,7 @@ import { createElement } from './utils.js';
 
 export default class StatsPanel {
   constructor(scores) {
-    const statsPage = createElement('div', 'stats-field');
+    const statsPanel = createElement('div', 'stats-field');
     const headRow = createElement('div', ['row', 'head-row']);
     const resetBtn = createElement('button', 'reset-btn', 'Reset');
     const repeatBtn = createElement('button', 'repeat-btn', 'Repeat difficult words');
@@ -15,13 +15,13 @@ export default class StatsPanel {
       headRow.append(div);
     });
     buttons.append(repeatBtn, resetBtn);
-    statsPage.append(buttons, headRow);
+    statsPanel.append(buttons, headRow);
 
     Object.keys(scores).forEach((word) => {
       const row = new StatsRow(word, scores);
-      statsPage.append(row);
+      statsPanel.append(row);
     });
 
-    return statsPage;
+    return statsPanel;
   }
 }

@@ -1,7 +1,7 @@
 import CATEGORIES from './categories.js';
 import CARDS from './cards.js';
 import {
-  createElement, scrollTop, shuffle, sleep,
+  createElement, scrollTop, shuffle, sleep, getDifficultCards,
 } from './utils.js';
 import Menu from './Menu.js';
 import Burger from './Burger.js';
@@ -38,8 +38,6 @@ export default class Game {
     this.renderCategories();
     this.runHeaderListeners();
     this.runGameFieldListeners();
-    this.runStatsPageListeners();
-    this.runPlayModeHandler();
     this.parseOrCreateScores();
   }
 
@@ -105,13 +103,14 @@ export default class Game {
 
     this.stopGame();
     gameField.classList.add('hidden');
-    sleep(500)
-      .then(() => {
-        this.clearGameField();
-        gameField.append(new StatsPanel(this.scores));
-        gameField.classList.remove('hidden');
-        scrollTop();
-      });
+    sleep(500).then(() => {
+      this.clearGameField();
+      const statsPanel = new StatsPanel(this.scores);
+      gameField.append(statsPanel);
+      statsPanel.addEventListener('click', this.handleStatsPanelBtnsClick.bind(this));
+      gameField.classList.remove('hidden');
+      scrollTop();
+    });
   }
 
   parseOrCreateScores() {
@@ -171,14 +170,21 @@ export default class Game {
   }
 
   togglePlayMode() {
-    const toggleBodyClass = () => document.body.classList.toggle('play-mode', this.state.isPlayMode);
+    const { isPlayMode } = this.state;
+    const { gameField } = this.elements;
 
-    this.state.isPlayMode = !this.state.isPlayMode;
-    toggleBodyClass();
+    this.state.isPlayMode = !isPlayMode;
+    document.body.classList.toggle('play-mode', isPlayMode);
+
     this.toggleFlipCardsTitles();
     this.toggleGamePanel();
 
-    if (!this.state.isPlayMode) this.setAllCardsActive();
+    if (this.state.isPlayMode) {
+      gameField.addEventListener('click', this.handlePlayModeAnswers.bind(this));
+    } else {
+      this.setAllCardsActive();
+      gameField.removeEventListener('click', this.handlePlayModeAnswers.bind(this));
+    }
   }
 
   setAllCardsActive() {
@@ -188,7 +194,7 @@ export default class Game {
   startGame() {
     const flipCardsLoaded = document.querySelector('.flip-card');
 
-    if (!document.querySelector('.replay-btn')) this.createReplayBtn();
+    if (!document.querySelector('.replay-btn')) this.renderReplayBtn();
     const cards = Array.from(this.elements.gameField.querySelectorAll('.flip-card')).map((card) => card.dataset);
 
     this.state.cards = shuffle(cards);
@@ -222,10 +228,6 @@ export default class Game {
       });
   }
 
-  playCard(card) {
-    sleep(1000).then(() => this.playSound(card.sound));
-  }
-
   createStar(answer) {
     const star = createElement('div', 'star');
     if (answer) star.classList.add('star-true');
@@ -236,7 +238,7 @@ export default class Game {
       .then(() => star.style.setProperty('opacity', 1));
   }
 
-  createReplayBtn() {
+  renderReplayBtn() {
     const replayBtn = createElement('div', ['replay-btn', 'play-btn', 'hidden']);
     this.elements.gamePanel.append(replayBtn);
 
@@ -247,7 +249,7 @@ export default class Game {
         sleep(200).then(() => replayBtn.classList.remove('play-btn'));
         sleep(1000).then(() => replayBtn.classList.remove('hidden'));
       }
-      this.playCard(this.state.currentCard);
+      this.playCardAudio(this.state.currentCard.sound);
     });
   }
 
@@ -262,10 +264,10 @@ export default class Game {
     this.elements.menu.classList.toggle('show');
     this.elements.burger.classList.toggle('jump-to-menu');
     this.elements.overlay.classList.toggle('hidden');
-    this.toggleScroll();
+    this.toggleScrollLock();
   }
 
-  toggleScroll() {
+  toggleScrollLock() {
     const stopScroll = () => {
       const x = window.scrollX;
       const y = window.scrollY;
@@ -299,78 +301,65 @@ export default class Game {
     }
   }
 
-  runHeaderListeners() {
-    this.elements.logo.addEventListener('click', this.handleLogoClick.bind(this));
-
-    this.elements.menu.addEventListener('click', this.handleMenuLiClick.bind(this));
-
-    this.elements.burger.addEventListener('click', this.toggleMenu.bind(this));
-
-    this.elements.overlay.addEventListener('click', this.toggleMenu.bind(this));
-
-    this.elements.controls.addEventListener('click', this.handleControlsClick.bind(this));
+  playCardAudio(src) {
+    if (src) this.sound.src = src;
+    sleep(1000).then(() => this.sound.play());
   }
 
-  playSound(src) {
-    if (src) this.sound.src = src;
-    this.sound.play();
+  runHeaderListeners() {
+    const {
+      logo, menu, burger, overlay, controls,
+    } = this.elements;
+
+    logo.addEventListener('click', this.handleLogoClick.bind(this));
+    menu.addEventListener('click', this.handleMenuLiClick.bind(this));
+    burger.addEventListener('click', this.toggleMenu.bind(this));
+    overlay.addEventListener('click', this.toggleMenu.bind(this));
+    controls.addEventListener('click', this.handleControlsClick.bind(this));
   }
 
   runGameFieldListeners() {
     const { gameField } = this.elements;
 
-    gameField.addEventListener('click', () => this.playSound(), { once: true });
-    gameField.addEventListener('click', this.handleCardFlip.bind(this));
+    gameField.addEventListener('click', this.handleFlipCardClick.bind(this));
     gameField.addEventListener('click', this.countTrainingClicks.bind(this));
     gameField.addEventListener('click', this.handleCategoryCardClick.bind(this));
     gameField.addEventListener('mouseout', this.handleFlipCardMouseOut.bind(this));
   }
 
-  runStatsPageListeners() {
-    this.elements.gameField.addEventListener('click', (event) => this.handleStatsPageButtonsClicks(event));
+  handleCorrectAnswer(targetCard) {
+    new Audio('./assets/audio/answerIsCorrect.wav').play();
+    this.createStar(true);
+    this.state.setCorrectAnswer();
+    targetCard.classList.add('disabled');
+    this.saveScores('correct');
+    if (this.state.hasNextCard()) {
+      this.state.setNextCard();
+      this.playCardAudio(this.state.currentCard.sound);
+    } else {
+      this.finishGame();
+    }
   }
 
-  runPlayModeHandler() {
-    this.elements.gameField.addEventListener('click', (event) => {
-      const {
-        gameStarted, currentCard, setCorrectAnswer,
-        setWrongAnswer, hasNextCard, setNextCard,
-      } = this.state;
-      const target = event.target.parentElement.parentElement.parentElement;
-      const isFlipCardClick = target.classList.contains('flip-card');
-      const isFlipCardInactive = target.classList.contains('disabled');
+  handleWrongAnswer() {
+    new Audio('./assets/audio/answerIsWrong.wav').play();
+    this.createStar(false);
+    this.state.setWrongAnswer();
+    this.state.mistakes += 1;
+    this.saveScores('wrong');
+  }
 
-      if (!gameStarted || !isFlipCardClick || isFlipCardInactive) return;
+  handlePlayModeAnswers(event) {
+    const { gameStarted, currentCard } = this.state;
+    const target = event.target.parentElement.parentElement.parentElement;
+    const isFlipCardClick = target.classList.contains('flip-card');
+    const isFlipCardInactive = target.classList.contains('disabled');
 
-      const isCorrectAnswer = target.dataset.word === currentCard.word;
-      if (isCorrectAnswer) {
-        sleep(0)
-          .then(() => new Audio('./assets/audio/answerIsCorrect.wav').play())
-          .then(() => {
-            this.createStar(true);
-            setCorrectAnswer();
-            target.classList.add('disabled');
-            this.saveScores('correct');
-            if (hasNextCard()) {
-              setNextCard();
-              this.playCard(this.state.currentCard);
-            } else {
-              this.finishGame();
-            }
-          });
-      }
+    if (!gameStarted || !isFlipCardClick || isFlipCardInactive) return;
 
-      if (!isCorrectAnswer) {
-        sleep(0)
-          .then(() => new Audio('./assets/audio/answerIsWrong.wav').play())
-          .then(() => {
-            this.createStar(false);
-            setWrongAnswer();
-            this.state.mistakes += 1;
-            this.saveScores('wrong');
-          });
-      }
-    });
+    const isCorrectAnswer = target.dataset.word === currentCard.word;
+    if (isCorrectAnswer) this.handleCorrectAnswer(target);
+    if (!isCorrectAnswer) this.handleWrongAnswer();
   }
 
   handleMenuLiClick(event) {
@@ -388,18 +377,18 @@ export default class Game {
     }
   }
 
-  handleCardFlip(event) {
+  handleFlipCardClick(event) {
     const { target } = event;
+    const flipCard = target.parentElement.parentElement.parentElement;
+    const isRotateBtnClick = target.classList.contains('card__rotate-btn');
+    const isCardFrontClick = target.parentElement.classList.contains('card__front');
 
     if (this.state.isPlayMode) return;
 
-    if (target.parentElement.classList.contains('card__front')) {
-      if (target.classList.contains('card__rotate-btn')) {
-        target.parentElement.parentElement.classList.add('rotate');
-        return;
-      }
-      const flipCard = target.parentElement.parentElement.parentElement;
-      this.playSound(flipCard.dataset.sound);
+    if (isRotateBtnClick) {
+      target.parentElement.parentElement.classList.add('rotate');
+    } else if (isCardFrontClick) {
+      new Audio(flipCard.dataset.sound).play();
     }
   }
 
@@ -440,24 +429,14 @@ export default class Game {
     this.elements.modal.addEventListener('click', this.handleModalButtonsClicks.bind(this));
   }
 
-  handleStatsPageButtonsClicks(event) {
-    if (event.target.classList.contains('reset-btn')) this.renderModal();
+  handleStatsPanelBtnsClick(event) {
+    const isResetBtnClick = event.target.classList.contains('reset-btn');
+    const isRepeatBtnClick = event.target.classList.contains('repeat-btn');
 
-    if (event.target.classList.contains('repeat-btn')) {
-      const difficultCards = [];
-      Object.keys(this.scores)
-        .forEach((el) => {
-          const card = this.scores[el];
-          if (card.wrong > 0) difficultCards.push(card);
-        });
-      difficultCards
-        .sort((a, b) => {
-          const percentage = (card) => card.wrong / (card.correct + card.wrong);
-          if (percentage(a) < percentage(b)) return 1;
-          if (percentage(a) > percentage(b)) return -1;
-          return 0;
-        })
-        .splice(8);
+    if (isResetBtnClick) this.renderModal();
+
+    if (isRepeatBtnClick) {
+      const difficultCards = getDifficultCards(this.scores);
       this.state.setActiveCards(difficultCards);
       this.renderFlipCards();
     }

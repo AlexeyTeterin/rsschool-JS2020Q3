@@ -44,3 +44,23 @@ export const getCardStats = (card) => {
     card.correct, card.wrong, card.trained, correctPercentage,
   ];
 };
+
+export const getDifficultCards = (scores) => {
+  const difficultCards = [];
+
+  Object.keys(scores)
+    .forEach((el) => {
+      const card = scores[el];
+      if (card.wrong > 0) difficultCards.push(card);
+    });
+  difficultCards
+    .sort((a, b) => {
+      const percentage = (card) => card.wrong / (card.correct + card.wrong);
+      if (percentage(a) < percentage(b)) return 1;
+      if (percentage(a) > percentage(b)) return -1;
+      return 0;
+    })
+    .splice(8);
+
+  return difficultCards;
+};
