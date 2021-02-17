@@ -11,6 +11,7 @@ import FlipCard from './FlipCard.js';
 import Footer from './Footer.js';
 import PlayMode from './PlayMode.js';
 import CategoryCard from './CategoryCard.js';
+import Modal from './Modal.js';
 
 export default class Game {
   scores = null;
@@ -381,7 +382,7 @@ export default class Game {
       this.handleCardFlip(event);
       this.handleTrainingClicks(event);
       this.handleCategoryCardClick(event);
-      this.handleStatsPageButtonsClicks(event);
+      // this.handleStatsPageButtonsClicks(event);
       this.handleStatsSorting(event);
     });
     this.elements.gameField.addEventListener('mouseout', (e) => this.handleCardBackFlip(e));
@@ -389,7 +390,6 @@ export default class Game {
 
   runStatsPageListeners() {
     this.elements.gameField.addEventListener('click', (event) => this.handleStatsPageButtonsClicks(event));
-    document.querySelector('.modal-overlay').addEventListener('click', (event) => this.handleModalButtonsClicks(event));
   }
 
   runPlayModeHandler() {
@@ -504,10 +504,14 @@ export default class Game {
     }
   }
 
-  handleStatsPageButtonsClicks(event) {
-    const modal = document.querySelector('.modal-overlay');
+  renderModal() {
+    this.elements.modal = new Modal();
 
-    if (event.target.classList.contains('reset-btn')) modal.classList.remove('hidden');
+    this.elements.modal.addEventListener('click', this.handleModalButtonsClicks.bind(this));
+  }
+
+  handleStatsPageButtonsClicks(event) {
+    if (event.target.classList.contains('reset-btn')) this.renderModal();
 
     if (event.target.classList.contains('repeat-btn')) {
       const weakWords = [];
@@ -529,19 +533,14 @@ export default class Game {
   }
 
   handleModalButtonsClicks(event) {
-    const modal = document.querySelector('.modal-overlay');
-    if (event.target.classList.contains('yes-btn')) {
-      modal.classList.add('hidden');
+    const isYesBtnClick = event.target.classList.contains('yes-btn');
+    if (isYesBtnClick) {
       localStorage.removeItem('englishForKidsScores');
       this.parseOrCreateScores();
       this.loadStats();
     }
-    if (event.target.classList.contains('no-btn')) {
-      modal.classList.add('hidden');
-    }
-    if (event.target === modal) {
-      modal.classList.add('hidden');
-    }
+    this.elements.modal.classList.add('hidden');
+    sleep(250).then(() => this.elements.modal.remove());
   }
 
   handleStatsSorting(event) {
