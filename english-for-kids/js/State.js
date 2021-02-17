@@ -1,5 +1,6 @@
 export default class State {
   constructor() {
+    this.isPlayMode = false;
     this.gameStarted = false;
     this.gameFinished = false;
     this.cards = null;
@@ -7,6 +8,7 @@ export default class State {
     this.currentIndex = 0;
     this.mistakes = 0;
     this.results = [];
+    this.category = null;
   }
 
   setCorrectAnswer = () => {
@@ -26,6 +28,12 @@ export default class State {
     const { cards, currentIndex } = this;
     this.currentCard = cards[currentIndex];
   };
+
+  setActiveCards(cards, category) {
+    const cardsOfCategory = cards.filter((card) => card.category === category);
+    this.category = category || 'difficult words';
+    this.cards = category ? cardsOfCategory : cards;
+  }
 
   reset = () => {
     this.results = [];

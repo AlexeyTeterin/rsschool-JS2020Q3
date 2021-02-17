@@ -33,7 +33,7 @@ export default class Game {
     this.sound = new Audio();
     this.renderHeader();
     this.renderFooter();
-    this.loadCategories();
+    this.renderCategories();
     this.runHeaderListeners();
     this.runGameFieldListeners();
     this.runStatsPageListeners();
@@ -53,15 +53,13 @@ export default class Game {
     document.body.append(this.elements.footer);
   }
 
-  renderCategoryName(category) {
-    const isDifficultWords = Array.isArray(category);
-    const categoryName = isDifficultWords ? 'Difficult words' : category;
-    const categoryHeader = createElement('div', 'category-header', categoryName);
+  renderCategoryName() {
+    const categoryHeader = createElement('div', 'category-header', this.state.category);
 
     this.elements.gameField.prepend(categoryHeader);
   }
 
-  loadCategories() {
+  renderCategories() {
     this.elements.gameField.classList.add('hidden');
     this.clearGamePanel();
     sleep(500)
@@ -73,37 +71,29 @@ export default class Game {
       })
       .then(() => {
         this.elements.gameField.classList.remove('hidden');
-        this.highlightMenuItem();
+        this.setMenuSelection();
         scrollTop();
       });
   }
 
-  loadCardsOf(category) {
-    const weakCardsRecieved = Array.isArray(category);
-    let cards;
-    if (weakCardsRecieved) {
-      cards = [];
-      category.forEach((weakCard) => {
-        cards.push(CARDS.filter((card) => card.word === weakCard.word)[0]);
-      });
-    } else {
-      cards = CARDS.filter((card) => card.category === category);
-    }
+  renderFlipCards() {
+    const { gameField } = this.elements;
+    const { cards } = this.state;
 
-    this.elements.gameField.classList.add('hidden');
+    gameField.classList.add('hidden');
     this.clearGamePanel();
     sleep(500)
       .then(() => {
         this.clearGameField();
-        this.renderCategoryName(category);
+        this.renderCategoryName();
         this.state.reset();
-        cards.forEach((card) => this.renderFlipCard(card));
+        cards.forEach((card) => gameField.append(new FlipCard(card)));
         this.toggleFlipCardsTitles();
         scrollTop();
       })
       .then(() => {
-        this.highlightMenuItem(weakCardsRecieved ? '' : category);
-        this.elements.gameField.classList.remove('hidden');
+        this.setMenuSelection(this.state.category);
+        gameField.classList.remove('hidden');
         if (this.state.isPlayMode) this.startGame();
       });
   }
@@ -194,10 +184,6 @@ export default class Game {
       .then(() => this.elements.gamePanel.classList.remove('hidden-content'));
   }
 
-  renderFlipCard(card) {
-    this.elements.gameField.append(new FlipCard(card));
-  }
-
   toggleFlipCardsTitles() {
     const notAFlipCard = (el) => !el.parentElement.classList.contains('card__front') && !el.parentElement.classList.contains('card__back');
 
@@ -278,7 +264,7 @@ export default class Game {
       })
       .then(() => sleep(5000))
       .then(() => {
-        if (document.querySelector('.finish-message')) this.loadCategories();
+        if (document.querySelector('.finish-message')) this.renderCategories();
       });
   }
 
@@ -342,7 +328,7 @@ export default class Game {
   handleLogoClick(event) {
     const { target } = event;
     const isTitleClick = target.classList.contains('logo__title');
-    if (isTitleClick) this.loadCategories();
+    if (isTitleClick) this.renderCategories();
   }
 
   handleControlsClick(event) {
@@ -352,7 +338,7 @@ export default class Game {
 
     if (isStatsBtnClick) {
       this.loadStats();
-      this.highlightMenuItem();
+      this.setMenuSelection();
     }
     if (isToggleModeClick) {
       this.togglePlayMode();
@@ -442,12 +428,13 @@ export default class Game {
     const menuLi = event.target;
 
     if (menuLi.classList.contains('home-link')) {
-      this.loadCategories();
+      this.renderCategories();
       this.toggleMenu();
     }
 
     if (menuLi.dataset.category) {
-      this.loadCardsOf(menuLi.dataset.category);
+      this.state.setActiveCards(CARDS, menuLi.dataset.category);
+      this.renderFlipCards();
       this.toggleMenu();
     }
   }
@@ -487,7 +474,8 @@ export default class Game {
     const isCategoryCardClick = target.classList.contains('category-card');
 
     if (!isCategoryCardClick) return;
-    this.loadCardsOf(target.dataset.category);
+    this.state.setActiveCards(CARDS, target.dataset.category);
+    this.renderFlipCards();
   }
 
   handleTrainingClicks(event) {
@@ -513,13 +501,13 @@ export default class Game {
     if (event.target.classList.contains('reset-btn')) this.renderModal();
 
     if (event.target.classList.contains('repeat-btn')) {
-      const weakWords = [];
+      const difficultCards = [];
       Object.keys(this.scores)
         .forEach((el) => {
           const card = this.scores[el];
-          if (card.wrong > 0) weakWords.push(card);
+          if (card.wrong > 0) difficultCards.push(card);
         });
-      weakWords
+      difficultCards
         .sort((a, b) => {
           const percentage = (card) => card.wrong / (card.correct + card.wrong);
           if (percentage(a) < percentage(b)) return 1;
@@ -527,7 +515,8 @@ export default class Game {
           return 0;
         })
         .splice(8);
-      this.loadCardsOf(weakWords);
+      this.state.setActiveCards(difficultCards);
+      this.renderFlipCards();
     }
   }
 
@@ -542,9 +531,10 @@ export default class Game {
     sleep(250).then(() => this.elements.modal.remove());
   }
 
-  highlightMenuItem(category) {
-    const menuItems = Array.from(this.elements.menu.getElementsByTagName('li'));
+  setMenuSelection(category) {
+    const menuItems = Array.from(this.elements.menu.children);
     menuItems.forEach((li) => li.classList.remove('active'));
+
     if (category) {
       const selectedMenuItem = menuItems.filter((li) => li.dataset.category === category)[0];
       selectedMenuItem.classList.add('active');
