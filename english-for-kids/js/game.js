@@ -12,7 +12,6 @@ import Footer from './Footer.js';
 import PlayMode from './PlayMode.js';
 import CategoryCard from './CategoryCard.js';
 import Modal from './Modal.js';
-import handleStatsSorting from './sorting.js';
 
 export default class Game {
   scores = null;
@@ -384,7 +383,6 @@ export default class Game {
       this.handleTrainingClicks(event);
       this.handleCategoryCardClick(event);
     });
-    this.elements.gameField.addEventListener('click', handleStatsSorting);
 
     this.elements.gameField.addEventListener('mouseout', (e) => this.handleCardBackFlip(e));
   }
