@@ -146,19 +146,15 @@ export default class Game {
 
   togglePlayMode() {
     const { isPlayMode } = this.state;
-    const { gameField } = this.elements;
 
     this.state.isPlayMode = !isPlayMode;
-    document.body.classList.toggle('play-mode', isPlayMode);
+    document.body.classList.toggle('play-mode', !isPlayMode);
 
     this.toggleFlipCardsTitles();
     this.toggleGamePanel();
 
-    if (this.state.isPlayMode) {
-      gameField.addEventListener('click', this.handlePlayModeAnswers.bind(this));
-    } else {
+    if (!this.state.isPlayMode) {
       this.setAllCardsActive();
-      gameField.removeEventListener('click', this.handlePlayModeAnswers.bind(this));
     }
   }
 
@@ -288,6 +284,7 @@ export default class Game {
     gameField.addEventListener('click', this.countTrainingClicks.bind(this));
     gameField.addEventListener('click', this.handleCategoryCardClick.bind(this));
     gameField.addEventListener('mouseout', this.handleFlipCardMouseOut.bind(this));
+    gameField.addEventListener('click', this.handlePlayModeAnswers.bind(this));
   }
 
   handleCorrectAnswer(targetCard) {
