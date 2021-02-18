@@ -1,8 +1,6 @@
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
+$col-bg-train: #0092b3;
+$col-bg-play: #6b4e91;
+$col-menu: rgb(247, 182, 63);
 
 @mixin max_620 {
   @media (max-width: 620px) {
@@ -82,10 +80,6 @@
   }
 }
 
-$col-bg-train: #0092b3;
-$col-bg-play: #6b4e91;
-$col-menu: rgb(247, 182, 63);
-
 html,
 body {
   height: 100%;
@@ -113,6 +107,7 @@ body {
 
   .wrapper {
     padding: 0 2rem;
+    box-sizing: border-box;
 
     @include max_620() {
       padding: 0 10px;

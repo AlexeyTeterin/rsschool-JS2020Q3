@@ -35,7 +35,7 @@ export default class Game {
     this.sound = new Audio();
     this.renderHeader();
     this.renderFooter();
-    this.renderCategories();
+    this.renderCategoryCards();
     this.runHeaderListeners();
     this.runGameFieldListeners();
     this.parseOrCreateScores();
@@ -59,7 +59,7 @@ export default class Game {
     this.elements.gameField.prepend(categoryHeader);
   }
 
-  renderCategories() {
+  renderCategoryCards() {
     this.elements.gameField.classList.add('hidden');
     this.clearGamePanel();
     sleep(500)
@@ -111,6 +111,12 @@ export default class Game {
       gameField.classList.remove('hidden');
       scrollTop();
     });
+  }
+
+  renderModal() {
+    this.elements.modal = new Modal();
+
+    this.elements.modal.addEventListener('click', this.handleModalButtonsClicks.bind(this));
   }
 
   parseOrCreateScores() {
@@ -224,7 +230,7 @@ export default class Game {
       .then(() => sleep(5000))
       .then(() => {
         const isFinalMessageActive = document.querySelector('.finish-message');
-        if (isFinalMessageActive) this.renderCategories();
+        if (isFinalMessageActive) this.renderCategoryCards();
       });
   }
 
@@ -284,7 +290,7 @@ export default class Game {
   handleLogoClick(event) {
     const { target } = event;
     const isTitleClick = target.classList.contains('logo__title');
-    if (isTitleClick) this.renderCategories();
+    if (isTitleClick) this.renderCategoryCards();
   }
 
   handleControlsClick(event) {
@@ -366,7 +372,7 @@ export default class Game {
     const menuLi = event.target;
 
     if (menuLi.classList.contains('home-link')) {
-      this.renderCategories();
+      this.renderCategoryCards();
       this.toggleMenu();
     }
 
@@ -379,6 +385,7 @@ export default class Game {
 
   handleFlipCardClick(event) {
     const { target } = event;
+    console.log(target);
     const flipCard = target.parentElement.parentElement.parentElement;
     const isRotateBtnClick = target.classList.contains('card__rotate-btn');
     const isCardFrontClick = target.parentElement.classList.contains('card__front');
@@ -423,12 +430,6 @@ export default class Game {
     this.saveScores();
   }
 
-  renderModal() {
-    this.elements.modal = new Modal();
-
-    this.elements.modal.addEventListener('click', this.handleModalButtonsClicks.bind(this));
-  }
-
   handleStatsPanelBtnsClick(event) {
     const isResetBtnClick = event.target.classList.contains('reset-btn');
     const isRepeatBtnClick = event.target.classList.contains('repeat-btn');
@@ -437,6 +438,7 @@ export default class Game {
 
     if (isRepeatBtnClick) {
       const difficultCards = getDifficultCards(this.scores);
+      console.log(difficultCards);
       this.state.setActiveCards(difficultCards);
       this.renderFlipCards();
     }

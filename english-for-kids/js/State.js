@@ -30,6 +30,7 @@ export default class State {
   };
 
   setActiveCards(cards, category) {
+    console.log(cards);
     const cardsOfCategory = cards.filter((card) => card.category === category);
     this.category = category || 'difficult words';
     this.cards = category ? cardsOfCategory : cards;

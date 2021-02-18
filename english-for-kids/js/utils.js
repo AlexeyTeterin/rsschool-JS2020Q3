@@ -1,3 +1,5 @@
+import CARDS from './cards.js';
+
 export const shuffle = (array) => {
   const len = document.querySelectorAll('.flip-card').length;
   const random = () => Math.floor(Math.random() * len);
@@ -50,8 +52,9 @@ export const getDifficultCards = (scores) => {
 
   Object.keys(scores)
     .forEach((el) => {
-      const card = scores[el];
-      if (card.wrong > 0) difficultCards.push(card);
+      const scoredCard = scores[el];
+      scoredCard.sound = CARDS.find((card) => card.word === scoredCard.word).sound;
+      if (scoredCard.wrong > 0) difficultCards.push(scoredCard);
     });
   difficultCards
     .sort((a, b) => {
