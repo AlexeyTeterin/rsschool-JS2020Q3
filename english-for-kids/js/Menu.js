@@ -1,4 +1,4 @@
-import CATEGORIES from './categories.js';
+import CATEGORIES from './CATEGORIES.js';
 import { createElement } from './utils.js';
 
 export default class Menu {

@@ -1,10 +1,11 @@
 import { COLUMNS } from './sortStats.js';
-import StatsRow from './StatsRow.js';
-import { createElement } from './utils.js';
+import { createElement, getCardStats } from './utils.js';
 
 export default class StatsPanel {
   constructor(scores) {
-    const statsPanel = createElement('div', 'stats-field');
+    this.scores = scores;
+    this.statsPanel = createElement('div', 'stats-field');
+
     const headRow = createElement('div', ['row', 'head-row']);
     const resetBtn = createElement('button', 'reset-btn', 'Reset');
     const repeatBtn = createElement('button', 'repeat-btn', 'Repeat difficult words');
@@ -15,13 +16,27 @@ export default class StatsPanel {
       headRow.append(div);
     });
     buttons.append(repeatBtn, resetBtn);
-    statsPanel.append(buttons, headRow);
+    this.statsPanel.append(buttons, headRow);
 
-    Object.keys(scores).forEach((word) => {
-      const row = new StatsRow(word, scores);
-      statsPanel.append(row);
+    Object.keys(scores).forEach((word) => this.renderStatsRow(word));
+
+    return this.statsPanel;
+  }
+
+  createStatsRow(word) {
+    const row = createElement('div', 'row', '', word);
+    const columns = getCardStats(this.scores[word]);
+
+    columns.forEach((column) => {
+      const div = createElement('div', null, column);
+      row.append(div);
     });
 
-    return statsPanel;
+    return row;
+  }
+
+  renderStatsRow(word) {
+    const row = this.createStatsRow(word);
+    this.statsPanel.append(row);
   }
 }

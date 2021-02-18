@@ -1,7 +1,7 @@
-import CATEGORIES from './categories.js';
-import CARDS from './cards.js';
+import CATEGORIES from './CATEGORIES.js';
+import CARDS from './CARDS.js';
 import {
-  createElement, scrollTop, shuffle, sleep, getDifficultCards,
+  createElement, scrollTop, shuffle, sleep, getDifficultCards, toggleScrollLock,
 } from './utils.js';
 import Menu from './Menu.js';
 import Burger from './Burger.js';
@@ -31,11 +31,13 @@ export default class Game {
 
   init() {
     this.sound = new Audio();
+    this.state.loadScores(CARDS);
+
     this.renderHeader();
     this.renderCategoryCards();
+
     this.runHeaderListeners();
     this.runGameFieldListeners();
-    this.state.loadScores(CARDS);
   }
 
   renderHeader() {
@@ -97,8 +99,8 @@ export default class Game {
     this.stopGame();
     gameField.classList.add('hidden');
     sleep(500).then(() => {
-      this.clearGameField();
       const statsPanel = new StatsPanel(this.state.scores);
+      this.clearGameField();
       gameField.append(statsPanel);
       statsPanel.addEventListener('click', this.handleStatsPanelBtnsClick.bind(this));
       gameField.classList.remove('hidden');
@@ -234,24 +236,12 @@ export default class Game {
   }
 
   toggleMenu() {
+    const isScrollable = () => this.elements.menu.classList.contains('show');
+
     this.elements.menu.classList.toggle('show');
     this.elements.burger.classList.toggle('jump-to-menu');
     this.elements.overlay.classList.toggle('hidden');
-    this.toggleScrollLock();
-  }
-
-  toggleScrollLock() {
-    const stopScroll = () => {
-      const x = window.scrollX;
-      const y = window.scrollY;
-      window.onscroll = () => window.scrollTo(x, y);
-    };
-
-    if (this.elements.menu.classList.contains('show')) {
-      stopScroll();
-    } else {
-      window.onscroll = () => {};
-    }
+    toggleScrollLock(isScrollable());
   }
 
   handleLogoClick(event) {

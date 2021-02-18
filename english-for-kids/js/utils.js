@@ -1,4 +1,4 @@
-import CARDS from './cards.js';
+import CARDS from './CARDS.js';
 
 export const shuffle = (array) => {
   const len = document.querySelectorAll('.flip-card').length;
@@ -32,13 +32,6 @@ export const createElement = (tag, className, textContent, id) => {
   return element;
 };
 
-export const scrollTop = () => {
-  window.scrollTo({
-    top: 0,
-    behavior: 'smooth',
-  });
-};
-
 export const getCardStats = (card) => {
   const correctPercentage = `${((card.correct / (card.correct + card.wrong)) * 100 || 0).toFixed(1)} %`;
   return [
@@ -66,4 +59,24 @@ export const getDifficultCards = (scores) => {
     .splice(8);
 
   return difficultCards;
+};
+
+export const scrollTop = () => {
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth',
+  });
+};
+
+export const toggleScrollLock = (isScrollable) => {
+  const stopScroll = () => {
+    const { scrollX, scrollY } = window;
+    window.onscroll = () => window.scrollTo(scrollX, scrollY);
+  };
+
+  if (isScrollable) {
+    stopScroll();
+  } else {
+    window.onscroll = () => {};
+  }
 };
