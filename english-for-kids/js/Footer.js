@@ -3,10 +3,12 @@ import { createElement } from './utils.js';
 export default class Footer {
   constructor() {
     this.container = createElement('footer');
+  }
 
+  render() {
     this.renderRSlogo();
     this.renderCopyright();
-
+    document.body.append(this.container);
     return this.container;
   }
 

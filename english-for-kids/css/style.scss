@@ -2,6 +2,10 @@ $col-bg-train: #0092b3;
 $col-bg-play: #6b4e91;
 $col-menu: rgb(247, 182, 63);
 
+// * {
+//   box-sizing: border-box;
+// }
+
 @mixin max_620 {
   @media (max-width: 620px) {
     @content;
@@ -214,6 +218,7 @@ body {
         transition: transform 0.4s;
         transform: translateX(-320px);
         box-shadow: 0 0 3rem rgba(0, 0, 0, 0.75);
+        box-sizing: border-box;
 
         &.show {
           width: 320px;
@@ -254,6 +259,7 @@ body {
             filter: invert(1) drop-shadow(0 2px 2px rgba(0, 0, 0, 0.5));
             width: 3rem;
             height: 3rem;
+            box-sizing: border-box;
 
             &:hover {
               filter: invert(1) drop-shadow(0 2px 4px rgba(255, 255, 255, 1));

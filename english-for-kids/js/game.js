@@ -19,12 +19,12 @@ export default class Game {
   elements = {
     gamePanel: document.querySelector('.game-panel'),
     gameField: document.querySelector('.game-field'),
-    menu: new Menu(),
-    logo: new Logo('English for kids'),
-    controls: new Controls(),
-    burger: new Burger(),
-    footer: new Footer(),
     overlay: document.querySelector('.overlay'),
+    logo: new Logo('English for kids'),
+    menu: new Menu().render(),
+    burger: new Burger().render(),
+    controls: new Controls().render(),
+    footer: new Footer().render(),
   }
 
   state = new State();
@@ -32,7 +32,6 @@ export default class Game {
   init() {
     this.sound = new Audio();
     this.renderHeader();
-    this.renderFooter();
     this.renderCategoryCards();
     this.runHeaderListeners();
     this.runGameFieldListeners();
@@ -45,10 +44,6 @@ export default class Game {
 
     headerEl.prepend(navEl, this.elements.logo, this.elements.controls);
     navEl.append(this.elements.burger, this.elements.menu);
-  }
-
-  renderFooter() {
-    document.body.append(this.elements.footer);
   }
 
   renderCategoryName() {

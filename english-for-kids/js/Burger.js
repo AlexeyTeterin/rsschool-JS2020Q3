@@ -3,8 +3,10 @@ import { createElement } from './utils.js';
 export default class Burger {
   constructor() {
     this.burger = createElement('div', 'menu-btn');
-    this.renderBars(3);
+  }
 
+  render() {
+    this.renderBars(3);
     return this.burger;
   }
 

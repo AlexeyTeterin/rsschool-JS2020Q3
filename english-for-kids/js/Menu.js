@@ -4,15 +4,12 @@ import { createElement } from './utils.js';
 export default class Menu {
   constructor() {
     this.menuUl = createElement('ul', 'menu');
-
-    this.render();
-
-    return this.menuUl;
   }
 
   render() {
     this.renderHomeLink();
     CATEGORIES.forEach((category) => this.renderMenuListItem(category));
+    return this.menuUl;
   }
 
   renderHomeLink() {

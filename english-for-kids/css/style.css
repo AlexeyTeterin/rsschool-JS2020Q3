@@ -139,6 +139,7 @@ body header nav .menu {
   transition: transform 0.4s;
   transform: translateX(-320px);
   box-shadow: 0 0 3rem rgba(0, 0, 0, 0.75);
+  box-sizing: border-box;
 }
 
 body header nav .menu.show {
@@ -181,6 +182,7 @@ body header nav .menu li.home-link {
   filter: invert(1) drop-shadow(0 2px 2px rgba(0, 0, 0, 0.5));
   width: 3rem;
   height: 3rem;
+  box-sizing: border-box;
 }
 
 body header nav .menu li.home-link:hover {

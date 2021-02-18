@@ -3,10 +3,11 @@ import { createElement } from './utils.js';
 export default class Controls {
   constructor() {
     this.controls = createElement('div', 'controls');
+  }
 
+  render() {
     this.renderGameModeToggle();
     this.renderStatsBtn();
-
     return this.controls;
   }
 
