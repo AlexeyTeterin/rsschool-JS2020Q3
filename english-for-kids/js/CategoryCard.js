@@ -2,11 +2,14 @@ import { createElement } from './utils.js';
 
 export default class CategoryCard {
   constructor(category) {
+    this.category = category;
     this.categoryCard = createElement('div', 'category-card');
     this.categoryCard.dataset.category = category;
+  }
 
-    this.renderImage(category);
-    this.renderTitle(category);
+  render() {
+    this.renderImage(this.category);
+    this.renderTitle(this.category);
 
     return this.categoryCard;
   }

@@ -9,6 +9,14 @@ export default class State {
     this.mistakes = 0;
     this.results = [];
     this.category = null;
+    this.sounds = {
+      winSound: './assets/audio/finish_true.ogg',
+      looseSound: './assets/audio/finish_false.ogg',
+    };
+    this.images = {
+      winImg: './assets/img/finish_win.png',
+      looseImg: './assets/img/finish_loose.png',
+    };
   }
 
   setCorrectAnswer = () => {

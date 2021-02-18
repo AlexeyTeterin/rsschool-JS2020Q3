@@ -2,13 +2,16 @@ import { createElement } from './utils.js';
 
 export default class FlipCard {
   constructor(card) {
+    this.card = card;
+    this.cardEl = createElement('div', 'card');
     this.flipCard = createElement('div', 'flip-card');
     this.flipCard.dataset.word = card.word;
     this.flipCard.dataset.sound = card.sound;
-    this.cardEl = createElement('div', 'card');
+  }
 
-    this.renderFront(card);
-    this.renderBack(card);
+  render() {
+    this.renderFront(this.card);
+    this.renderBack(this.card);
     this.flipCard.append(this.cardEl);
 
     return this.flipCard;

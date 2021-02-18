@@ -2,19 +2,24 @@ import { createElement } from './utils.js';
 
 export default class FinalMessage {
   constructor(state) {
-    const isWon = !state.results.includes(false);
-    const { mistakes } = state;
-    const src = isWon ? './assets/img/finish_win.png' : './assets/img/finish_loose.png';
-    const message = createElement('div', 'finish-message');
-    message.innerText = isWon ? 'You win!' : `${mistakes} mistake`;
-    if (mistakes > 1) message.innerText += 's';
-    const img = new Image();
-    img.src = src;
+    this.state = state;
+  }
 
+  render() {
+    const { mistakes, images, results } = this.state;
+    const isAllCorrect = !results.includes(false);
+    const src = isAllCorrect ? images.winImg : images.looseImg;
+    const message = createElement('div', 'finish-message');
+    const img = new Image();
+
+    message.innerText = isAllCorrect ? 'You win!' : `${mistakes} mistake`;
+    message.innerText += (mistakes > 1) ? 's' : '';
+    img.src = src;
     img.onload = () => {
       message.style.setProperty('background-image', `url(${src})`);
       message.style.setProperty('opacity', 1);
     };
+
     return message;
   }
 }

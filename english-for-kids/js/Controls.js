@@ -8,6 +8,7 @@ export default class Controls {
   render() {
     this.renderGameModeToggle();
     this.renderStatsBtn();
+
     return this.controls;
   }
 

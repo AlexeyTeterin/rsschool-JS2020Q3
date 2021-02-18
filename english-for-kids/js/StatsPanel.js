@@ -5,7 +5,9 @@ export default class StatsPanel {
   constructor(scores) {
     this.scores = scores;
     this.statsPanel = createElement('div', 'stats-field');
+  }
 
+  render() {
     const headRow = createElement('div', ['row', 'head-row']);
     const resetBtn = createElement('button', 'reset-btn', 'Reset');
     const repeatBtn = createElement('button', 'repeat-btn', 'Repeat difficult words');
@@ -18,7 +20,7 @@ export default class StatsPanel {
     buttons.append(repeatBtn, resetBtn);
     this.statsPanel.append(buttons, headRow);
 
-    Object.keys(scores).forEach((word) => this.renderStatsRow(word));
+    Object.keys(this.scores).forEach((word) => this.renderStatsRow(word));
 
     return this.statsPanel;
   }
@@ -37,6 +39,7 @@ export default class StatsPanel {
 
   renderStatsRow(word) {
     const row = this.createStatsRow(word);
+
     this.statsPanel.append(row);
   }
 }

@@ -1,17 +1,17 @@
-import CARDS from './CARDS.js';
+import { CARDS } from './CARDS.js';
 
-export const shuffle = (array) => {
-  const len = document.querySelectorAll('.flip-card').length;
-  const random = () => Math.floor(Math.random() * len);
+const getRandom = (maxNumber) => Math.floor(Math.random() * maxNumber);
+
+export const shuffleCards = (cards) => {
   const indexes = [];
-  const result = [];
-  let index = random();
-  for (let i = len; i > 0; i -= 1) {
-    while (indexes.includes(index)) index = random();
-    indexes.push(index);
-    result.push(array[index]);
+  const shuffledCards = [];
+  let randomIndex = getRandom(cards.length);
+  for (let i = cards.length; i > 0; i -= 1) {
+    while (indexes.includes(randomIndex)) randomIndex = getRandom(cards.length);
+    indexes.push(randomIndex);
+    shuffledCards.push(cards[randomIndex]);
   }
-  return result;
+  return shuffledCards;
 };
 
 export const sleep = (ms) => new Promise((resolve) => setTimeout(() => resolve(), ms));
@@ -79,4 +79,9 @@ export const toggleScrollLock = (isScrollable) => {
   } else {
     window.onscroll = () => {};
   }
+};
+
+export const isFlipCard = (node) => {
+  const classes = ['card__front', 'card__back'];
+  return classes.some((className) => node.classList.contains(className));
 };

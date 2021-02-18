@@ -1,7 +1,6 @@
 /* eslint-disable import/extensions */
-import Game from './game.js';
-import handleStatsHeaderClick from './sortStats.js';
+import App from './App.js';
 
-new Game().init();
+const app = new App();
 
-document.addEventListener('click', handleStatsHeaderClick);
+app.init();
