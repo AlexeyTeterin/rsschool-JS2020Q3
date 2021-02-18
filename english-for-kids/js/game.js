@@ -16,8 +16,6 @@ import StatsPanel from './StatsPanel.js';
 import FinalMessage from './FinalMessage.js';
 
 export default class Game {
-  scores = null;
-
   elements = {
     gamePanel: document.querySelector('.game-panel'),
     gameField: document.querySelector('.game-field'),
@@ -38,7 +36,7 @@ export default class Game {
     this.renderCategoryCards();
     this.runHeaderListeners();
     this.runGameFieldListeners();
-    this.parseOrCreateScores();
+    this.state.loadScores(CARDS);
   }
 
   renderHeader() {
@@ -105,7 +103,7 @@ export default class Game {
     gameField.classList.add('hidden');
     sleep(500).then(() => {
       this.clearGameField();
-      const statsPanel = new StatsPanel(this.scores);
+      const statsPanel = new StatsPanel(this.state.scores);
       gameField.append(statsPanel);
       statsPanel.addEventListener('click', this.handleStatsPanelBtnsClick.bind(this));
       gameField.classList.remove('hidden');
@@ -117,32 +115,6 @@ export default class Game {
     this.elements.modal = new Modal();
 
     this.elements.modal.addEventListener('click', this.handleModalButtonsClicks.bind(this));
-  }
-
-  parseOrCreateScores() {
-    function createScoreforCard(card) {
-      return {
-        word: card.word,
-        correct: 0,
-        wrong: 0,
-        category: card.category,
-        trained: 0,
-        translation: card.translation,
-      };
-    }
-    this.scores = JSON.parse(localStorage.getItem('englishForKidsScores')) || {};
-
-    CARDS.forEach((card) => {
-      if (this.scores[card.word]) return;
-      this.scores[card.word] = createScoreforCard(card);
-    });
-  }
-
-  saveScores(answer) {
-    if (answer === 'correct') this.scores[this.state.currentCard.word].correct += 1;
-    if (answer === 'wrong') this.scores[this.state.currentCard.word].wrong += 1;
-
-    localStorage.setItem('englishForKidsScores', JSON.stringify(this.scores));
   }
 
   clearGameField() {
@@ -338,7 +310,7 @@ export default class Game {
     this.createStar(true);
     this.state.setCorrectAnswer();
     targetCard.classList.add('disabled');
-    this.saveScores('correct');
+    this.state.saveScore('correct');
     if (this.state.hasNextCard()) {
       this.state.setNextCard();
       this.playCardAudio(this.state.currentCard.sound);
@@ -352,7 +324,7 @@ export default class Game {
     this.createStar(false);
     this.state.setWrongAnswer();
     this.state.mistakes += 1;
-    this.saveScores('wrong');
+    this.state.saveScore('wrong');
   }
 
   handlePlayModeAnswers(event) {
@@ -385,7 +357,6 @@ export default class Game {
 
   handleFlipCardClick(event) {
     const { target } = event;
-    console.log(target);
     const flipCard = target.parentElement.parentElement.parentElement;
     const isRotateBtnClick = target.classList.contains('card__rotate-btn');
     const isCardFrontClick = target.parentElement.classList.contains('card__front');
@@ -426,8 +397,8 @@ export default class Game {
 
     if (this.state.isPlayMode || !isFlipCardClick) return;
 
-    this.scores[word].trained += 1;
-    this.saveScores();
+    this.state.scores[word].trained += 1;
+    this.state.saveScore();
   }
 
   handleStatsPanelBtnsClick(event) {
@@ -437,8 +408,7 @@ export default class Game {
     if (isResetBtnClick) this.renderModal();
 
     if (isRepeatBtnClick) {
-      const difficultCards = getDifficultCards(this.scores);
-      console.log(difficultCards);
+      const difficultCards = getDifficultCards(this.state.scores);
       this.state.setActiveCards(difficultCards);
       this.renderFlipCards();
     }
@@ -448,7 +418,7 @@ export default class Game {
     const isYesBtnClick = event.target.classList.contains('yes-btn');
     if (isYesBtnClick) {
       localStorage.removeItem('englishForKidsScores');
-      this.parseOrCreateScores();
+      this.state.loadScores(CARDS);
       this.renderStatsPanel();
     }
     this.elements.modal.classList.add('hidden');

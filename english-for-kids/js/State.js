@@ -30,7 +30,6 @@ export default class State {
   };
 
   setActiveCards(cards, category) {
-    console.log(cards);
     const cardsOfCategory = cards.filter((card) => card.category === category);
     this.category = category || 'difficult words';
     this.cards = category ? cardsOfCategory : cards;
@@ -43,4 +42,30 @@ export default class State {
     this.mistakes = 0;
     this.gameStarted = false;
   };
+
+  loadScores(cards) {
+    function createScoreForCard(card) {
+      return {
+        word: card.word,
+        correct: 0,
+        wrong: 0,
+        category: card.category,
+        trained: 0,
+        translation: card.translation,
+      };
+    }
+    this.scores = JSON.parse(localStorage.getItem('englishForKidsScores')) || {};
+
+    cards.forEach((card) => {
+      if (this.scores[card.word]) return;
+      this.scores[card.word] = createScoreForCard(card);
+    });
+  }
+
+  saveScore(answer) {
+    if (answer === 'correct') this.scores[this.currentCard.word].correct += 1;
+    if (answer === 'wrong') this.scores[this.currentCard.word].wrong += 1;
+
+    localStorage.setItem('englishForKidsScores', JSON.stringify(this.scores));
+  }
 }
