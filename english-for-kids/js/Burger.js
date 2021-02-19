@@ -1,9 +1,7 @@
 import { createElement } from './utils.js';
 
 export default class Burger {
-  constructor() {
-    this.burger = createElement('div', 'menu-btn');
-  }
+  burger = createElement('div', 'menu-btn');
 
   render() {
     this.renderBars(3);

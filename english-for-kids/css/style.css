@@ -843,6 +843,10 @@ body footer .rsschool-logo {
   backdrop-filter: blur(2px);
 }
 
+.modal-overlay.hidden {
+  visibility: visible;
+}
+
 .modal-overlay .modal {
   position: fixed;
   max-width: 90%;

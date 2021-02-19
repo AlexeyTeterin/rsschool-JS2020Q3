@@ -2,9 +2,7 @@ import { createElement } from './utils.js';
 
 export default class Modal {
   constructor() {
-    this.modalOverlay = createElement('div', ['modal-overlay']);
-    this.render();
-    return this.modalOverlay;
+    this.modalOverlay = createElement('div', ['modal-overlay', 'hidden']);
   }
 
   render() {
@@ -16,5 +14,9 @@ export default class Modal {
     modal.append(text, yesBtn, noBtn);
     this.modalOverlay.append(modal);
     document.querySelector('header').append(this.modalOverlay);
+
+    setTimeout(() => this.modalOverlay.classList.remove('hidden'), 0);
+
+    return this.modalOverlay;
   }
 }

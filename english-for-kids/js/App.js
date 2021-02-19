@@ -133,7 +133,7 @@ export default class App {
   }
 
   renderModal() {
-    this.elements.modal = new Modal();
+    this.elements.modal = new Modal().render();
 
     this.elements.modal.addEventListener('click', this.handleModalButtonsClicks.bind(this));
   }

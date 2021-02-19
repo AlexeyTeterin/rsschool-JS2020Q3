@@ -1,23 +1,31 @@
 export default class State {
-  constructor() {
-    this.isPlayMode = false;
-    this.gameStarted = false;
-    this.gameFinished = false;
-    this.cards = null;
-    this.currentCard = null;
-    this.currentIndex = 0;
-    this.mistakes = 0;
-    this.results = [];
-    this.category = null;
-    this.sounds = {
-      winSound: './assets/audio/finish_true.ogg',
-      looseSound: './assets/audio/finish_false.ogg',
-    };
-    this.images = {
-      winImg: './assets/img/finish_win.png',
-      looseImg: './assets/img/finish_loose.png',
-    };
-  }
+  isPlayMode = false;
+
+  gameStarted = false;
+
+  gameFinished = false;
+
+  cards = null;
+
+  currentCard = null;
+
+  currentIndex = 0;
+
+  mistakes = 0;
+
+  results = [];
+
+  category = null;
+
+  sounds = {
+    winSound: './assets/audio/finish_true.ogg',
+    looseSound: './assets/audio/finish_false.ogg',
+  };
+
+  images = {
+    winImg: './assets/img/finish_win.png',
+    looseImg: './assets/img/finish_loose.png',
+  };
 
   setCorrectAnswer = () => {
     const { results, currentIndex } = this;
