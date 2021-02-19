@@ -248,7 +248,7 @@ export default class App {
     }
   }
 
-  toggleMenu() {
+  toggleMenu = () => {
     const isScrollable = () => this.elements.menu.classList.contains('show');
 
     this.elements.menu.classList.toggle('show');
@@ -257,14 +257,14 @@ export default class App {
     toggleScrollLock(isScrollable());
   }
 
-  handleLogoClick(event) {
+  handleLogoClick = (event) => {
     const { target } = event;
     const isTitleClick = target.classList.contains('logo__title');
 
     if (isTitleClick) this.renderCategoryCards();
   }
 
-  handleControlsClick(event) {
+  handleControlsClick = (event) => {
     const { target } = event;
     const isStatsBtnClick = target.classList.contains('stats-btn');
     const isToggleModeClick = target.id === 'checkbox';
@@ -288,22 +288,22 @@ export default class App {
       logo, menu, burger, overlay, controls,
     } = this.elements;
 
-    logo.addEventListener('click', this.handleLogoClick.bind(this));
-    menu.addEventListener('click', this.handleMenuLiClick.bind(this));
-    burger.addEventListener('click', this.toggleMenu.bind(this));
-    overlay.addEventListener('click', this.toggleMenu.bind(this));
-    controls.addEventListener('click', this.handleControlsClick.bind(this));
+    burger.addEventListener('click', this.toggleMenu);
+    overlay.addEventListener('click', this.toggleMenu);
+    menu.addEventListener('click', this.handleMenuLiClick);
+    logo.addEventListener('click', this.handleLogoClick);
+    controls.addEventListener('click', this.handleControlsClick);
   }
 
   runGameFieldListeners() {
     const { gameField } = this.elements;
 
-    gameField.addEventListener('click', this.handleFlipCardClick.bind(this));
-    gameField.addEventListener('click', this.countTrainingClicks.bind(this));
-    gameField.addEventListener('click', this.handleCategoryCardClick.bind(this));
-    gameField.addEventListener('mouseout', this.handleFlipCardMouseOut.bind(this));
-    gameField.addEventListener('click', this.handlePlayModeAnswers.bind(this));
+    gameField.addEventListener('click', this.handleFlipCardClick);
+    gameField.addEventListener('click', this.countTrainingClicks);
+    gameField.addEventListener('click', this.handleCategoryCardClick);
+    gameField.addEventListener('click', this.handlePlayModeAnswers);
     gameField.addEventListener('click', handleStatsHeaderClick);
+    gameField.addEventListener('mouseout', this.handleFlipCardMouseOut);
   }
 
   handleCorrectAnswer(targetCard) {
@@ -328,7 +328,7 @@ export default class App {
     this.state.saveScore('wrong');
   }
 
-  handlePlayModeAnswers(event) {
+  handlePlayModeAnswers = (event) => {
     const { gameStarted, currentCard } = this.state;
     const target = event.target.parentElement.parentElement.parentElement;
     const isFlipCardClick = target.classList.contains('flip-card');
@@ -341,7 +341,7 @@ export default class App {
     if (!isCorrectAnswer()) this.handleWrongAnswer();
   }
 
-  handleMenuLiClick(event) {
+  handleMenuLiClick = (event) => {
     const { target } = event;
     const isHomeLinkClick = target.id === 'home-link';
     const isMenuLinkClick = target.dataset.category !== null;
@@ -356,7 +356,7 @@ export default class App {
     }
   }
 
-  handleFlipCardClick(event) {
+  handleFlipCardClick = (event) => {
     const { target } = event;
     const flipCard = target.parentElement.parentElement.parentElement;
     const isRotateBtnClick = target.classList.contains('card__rotate-btn');
@@ -371,7 +371,7 @@ export default class App {
     }
   }
 
-  handleFlipCardMouseOut(event) {
+  handleFlipCardMouseOut = (event) => {
     const { relatedTarget } = event;
     const rotatedCard = this.elements.gameField.querySelector('.rotate');
     const isCardMouseOut = () => relatedTarget.classList.contains('game-field');
@@ -381,7 +381,7 @@ export default class App {
     if (rotatedCard) rotatedCard.classList.remove('rotate');
   }
 
-  handleCategoryCardClick(event) {
+  handleCategoryCardClick = (event) => {
     const target = event.target.parentNode;
     const isCategoryCardClick = target.classList.contains('category-card');
 
@@ -391,7 +391,7 @@ export default class App {
     this.renderFlipCards();
   }
 
-  countTrainingClicks(event) {
+  countTrainingClicks = (event) => {
     const target = event.target.parentElement.parentElement.parentElement;
     const isFlipCardClick = target.classList.contains('flip-card');
     const { word } = target.dataset;
