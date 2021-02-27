@@ -1,2 +1,5 @@
-# alexeyteterin-JS2020Q3
-Private repository for @alexeyteterin
+# Virtual Keyboard
+
+A keyboard with speech recognition
+
+`JavaScript` `Web Speech API` `SCSS`
