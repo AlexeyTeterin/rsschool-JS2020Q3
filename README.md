@@ -1,2 +1,3 @@
-# alexeyteterin-JS2020Q3
-Private repository for @alexeyteterin
+# Shelter
+
+A responsive multi-page site with custom pagination
