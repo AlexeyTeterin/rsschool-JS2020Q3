@@ -1,4 +1,4 @@
-# Virtual Keyboard
+# :keyboard: Virtual Keyboard
 
 A keyboard with speech recognition
 
