@@ -1,2 +1,3 @@
-# alexeyteterin-JS2020Q3
-Private repository for @alexeyteterin
+# English for Kids
+English word study SPA for children.
+###### `JavaScript` `Custom UI` `CSS-animations`
