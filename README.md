@@ -1,2 +1,3 @@
-# alexeyteterin-JS2020Q3
-Private repository for @alexeyteterin
+# Gem puzzle
+Puzzle game with customizable field options (size, background image), score and autoplay.  
+###### `JavaScript` `Custom UI` `SASS`
