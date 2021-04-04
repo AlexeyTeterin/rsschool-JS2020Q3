@@ -1,3 +1,12 @@
+* {
+  box-sizing: border-box;
+  transition: 50ms linear;
+  -webkit-transition: 50ms linear;
+  -moz-transition: 50ms linear;
+  -ms-transition: 50ms linear;
+  -o-transition: 50ms linear;
+}
+
 $col-light-s: #FAFAFA;
 $col-light-l: #F6F6F6;
 $col-primary: #F1CDB3;
@@ -77,8 +86,7 @@ button {
   background: none;
   color: #292929;
 
-  &:focus,
-  :active {
+  &:focus, :active {
     outline: none;
   }
 
@@ -1156,4 +1164,6 @@ footer {
       margin-right: 20px;
     }
   }
+
+
 }
